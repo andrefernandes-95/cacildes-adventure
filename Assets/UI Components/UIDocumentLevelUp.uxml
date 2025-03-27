@@ -1,0 +1,212 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="CloseIndicator" src="project://database/Assets/UI%20Components/CloseIndicator.uxml?fileID=9197481963319205126&amp;guid=0c4ccebd48dd9834cb198cc1e88bc206&amp;type=3#CloseIndicator" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentMenu.uss?fileID=7433441132597879392&amp;guid=8130d4f12839ca94fa1bef036e27ad88&amp;type=3#EquipmentMenu" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_Asset%20Store/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Base_Normals.png?fileID=2800000&amp;guid=ae6da1f30745f024683bad2d094f8220&amp;type=3#PFK_Texture_Ground_Base_Normals&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.63); background-color: rgb(36, 36, 36); -unity-background-scale-mode: stretch-to-fill; justify-content: flex-start; align-items: center;">
+        <ui:VisualElement name="ImageBack" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: auto; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/Level%20Up%20Notification.png?fileID=2800000&amp;guid=ed80a91dcc0bd01488dafcbe8cf45240&amp;type=3#Level Up Notification&quot;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.1); background-color: rgba(0, 0, 0, 0); -unity-background-scale-mode: scale-and-crop;">
+            <ui:Instance template="CloseIndicator" />
+            <ui:VisualElement name="VisualElement" style="width: 100%; justify-content: flex-start; align-items: center; height: 100%; flex-grow: 0; margin-top: 10px;">
+                <ui:Label text="Level Up" display-tooltip-when-elided="true" name="Title" class="label-text" style="color: rgb(255, 255, 255); font-size: 24px; justify-content: flex-start; -unity-text-align: middle-center; -unity-font-style: bold;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210146595143680)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement name="AttributesContainer" style="border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; flex-grow: initial; width: 75%; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-direction: column; justify-content: space-between; align-items: stretch; padding-top: 0; display: flex; visibility: visible; padding-left: 10px; padding-right: 10px; padding-bottom: 0; min-height: auto;">
+                    <ui:VisualElement name="Level" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/Level%20Up%20Background.png?fileID=2800000&amp;guid=b51faea7245c1114d91b9a9c2cf61a4e&amp;type=3#Level Up Background&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Level" display-tooltip-when-elided="true" name="Level" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210231789846528)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Gold" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/Gold.png?fileID=2800000&amp;guid=73bd41d271c7a864d93da71916152f12&amp;type=3#Gold&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Current Gold / Required" display-tooltip-when-elided="true" name="CurrentGoldAndRequired" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210302954602496)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MaximumHealth" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/8.png?fileID=2800000&amp;guid=8eaa683de8e829649b71be000148c0ec&amp;type=3#8&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Maximum Health" display-tooltip-when-elided="true" name="MaximumHealthText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210454117318656)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MaximumStamina" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%B0%2025.png?fileID=2800000&amp;guid=6a14f2ed25aeb9d4c812853cfb7c8a27&amp;type=3#Группа 25&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Maximum Stamina" display-tooltip-when-elided="true" name="MaximumStaminaText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210522132152320)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MaximumMana" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/47.png?fileID=2800000&amp;guid=5e2df76d58582354bb7ed1aec5334ce2&amp;type=3#47&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Maximum Mana" display-tooltip-when-elided="true" name="MaximumManaText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210599542226944)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PhysicalAttackPower" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/40.png?fileID=2800000&amp;guid=a5457e7e01d331b47ae01bea58552cb3&amp;type=3#40&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Physical Attack Power" display-tooltip-when-elided="true" name="PhysicalAttackPowerLabel" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210844158230528)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="DefenseAbsorption" style="flex-direction: row; justify-content: space-between; flex-grow: 1; align-items: center;">
+                        <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; align-items: center;">
+                            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 30px; height: 30px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/7.png?fileID=2800000&amp;guid=34061fc76cced1f4284d07c255eb3aba&amp;type=3#7&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                            <ui:Label text="Physical Defense Absorption" display-tooltip-when-elided="true" name="PhysicalDefenseAbsorptionLabel" enable-rich-text="false" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 14px; margin-left: 5px;">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1210963406487552)" />
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:Label text="100/500" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal; font-size: 16px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="StatsContainer" style="border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; width: 75%; -unity-text-align: upper-right; margin-left: 0; margin-right: 0; margin-top: 10px; margin-bottom: 0; flex-direction: column; justify-content: space-between; align-items: stretch; padding-top: 10px; display: flex; visibility: visible; background-color: rgba(0, 0, 0, 0.2); padding-left: 10px; padding-right: 10px; padding-bottom: 10px; flex-shrink: 0;">
+                    <ui:VisualElement name="StatsContent" style="flex-grow: 1;">
+                        <ui:VisualElement name="Vitality" style="flex-direction: row; justify-content: space-between; flex-grow: 0; margin-bottom: 3px; -unity-text-align: middle-right; align-items: center; flex-shrink: 1; margin-top: 3px;">
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 40px; height: 40px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/10.png?fileID=2800000&amp;guid=b603683e78dd3684ca7d2dd31e8f2722&amp;type=3#10&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-right: 10px;" />
+                                <ui:Label text="Vitality" display-tooltip-when-elided="true" name="VitalityText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211218625691648)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:Label text="Governs max health" display-tooltip-when-elided="true" name="VitalityDescriptionText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: italic; font-size: 11px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: middle-left;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211588341006336)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:Button text="-" display-tooltip-when-elided="true" name="DecreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 10px; margin-right: 10px;" />
+                                <ui:Button text="+" display-tooltip-when-elided="true" name="IncreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Endurance" style="flex-direction: row; justify-content: space-between; flex-grow: 0; margin-bottom: 3px; -unity-text-align: middle-right; align-items: center; flex-shrink: 1; margin-top: 3px;">
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 40px; height: 40px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/27.png?fileID=2800000&amp;guid=86629370314c27742b8e8cca8aa3ac44&amp;type=3#27&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-right: 10px;" />
+                                <ui:Label text="Endurance" display-tooltip-when-elided="true" name="EnduranceText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211272006598656)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:Label text="Governs max stamina, physical defense and poise" display-tooltip-when-elided="true" name="EnduranceDescriptionText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: italic; font-size: 11px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: middle-left;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211686441582592)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:Button text="-" display-tooltip-when-elided="true" name="DecreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 10px; margin-right: 10px;" />
+                                <ui:Button text="+" display-tooltip-when-elided="true" name="IncreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Strength" style="flex-direction: row; justify-content: space-between; flex-grow: 0; margin-bottom: 3px; -unity-text-align: middle-right; align-items: center; margin-top: 3px;">
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 40px; height: 40px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/18.png?fileID=2800000&amp;guid=139fe3bd023b11940be341169eee9754&amp;type=3#18&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-right: 10px;" />
+                                <ui:Label text="Strength" display-tooltip-when-elided="true" name="StrengthText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211376092446720)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:Label text="Enhances physical attack, poise and posture. Heavy weapons deal more damage" display-tooltip-when-elided="true" name="StrengthExplanationText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: italic; font-size: 11px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: middle-left;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211993829539840)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:Button text="-" display-tooltip-when-elided="true" name="DecreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 10px; margin-right: 10px;" />
+                                <ui:Button text="+" display-tooltip-when-elided="true" name="IncreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Dexterity" style="flex-direction: row; justify-content: space-between; flex-grow: 0; margin-bottom: 3px; -unity-text-align: middle-right; align-items: center; margin-top: 3px;">
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 40px; height: 40px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/28.png?fileID=2800000&amp;guid=8da4ce4be011e2843aab1f5215bf1fd4&amp;type=3#28&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-right: 10px;" />
+                                <ui:Label text="Dexterity" display-tooltip-when-elided="true" name="DexterityText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211438138785792)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:Label text="Enhances physical attack. Light weapons and bows deal more damage" display-tooltip-when-elided="true" name="DexterityExplanationText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: italic; font-size: 11px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: middle-left;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1212216400281600)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:Button text="-" display-tooltip-when-elided="true" name="DecreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 10px; margin-right: 10px;" />
+                                <ui:Button text="+" display-tooltip-when-elided="true" name="IncreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="Intelligence" style="flex-direction: row; justify-content: space-between; flex-grow: 0; margin-bottom: 3px; -unity-text-align: middle-right; align-items: center; margin-top: 3px;">
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; width: 40px; height: 40px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/43.png?fileID=2800000&amp;guid=ba93b36069772bf44aea4effc1ae8008&amp;type=3#43&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-right: 10px;" />
+                                <ui:Label text="Intelligence" display-tooltip-when-elided="true" name="IntelligenceText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211493470044160)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:Label text="Governs max mana and spells power" display-tooltip-when-elided="true" name="IntelligenceExplanationText" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: italic; font-size: 11px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-text-align: middle-left;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1212317264904192)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:VisualElement>
+                            <ui:VisualElement style="flex-direction: row;">
+                                <ui:Button text="-" display-tooltip-when-elided="true" name="DecreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="Value" style="color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 16px; margin-left: 10px; margin-right: 10px;" />
+                                <ui:Button text="+" display-tooltip-when-elided="true" name="IncreaseBtn" class="save-game-button craft-button" style="font-size: 14px; -unity-font-style: bold; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 25px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Confirm" style="flex-direction: column; justify-content: center; flex-grow: 0; margin-bottom: 0;">
+                        <ui:Button text="Confirm" display-tooltip-when-elided="true" name="ConfirmButton" class="primary-button">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211086517698560)" />
+                            </Bindings>
+                        </ui:Button>
+                        <ui:Button text="Back to Bonfire" display-tooltip-when-elided="true" name="ButtonExit" class="primary-button">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1211147221860352)" />
+                            </Bindings>
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="CloseIndicator" src="project://database/Assets/UI%20Components/CloseIndicator.uxml?fileID=9197481963319205126&amp;guid=0c4ccebd48dd9834cb198cc1e88bc206&amp;type=3#CloseIndicator" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentMenu.uss?fileID=7433441132597879392&amp;guid=8130d4f12839ca94fa1bef036e27ad88&amp;type=3#EquipmentMenu" />
+    <Style src="project://database/Assets/UI%20Components/Styles/MainStyle.uss?fileID=7433441132597879392&amp;guid=6e69b83449d639a46a49a607ab548cd2&amp;type=3#MainStyle" />
+    <ui:VisualElement style="flex-grow: 1; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_Asset%20Store/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Base_Normals.png?fileID=2800000&amp;guid=ae6da1f30745f024683bad2d094f8220&amp;type=3#PFK_Texture_Ground_Base_Normals&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.63); background-color: rgb(36, 36, 36); -unity-background-scale-mode: stretch-to-fill; width: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; flex-shrink: 1;">
+            <ui:VisualElement name="Panel" style="flex-grow: 1; align-items: center; justify-content: flex-start; flex-direction: column; flex-shrink: 0; flex-wrap: nowrap; width: auto; border-left-width: 0; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); height: 100%; padding-top: 25px; padding-right: 25px; padding-bottom: 25px; padding-left: 25px;">
+                <ui:Instance template="CloseIndicator" style="flex-shrink: 0; align-items: center; align-self: center;" />
+                <ui:Label text="Credits" display-tooltip-when-elided="true" name="CreditsTitle" class="label-text" style="font-size: 30px; -unity-font-style: bold; margin-bottom: 15px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(23898324644790272)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement style="flex-grow: 0; flex-direction: row; margin-top: 0; min-width: 250px; justify-content: space-around; align-self: center; align-items: center; margin-bottom: 15px;">
+                    <ui:VisualElement template="Previous_KeyboardHint">
+                        <ui:VisualElement name="ShowNextHint" style="flex-grow: 0; flex-direction: row; justify-content: center; align-self: center; align-items: center;">
+                            <ui:Button style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgba(188, 188, 188, 0); flex-direction: row; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
+                                <ui:VisualElement name="VisualElement" style="width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Z_Key_Dark.png?fileID=2800000&amp;guid=395a46d63d22ff749968c12c4a8c7790&amp;type=3#Z_Key_Dark&quot;); margin-right: 0;" />
+                                <ui:Label tabindex="-1" text="Switch" display-tooltip-when-elided="true" class="text" style="margin-top: 0; margin-right: 10px; margin-bottom: 0; margin-left: 0; -unity-font-style: normal; font-size: 11px;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(24211012868505600)" />
+                                    </Bindings>
+                                </ui:Label>
+                            </ui:Button>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Label text="v1.4.1" display-tooltip-when-elided="true" name="Version" class="label-text" style="font-size: 24px; -unity-font-style: normal; margin-bottom: 0; margin-right: 25px; margin-left: 25px;" />
+                    <ui:VisualElement template="Next_KeyboardHint">
+                        <ui:VisualElement name="ShowPreviousHint" style="flex-grow: 0; flex-direction: row; justify-content: center; align-self: center; align-items: center;">
+                            <ui:Button text="&#10;" style="flex-direction: row; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgba(188, 188, 188, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
+                                <ui:Label tabindex="-1" text="Switch" display-tooltip-when-elided="true" class="text" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; -unity-font-style: normal; font-size: 11px;">
+                                    <Bindings>
+                                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(24211438561001472)" />
+                                    </Bindings>
+                                </ui:Label>
+                                <ui:VisualElement style="width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/X_Key_Dark.png?fileID=2800000&amp;guid=d9a04102eb5600d46b83a803af077441&amp;type=3#X_Key_Dark&quot;); margin-right: 0; margin-left: 0;" />
+                            </ui:Button>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label text="22/03/2024" name="Date" enable-rich-text="true" class="label-text" style="-unity-font-style: normal; font-size: 12px; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;" />
+                <ui:VisualElement name="Thumbnail" style="flex-grow: 0; height: 150px; width: 270px; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; background-image: resource(&apos;Items/Cooking/3&apos;); -unity-background-scale-mode: scale-and-crop; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                <ui:Label text="Expansion" name="ExpansionLabel" class="label-text" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 0; margin-top: 0; color: rgb(133, 113, 219); margin-right: 0; margin-left: 0;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(24290805416853504)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="Big Update" name="BigUpdateLabel" class="label-text" style="-unity-font-style: bold; font-size: 14px; margin-bottom: 0; margin-top: 0; color: rgb(219, 192, 113); margin-right: 0; margin-left: 0;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(24290718104027136)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="Label" name="SmallDescription" class="label-text" style="-unity-font-style: italic; font-size: 20px; margin-bottom: 0; margin-top: 0;" />
+                <ui:ScrollView focusable="true" style="width: 90%; min-height: 100px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; max-height: 75%; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-top: 10px; font-size: 12px;">
+                    <ui:Label text="Label" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-text-align: upper-center;" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="top: 5px; right: 5px; position: absolute; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-color: rgb(0, 0, 0);">
+            <ui:Button text="X" display-tooltip-when-elided="true" name="CloseBtn" class="closeButton" style="border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); cursor: url(&quot;project://database/Assets/Graphics/Sprites/Cursor/Cursor.png?fileID=2800000&amp;guid=7d3d2124b9a178749a9d359c24c90004&amp;type=3#Cursor&quot;); transition-duration: 0.25s;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

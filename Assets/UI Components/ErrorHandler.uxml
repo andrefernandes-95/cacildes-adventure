@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="ErrorEntryUI" src="project://database/Assets/UI%20Components/ErrorEntryUI.uxml?fileID=9197481963319205126&amp;guid=0789b82fd388b1b43ba2ef6f13f75416&amp;type=3#ErrorEntryUI" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentMenu.uss?fileID=7433441132597879392&amp;guid=8130d4f12839ca94fa1bef036e27ad88&amp;type=3#EquipmentMenu" />
+    <ui:VisualElement name="ErrorPanel" picking-mode="Ignore" style="height: auto; align-items: flex-start; padding-right: 0; flex-shrink: 0; flex-grow: 1; justify-content: flex-end; position: relative; bottom: 0; left: 0;">
+        <ui:VisualElement name="ErrorMessagesContainer" picking-mode="Ignore" style="flex-grow: 0; flex-shrink: 0; width: auto; height: auto; justify-content: flex-end; align-items: flex-start; max-width: 750px;">
+            <ui:Instance template="ErrorEntryUI" name="ErrorEntryUI" style="flex-shrink: 0; align-items: center; flex-grow: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

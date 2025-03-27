@@ -1,0 +1,89 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Panel" style="align-items: center; justify-content: center; flex-direction: column; flex-wrap: nowrap; width: auto; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); flex-shrink: 1; flex-grow: 0; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:Label text="Controls" display-tooltip-when-elided="true" name="ControlsTitle" style="font-size: 24px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); padding-bottom: 1%;" />
+        <ui:VisualElement name="Walk" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0; margin-left: 0; margin-right: 0;">
+            <ui:Label text="Walk" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="WASD Keys /" display-tooltip-when-elided="true" name="WASDKeys" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Left_Stick.png?fileID=2800000&amp;guid=e32126535f8e9914391f8fe366234805&amp;type=3#PS4_Left_Stick&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="LightAttack" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Light Attack" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Left Mouse Button /" display-tooltip-when-elided="true" name="LeftMouseButton" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_R1.png?fileID=2800000&amp;guid=a0692b382cdc74b409d68c74cebe31b7&amp;type=3#PS4_R1&apos;); width: 40px; height: 40px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="HeavyAttack" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Heavy Attack" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="G" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_R2.png?fileID=2800000&amp;guid=ed46ace1774a0924cac94e34e92425b6&amp;type=3#PS4_R2&apos;); width: 40px; height: 40px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BlockAndParry" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:Label text="Block/Parry" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Right Mouse Button /" display-tooltip-when-elided="true" name="RightMouseButton" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_L1.png?fileID=2800000&amp;guid=0421d2d06f8b18e4ea91e9c81b717865&amp;type=3#PS4_L1&apos;); width: 40px; height: 40px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Sprint" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0; margin-left: 0; margin-right: 0;">
+            <ui:Label text="Sprint" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Left Shift /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_L2.png?fileID=2800000&amp;guid=592e5ad619ea96b4f8526bb9ba301bc1&amp;type=3#PS4_L2&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Jump" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0; margin-left: 0; margin-right: 0;">
+            <ui:Label text="Jump" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="F /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_a.png?fileID=2800000&amp;guid=430803eafeca58b4bb4bc76834f6e6f9&amp;type=3#ps_a&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="DodgeRoll" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Dodge Roll" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Spacebar /" display-tooltip-when-elided="true" name="Spacebar" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_b.png?fileID=2800000&amp;guid=b76c6d8edf1762e4da96c773c11db607&amp;type=3#ps_b&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Interact" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Interact" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="E /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_x.png?fileID=2800000&amp;guid=fa88290be5361f443b31aadcca0b49d3&amp;type=3#ps_x&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="UseFavoriteItem" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Use Favorite Item" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="R /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_y.png?fileID=2800000&amp;guid=7eb285aa499735e4ca5d674971c7dd8d&amp;type=3#ps_y&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="SwitchFavoriteItem" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0;">
+            <ui:Label text="Switch Favorite Item" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Scrollwheel /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Dpad_Up_and_Down.png?fileID=2800000&amp;guid=0edc90c8e6cbca848b4a4bee4137361d&amp;type=3#PS4_Dpad_Up_and_Down&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="OpenMenu" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 3px; margin-top: 3px;">
+            <ui:Label text="Open Menu" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Esc /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/options.png?fileID=2800000&amp;guid=65a1960f29b6f5b43b703b1e2d2bba61&amp;type=3#options&apos;); width: 25px; height: 25px; flex-grow: 1; background-color: rgb(120, 120, 120);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ToggleWalkAndRun" style="flex-direction: row; justify-content: space-between; width: 50%; margin-bottom: 0; margin-top: 0; margin-left: 0; margin-right: 0;">
+            <ui:Label text="Toggle Walk/Run" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Caps Lock /" display-tooltip-when-elided="true" style="font-size: 14px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;); -unity-text-align: middle-left;" />
+                <ui:IMGUIContainer style="background-image: url(&apos;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Left_Stick_Click.png?fileID=2800000&amp;guid=50373f59bf6c41d439ec100f35a3a28d&amp;type=3#PS4_Left_Stick_Click&apos;); width: 30px; height: 30px; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

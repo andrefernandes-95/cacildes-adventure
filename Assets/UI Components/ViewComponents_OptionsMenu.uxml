@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="OverrideButtonInput" src="project://database/Assets/UI%20Components/Components/OverrideButtonInput.uxml?fileID=9197481963319205126&amp;guid=3bb40b429b847e8468aab29d8b6b38b8&amp;type=3#OverrideButtonInput" />
+    <Style src="project://database/Assets/UI%20Components/Styles/ViewSettings.uss?fileID=7433441132597879392&amp;guid=33cb7d9fbd32b4f209747b67c0b2ad18&amp;type=3#ViewSettings" />
+    <Style src="project://database/Assets/UI%20Components/Styles/MainStyle.uss?fileID=7433441132597879392&amp;guid=6e69b83449d639a46a49a607ab548cd2&amp;type=3#MainStyle" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1">
+        <ui:VisualElement name="OptionsMenu" style="flex-grow: 1; position: relative; width: auto; height: auto; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; flex-direction: column; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; align-items: flex-start; align-self: auto; display: flex; color: rgba(27, 27, 27, 0.78); right: auto; margin-top: 1px; background-color: rgba(0, 0, 0, 0); flex-shrink: 0;">
+            <ui:Button text="Reset to default settings" display-tooltip-when-elided="true" name="ResetSettings" enable-rich-text="true" class="craft-button">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218623526797312)" />
+                </Bindings>
+            </ui:Button>
+            <ui:RadioButtonGroup label="Keybindings" value="-1" choices="English,Português" name="GameLanguage" style="-unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); width: 100%; margin-bottom: 8px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(5829983065735168)" />
+                </Bindings>
+            </ui:RadioButtonGroup>
+            <ui:RadioButtonGroup label="Graphics Quality" value="-1" choices="Low,Medium,High,Ultra" name="GraphicsQuality" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 8px; flex-direction: row; flex-wrap: nowrap; flex-grow: 0; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); flex-shrink: 1;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218689486422016)" />
+                </Bindings>
+            </ui:RadioButtonGroup>
+            <ui:Slider label="Camera Sensitivity" value="1" high-value="100" low-value="1" name="CameraSensitivity" style="flex-grow: 0; align-items: center; flex-shrink: 1; width: 100%; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); margin-bottom: 8px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218757434146816)" />
+                </Bindings>
+            </ui:Slider>
+            <ui:Slider label="Camera Sensitivity" value="1" high-value="100" low-value="1" name="CameraDistanceToPlayer" style="flex-grow: 0; align-items: center; flex-shrink: 1; width: 100%; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); margin-bottom: 8px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(32292405712388096)" />
+                </Bindings>
+            </ui:Slider>
+            <ui:Slider label="Music Volume" value="1" high-value="100" low-value="1" name="MusicVolume" style="flex-grow: 0; align-items: center; flex-shrink: 1; width: 100%; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); margin-bottom: 8px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218821867044864)" />
+                </Bindings>
+            </ui:Slider>
+            <ui:Toggle label="Display Player HUD" name="DisplayPlayerHUD" style="-unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(15913559429873664)" />
+                </Bindings>
+            </ui:Toggle>
+            <ui:VisualElement style="flex-grow: 0; max-width: none; flex-shrink: 1; width: 100%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
+                <ui:RadioButtonGroup label="Keybindings" value="-1" choices="Use Default, Customize" name="UseDefaultOrCustomize" style="-unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); width: 100%; margin-bottom: 0;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="label" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218910106812416)" />
+                    </Bindings>
+                </ui:RadioButtonGroup>
+                <ui:VisualElement name="KeyBindingsList" style="flex-grow: 1; align-items: center; flex-shrink: 0; width: auto; justify-content: flex-start; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; border-right-color: rgb(255, 255, 255); border-left-width: 0; border-left-color: rgb(255, 255, 255); margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;">
+                    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="KeyBindingScrolls" style="width: 100%;">
+                        <ui:Instance template="OverrideButtonInput" name="OverrideButtonInput" />
+                    </ui:ScrollView>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+    <ui:VisualElement name="PressAnyKeyModal" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.39); position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 100%; height: 100%; flex-shrink: 0; display: none;">
+        <ui:Label tabindex="-1" text="Press any key..." display-tooltip-when-elided="true" style="position: absolute; top: 50%; left: 50%; translate: -50% -50%; -unity-font-definition: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; font-size: 24px; color: rgb(255, 255, 255); text-shadow: 1px 1px 3px rgb(0, 0, 0); -unity-text-outline-color: rgba(0, 0, 0, 0.53); -unity-text-outline-width: 1px;">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1384567226105856)" />
+            </Bindings>
+        </ui:Label>
+    </ui:VisualElement>
+</ui:UXML>

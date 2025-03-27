@@ -1,0 +1,1463 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Changelogs_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 290939a432559c541b77dc4ec925105b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 75005558784
+    m_Localized: Improved lock on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 320762316455936
+    m_Localized: Enhanced lock-on targeting so that occlusion now focuses on the
+      player rather than the enemy. This resolves the issue where the camera would
+      zoom in on an enemy if they moved behind a rock or wall.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321349938446336
+    m_Localized: "Fixed the issue of lost gold appearing in inaccessible locations.
+      Previously, the coins would respawn exactly at the player\u2019s death position,
+      which in some cases resulted in them spawning underwater. Now, the coins are
+      placed at the last grounded position before the player's death, ensuring they
+      respawn in an accessible location."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325322976133120
+    m_Localized: Fixed Credits screen not appearing on Title Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342932581122048
+    m_Localized: 'Added support to return to title screen by pressing ESC on the
+      following menus: Credits, Options, Load Game and Changelog'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 351264456966144
+    m_Localized: 'Added new consumable type: collectable cards. Find them by defeating
+      enemies to unlock special abilities in combat. Card usage replenishes at bonfires.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 351936652902400
+    m_Localized: Fixed a bug where Crystal Knight Celes collision would remain active
+      after the first battle.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352154995785728
+    m_Localized: Added new attack to the Slepbone Beast boss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352460274008064
+    m_Localized: Fixed a bug where it was possible to cause damage to Midnight Omen
+      boss while she is teleporting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352724544520192
+    m_Localized: "Fixed a teleport issue in Arun Garden when falling near the bee
+      boss fight, the player would respawn inside a wall and be unable to move\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352988919889920
+    m_Localized: Enemies max posture now increases a bit every time their posture
+      is broken. This adds more challenge to combat where enemies become tougher
+      as you deal more damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 353264275947520
+    m_Localized: "Made it impossible to backstab continuously. There is now a cooldown
+      before you can backstab an enemy again. The same applies to enemy poise\u2014you
+      won't be able to stagger them immediately after they've been staggered.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 353537471938560
+    m_Localized: Added a visual indicator to the HUD if you don't have enough stamina
+      or mana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 353652026769408
+    m_Localized: Increased the sensitivity threshold for lock-on target switching,
+      reducing the chances of unintentional target changes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354022299926528
+    m_Localized: Reduced the critical damage dealt by the player to enemies overall,
+      making the combat fairer for both sides
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354408276557824
+    m_Localized: Added new NPC, Tarun, in Mountainpass, which allows the player to
+      travel to the Veilglade Peninsula to start the Veilglade expansion (work in
+      progress as of 1.4.0 version)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358536289583104
+    m_Localized: An update with bugfixes for mage builds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358790862864384
+    m_Localized: 'Increased posture damage recovery rate - you will now be able to
+      withstand more blows and your posture will decrease faster.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359157310816256
+    m_Localized: Putting points in Dexterity will now increase jump height and movement
+      speed at higher levels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359321865945088
+    m_Localized: Max posture, which scales with Strength, now scales with Vitality
+      too
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359582952980480
+    m_Localized: Removed Morning Star requirements to allow mage-build players to
+      complete Roberto's quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359993520816128
+    m_Localized: Fixed issue where magic wasn't damaging certain enemies (dragons,
+      bears, skull crabs, wolves, etc.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360172135251968
+    m_Localized: Lightning Strike spell damage now scales with Positive Reputation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360333829865472
+    m_Localized: Damage of dark spells now scales with Negative Reputation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360626160271360
+    m_Localized: Wildfire Bomb was buffed, it now deals more damage and lasts longer
+      when thrown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360793861128192
+    m_Localized: 'Made the following weapons hex weapons that scale with negative
+      reputation: Molok Blade, Drake Sword.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 361026095546368
+    m_Localized: 'Made the following weapons Faith weapons that scale with positive
+      reputation: Mace of Gilded Grip, Golden Age Saber and Twinblades'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 361561796247552
+    m_Localized: Resolved Flower Lady Lockon issue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 361655044014080
+    m_Localized: Fixed Sandworm Null Pointer errors related to a missing combat audio
+      source
+    m_Metadata:
+      m_Items: []
+  - m_Id: 361781946875904
+    m_Localized: Added option to hide HUD for development purposes (taking screenshots).
+      Not recommended for gameplay!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381702101663744
+    m_Localized: 'Added 2 new magic staves: Xaman Staff, which imbues every spell
+      with poison, and Magic Wand, which regenerates mana over time'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382000908075008
+    m_Localized: Added a new spell that allows the creation of portals that teleport
+      you and enemies around
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382200892489728
+    m_Localized: Made Black Knights not attack the player when wearing Black Knight
+      armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382402856615936
+    m_Localized: "Fixed IK issues with some weapons when sitting on bonfires; the
+      player\u2019s arm would be stretched."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382597203886080
+    m_Localized: Fixed automatic parries after taking damage while holding the block
+      input.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382723339190272
+    m_Localized: Fixed push force causing enemies to be pushed out of the map when
+      reputation was high. It was reduced to more appropriate values
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388654231846912
+    m_Localized: Improved performance and frame rate by adjusting lower quality settings
+      to disable anti-aliasing and shadows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388781298286592
+    m_Localized: Enhanced enemy placements and overall design in Snowy Mountains
+      and Snowy Ruins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388900290691072
+    m_Localized: Added a new boss fight in Snowy Ruins for a more challenging end-game
+      experience.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388969979052032
+    m_Localized: Added a secret bonus map in Snowy Ruins. Can you find it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 389126242041856
+    m_Localized: Improved hitbox for dragon Frostynax, making it easier to hit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 393436212363264
+    m_Localized: Added new lock-on animations to improve movement fluidity.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 393629251010560
+    m_Localized: Enabled enemies to exit long combos if the player is out of reach.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 393792795312128
+    m_Localized: Fixed Hugo disappearing when joining the party in Cecily Fields
+      due to missing navmesh data.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 393870507376640
+    m_Localized: Fixed enemies standing still in Maerimond Cavern due to missing
+      navmesh data.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 394480833134592
+    m_Localized: The Sewers Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 394588911960064
+    m_Localized: 'Added new map to Cecily Town: the sewers, along with a side-quest
+      which can be done by talking to Pedro, a new NPC in the King''s Castle''s tavern.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 394872149114880
+    m_Localized: Weapons now play visual effects when hitting certain materials (wood,
+      grass, water, etc)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 395089745412096
+    m_Localized: Pitch when swingig or hitting with weapons is now randomized so
+      that it's not always the same dull sound effect in combat!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 395147589058560
+    m_Localized: 'Added new weapons: the Sickles, which can be dual wielded; and
+      a new curved sword'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 395356100493312
+    m_Localized: 'Added new armor: the Thief Armor set; most thieves won''t attack
+      you if you wear it.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 395950114603008
+    m_Localized: Player Customization and Localization to Portuguese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396114028003328
+    m_Localized: 'Added full character customization: change Cacildes name, gender,
+      appearance and avatar portrait to your liking!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396302838792192
+    m_Localized: Added localization, game now supports Portuguese (Portugal) besides
+      english.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396468983562240
+    m_Localized: Game economy fully rebalanced, with better and more realistic values
+      for all items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396642678079488
+    m_Localized: Companions now teleport behind the player if their distance to you
+      is too long, and they won't collide with you anymore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 396986174799872
+    m_Localized: 'Collectable Cards: A new consumable'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 398929639112704
+    m_Localized: The Sunkenland Expansion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399192483561472
+    m_Localized: Added a ton of new content to the base game, with new maps, bossfights,
+      weapons, armors, etc. Find the path to Sunkenland in Snailcliff.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400454847430656
+    m_Localized: The Crushing Weapons Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400558690009088
+    m_Localized: 'New armor set: The Gilded Set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400625098424320
+    m_Localized: 'New pierce weapon: Halberd'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400904338407424
+    m_Localized: Expanded West Bridge to include an island with a statue where you
+      can pray to receive a special gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 401360007593984
+    m_Localized: Fixed a bug where the Vagabond sword was not equippable!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 403925285863424
+    m_Localized: New Game+ and tons of new content!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 404125068951552
+    m_Localized: 'Added new armor: The bronze set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 404170262577152
+    m_Localized: 'Added new headgear: The Markmans Cowl, which increases damage for
+      arrows'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 411072929333248
+    m_Localized: "Added new helmet: The Old Hero helmet, which unlocks a special
+      combat mechanic where every blow you sustain increases your next attack\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 411237195055104
+    m_Localized: 'Added new sword: Vagabond Sword'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 411302068355072
+    m_Localized: 'Added new rapier: Golden Age Sabre'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 412408966152192
+    m_Localized: 'Added new greatsword: Ultragreatsword'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 412869702057984
+    m_Localized: "Added a new range weapon, the crossbow\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 412958357061632
+    m_Localized: 'Added new spells: Magic Barrier, Magic Orb, Flux Orb, Healing Orb,
+      Windstorm and Thunder Light My Way'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413215346262016
+    m_Localized: Added more dialogue to mom if player returns home after mid and
+      end game content
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413286850756608
+    m_Localized: Added more content to Crystal Tower map
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413427712262144
+    m_Localized: Added cloth physics to armors with capes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413599779389440
+    m_Localized: Added requirements to equip weapons and spells, you now need appropriate
+      strength / dexterity / intelligence levels to equip these
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413991128924160
+    m_Localized: Added guard counters - perform an attack immediately after blocking
+      an attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414183819444224
+    m_Localized: "Added indicators to damage to show where critical damage comes
+      from (backstabs, guard counters, posture breaks, enraged mode, etc)\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414357677539328
+    m_Localized: Added Fear status to enemies and flee state.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414494810308608
+    m_Localized: "Added more stamina requirements to bow shooting so we can\u2019t
+      spam this mechanic"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414598833242112
+    m_Localized: Simplified upgrade material requirements, now every weapons has
+      5 levels of upgrades instead of 8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414685034577920
+    m_Localized: Fixed bug where we could equip same accessory multiple times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 414800717676544
+    m_Localized: "Fixed bug where enemies wouldn\u2019t attack player if backstabbed
+      first"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 415852594593792
+    m_Localized: More player choice, reputation matters and new weapons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416091334377472
+    m_Localized: 'Player Choices: Added new dialogue options, including darker choices.
+      New content for players who prefer the path of darkness. Secret shop now available
+      in Cecily Town for players with negative reputation.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416248650137600
+    m_Localized: 'UI and Quality of Life: Improved UI with visible discounts in shops
+      and optimized menus for gamepads, ideal for Steam Deck (runs well on Medium
+      and High settings; Ultra may vary).
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416343529488384
+    m_Localized: 'NPC Reactions: NPCs now react to player progress, with shops offering
+      discounts upon quest completion.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416680449540096
+    m_Localized: Added Hellblade Shasapatha token to the boss fight, granting a new
+      weapon obtainable by trading the token with Altaire in Snailcliff.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416726452666368
+    m_Localized: Frostynax Dragon now gives double the coins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416807385956352
+    m_Localized: Drogo now has increased poise.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416889430736896
+    m_Localized: Revised Arun's dialogue after slaying the dragon and added dialogue
+      choices.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416973883047936
+    m_Localized: Fixed Arun's temple bonfire not appearing on the travel menu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417057739767808
+    m_Localized: Poison now deals more damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417124810883072
+    m_Localized: Balbino boss fight now has double the health.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417209909116928
+    m_Localized: Added a conversation with the Soldier in West Bridge with rude dialogue
+      options.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417281954676736
+    m_Localized: "Fixed orc shaman in bridge not spotting the player in Drogo\u2019s
+      Hideaway."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417349029986304
+    m_Localized: Allowed players to sell items to Thorgeir and other Cecily Town
+      merchants after completing the "Orcs at our Door" quest. Discounts available
+      in these shops.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417429506097152
+    m_Localized: Added discounts to the church shop after completing Roberto's quest.
+      Players can also sell items to the priest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417507704700928
+    m_Localized: Fixed bug where the Obsidian Samurai could be killed twice, awarding
+      double loot and coins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417584741482496
+    m_Localized: Added damage type absorptions to shields (PIERCE, BLUNT, and SLASH).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417640953544704
+    m_Localized: Added posture damage absorption to shields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417702857277440
+    m_Localized: Fixed Tree Trunks not reviving properly when resting at a bonfire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417782079291392
+    m_Localized: Added road signs to Cecily Town.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417848315740160
+    m_Localized: Improved scrolling with a gamepad on the Blacksmith and Alchemy
+      menus.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 417922844327936
+    m_Localized: Made the bonfire menu larger so it can be scrollable on a gamepad.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418012736651264
+    m_Localized: Added the Ill Omen helmet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418120081473536
+    m_Localized: If Thelma is told to toughen up and is after the Elven Stone quest,
+      she will appear dead in the Druid Forest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418219566170112
+    m_Localized: Fixed bug where players were spawning in the middle of bonfires
+      when traveling.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418308955176960
+    m_Localized: Changed Foil weapon location to be in the pirate house.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418393386516480
+    m_Localized: Weapon upgrades should focus on the first item always. Fixed menu
+      issues on the Steam Deck.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418459312586752
+    m_Localized: Normalized scene music volumes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418528866729984
+    m_Localized: Fixed bug where mage gloves were clipping.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418692515889152
+    m_Localized: Fixed wall glitch where players could fall off near the crossbow
+      soldiers in Maerimond Cavern.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418759956103168
+    m_Localized: Lost coins were not working properly; now fixed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418885822971904
+    m_Localized: Reduced player physical defense for balancing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418948506845184
+    m_Localized: Fixed bug where Alcino would appear in the Hellblade Shasapatha
+      boss fight cutscene even though he wasn't in the party.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419028362199040
+    m_Localized: Removed push force when backstabbing. Backstabbing looks cooler
+      now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419117784760320
+    m_Localized: 'Critical fix: Climbing a ladder and switching weapon stances broke
+      the game. Fixed!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419211166744576
+    m_Localized: 'Balancing: Hellblade Shasapatha and some enemies were too invulnerable
+      after certain animations. Fixed damage issues. Combat should feel better now.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419417895600128
+    m_Localized: Improved sharks overall, made them less buggy, and added valuable
+      loot for killing them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419488565428224
+    m_Localized: Added Dung Ale, a potion that makes you invincible for X seconds
+      but causes you to fart with each hit. Future updates will make the fart poisonous
+      to enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419728609640448
+    m_Localized: ' Added a vendor in Cecily Town selling odd items, appearing only
+      at night.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419804849504256
+    m_Localized: Fixed Bastard Sword heavy attacks dealing too much posture damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 419923057573888
+    m_Localized: Changed player appearance based on reputation. Eyebrows for negative
+      reputation and horns for very low reputation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 420002615132160
+    m_Localized: 'New weapon: Zweihander'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421589509079040
+    m_Localized: Adding Twinblades, UI Improvements and new status effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421873614454784
+    m_Localized: Improved Companions by adding more dialogues in maps.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422051956260864
+    m_Localized: Added new book, A Tale Of Two Brothers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422118264012800
+    m_Localized: Added more details to Arun Village.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422186211737600
+    m_Localized: Added recipe descriptions to consumables if the player has the recipe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422260429946880
+    m_Localized: Made bee boss fight more challenging by preventing bees from attacking
+      each other, increasing their health, and adding lightning traps around the
+      arena.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422436792041472
+    m_Localized: Companions now give items when interacted with on different maps.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422511622619136
+    m_Localized: Shops in Arun Village now close during nighttime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422830154842112
+    m_Localized: Made shop doors in Arun Village not collide with player. This is
+      to avoid that players get locked inside shops if the store closes because of
+      night time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423130064355328
+    m_Localized: Increased enemy health based on the number of companions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423194119766016
+    m_Localized: After helping in Arun Village, Cacildes can now sell items.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423254958145536
+    m_Localized: Added Slowness negative effect to enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423308439715840
+    m_Localized: Added a filter so character shops only buy certain items from the
+      player.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423362495905792
+    m_Localized: Improved level progression for easier leveling up in the early levels.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423443127205888
+    m_Localized: Added tooltip on top of alchemy replenishables if the player has
+      the recipe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423563935744000
+    m_Localized: Confusion status now makes the player hurt himself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423619728375808
+    m_Localized: Added Confusion negative effect to enemies, causing them to attack
+      themselves.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423698681954304
+    m_Localized: Changed Luzern Armor location; must now kill Luzern to obtain the
+      Golden Warrior Armor Set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423760485023744
+    m_Localized: Added Paralysis negative effect to enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423804944646144
+    m_Localized: Added Twinblades as a boss weapon after defeating the Hive Initiative.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 423888356769792
+    m_Localized: Fixed issue where saving while on the menu saved the screenshot
+      with the UI.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425769321758720
+    m_Localized: Adding key rebindings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425850628341760
+    m_Localized: Added key rebindings for JUMP, DODGE, SPRINT, HEAVY ATTACK, and
+      TOGGLE 1/2 HAND MODE in the settings menu. Currently only available for keyboard.
+      Gamepad rebinding support may be added in the future based on player demand.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426086813794304
+    m_Localized: Adding multiple saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426203084095488
+    m_Localized: Added multiple save files
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426304586252288
+    m_Localized: Added a volume slider for music and ambience in the game settings
+      menu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426373016322048
+    m_Localized: Fixed Balbino in Snowy Mountains; his companion system was breaking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426469841829888
+    m_Localized: Lara now drops daggers if killed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426895588851712
+    m_Localized: The Leaving Early Access Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427277060800512
+    m_Localized: 'Added three new maps: Maerimond Cavern, Druid Forest, and Hell.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427381666742272
+    m_Localized: Added a new mace weapon, the Morning Star.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427428563255296
+    m_Localized: Added Foil, a new rapier-type weapon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427462079938560
+    m_Localized: Added Molok Blade, Celes Sword, and Warchief Axe (previously Goblin
+      Axe) as boss weapons that can be acquired from Altaire in Snailcliff Tower.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427535329263616
+    m_Localized: Added a boss spell, the Moonbeam. Trade the Midnight Omen token
+      with Altaire for this devastating spell; its damage doubles at nighttime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427619286646784
+    m_Localized: 'Added 3 new pyromancer spells: Spitfire, Slave to Fire, and Burning
+      Man.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427705018220544
+    m_Localized: Added 1 new Magic Spell - the Magic Slash.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427755249205248
+    m_Localized: Added 1 new Dark Spell - Raise Skeletons. Raise your own army of
+      skeletons to fight for you!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427813533253632
+    m_Localized: Added new side-quest in Cecily Town regarding a skeleton that won't
+      stay dead.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427879463518208
+    m_Localized: Added new achievements to reflect the new content.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427935872712704
+    m_Localized: Added more recipes to the game - you can now craft weapon resins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427992978161664
+    m_Localized: 'Added new status effects: Fear and Confusion.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428052742799360
+    m_Localized: Added new consumable, the Duskcap, which restores some mana for
+      magic users.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428127598542848
+    m_Localized: Illusionary Walls now activate on touch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428413725573120
+    m_Localized: The Arena Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428501868871680
+    m_Localized: Added 3 arenas with enemy waves where you can test your battle skills.
+      Find them in Slepbone Beach, Cecily Town and Arun Village
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428887476404224
+    m_Localized: Added new spell, Homing Dark Orb.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428943986262016
+    m_Localized: Added 8 new shields.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 428989779673088
+    m_Localized: 'Added new arrow types: Fire Arrow, Poison Arrow, and Triple Arrows.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429041998757888
+    m_Localized: 'Added 2 new bows: Mystic Bow and Elven Bow.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429099137761280
+    m_Localized: Faith spells now scale with reputation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429134202142720
+    m_Localized: Dark spells now scale with negative reputation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429202661572608
+    m_Localized: Magic staves now scale with intelligence.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429255534968832
+    m_Localized: Bows now scale with dexterity.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429306873249792
+    m_Localized: Rebalanced player stats; end-game is more challenging now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429359792783360
+    m_Localized: Improved tooltips to better explain how damage is calculated.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429741445087232
+    m_Localized: Added a one-hand sword, the rapier, with an elegant moveset.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429780364034048
+    m_Localized: 'Added two new long axes: the long iron axe and the goblin axe.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429849385500672
+    m_Localized: Added a new spell, the levitation spell, which allows you to float
+      in air for a short time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429900182716416
+    m_Localized: Added a new boss armor set, the Crystal Knight set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 429959142047744
+    m_Localized: Added an indicator in the UI to show if the player is in one-hand
+      mode or two-hand mode.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430031548317696
+    m_Localized: Added a captain's note in the orc cavern regarding jumping in heavy
+      armor to warn players that they won't be able to perform jumps when wearing
+      heavy equipment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430411669700608
+    m_Localized: 'Added 2 new weapons: a lance and a longsword, the Flamberge.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430476056461312
+    m_Localized: 'Added a new armor set: the golden warrior armor. Find it after
+      leaving your home to join the king''s army.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430554401865728
+    m_Localized: Fixed achievements not being awarded due to Steam Manager being
+      destroyed after leaving Cacildes' Home. Achievements should be working now!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430608822960128
+    m_Localized: Fixed null pointers reported by users (thank you!).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431007554469888
+    m_Localized: Added a ton of accessories that influence gameplay and player stats.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431057613488128
+    m_Localized: 'Added 3 new spells: Bed of Thorns, Blizzard, and Bubbles.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431104241565696
+    m_Localized: 'Introduced a new armor set: Nomad Set.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431165054779392
+    m_Localized: Implemented frostbite status effect for both player and enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431234483093504
+    m_Localized: Included discount percentage attribute to ArmorBase class, enabling
+      certain armors to offer discounts in shops.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431343832793088
+    m_Localized: Filled Arun Garden, Arun Temple, Snowy Maps, and Crystal Tower with
+      additional content to enrich exploration.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431427156836352
+    m_Localized: Fixed critical bug where we could not progress after defeating the
+      Dragon in Snowy Mountains.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431491015114752
+    m_Localized: Improved resilience of save game functionality by handling the loading
+      of nonexistent items gracefully.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431698440224768
+    m_Localized: Fixing black screen with additional error information and report
+      tool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431862022275072
+    m_Localized: Fixed black screen issue with additional error information to help
+      diagnose and resolve the problem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 432025667239936
+    m_Localized: Added Changelog feature to title screen. It is now possible to see
+      what changes have been made to the game over time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 510561329479680
+    m_Localized: Fixed poise displaying wrong values when hovering over equipment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 510735074328576
+    m_Localized: Changed Weight Indicator in UI to be green for lighter equipments,
+      and red for heavier ones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 543986677579776
+    m_Localized: Fixed Martin dialogue not triggering after opening his cell in Mountainpass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 696647557185536
+    m_Localized: Enemies no longer collide with player when they die. Previously,
+      they could block doorways and lock player inside certain areas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725259605901312
+    m_Localized: Adjusted status effect logic so that when a player is inflicted,
+      the applied amount equals the base resistance only, ignoring any resistance
+      bonuses. Previously, equipping a resistance ring would cause the status effect
+      bar to grow larger, making the negative effect last longer. Now, it applies
+      only to the base amount, ensuring higher resistance has no drawbacks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 746656520601600
+    m_Localized: Made status effect indicator of enemies larger, to better display
+      what status are being applied during battle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 750110169235456
+    m_Localized: Fixed poison and blood resin not applying damage to enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 751801480380416
+    m_Localized: Fixed Hugo not attacking the bear due to the stopping distance being
+      too low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 758127426142208
+    m_Localized: Made the negative status effects applied to the player more noticeable
+      by adding a new HUD indicator. The indicator flashes on the screen once the
+      bar is filled and the status effect activates.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 780492314902528
+    m_Localized: 'New Card: Windcutter'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 780574686838784
+    m_Localized: 'New Card: Anvil Smash'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 787405089931264
+    m_Localized: 'New Card: Wallclimber'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1403183204007936
+    m_Localized: Fixed teleport issues with Midnight Omen Boss by refactoring teleporting
+      code for enemies. This also fixes Molok fight when he teleports and sometimes
+      does not reappear.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1860997575737344
+    m_Localized: Fixed Guts not dealing damage in the Sunkenland boss fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1861208624726016
+    m_Localized: Removed fog wall from berserk boss fight because characters would
+      sometimes fall outside the fight bounds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1883212572655616
+    m_Localized: Fixed wrong shop discounts calculations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1884014930427904
+    m_Localized: Fixed menu issue where unequiping a weapon would cause the selected
+      slot to return to the wrong slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1886224217145344
+    m_Localized: Added card requirements tooltips when hovering and selecting cards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1886360997593088
+    m_Localized: Added card limits for balancing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2177025220411392
+    m_Localized: Fixed hitbox issues with some attacks when two handing old iron
+      axe, vagabond sword and other weapons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669095622148096
+    m_Localized: 'New weapon: Twinswords'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669161711796224
+    m_Localized: 'New weapon: Sea Sentinel Twinblades'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669250123530240
+    m_Localized: 'New weapon: Twinaxes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669333170749440
+    m_Localized: 'New card: Forgotten Lore'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669400413831168
+    m_Localized: 'New armor: Veilglade Set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2669457758355456
+    m_Localized: 'New armor: Centurion Set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2894208405733376
+    m_Localized: 'New spell: Veil of Ruin'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2952928452018176
+    m_Localized: 'New magic staff: Staff of Bounding Light'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2953058429304832
+    m_Localized: 'New armor: Sun Priest Set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4708718938554368
+    m_Localized: Debuffed some spells that were dealing too much damage, like Bubbles,
+      and increases mana cost for lightning spells
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4709034559930368
+    m_Localized: Debuffed old iron axe posture damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5047910134579200
+    m_Localized: Adjusted vitality formula. You should see higher health points by
+      raising Vitality early on, and diminish returns at very high Vitality levels
+      (>= 50)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5056679493107712
+    m_Localized: Added xbox icons for gamepad users
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5072915379650560
+    m_Localized: Added the ability to toggle visibility for control hints in player
+      hud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5405074850185216
+    m_Localized: Adjusted multiple weapon movesets for smoother combos based on player
+      feedback.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6146348427378688
+    m_Localized: Improved Quests UI to better display objectives
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6257005554434048
+    m_Localized: Fixed a bug where attacking while being inflicted with a status
+      effect would cause the player weapon hitbox to disable, making attacks not
+      connect with enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6260103828078592
+    m_Localized: Reworked Warchief Axe boss weapon, it's heavy attack now unleashes
+      Fury, allowing the next strike to be considerably more powerful. Improved this
+      weapon's move set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6260317188128768
+    m_Localized: 'New weapon: Partisan'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6260392618491904
+    m_Localized: 'Added new Veilglade quests: Ship of Fools and Forgotten Lore. Explore
+      the first act of the Veilglade expansion.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6496382067015680
+    m_Localized: Fixed bug where some enemies exiting out of ambush state would not
+      chase player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6671671078289408
+    m_Localized: Fixed bug where casting spells with Xaman Staff or other magic staves
+      could cause status effects applied to increase exponentially
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6671950674788352
+    m_Localized: 'New Spell: Healing'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6672009025945600
+    m_Localized: 'New Spell: Magic Triad'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6672065363836928
+    m_Localized: 'New Spell: Poison Sword'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6672137682026496
+    m_Localized: 'New Staff: Blood Oath Staff'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6672255751684096
+    m_Localized: 'New Spell: Magic Hammer'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10795969518895104
+    m_Localized: Fixed an issue where the incorrect body type clothing would sometimes
+      appear when unequipping and re-equipping different body armor parts.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10818037098610688
+    m_Localized: Fixed a bug where blocking an enemy attack would lower the damage
+      of his attack for the rest of the fight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941221252333568
+    m_Localized: Improved note in Maerimond Cavern to warn player about blunt weapons
+      doing better damage against stone knights.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941456770891776
+    m_Localized: 'New Weapon: Claymore'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941513750511616
+    m_Localized: 'New Weapon: Club'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941572001005568
+    m_Localized: 'New map: Oros Crypt, in Veilglade Peninsula'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941683003260928
+    m_Localized: 'New enemy type: Vampires'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11941740985319424
+    m_Localized: Added a new level, a Tutorial section, accessible from the title
+      screen, where players can learn about all the game mechanics and watch videos
+      with explanations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11956278153576448
+    m_Localized: Fixed blocking with shield not filtering damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12746270538858496
+    m_Localized: 'New Weapon: Battle Axe'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12748279866327040
+    m_Localized: Made finding magic staff and fire spell easy in Bear Cavern map
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13033093592907776
+    m_Localized: Fixed bug where arena powerups would still spawn even after ending
+      arena mini-game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13060306652495872
+    m_Localized: Improved odachi one hand attacks, reducing animation delays and
+      making the move set more fluid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15650737290608640
+    m_Localized: 'New Weapon: Impossible Sword'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15650809160007680
+    m_Localized: 'New Map: Impossible City'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15650890667917312
+    m_Localized: 'New Map: Vella Tower'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15650965695627264
+    m_Localized: 'New Armor: Silver Knight Set'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15651038793957376
+    m_Localized: 'New Armor: Elite Knight Armor'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15651133669113856
+    m_Localized: Cards are no longer displayed occupying the screen if a enemy is
+      nearby and in active battle with player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15658179483271168
+    m_Localized: Added crafting recipes for iron, steel, fire, poison and triple
+      arrows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15673784877842432
+    m_Localized: Improved Gorth boss fight in Obsidian Keep with new animations and
+      lowered his health from 8000 to 7000
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15704343800840192
+    m_Localized: 'Improved animation set for lance weapons: Lance and Partisan'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15955458375155712
+    m_Localized: Reduced build size substantially by compressing textures of the
+      project overall and also the videos from the tutorial section, many going from
+      130mb to 7mb by using mpeg compression
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15986590265245696
+    m_Localized: Adding steam cloud saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16258172325855232
+    m_Localized: Now, when stamina drops below 25%, regeneration is significantly
+      accelerated, and moderately increased when below 50%. This change makes combat
+      more fluid, allowing the player to recover quickly after running out of stamina,
+      reducing the wait time before the next attack.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16258821918687232
+    m_Localized: Some of the newer weapons can now feature more than 2 light attack
+      animations, allowing up to 4 combo sequences. For heavy attacks, certain weapons
+      now have 2 distinct heavy attacks instead of just one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16295066342391808
+    m_Localized: Fixed bug where Vella was not giving bullets to player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16295300082565120
+    m_Localized: The Veilglade Expansion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17379486558191616
+    m_Localized: Increase the damping on collision to reduce camera clipping when
+      the player collides with walls, preventing the camera from passing through
+      the environment as often.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17380370138660864
+    m_Localized: Lowered the damage from stone knights in Maerimond's cavern. Increased
+      the delay between firing shots for one of the archers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17386980797972480
+    m_Localized: Fixed wolves not attacking player when sleeping and getting shot
+      from a distance with an arrow or a spell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17390549685108736
+    m_Localized: Added null pointer to damage during combat, for some reason it's
+      not entirely reproducible so a few more logs were added to this so I can investigate
+      further.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17897961978462208
+    m_Localized: Fixed miscellaneous issues with settings menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17898098243010560
+    m_Localized: Removed unrestricted quest progress in Veilglades expansion. It
+      would cause quests to be out of order. Now the player needs to follow a specific
+      path in order to complete the expansion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18160537496846336
+    m_Localized: Fixed the null pointer error when clicking Continue, which appeared
+      enabled even though there were no save files. What happened was that Steam
+      Cloud created a file inside the save folder, and the game thought there were
+      game files to load.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18803789598162944
+    m_Localized: Fixed some screens being unplayable on resolutions such as 3440x1440
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18803968543948800
+    m_Localized: Fixed Elite Knight Armor set torso piece not appearing in female
+      bodies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18807735351902208
+    m_Localized: Added a new note at Cacildes house to explain about certain invencible
+      frames granted to the player when drinking potions or using the main menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18807954873384960
+    m_Localized: Added a new chest with some starting loot at Cacildes house
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18821686311649280
+    m_Localized: 'Added new spell: Golden Disc'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19929954144616448
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19930072319131648
+    m_Localized: Debuffed the base damage of several greatswords, they were dealing
+      too much damage and causing the game to be unbalanced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19930242112946176
+    m_Localized: Improved damage explanation tooltip for weapons to better explain
+      how damage is calculated alongside two hand and jump attack bonuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19962221705428992
+    m_Localized: Diminished shop discount bonus from quests and nomad gear attributes.
+      Some shops were giving you items for free for completing quests and showing
+      up in the right outfit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19963839293292544
+    m_Localized: Added discounts to elven shops after completing main quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20702470731595776
+    m_Localized: Adding better tooltips to explain holy damage and dark damage scaling
+      with reputation. Limiting reputation damage to a ceiling threshold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21068183937875968
+    m_Localized: 'Added new recipe: Fire bomb'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21068249666813952
+    m_Localized: Improved equipment UI, displaying a new section for character stats
+      with more detailed info on how equipment affects your stats.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21068470698246144
+    m_Localized: 'Added new card: Rebirth, allowing you to reset your stats and get
+      back all your spent gold.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21068684343508992
+    m_Localized: Added more fire bombs to Slepbone Beach to make it viable to do
+      a fire bomb challenge run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21068984160747520
+    m_Localized: Fixed an issue where opening main menu while dialogue was playing
+      with choices would cause the mouse to disappear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21069146874576896
+    m_Localized: Fixed an issue where an elven archer enemy was shooting itself
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23974388482048000
+    m_Localized: Refined the leveling formulas for all stats. You should now see
+      greater gains when investing points in any stat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24273932809797632
+    m_Localized: I've adjusted the weapon scaling formulas to give higher values
+      at early levels and stabilize later. Weapons with A and S scaling should now
+      perform better if you have the corresponding stat leveled up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24274474890035200
+    m_Localized: I've added a reload mechanic to bow / cross bow / rifle shooting,
+      as it was too easy to finish the game using bows alone. The value of arrows
+      has been increased, and alchemy now yields 15 arrows per craft instead of 30.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24274745644941312
+    m_Localized: Improved many weapons attack combos and "feel". You should feel
+      combat more fluid with certain weapons.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24274916948705280
+    m_Localized: Added recipes to craft bullets and bolts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24317294556348416
+    m_Localized: Added next level gold required, max health, max mana and max stamina
+      indicator to character stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24377777921589248
+    m_Localized: Each weapon upgrade level now increases damage by 20 instead of
+      10, making weapon upgrades more rewarding!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638080781516800
+    m_Localized: Fixed switch menu indicators in main menu for gamepads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638209294991360
+    m_Localized: Added a better value crossfade for attacks, making combos feel more
+      natural
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

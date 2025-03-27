@@ -1,0 +1,40 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="ViewComponent_Navbar" src="project://database/Assets/UI%20Components/ViewComponent_Navbar.uxml?fileID=9197481963319205126&amp;guid=130589f98d077114c87ec2c83987eb80&amp;type=3#ViewComponent_Navbar" />
+    <ui:Template name="ViewComponents_OptionsMenu" src="project://database/Assets/UI%20Components/ViewComponents_OptionsMenu.uxml?fileID=9197481963319205126&amp;guid=f3d9ac76cf02fbb4da54c06059e96ff3&amp;type=3#ViewComponents_OptionsMenu" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentMenu.uss?fileID=7433441132597879392&amp;guid=8130d4f12839ca94fa1bef036e27ad88&amp;type=3#EquipmentMenu" />
+    <Style src="project://database/Assets/UI%20Components/Styles/MainStyle.uss?fileID=7433441132597879392&amp;guid=6e69b83449d639a46a49a607ab548cd2&amp;type=3#MainStyle" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentView.uss?fileID=7433441132597879392&amp;guid=87a2b0424b4f04edcb169d127627e754&amp;type=3#EquipmentView" />
+    <Style src="project://database/Assets/UI%20Components/Styles/ViewSettings.uss?fileID=7433441132597879392&amp;guid=33cb7d9fbd32b4f209747b67c0b2ad18&amp;type=3#ViewSettings" />
+    <ui:VisualElement style="flex-grow: 1; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+        <ui:Instance template="ViewComponent_Navbar" style="display: flex;" />
+        <ui:VisualElement name="Container" style="margin-top: 35px; flex-grow: 1; min-height: auto; min-width: auto; padding-left: 25px; padding-right: 25px; padding-bottom: 25px;">
+            <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.86); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                <ui:Instance template="ViewComponents_OptionsMenu" name="ViewComponents_OptionsMenu" />
+                <ui:Button text="Save Progress" display-tooltip-when-elided="true" name="SaveGame" class="main-menu-nav-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218403405529088)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="Begin New Game +" display-tooltip-when-elided="true" name="NewGamePlus" class="main-menu-nav-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218463337938944)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="Exit To Title Screen" display-tooltip-when-elided="true" name="ExitGame" class="main-menu-nav-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218512293855232)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:VisualElement style="flex-grow: 0; flex-direction: row; align-items: center; justify-content: center; margin-top: 4px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; flex-shrink: 0;">
+                    <ui:Label text="Current Game Iteration: 0" name="CurrentNewGameCount" class="text" style="font-size: 8px; -unity-font-style: bold; -unity-text-align: upper-center; margin-top: 4px; padding-top: 4px;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1218027478450176)" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="1" name="CurrentNewGameCounter" class="text" style="font-size: 8px; -unity-font-style: bold; -unity-text-align: upper-center; margin-top: 4px; padding-top: 4px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

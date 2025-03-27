@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Controls" src="project://database/Assets/UI%20Components%20V2/Controls.uxml?fileID=9197481963319205126&amp;guid=4d20d44772662af48ac4eac911e44629&amp;type=3#Controls" />
+    <ui:Template name="ReadingBottomActionsHUD" src="project://database/Assets/UI%20Components%20V3/ReadingBottomActionsHUD.uxml?fileID=9197481963319205126&amp;guid=930ff622cac1c684e8f4a51dd4fa0a36&amp;type=3#ReadingBottomActionsHUD" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; align-items: center; justify-content: center; flex-shrink: 0; height: auto; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <ui:VisualElement style="align-items: center; height: auto; width: 100%; flex-shrink: 0; flex-grow: 0;">
+            <ui:VisualElement name="Children" style="flex-grow: 0; background-color: rgb(58, 58, 58); flex-shrink: 0; width: 50%; background-image: url(&apos;project://database/Assets/_Asset%20Store/Synty%20Studios/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Base_Normals.png?fileID=2800000&amp;guid=ae6da1f30745f024683bad2d094f8220&amp;type=3#PFK_Texture_Ground_Base_Normals&apos;); -unity-background-image-tint-color: rgb(0, 0, 0); -unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; -unity-slice-scale: 1px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; height: auto;">
+                <ui:Instance template="Controls" style="flex-shrink: 0; flex-grow: 1; width: auto; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; -unity-slice-scale: 2px; -unity-background-scale-mode: scale-and-crop;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Instance template="ReadingBottomActionsHUD" name="ReadingBottomActionsHUD" style="flex-shrink: 0; flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

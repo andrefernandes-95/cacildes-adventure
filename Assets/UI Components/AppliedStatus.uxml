@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="StatusEntry" src="project://database/Assets/UI%20Components/StatusEntry.uxml?fileID=9197481963319205126&amp;guid=02ae339453a57e14f8e5f5247390c065&amp;type=3#StatusEntry" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: space-around;">
+        <ui:VisualElement name="StatusContainer" picking-mode="Ignore" style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 10px; white-space: normal; flex-direction: column; align-items: flex-start; flex-shrink: 1; flex-grow: 0; height: auto; justify-content: space-between; left: 0; right: auto;">
+            <ui:VisualElement name="Positive" picking-mode="Ignore" style="align-items: flex-start;">
+                <ui:Instance template="StatusEntry" name="StatusEntry" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Negative" picking-mode="Ignore" style="align-items: flex-end;">
+                <ui:Instance template="StatusEntry" name="StatusEntry" picking-mode="Ignore" style="align-items: flex-start;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0);" />
+    </ui:VisualElement>
+</ui:UXML>

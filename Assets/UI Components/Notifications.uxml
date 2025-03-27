@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="NotificationItem" src="project://database/Assets/UI%20Components%20V2/NotificationItem.uxml?fileID=9197481963319205126&amp;guid=53a80f8681d6ed945831806e5aff0551&amp;type=3#NotificationItem" />
+    <Style src="project://database/Assets/UI%20Components%20V2/common/hide-element.uss?fileID=7433441132597879392&amp;guid=c8372bca82719544db771efa7bb90c4e&amp;type=3#hide-element" />
+    <Style src="project://database/Assets/UI%20Components%20V2/notification-ui/notification-ui.uss?fileID=7433441132597879392&amp;guid=d00b8095a521d324dbd53956ed30e207&amp;type=3#notification-ui" />
+    <ui:VisualElement tabindex="-1" picking-mode="Ignore" style="flex-grow: 0; flex-shrink: 0; height: 100%; visibility: visible; overflow: visible; display: flex; align-items: center; justify-content: center; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+        <ui:VisualElement name="NotificationPanelContainer" tabindex="-1" picking-mode="Ignore" style="height: 100%; width: 100%; flex-direction: column; flex-grow: 0; align-items: flex-end; flex-shrink: initial; justify-content: space-around; margin-right: 0; margin-left: 0; margin-top: 0; margin-bottom: 0; -unity-font: url(&apos;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&apos;);">
+            <ui:VisualElement picking-mode="Ignore" name="NotificationContainer" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0);">
+                <ui:Instance template="NotificationItem" name="NotificationItem" tabindex="-1" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

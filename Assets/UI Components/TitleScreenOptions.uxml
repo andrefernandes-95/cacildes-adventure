@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="ViewComponents_OptionsMenu" src="project://database/Assets/UI%20Components/ViewComponents_OptionsMenu.uxml?fileID=9197481963319205126&amp;guid=f3d9ac76cf02fbb4da54c06059e96ff3&amp;type=3#ViewComponents_OptionsMenu" />
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <Style src="project://database/Assets/UI%20Components/Styles/EquipmentMenu.uss?fileID=7433441132597879392&amp;guid=8130d4f12839ca94fa1bef036e27ad88&amp;type=3#EquipmentMenu" />
+    <ui:VisualElement style="flex-grow: 1; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_Asset%20Store/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Base_Normals.png?fileID=2800000&amp;guid=ae6da1f30745f024683bad2d094f8220&amp;type=3#PFK_Texture_Ground_Base_Normals&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.63); background-color: rgb(36, 36, 36); -unity-background-scale-mode: stretch-to-fill; width: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;">
+            <ui:VisualElement name="Panel" style="align-items: center; justify-content: flex-start; flex-direction: column; flex-wrap: nowrap; width: auto; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); flex-grow: 1; padding-bottom: 10px; padding-top: 10px; padding-right: 10px; padding-left: 10px;">
+                <ui:Label text="Options" display-tooltip-when-elided="true" name="Title" style="font-size: 30px; color: rgb(255, 255, 255); -unity-font-definition: none; -unity-font-style: bold; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); padding-bottom: 1%;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(5843861598240768)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Instance template="ViewComponents_OptionsMenu" style="flex-grow: 1; width: 100%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="top: 5px; right: 5px; position: absolute; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:Button text="X" display-tooltip-when-elided="true" name="CloseBtn" class="closeButton" style="border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); cursor: url(&quot;project://database/Assets/Graphics/Sprites/Cursor/Cursor.png?fileID=2800000&amp;guid=7d3d2124b9a178749a9d359c24c90004&amp;type=3#Cursor&quot;); transition-duration: 0.25s;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

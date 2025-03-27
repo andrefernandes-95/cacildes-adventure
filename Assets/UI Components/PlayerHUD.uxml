@@ -1,0 +1,258 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Components/Styles/Styles.uss?fileID=7433441132597879392&amp;guid=756241e74d42bab43b4532533f359ba2&amp;type=3#Styles" />
+    <ui:VisualElement name="HUDContainer" picking-mode="Ignore" style="padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; white-space: normal; flex-direction: row; align-items: flex-start; flex-shrink: 0; justify-content: space-between; flex-grow: 1;">
+        <ui:VisualElement picking-mode="Ignore" style="flex-direction: row;">
+            <ui:VisualElement style="margin-left: 5px;">
+                <ui:VisualElement name="Health" style="background-color: rgb(255, 255, 255); width: 225px; height: 15px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px;">
+                    <ui:VisualElement name="HealthFill" style="background-color: rgb(221, 24, 90); width: 60px; height: 100%; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Stamina" style="background-color: rgb(255, 255, 255); width: 150px; height: 8px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; margin-top: 2px;">
+                    <ui:VisualElement name="StaminaFill" style="background-color: rgb(24, 221, 60); width: 69px; height: 200%; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Mana" style="background-color: rgb(255, 255, 255); width: 150px; height: 8px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; margin-top: 2px;">
+                    <ui:VisualElement name="ManaFill" style="background-color: rgb(24, 199, 221); width: 69px; height: 200%; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:Label tabindex="-1" text="Combat Stance: One-Handing Weapon" display-tooltip-when-elided="true" name="CombatStanceIndicator" class="label-text" style="font-size: 10px; -unity-font-style: bold;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:IMGUIContainer picking-mode="Ignore" style="width: 45px; height: 45px; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: none; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: center; align-items: center;">
+            <ui:IMGUIContainer name="DayTimeIcon" style="width: 100%; height: 100%; background-color: rgb(46, 46, 46); background-image: url(&quot;project://database/Assets/Graphics/Sprites/Misc/Dawn.png?fileID=2800000&amp;guid=f069df080a52b6e4888d31d69a9e0e76&amp;type=3#Dawn&quot;); -unity-background-scale-mode: stretch-to-fill; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: center; align-items: center; flex-shrink: 0;">
+                <ui:VisualElement name="Clock" style="width: 36px; height: auto; background-color: rgb(255, 255, 255); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; position: absolute; bottom: -8px; right: 2.5px; font-size: 15px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 0; justify-content: center;">
+                    <ui:Label text="00:00" display-tooltip-when-elided="true" name="Value" style="-unity-font-definition: none; font-size: 14px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; -unity-text-align: middle-center; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: normal;" />
+                </ui:VisualElement>
+            </ui:IMGUIContainer>
+            <ui:Label tabindex="-1" text="Current Objective" display-tooltip-when-elided="true" name="CurrentObjectiveLabel" class="label-text" style="position: absolute; bottom: -50px; right: 0; font-size: 11px; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.59); -unity-font-style: bold; padding-top: 2px; padding-right: 4px; padding-bottom: 2px; padding-left: 4px; border-left-color: rgba(255, 255, 255, 0.39); border-right-color: rgba(255, 255, 255, 0.39); border-top-color: rgba(255, 255, 255, 0.39); border-bottom-color: rgba(255, 255, 255, 0.39); border-top-width: 0; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: rgba(255, 255, 255, 0); color: rgb(255, 255, 255);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103999959695360)" />
+                </Bindings>
+            </ui:Label>
+            <ui:Label tabindex="-1" text="Exit to snailcliff and search for the old man." display-tooltip-when-elided="true" name="CurrentObjectiveValue" class="label-text" style="position: absolute; bottom: -110px; right: 0; font-size: 13px; -unity-font-style: bold; flex-wrap: wrap; width: 300px; height: 60px; -unity-text-align: upper-right; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.59);" />
+            <ui:VisualElement name="SwimmingIndicator" style="flex-grow: 1; left: -125px; position: absolute; align-items: flex-end; bottom: 0;">
+                <ui:IMGUIContainer name="SwimIcon" style="width: 30px; height: 20px; background-color: rgba(46, 46, 46, 0); background-image: url(&quot;project://database/Assets/Graphics/Sprites/Double%20(128px)/Water.png?fileID=2800000&amp;guid=dc82861d8e87cf14799b26ac981c6ef8&amp;type=3#Water&quot;); -unity-background-scale-mode: stretch-to-fill; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: center; align-items: center; flex-shrink: 0; left: auto; position: relative;" />
+                <ui:Label text="Swimming is allowed" class="label-text" style="align-items: flex-end; -unity-text-align: middle-right; font-size: 12px; -unity-font-style: bold; text-shadow: 0.5px 0.5px 0 rgba(0, 0, 0, 0.69);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(22173744196616192)" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+        </ui:IMGUIContainer>
+        <ui:VisualElement name="EquipmentContainer" style="flex-grow: 1; position: absolute; bottom: 65px; left: 85px; display: flex;">
+            <ui:IMGUIContainer name="SpellSlot" style="width: 45px; height: 45px; background-color: rgba(255, 255, 255, 0); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: resource(&apos;Items/Spells/Flambe&apos;); -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: center; align-items: center; margin-bottom: 0; position: absolute; top: -50px;">
+                <ui:VisualElement name="Gamepad" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Dpad_Up_White.png?fileID=2800000&amp;guid=c690ed9a1d4e954498de079168a79830&amp;type=3#PS4_Dpad_Up_White&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: -15px; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); display: none;" />
+                <ui:Label text="Arrows (9)" display-tooltip-when-elided="true" name="ArrowsLabel" enable-rich-text="true" style="-unity-font-definition: none; font-size: 9px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: middle-center; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; height: auto; color: rgb(255, 255, 255); -unity-text-outline-width: 0; text-shadow: 0.5px 0.5px 2px rgb(0, 0, 0); position: relative; bottom: auto; justify-content: center; top: -44px;" />
+                <ui:VisualElement name="Keyboard" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/2_Key_Dark.png?fileID=2800000&amp;guid=c5468adc2a8f2f24d8e9e9ba14589760&amp;type=3#2_Key_Dark&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: -15px; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: auto; left: auto; display: flex;" />
+            </ui:IMGUIContainer>
+            <ui:IMGUIContainer name="ConsumableSlot" style="width: 45px; height: 45px; background-color: rgba(255, 255, 255, 0); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: resource(&apos;Items/Cards/card vampire back&apos;); -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: flex-end; align-items: center; display: flex;">
+                <ui:VisualElement name="Gamepad" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Dpad_Up_White.png?fileID=2800000&amp;guid=c690ed9a1d4e954498de079168a79830&amp;type=3#PS4_Dpad_Up_White&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: -15px; rotate: 180deg; display: none;" />
+                <ui:VisualElement name="Keyboard" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/4_Key_Dark.png?fileID=2800000&amp;guid=b05f7f3ed2d3a61409b2cde403e3d609&amp;type=3#4_Key_Dark&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: -15px; rotate: 0; right: auto; left: auto; display: flex;" />
+                <ui:VisualElement style="flex-grow: 0; bottom: -32px; align-items: center; flex-direction: row; position: absolute; flex-shrink: 0;">
+                    <ui:Label text="Arrows (9)" display-tooltip-when-elided="true" name="QuickItemName" enable-rich-text="true" style="-unity-font-definition: none; font-size: 9px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: middle-center; -unity-font: url(&quot;project://database/Assets/Graphics/Fonts/Vecna.ttf?fileID=12800000&amp;guid=3cb0a9ff58895424c8d2920e9eef12f1&amp;type=3#Vecna&quot;); -unity-font-style: bold; height: auto; color: rgb(255, 255, 255); -unity-text-outline-width: 0; text-shadow: 0.5px 0.5px 2px rgb(0, 0, 0); position: relative; bottom: auto; justify-content: center;" />
+                    <ui:VisualElement name="UseKeyboard" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/R_Key_Dark.png?fileID=2800000&amp;guid=eed66d8c3d81fab4fafd64801aec3b84&amp;type=3#R_Key_Dark&quot;); flex-shrink: 0; width: 20px; height: 20px; position: relative; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: auto; left: auto; display: flex;" />
+                    <ui:VisualElement name="UseGamepad" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_y.png?fileID=2800000&amp;guid=7eb285aa499735e4ca5d674971c7dd8d&amp;type=3#ps_y&quot;); flex-shrink: 0; width: 20px; height: 20px; position: relative; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 2px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: auto; left: auto; display: flex;" />
+                    <ui:VisualElement name="UseXbox" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_Y.png?fileID=2800000&amp;guid=1655a146a2e08f2499c53f916a1d7d64&amp;type=3#XboxOne_Y&quot;); flex-shrink: 0; width: 20px; height: 20px; position: relative; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 2px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: auto; left: auto; display: flex;" />
+                </ui:VisualElement>
+            </ui:IMGUIContainer>
+            <ui:IMGUIContainer name="WeaponSlot" style="width: 45px; height: 45px; background-color: rgba(255, 255, 255, 0); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: resource(&apos;Items/Weapons/Elven Sword/Elven Sword&apos;); -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: center; align-items: center; margin-bottom: 0; position: absolute; top: -25px; right: -50px;">
+                <ui:VisualElement name="Gamepad" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Dpad_Up_White.png?fileID=2800000&amp;guid=c690ed9a1d4e954498de079168a79830&amp;type=3#PS4_Dpad_Up_White&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 90deg; right: -15px; display: none;" />
+                <ui:VisualElement name="Keyboard" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/3_Key_Dark.png?fileID=2800000&amp;guid=1d2423998c666144c91f380e3f8eaece&amp;type=3#3_Key_Dark&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: -15px; left: auto; display: flex;" />
+            </ui:IMGUIContainer>
+            <ui:IMGUIContainer name="ShieldSlot" style="width: 45px; height: 45px; background-color: rgba(255, 255, 255, 0); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: resource(&apos;Items/Shields/Barbarian Shield&apos;); -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: center; align-items: center; margin-bottom: 0; position: absolute; top: -25px; right: 50px; opacity: 1;">
+                <ui:VisualElement name="Gamepad" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Dpad_Up_White.png?fileID=2800000&amp;guid=c690ed9a1d4e954498de079168a79830&amp;type=3#PS4_Dpad_Up_White&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: -90deg; right: auto; left: -15px; display: none;" />
+                <ui:IMGUIContainer name="Blocked" style="width: 45px; height: 45px; background-color: rgba(0, 0, 0, 0.75); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Double%20(128px)/lock_closed.png?fileID=2800000&amp;guid=8245a5a7e36940f4fa795787e6ddbee3&amp;type=3#lock_closed&quot;); -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; -unity-background-scale-mode: scale-and-crop; -unity-background-image-tint-color: rgb(255, 0, 0); padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-right: 0; margin-left: 0; justify-content: center; align-items: center; margin-bottom: 0; position: absolute; top: auto; right: auto; -unity-slice-scale: 5px; display: none;" />
+                <ui:VisualElement name="Keyboard" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/1_Key_Dark.png?fileID=2800000&amp;guid=db8a0e763dbbd904a9f53b1ebbee1eb1&amp;type=3#1_Key_Dark&quot;); flex-shrink: 0; width: 20px; height: 20px; position: absolute; top: auto; background-color: rgba(255, 255, 255, 0); -unity-background-scale-mode: scale-to-fit; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; -unity-slice-left: 1; -unity-slice-top: 1; -unity-slice-right: 1; -unity-slice-bottom: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-slice-scale: 1px; -unity-background-image-tint-color: rgb(255, 255, 255); bottom: auto; rotate: 0; right: auto; left: -15px; display: flex;" />
+            </ui:IMGUIContainer>
+        </ui:VisualElement>
+        <ui:VisualElement name="KeyboardActions" style="flex-grow: 1; position: absolute; bottom: 20px; right: 20px; display: flex;">
+            <ui:VisualElement style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: flex-end; align-self: auto;">
+                    <ui:VisualElement name="Move" style="flex-grow: 1; flex-direction: row; align-items: center; -unity-text-outline-width: 0; -unity-text-outline-color: rgba(255, 0, 0, 0); background-color: rgba(255, 0, 0, 0);">
+                        <ui:Label tabindex="-1" text="Move" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102802066472960)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/W_Key_Dark.png?fileID=2800000&amp;guid=29ec704250abe184ba892a21f2fc7a86&amp;type=3#W_Key_Dark&quot;); -unity-slice-scale: 1px; -unity-background-scale-mode: stretch-to-fill; margin-right: -4px;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/A_Key_Dark.png?fileID=2800000&amp;guid=58285aa5ce4a8434995f8530898b4711&amp;type=3#A_Key_Dark&quot;); margin-right: -4px;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/S_Key_Dark.png?fileID=2800000&amp;guid=5a9f7b952900ba14e964b4a8dd0c1bd8&amp;type=3#S_Key_Dark&quot;); margin-right: -4px;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/D_Key_Dark.png?fileID=2800000&amp;guid=4588e6ed308c60b4e8482ff0a5903e75&amp;type=3#D_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Interact" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Interact" display-tooltip-when-elided="true" name="Interact" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102875013808128)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/E_Key_Dark.png?fileID=2800000&amp;guid=a003e89c3035b5145a97422d5b0edf46&amp;type=3#E_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Keys" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="Sprint" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Sprint" display-tooltip-when-elided="true" name="SprintKeyLabel" class="label-text" style="font-size: 10px; -unity-font-style: bold;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102664115814400)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement name="SprintKeyIcon" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Shift_Key_Dark.png?fileID=2800000&amp;guid=eb06e2f75a989544bb7a766a17c8cc12&amp;type=3#Shift_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Jump" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Jump" display-tooltip-when-elided="true" name="JumpKeyLabel" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102300150890496)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement name="JumpKeyIcon" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/F_Key_Dark.png?fileID=2800000&amp;guid=7f84c90d6d5be4f4c90513031e7a487f&amp;type=3#F_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Dodge" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Dodge" display-tooltip-when-elided="true" name="DodgeKeyLabel" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102216772321280)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement name="DodgeKeyIcon" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Space_Key_Dark.png?fileID=2800000&amp;guid=e28f4014b3cd8b544ab45b4a13c2db3b&amp;type=3#Space_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ToggleHands" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Toggle 1/2 Handing" display-tooltip-when-elided="true" name="ToggleHandsKeyLabel" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102389237907456)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement name="ToggleHandsKeyIcon" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Tab_Key_Dark.png?fileID=2800000&amp;guid=daa8ab6c6ae50af4d86503410ca77fe1&amp;type=3#Tab_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: flex-end;">
+                    <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Attack/Shoot/Cast Spell" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103114856693760)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Mouse_Left_Key_Dark.png?fileID=2800000&amp;guid=199aa64f4b7c5e145b7c807a8e3c2a0c&amp;type=3#Mouse_Left_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="BlockParryAim" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Block/Parry/Aim" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 0;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103232234291200)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Mouse_Right_Key_Dark.png?fileID=2800000&amp;guid=6e82b1c11fc80a6429ae3b8507e2d98d&amp;type=3#Mouse_Right_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="LockOn" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Lock On" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103312265805824)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Mouse_Middle_Key_Dark.png?fileID=2800000&amp;guid=ca89d19ec636f0441833e58a766a1b9a&amp;type=3#Mouse_Middle_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="HeavyAttack" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Heavy Attack" display-tooltip-when-elided="true" name="HeavyAttackKeyLabel" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 0;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1102593756364800)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement name="HeavyAttackKeyIcon" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/G_Key_Dark.png?fileID=2800000&amp;guid=80dd26b0ecc1e0445872f4bc79c8efac&amp;type=3#G_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MainMenu" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Main Menu" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103801015468032)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/Esc_Key_Dark.png?fileID=2800000&amp;guid=adeace1b0bf636b45a9bb3fc16d9bcee&amp;type=3#Esc_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SaveGame" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Save Game" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103728307208192)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/F5_Key_Dark.png?fileID=2800000&amp;guid=af8d3c1a4f6c2c44682ad1739e03e080&amp;type=3#F5_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="LoadGame" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Load Game" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103653547933696)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/F9_Key_Dark.png?fileID=2800000&amp;guid=604a560e45e4e8843b7d79f1c08f68e8&amp;type=3#F9_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="CustomizeCharacter" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Main Menu" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(1103566235107328)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Keyboard%20&amp;%20Mouse/Dark/F6_Key_Dark.png?fileID=2800000&amp;guid=7f554eb91429ac04fbec0d2b090fde7c&amp;type=3#F6_Key_Dark&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="GamepadActions" style="flex-grow: 1; position: absolute; bottom: 20px; right: 20px; display: none;">
+            <ui:VisualElement style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: flex-end; align-self: auto;">
+                    <ui:VisualElement name="Move" style="flex-grow: 1; flex-direction: row; align-items: center; margin-bottom: 0;">
+                        <ui:Label tabindex="-1" text="Move" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Left_Stick.png?fileID=2800000&amp;guid=e32126535f8e9914391f8fe366234805&amp;type=3#PS4_Left_Stick&quot;); -unity-slice-scale: 1px; -unity-background-scale-mode: stretch-to-fill; margin-right: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Interact" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Interact" display-tooltip-when-elided="true" name="Interact" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement name="Interact_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_x.png?fileID=2800000&amp;guid=fa88290be5361f443b31aadcca0b49d3&amp;type=3#ps_x&quot;); -unity-background-scale-mode: scale-to-fit;" />
+                        <ui:VisualElement name="Interact_Xbox" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_X.png?fileID=2800000&amp;guid=7f1a5ee53defa8045bab4e9991bb1747&amp;type=3#XboxOne_X&quot;); -unity-background-scale-mode: scale-to-fit;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Sprint" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="Sprint" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Sprint" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold;" />
+                        <ui:VisualElement name="Sprint_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_L2.png?fileID=2800000&amp;guid=592e5ad619ea96b4f8526bb9ba301bc1&amp;type=3#PS4_L2&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Jump" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Jump" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement name="Jump_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_a.png?fileID=2800000&amp;guid=430803eafeca58b4bb4bc76834f6e6f9&amp;type=3#ps_a&quot;);" />
+                        <ui:VisualElement name="Jump_Xbox" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_A.png?fileID=2800000&amp;guid=69031c13573afc54aba305388adbe58a&amp;type=3#XboxOne_A&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Dodge" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Dodge" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement name="Dodge_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/ps_b.png?fileID=2800000&amp;guid=b76c6d8edf1762e4da96c773c11db607&amp;type=3#ps_b&quot;);" />
+                        <ui:VisualElement name="Dodge_Xbox" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_B.png?fileID=2800000&amp;guid=c89886fe04df7654ab9e90b701d75e31&amp;type=3#XboxOne_B&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ToggleHands" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Toggle 1/2 Handing" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement name="Toggle_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/options.png?fileID=2800000&amp;guid=65a1960f29b6f5b43b703b1e2d2bba61&amp;type=3#options&quot;);" />
+                        <ui:VisualElement name="Toggle_Xbox" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_Windows.png?fileID=2800000&amp;guid=7fa2398173b312f409cac4954d171fea&amp;type=3#XboxOne_Windows&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: flex-end;">
+                    <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Attack/Shoot/Cast Spell" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_R1.png?fileID=2800000&amp;guid=a0692b382cdc74b409d68c74cebe31b7&amp;type=3#PS4_R1&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="BlockParryAim" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Block/Parry/Aim" display-tooltip-when-elided="true" name="Label" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 0;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_L1.png?fileID=2800000&amp;guid=0421d2d06f8b18e4ea91e9c81b717865&amp;type=3#PS4_L1&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="LockOn" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Lock On" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Right_Stick_Click.png?fileID=2800000&amp;guid=42eb5fdb07d03874f95cfb9b54c406a6&amp;type=3#PS4_Right_Stick_Click&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Attack" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                    <ui:VisualElement name="HeavyAttack" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Heavy Attack" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 0;" />
+                        <ui:VisualElement style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_R2.png?fileID=2800000&amp;guid=ed46ace1774a0924cac94e34e92425b6&amp;type=3#PS4_R2&quot;);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MainMenu" style="flex-grow: 1; flex-direction: row; align-items: center;">
+                        <ui:Label tabindex="-1" text="Main Menu" display-tooltip-when-elided="true" name="Jump" class="label-text" style="font-size: 10px; -unity-font-style: bold; margin-left: 5px;" />
+                        <ui:VisualElement name="Menu_PS4" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Inputs%20&amp;%20Gamepad/PS4_Share.png?fileID=2800000&amp;guid=486a0b66ab4874143a9db3f8e6723b49&amp;type=3#PS4_Share&quot;);" />
+                        <ui:VisualElement name="Menu_Xbox" style="flex-grow: 0; width: 20px; height: 20px; background-image: url(&quot;project://database/Assets/Graphics/Sprites/Xbox%20One/XboxOne_Menu.png?fileID=2800000&amp;guid=c4663e2a8c63e1046bc8296ae3911cee&amp;type=3#XboxOne_Menu&quot;);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="ErrorEntryUI" focusable="false" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/_Asset%20Store/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Base_Normals.png?fileID=2800000&amp;guid=ae6da1f30745f024683bad2d094f8220&amp;type=3#PFK_Texture_Ground_Base_Normals&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.63); background-color: rgba(36, 36, 36, 0); -unity-background-scale-mode: scale-and-crop; flex-shrink: 0; height: auto; width: auto; margin-left: 10px; align-items: flex-start; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; -unity-text-align: upper-left; justify-content: flex-start; padding-right: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; position: relative; left: auto; bottom: auto; min-width: auto;">
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; flex-shrink: 0; width: 100%;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: flex-start; flex-shrink: 0; background-color: rgb(0, 0, 0);">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-items: center; flex-shrink: 0; width: 100%; background-color: rgb(181, 56, 73);">
+                    <ui:Label text="Oops... it seems the code took a coffee break!" display-tooltip-when-elided="true" name="ErrorName" class="label-text" style="color: rgb(255, 255, 255); font-size: 12px; justify-content: flex-start; -unity-text-align: middle-center; margin-top: 0; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(180, 55, 73); flex-grow: 1;" />
+                    <ui:Button text="X" display-tooltip-when-elided="true" name="CloseButton" class="primary-button" style="position: relative; right: auto; top: auto; background-color: rgb(181, 56, 73); -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Assets/_Asset%20Store/Animations%20-%20Malbers%20Animations/Common/Fonts/OpenSans/OpenSansRegular.ttf?fileID=12800000&amp;guid=b51a3e520f9164da198dc59c8acfccd6&amp;type=3#OpenSansRegular&quot;); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; color: rgb(255, 255, 255); width: auto; height: auto; flex-grow: 0; min-width: 25px;" />
+                </ui:VisualElement>
+                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" style="height: 50px; width: auto; flex-grow: 1; flex-shrink: 0;">
+                    <ui:Label text="Either make the Mesh Collider convex, or make the Rigidbody kinematic. Scene hierarchy path &quot;-- Interactable --/Destroyable Box without Item (5)/[PREFAB] Destroyable Box with Item/Wood Pieces/SM_Env_Rubble_Plank_03&quot;, Mesh asset path &quot;Assets/_Asset Store/PolygonDungeon/Models/SM_Env_Rubble_Plank_03.fbx&quot; Mesh name &quot;SM_Env_Rubble_Plank_03&quot;&#10;" display-tooltip-when-elided="true" name="StackTrace" class="label-text" style="color: rgb(255, 255, 255); font-size: 9px; justify-content: flex-start; -unity-text-align: middle-left; margin-top: 0; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: normal; margin-right: 0; margin-bottom: 0; margin-left: 0; align-items: flex-start; height: auto; flex-wrap: nowrap; white-space: normal; text-overflow: ellipsis; width: auto;" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; flex-shrink: 0; width: 100%; margin-top: 0; padding-top: 0; flex-direction: row; padding-bottom: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; justify-content: space-around; background-color: rgb(55, 55, 55); padding-right: 0; padding-left: 0; height: 18px;">
+            <ui:Button text="Reload last save" display-tooltip-when-elided="true" name="ReloadLastSave" class="primary-button" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1; font-size: 12px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(337317062377472)" />
+                </Bindings>
+            </ui:Button>
+            <ui:Button text="Copy error" display-tooltip-when-elided="true" name="CopyError" class="primary-button" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1; font-size: 12px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(337483408474112)" />
+                </Bindings>
+            </ui:Button>
+            <ui:Button text="Report to developer" display-tooltip-when-elided="true" name="SendEmail" class="primary-button" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1; font-size: 12px; height: auto; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(337551414919168)" />
+                </Bindings>
+            </ui:Button>
+            <ui:Button text="Reload last save" display-tooltip-when-elided="true" name="ReturnToTitleScreen" class="primary-button" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1; font-size: 12px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:dbb3674ad34b76b458d72593e4ca5a4a" entry="Id(13824099607248896)" />
+                </Bindings>
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
