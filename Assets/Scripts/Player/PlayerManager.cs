@@ -8,6 +8,7 @@ using AF.Inventory;
 using AF.Ladders;
 using AF.Reputation;
 using AF.Shooting;
+using AF.StateMachine;
 using AF.Stats;
 using TigerForge;
 using UnityEngine;
@@ -50,6 +51,8 @@ namespace AF
         public PlayerCardManager playerCardManager;
         public ExecutionerManager executionerManager;
         public UIDocumentPlayerHUDV2 uIDocumentPlayerHUDV2;
+        public PlayerStateMachine playerStateMachine;
+        public PlayerCamera playerCamera;
 
         [Header("Databases")]
         public PlayerStatsDatabase playerStatsDatabase;
@@ -88,7 +91,10 @@ namespace AF
             animator.applyRootMotion = false;
             SetCanUseIK_True();
 
-            thirdPersonController.canRotateCharacter = true;
+            if (TryGetThirdPersonController(out ThirdPersonController tps))
+            {
+                tps.canRotateCharacter = true;
+            }
 
             playerInventory.FinishItemConsumption();
             playerCombatController.ResetStates();
@@ -244,6 +250,28 @@ namespace AF
         public bool CanUseIK()
         {
             return _canUseWeaponIK;
+        }
+
+        /// <summary>
+        /// Wrapper method to access third person controller
+        /// </summary>
+        /// <param name="tps"></param>
+        /// <returns></returns>
+        public bool TryGetThirdPersonController(out ThirdPersonController tps)
+        {
+            tps = thirdPersonController;
+
+            return tps != null;
+        }
+
+        public bool IsJumping()
+        {
+            return starterAssetsInputs.jump && characterGravity.isGrounded;
+        }
+
+        public bool IsFalling()
+        {
+            return !characterGravity.isGrounded;
         }
     }
 }

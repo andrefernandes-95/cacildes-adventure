@@ -53,24 +53,34 @@ namespace AF
                 return;
             }
 
-            thirdPersonController.enabled = true;
-            thirdPersonController.canRotateCharacter = true;
-            thirdPersonController.canMove = true;
+            // TODO Replace with state machines
+            if (thirdPersonController != null)
+            {
+                thirdPersonController.enabled = true;
+                thirdPersonController.canRotateCharacter = true;
+                thirdPersonController.canMove = true;
+                thirdPersonController.SetTrackFallDamage(true);
+            }
+
             playerCombatController.enabled = true;
             dodgeController.enabled = true;
             playerParryManager.enabled = true;
-            thirdPersonController.SetTrackFallDamage(true);
         }
 
         public void DisableComponents()
         {
-            thirdPersonController.StopMovement();
-            thirdPersonController.canMove = false;
-            thirdPersonController.canRotateCharacter = false;
+            // TODO Replace with state machines
+            if (thirdPersonController != null)
+            {
+                thirdPersonController.StopMovement();
+                thirdPersonController.canMove = false;
+                thirdPersonController.canRotateCharacter = false;
+                thirdPersonController.SetTrackFallDamage(false);
+            }
+
             playerCombatController.enabled = false;
             dodgeController.enabled = false;
             playerParryManager.enabled = false;
-            thirdPersonController.SetTrackFallDamage(false);
         }
 
         public void DisableCharacterController()

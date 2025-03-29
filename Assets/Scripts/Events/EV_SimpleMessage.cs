@@ -8,7 +8,6 @@ namespace AF
     public class EV_SimpleMessage : EventBase
     {
 
-
         [Header("Actor")]
         public Character character;
 

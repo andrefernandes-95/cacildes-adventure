@@ -322,5 +322,20 @@ namespace AF.Animations
 
         }
 
+        public void ApplyJumpVelocity()
+        {
+
+        }
+
+        public void EnableCanMove()
+        {
+            characterManager.canMove = true;
+        }
+
+        public void DisableCanMove()
+        {
+            characterManager.canMove = false;
+        }
+
     }
 }

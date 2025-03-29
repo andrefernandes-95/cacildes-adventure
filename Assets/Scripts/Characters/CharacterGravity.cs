@@ -4,49 +4,116 @@ namespace AF
 {
     public class CharacterGravity : MonoBehaviour
     {
-        public CharacterManager characterManager;
-        public bool ignoreGravity = false;
+        [Header("Components")]
+        public CharacterBaseManager characterBaseManager;
 
-        void Start()
+        [Tooltip("The height the character can jump")]
+        public float JumpHeight = 1.2f;
+        public float JumpHeightBonus = 0f;
+
+        [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+        public float Gravity = -15.0f;
+
+        [Space(10)]
+        [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+        public float JumpTimeout = 0.50f;
+
+        [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+        public float FallTimeout = 0.15f;
+
+        [Header("Character Grounded")]
+        [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+        public bool isGrounded = true;
+
+        [Tooltip("Useful for rough ground")]
+        public float GroundedOffset = -0.14f;
+
+        [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
+        public float GroundedRadius = 0.28f;
+
+        [Tooltip("What layers the character uses as ground")]
+        public LayerMask GroundLayers;
+
+        private float _verticalVelocity;
+        public float VerticalVelocity
         {
-            if (ignoreGravity)
-            {
-                this.gameObject.SetActive(false);
-            }
+            get { return _verticalVelocity; }
         }
 
-        private void Update()
+        private float _terminalVelocity = 53.0f;
+
+        float fallBegin;
+
+        void Update()
         {
+            GroundedCheck();
 
-            if (characterManager.characterController.isGrounded && characterManager.agent.enabled)
-            {
-                return;
-            }
-
-            if (characterManager.characterController.enabled == false)
-            {
-                return;
-            }
-
-            characterManager.characterController.Move(new Vector3(0.0f, -9f, 0.0f) * Time.deltaTime);
+            ApplyGravity();
         }
 
-        bool CheckEnemyGrounded()
+        private void GroundedCheck()
         {
-            // Cast a ray downward from the player's position
-            Ray groundRay = new Ray(characterManager.transform.position, Vector3.down);
+            isGrounded = Physics.CheckSphere(
+                new(
+                    characterBaseManager.transform.position.x,
+                    characterBaseManager.characterController.transform.position.y - GroundedOffset,
+                    characterBaseManager.characterController.transform.position.z),
+                GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore) || characterBaseManager.characterController.isGrounded;
+        }
 
-            // Set the maximum distance the ray can travel
-            float maxDistance = 1f;
-
-            // Perform the raycast and check if it hits something
-            if (Physics.Raycast(groundRay, out RaycastHit hit, maxDistance))
+        void ApplyGravity()
+        {
+            if (isGrounded)
             {
-                return true; // The enemy is grounded
+                // stop our velocity dropping infinitely when grounded
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
             }
 
-            return false; // The enemy is not grounded
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime; //+ (playerManager.playerCombatController.isJumpAttacking ? jumpAttackVelocity : 0f);
+            }
+
+            EnforceVerticalVelocity();
+        }
+
+        void EnforceVerticalVelocity()
+        {
+            characterBaseManager.characterController.Move(new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
+        }
+
+        public void Jump()
+        {
+            // the square root of H * -2 * G = how much velocity needed to reach desired height
+            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        }
+
+        public void UpdateFallBegin() => fallBegin = characterBaseManager.transform.position.y;
+
+        public float GetFallHeight()
+        {
+            float difference = fallBegin - characterBaseManager.transform.position.y;
+            return difference;
+        }
+
+        public float GetHeightFromGround()
+        {
+            // Define a ray starting from the player's position pointing downwards
+            Ray ray = new Ray(characterBaseManager.transform.position, Vector3.down);
+
+            // Perform the raycast to detect the ground
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, GroundLayers, QueryTriggerInteraction.Ignore))
+            {
+                // Return the distance from the player to the ground
+                return hit.distance;
+            }
+
+            // If no ground is detected, return a large value or handle it as needed
+            return Mathf.Infinity;
         }
     }
-
 }

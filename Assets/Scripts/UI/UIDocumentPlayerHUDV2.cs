@@ -173,7 +173,14 @@ namespace AF
 
             combatStanceIndicatorLabel = root.Q<Label>("CombatStanceIndicator");
 
-            root.Q<VisualElement>("SwimmingIndicator").style.display = playerManager.thirdPersonController.water != null ? DisplayStyle.Flex : DisplayStyle.None;
+            if (playerManager.TryGetThirdPersonController(out ThirdPersonController thirdPersonController) && thirdPersonController.water != null)
+            {
+                root.Q<VisualElement>("SwimmingIndicator").style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                root.Q<VisualElement>("SwimmingIndicator").style.display = DisplayStyle.None;
+            }
 
             InputSystem.onDeviceChange += HandleDeviceChangeCallback;
 

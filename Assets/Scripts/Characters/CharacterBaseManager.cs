@@ -3,6 +3,7 @@ using System.Linq;
 using AF.Characters;
 using AF.Combat;
 using AF.Health;
+using AF.StateMachine;
 using AF.StatusEffects;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,8 +26,9 @@ namespace AF
 
         [Header("Flags")]
         public bool isBusy = false;
-
         public bool isConfused = false;
+        public bool canMove = true;
+        public bool canRotate = true;
 
         [Header("Components")]
         public StatusController statusController;
@@ -36,6 +38,9 @@ namespace AF
         public CharacterAbstractBlockController characterBlockController;
         public DamageReceiver damageReceiver;
         public CharacterPushController characterPushController;
+        public CharacterStateMachine characterStateMachine;
+        public CharacterGravity characterGravity;
+
         public abstract void ResetStates();
 
         public bool IsBusy()
@@ -71,6 +76,11 @@ namespace AF
         {
             animator.applyRootMotion = true;
             PlayBusyAnimation(animationName);
+        }
+
+        public void SetAnimatorFloat(string parameterName, float value, float blendTime = 0.2f)
+        {
+            animator.SetFloat(parameterName, value, blendTime, Time.deltaTime);
         }
 
 
@@ -115,6 +125,29 @@ namespace AF
         public void ResetIsConfused()
         {
             this.isConfused = false;
+        }
+
+        public void Move(float targetSpeed, Quaternion rotation)
+        {
+            if (!canMove)
+            {
+                return;
+            }
+
+            Vector3 targetDirection = rotation * Vector3.forward;
+
+            characterController.Move(
+                            targetDirection.normalized * (targetSpeed * Time.deltaTime));
+        }
+
+        public void EnableCanMove()
+        {
+            canMove = true;
+        }
+
+        public void DisableCanMove()
+        {
+            canMove = false;
         }
     }
 }

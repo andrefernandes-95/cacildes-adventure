@@ -2,6 +2,7 @@ namespace AF.Animations
 {
     public interface IAnimationEventListener
     {
+        public void ApplyJumpVelocity();
 
         public void EnableIframes();
         public void StopIframes();
@@ -29,6 +30,8 @@ namespace AF.Animations
         public void EnableRotation();
         public void DisableRotation();
         public void FaceTarget();
+        public void EnableCanMove();
+        public void DisableCanMove();
 
         public void OnSpellCast();
         public void OnFireArrow();

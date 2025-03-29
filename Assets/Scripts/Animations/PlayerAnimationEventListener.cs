@@ -321,5 +321,21 @@ namespace AF.Animations
         {
             playerManager.isBusy = false;
         }
+
+        public void ApplyJumpVelocity()
+        {
+            playerManager.characterGravity.Jump();
+            playerManager.EnableCanMove();
+        }
+
+        public void EnableCanMove()
+        {
+            playerManager.EnableCanMove();
+        }
+
+        public void DisableCanMove()
+        {
+            playerManager.DisableCanMove();
+        }
     }
 }
