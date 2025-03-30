@@ -8,7 +8,7 @@ namespace AF
         [Header("Components")]
         public ThirdPersonController thirdPersonController;
         public PlayerCombatController playerCombatController;
-        public DodgeController dodgeController;
+        public CharacterRollManager dodgeController;
         public PlayerBlockInput playerParryManager;
         public CharacterController characterController;
 
@@ -63,7 +63,7 @@ namespace AF
             }
 
             playerCombatController.enabled = true;
-            dodgeController.enabled = true;
+            //dodgeController.enabled = true;
             playerParryManager.enabled = true;
         }
 
@@ -79,7 +79,7 @@ namespace AF
             }
 
             playerCombatController.enabled = false;
-            dodgeController.enabled = false;
+            //dodgeController.enabled = false;
             playerParryManager.enabled = false;
         }
 

@@ -38,8 +38,8 @@ namespace AF
         public CharacterAbstractBlockController characterBlockController;
         public DamageReceiver damageReceiver;
         public CharacterPushController characterPushController;
-        public CharacterStateMachine characterStateMachine;
         public CharacterGravity characterGravity;
+        public CharacterRollManager characterRollManager;
 
         public abstract void ResetStates();
 
@@ -82,7 +82,6 @@ namespace AF
         {
             animator.SetFloat(parameterName, value, blendTime, Time.deltaTime);
         }
-
 
         public void PlayCrossFadeBusyAnimationWithRootMotion(string animationName, float crossFade)
         {

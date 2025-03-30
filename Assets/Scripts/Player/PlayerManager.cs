@@ -20,7 +20,7 @@ namespace AF
         public ThirdPersonController thirdPersonController;
         public PlayerWeaponsManager playerWeaponsManager;
         public ClimbController climbController;
-        public DodgeController dodgeController;
+        public CharacterRollManager dodgeController;
         public StatsBonusController statsBonusController;
         public PlayerLevelManager playerLevelManager;
         public PlayerAchievementsManager playerAchievementsManager;
@@ -89,6 +89,9 @@ namespace AF
             // First, reset all flags before calling the handlers
             isBusy = false;
             animator.applyRootMotion = false;
+            canMove = true;
+            canRotate = true;
+
             SetCanUseIK_True();
 
             if (TryGetThirdPersonController(out ThirdPersonController tps))
@@ -272,6 +275,15 @@ namespace AF
         public bool IsFalling()
         {
             return !characterGravity.isGrounded;
+        }
+        public bool IsAttemptingToDodge()
+        {
+            return starterAssetsInputs.dodge;
+        }
+
+        public bool IsSprinting()
+        {
+            return starterAssetsInputs.sprint;
         }
     }
 }

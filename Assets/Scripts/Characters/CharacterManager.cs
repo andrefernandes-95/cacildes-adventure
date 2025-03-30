@@ -11,6 +11,7 @@ using AF.Companions;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using System;
+using AF.StateMachine;
 
 
 namespace AF
@@ -25,6 +26,7 @@ namespace AF
         public CharacterWeaponsManager characterWeaponsManager;
         public CharacterBossController characterBossController;
         public ExecutionManager executionManager;
+        public CharacterStateMachine characterStateMachine;
 
         // Animator Overrides
         [HideInInspector] public AnimatorOverrideController animatorOverrideController;
@@ -92,6 +94,8 @@ namespace AF
             isCuttingDistanceToTarget = false;
             animator.applyRootMotion = false;
             isBusy = false;
+            canMove = true;
+            canRotate = true;
 
             characterPosture.ResetStates();
             characterCombatController.ResetStates();

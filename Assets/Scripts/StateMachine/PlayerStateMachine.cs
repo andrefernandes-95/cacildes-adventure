@@ -2,17 +2,34 @@ namespace AF.StateMachine
 {
     using UnityEngine;
 
-    public class PlayerStateMachine : CharacterStateMachine
+    public class PlayerStateMachine : MonoBehaviour
     {
+        [SerializeField] PlayerManager playerManager;
+
         public PlayerIdleState playerIdleState;
         public PlayerRunState playerRunState;
         public PlayerJumpState playerJumpState;
         public PlayerFallState playerFallState;
+        public PlayerRollState playerRollState;
+        public PlayerBackstepState playerBackstepState;
 
-        [Header("Components")]
-        [SerializeField] PlayerManager playerManager;
+        [Header("Debug")]
+        [SerializeField] protected AIState currentState;
 
-        public override void ProcessStateMachine()
+        [Header("Default")]
+        [SerializeField] AIState defaultState;
+
+        private void Awake()
+        {
+            currentState = defaultState;
+        }
+
+        void Update()
+        {
+            ProcessStateMachine();
+        }
+
+        public void ProcessStateMachine()
         {
             AIState nextState = currentState?.Tick(playerManager);
             if (nextState != null)

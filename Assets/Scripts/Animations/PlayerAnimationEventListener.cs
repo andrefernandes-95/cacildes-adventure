@@ -124,12 +124,12 @@ namespace AF.Animations
         }
         public void EnableRotation()
         {
-            playerManager.thirdPersonController.canRotateCharacter = true;
+            playerManager.canRotate = true;
         }
 
         public void DisableRotation()
         {
-            playerManager.thirdPersonController.canRotateCharacter = false;
+            playerManager.canRotate = false;
         }
 
         public void EnableRootMotion()

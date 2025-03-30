@@ -8,6 +8,10 @@ namespace AF
         public static string Jump = "Jump";
         public static string FreeFall = "FreeFall";
         public static string InAirTimer = "InAirTimer";
+    }
 
+    public static class AnimatorClipNames
+    {
+        public static string Roll = "Roll";
     }
 }

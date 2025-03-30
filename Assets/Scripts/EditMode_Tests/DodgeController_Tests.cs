@@ -7,14 +7,14 @@ namespace AF.Tests
     public class DodgeController_Tests : MonoBehaviour
     {
         PlayerManager playerManager;
-        DodgeController dodgeController;
+        CharacterRollManager dodgeController;
 
         [SetUp]
         public void SetUp()
         {
-            dodgeController = new GameObject().AddComponent<DodgeController>();
+            dodgeController = new GameObject().AddComponent<CharacterRollManager>();
             playerManager = dodgeController.gameObject.AddComponent<PlayerManager>();
-            dodgeController.playerManager = playerManager;
+            //dodgeController.playerManager = playerManager;
         }
 
         [Test]

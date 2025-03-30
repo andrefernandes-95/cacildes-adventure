@@ -16,7 +16,10 @@ namespace AF.StateMachine
 
         protected virtual AIState SwitchState(CharacterBaseManager characterBaseManager, AIState newState)
         {
-            ResetStateFlags(characterBaseManager);
+            if (newState != this)
+            {
+                ResetStateFlags(characterBaseManager);
+            }
 
             return newState;
         }

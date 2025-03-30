@@ -3,11 +3,9 @@ namespace AF.StateMachine
     using UnityEngine;
     using NaughtyAttributes;
 
-    public class CharacterStateMachine : MonoBehaviour
+    public abstract class CharacterStateMachine : MonoBehaviour
     {
-        [ShowIf("IsAICharacter")]
         [SerializeField] CharacterManager characterManager;
-        protected bool IsAICharacter() => this is not PlayerStateMachine;
 
         [Header("Debug")]
         [SerializeField] protected AIState currentState;
@@ -16,10 +14,8 @@ namespace AF.StateMachine
         [SerializeField] AIState defaultState;
 
         [Header("States")]
-        [ShowIf("IsAICharacter")] public BaseIdleState idleState;
-        [ShowIf("IsAICharacter")] public BaseJumpState jumpState;
-        [ShowIf("IsAICharacter")] public BaseFallState fallingState;
-        [ShowIf("IsAICharacter")] public AIState pursueTargetState;
+        public AIState pursueTargetState;
+
 
         private void Awake()
         {
