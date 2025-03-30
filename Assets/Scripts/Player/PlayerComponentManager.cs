@@ -7,7 +7,7 @@ namespace AF
     {
         [Header("Components")]
         public ThirdPersonController thirdPersonController;
-        public PlayerCombatController playerCombatController;
+        public CombatManager playerCombatController;
         public CharacterRollManager dodgeController;
         public PlayerBlockInput playerParryManager;
         public CharacterController characterController;

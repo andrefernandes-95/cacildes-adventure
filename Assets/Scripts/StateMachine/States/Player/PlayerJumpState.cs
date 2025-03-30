@@ -10,11 +10,6 @@ namespace AF.StateMachine
 
         public override AIState Tick(PlayerManager playerManager)
         {
-            if (playerManager.starterAssetsInputs.jump)
-            {
-                playerManager.starterAssetsInputs.jump = false;
-            }
-
             PlayJump(playerManager.animator);
 
             // Free Falling?

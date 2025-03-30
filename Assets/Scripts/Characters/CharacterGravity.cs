@@ -86,10 +86,10 @@ namespace AF
             characterBaseManager.characterController.Move(new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
         }
 
-        public void Jump()
+        public void Jump(float jumpHeightBonus = 0)
         {
             // the square root of H * -2 * G = how much velocity needed to reach desired height
-            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            _verticalVelocity = Mathf.Sqrt((JumpHeight + jumpHeightBonus) * -2f * Gravity);
         }
 
         public void UpdateFallBegin() => fallBegin = characterBaseManager.transform.position.y;

@@ -11,6 +11,7 @@ namespace AF.Animations
         [Header("Unity Events")]
         public UnityEvent onLeftFootstep;
         public UnityEvent onRightFootstep;
+        [HideInInspector] public UnityEvent onHitboxesClosed;
         public Cinemachine.CinemachineImpulseSource cinemachineImpulseSource;
 
         [Header("Components")]
@@ -51,7 +52,7 @@ namespace AF.Animations
             {
                 playerManager.playerWeaponsManager.leftHandHitbox.DisableHitbox();
             }
-
+            onHitboxesClosed?.Invoke();
         }
 
         public void OpenRightWeaponHitbox()
@@ -79,6 +80,7 @@ namespace AF.Animations
                 playerManager.playerWeaponsManager.rightHandHitbox.DisableHitbox();
             }
 
+            onHitboxesClosed?.Invoke();
         }
 
         public void OpenLeftFootHitbox()
@@ -100,6 +102,7 @@ namespace AF.Animations
                 playerManager.playerCombatController.isAttackingWithFoot = false;
             }
 
+            onHitboxesClosed?.Invoke();
         }
 
         public void OpenRightFootHitbox()
@@ -121,6 +124,7 @@ namespace AF.Animations
                 playerManager.playerCombatController.isAttackingWithFoot = false;
             }
 
+            onHitboxesClosed?.Invoke();
         }
         public void EnableRotation()
         {
@@ -324,7 +328,8 @@ namespace AF.Animations
 
         public void ApplyJumpVelocity()
         {
-            playerManager.characterGravity.Jump();
+            float bonusJumpHeight = playerManager.IsSprinting() ? .5f : 0f;
+            playerManager.characterGravity.Jump(bonusJumpHeight);
             playerManager.EnableCanMove();
         }
 

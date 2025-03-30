@@ -109,6 +109,11 @@ namespace AF
 
         bool CanBlock()
         {
+            if (equipmentDatabase.GetCurrentShield() == null)
+            {
+                return false;
+            }
+
             if (equipmentDatabase.IsBowEquipped())
             {
                 return false;

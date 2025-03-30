@@ -1,12 +1,32 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Linq;
+using AF.Animations;
 using AF.Combat;
 using AF.Ladders;
 using UnityEngine;
 
 namespace AF
 {
-    public class PlayerCombatController : MonoBehaviour
+    public class CombatManager : MonoBehaviour
     {
+        [Header("Unarmed Attacks")]
+        public AttackAction[] unarmedRightHandAttacks;
+        private AttackAction lastUnarmedRightHandAttackAction;
+
+        public AttackAction[] unarmedLeftHandAttacks;
+        private AttackAction lastUnarmedLeftHandAttackAction;
+
+        public AttackAction[] unarmedRightFootAttacks;
+        private AttackAction lastUnarmedRightFootAttackAction;
+
+        public AttackAction[] unarmedLeftFootAttacks;
+        private AttackAction lastUnarmedLeftFootAttackAction;
+
+        public AttackAction[] unarmedHeadAttacks;
+
+        [HideInInspector] public AttackingMember currentAttackingMember = AttackingMember.NONE;
+
         public float crossFade = 0.1f;
         public readonly string hashLightAttack1 = "Light Attack 1";
         public readonly string hashLightAttack2 = "Light Attack 2";
@@ -51,9 +71,17 @@ namespace AF
         [Header("Foot Damage")]
         public bool isAttackingWithFoot = false;
 
+        [Header("Combos")]
+        [SerializeField] float maxTimeBeforeResettingCombos = 1f;
+        Coroutine OnGoingResetComboCoroutine;
+
         private void Start()
         {
             animator.SetFloat(SpeedMultiplierHash, 1f);
+
+            // Update Animators
+            playerManager.UpdateAttackAnimations(unarmedRightHandAttacks);
+            playerManager.UpdateAttackAnimations(unarmedLeftHandAttacks);
         }
 
         public void ResetStates()
@@ -63,14 +91,120 @@ namespace AF
             isLightAttacking = false;
             isAttackingWithFoot = false;
             animator.SetFloat(SpeedMultiplierHash, 1f);
+
+            StopComboCoroutine();
+
+            OnGoingResetComboCoroutine = StartCoroutine(ResetComboFlags());
         }
+
+        void StopComboCoroutine()
+        {
+            if (OnGoingResetComboCoroutine != null)
+            {
+                StopCoroutine(OnGoingResetComboCoroutine);
+                OnGoingResetComboCoroutine = null;
+            }
+        }
+
+        IEnumerator ResetComboFlags()
+        {
+            yield return new WaitForSeconds(maxTimeBeforeResettingCombos);
+            lastUnarmedRightHandAttackAction = lastUnarmedLeftHandAttackAction = lastUnarmedRightFootAttackAction = lastUnarmedLeftFootAttackAction = null;
+        }
+
+        public void AttemptAttack()
+        {
+            StopComboCoroutine();
+
+            // If unarmed
+            if (true)
+            {
+                AttackAction chosenAttackAction = null;
+                AttackAction lastAttackAction = null;
+                AttackAction[] attackActions = null;
+
+                bool isRightHand = false;
+                bool isLeftHand = false;
+                bool isRightFoot = false;
+                bool isLeftFoot = false;
+
+                switch (currentAttackingMember)
+                {
+                    case AttackingMember.RIGHT_HAND:
+                        lastAttackAction = lastUnarmedRightHandAttackAction;
+                        attackActions = unarmedRightHandAttacks;
+                        isRightHand = true;
+                        break;
+                    case AttackingMember.LEFT_HAND:
+                        lastAttackAction = lastUnarmedLeftHandAttackAction;
+                        attackActions = unarmedLeftHandAttacks;
+                        isLeftHand = true;
+                        break;
+                    case AttackingMember.RIGHT_FOOT:
+                        lastAttackAction = lastUnarmedRightFootAttackAction;
+                        attackActions = unarmedRightFootAttacks;
+                        isRightFoot = true;
+                        break;
+                    case AttackingMember.LEFT_FOOT:
+                        lastAttackAction = lastUnarmedLeftFootAttackAction;
+                        attackActions = unarmedLeftFootAttacks;
+                        isLeftFoot = true;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (lastAttackAction == null)
+                {
+                    chosenAttackAction = attackActions[0];
+                }
+                else
+                {
+                    int nextAttackActionIndex = Array.IndexOf(attackActions, lastAttackAction) + 1;
+                    if (nextAttackActionIndex >= attackActions.Length)
+                    {
+                        nextAttackActionIndex = 0;
+                    }
+
+                    chosenAttackAction = attackActions[nextAttackActionIndex];
+                }
+
+                if (isRightHand)
+                {
+                    lastUnarmedRightHandAttackAction = chosenAttackAction;
+                }
+                else if (isLeftHand)
+                {
+                    lastUnarmedLeftHandAttackAction = chosenAttackAction;
+                }
+                else if (isRightFoot)
+                {
+                    lastUnarmedRightFootAttackAction = chosenAttackAction;
+                }
+                else if (isLeftFoot)
+                {
+                    lastUnarmedLeftFootAttackAction = chosenAttackAction;
+                }
+
+                chosenAttackAction?.Execute(playerManager);
+
+            }
+        }
+
+
+
+
+
+
+
 
         public void OnLightAttack()
         {
+            /*
             if (CanLightAttack())
             {
                 HandleLightAttack();
-            }
+            }*/
         }
 
         public void OnHeavyAttack()
@@ -355,5 +489,7 @@ namespace AF
                 playerManager.attackStatManager.attackSource = AttackStatManager.AttackSource.UNARMED;
             }
         }
+
+
     }
 }

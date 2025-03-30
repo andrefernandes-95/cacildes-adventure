@@ -14,7 +14,7 @@ namespace AF.StateMachine
             playerManager.SetAnimatorFloat(AnimatorParametersConstants.Horizontal, 0);
             playerManager.SetAnimatorFloat(AnimatorParametersConstants.Vertical, playerManager.IsSprinting() ? 2 : 1);
 
-            if (!playerManager.starterAssetsInputs.IsMoving())
+            if (!playerManager.IsMoving())
             {
                 return SwitchState(playerManager, playerManager.playerStateMachine.playerIdleState);
             }
@@ -32,6 +32,11 @@ namespace AF.StateMachine
             if (playerManager.IsAttemptingToDodge())
             {
                 return SwitchState(playerManager, playerManager.playerStateMachine.playerRollState);
+            }
+
+            if (playerManager.IsAttemptingAttack())
+            {
+                return SwitchState(playerManager, playerManager.playerStateMachine.playerCombatState);
             }
 
             playerManager.Move(runSpeed * (playerManager.IsSprinting() ? sprintMultiplier : 1f), playerManager.playerCamera.GetPlayerRotation());

@@ -6,12 +6,12 @@ namespace AF.Tests
 {
     public class CharacterCombatController_Tests : MonoBehaviour
     {
-        CharacterCombatController characterCombatController;
+        Combat.CharacterCombatController characterCombatController;
 
         [SetUp]
         public void SetUp()
         {
-            characterCombatController = new GameObject().AddComponent<CharacterCombatController>();
+            characterCombatController = new GameObject().AddComponent<Combat.CharacterCombatController>();
             CharacterManager characterManager = characterCombatController.gameObject.AddComponent<CharacterManager>();
             characterCombatController.characterManager = characterManager;
             Animator animator = characterCombatController.characterManager.gameObject.AddComponent<Animator>();

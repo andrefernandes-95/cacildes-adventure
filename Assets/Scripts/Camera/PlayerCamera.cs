@@ -73,7 +73,7 @@ namespace AF
             {
                 RotateWithCamera();
             }
-            else if (starterAssetsInputs.IsMoving())
+            else if (playerManager.IsMoving())
             {
                 if (IsLockedOn())
                 {

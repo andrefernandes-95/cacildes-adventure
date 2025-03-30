@@ -12,6 +12,7 @@ namespace AF.StateMachine
         public PlayerFallState playerFallState;
         public PlayerRollState playerRollState;
         public PlayerBackstepState playerBackstepState;
+        public PlayerCombatState playerCombatState;
 
         [Header("Debug")]
         [SerializeField] protected AIState currentState;
@@ -22,6 +23,17 @@ namespace AF.StateMachine
         private void Awake()
         {
             currentState = defaultState;
+
+            playerIdleState = Instantiate(playerIdleState);
+            playerRunState = Instantiate(playerRunState);
+            playerJumpState = Instantiate(playerJumpState);
+            playerFallState = Instantiate(playerFallState);
+            playerRollState = Instantiate(playerRollState);
+            playerBackstepState = Instantiate(playerBackstepState);
+            playerCombatState = Instantiate(playerCombatState);
+
+            // Allow combos
+            playerManager.playerAnimationEventListener.onHitboxesClosed.AddListener(() => playerCombatState.CheckForCombos(playerManager));
         }
 
         void Update()

@@ -27,7 +27,10 @@ namespace AF.StateMachine
                 return SwitchState(playerManager, playerManager.playerStateMachine.playerIdleState);
             }
 
-            playerManager.Move(moveSpeed, playerManager.playerCamera.GetPlayerRotation());
+            if (playerManager.IsMoving())
+            {
+                playerManager.Move(moveSpeed, playerManager.playerCamera.GetPlayerRotation());
+            }
 
             return this;
         }

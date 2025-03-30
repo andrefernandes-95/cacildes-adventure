@@ -12,11 +12,11 @@ namespace AF
 
         public float timeBeforeDroppingStalacites = .5f;
 
-        PlayerCombatController playerCombatController;
+        CombatManager playerCombatController;
 
         private void Awake()
         {
-            playerCombatController = FindObjectOfType<PlayerCombatController>(true);
+            playerCombatController = FindObjectOfType<CombatManager>(true);
         }
 
         public void ShakeCamera()

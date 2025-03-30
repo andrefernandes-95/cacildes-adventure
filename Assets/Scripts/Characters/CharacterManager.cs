@@ -19,7 +19,7 @@ namespace AF
     public class CharacterManager : CharacterBaseManager
     {
         public CompanionID companionID;
-        public CharacterCombatController characterCombatController;
+        public Combat.CharacterCombatController characterCombatController;
         public TargetManager targetManager;
 
         public CharacterBaseShooter characterBaseShooter;

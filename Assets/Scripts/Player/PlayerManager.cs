@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AF.Animations;
 using AF.Equipment;
 using AF.Events;
@@ -25,7 +26,7 @@ namespace AF
         public PlayerLevelManager playerLevelManager;
         public PlayerAchievementsManager playerAchievementsManager;
         public CombatNotificationsController combatNotificationsController;
-        public PlayerCombatController playerCombatController;
+        public CombatManager playerCombatController;
         public StaminaStatManager staminaStatManager;
         public ManaManager manaManager;
         public DefenseStatManager defenseStatManager;
@@ -72,6 +73,18 @@ namespace AF
             SetupAnimRefs();
         }
 
+        void Start()
+        {
+            starterAssetsInputs.onLeftHandAttack.AddListener(() =>
+            {
+                playerCombatController.currentAttackingMember = AttackingMember.LEFT_HAND;
+            });
+            starterAssetsInputs.onRightHandAttack.AddListener(() =>
+            {
+                playerCombatController.currentAttackingMember = AttackingMember.RIGHT_HAND;
+            });
+        }
+
         void SetupAnimRefs()
         {
             if (defaultAnimatorController == null)
@@ -94,6 +107,7 @@ namespace AF
 
             SetCanUseIK_True();
 
+            // TODO: Remove
             if (TryGetThirdPersonController(out ThirdPersonController tps))
             {
                 tps.canRotateCharacter = true;
@@ -200,7 +214,32 @@ namespace AF
             }
         }
 
-        void UpdateAnimationOverrides(Animator animator, AnimationClipOverrides clipOverrides, System.Collections.Generic.List<AnimationOverride> clips)
+
+
+        public void UpdateAttackAnimations(AttackAction[] attackActions)
+        {
+            SetupAnimRefs();
+
+            var clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
+            animatorOverrideController.GetOverrides(clipOverrides);
+
+            List<AnimationOverride> animationOverrides = new();
+            foreach (var attack in attackActions)
+            {
+                if (attack.attackAnimations.Count > 0)
+                {
+                    foreach (var attackClip in attack.attackAnimations)
+                    {
+                        AnimationOverride animationOverride = new() { animationClip = attackClip.Value, animationName = attackClip.Key.name };
+                        animationOverrides.Add(animationOverride);
+                    }
+                }
+            }
+
+            UpdateAnimationOverrides(animator, clipOverrides, animationOverrides);
+        }
+
+        void UpdateAnimationOverrides(Animator animator, AnimationClipOverrides clipOverrides, List<AnimationOverride> clips)
         {
             foreach (var animationOverride in clips)
             {
@@ -276,14 +315,36 @@ namespace AF
         {
             return !characterGravity.isGrounded;
         }
+
         public bool IsAttemptingToDodge()
         {
             return starterAssetsInputs.dodge;
+        }
+
+        public bool IsAttemptingToRightAttack()
+        {
+            return starterAssetsInputs.rightHandAttack;
+        }
+        public bool IsAttemptingToLeftAttack()
+        {
+            return starterAssetsInputs.leftHandAttack;
+        }
+        public bool IsAttemptingAttack()
+        {
+            return IsAttemptingToRightAttack() || IsAttemptingToLeftAttack();
         }
 
         public bool IsSprinting()
         {
             return starterAssetsInputs.sprint;
         }
+
+
+        public bool IsMoving()
+        {
+            // Can control player
+            return starterAssetsInputs.move != Vector2.zero;
+        }
+
     }
 }

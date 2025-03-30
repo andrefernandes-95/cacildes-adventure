@@ -44,7 +44,7 @@ namespace AF
 
         public void UpdateTwoHandingMode()
         {
-            playerManager.UpdateAnimatorOverrideControllerClips();
+            // playerManager.UpdateAnimatorOverrideControllerClips();
 
             onTwoHandingModeChanged?.Invoke();
         }

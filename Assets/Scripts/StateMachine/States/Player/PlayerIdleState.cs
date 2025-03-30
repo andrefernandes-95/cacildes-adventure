@@ -9,7 +9,7 @@ namespace AF.StateMachine
         {
             PlayIdle(playerManager.animator);
 
-            if (playerManager.starterAssetsInputs.IsMoving())
+            if (playerManager.IsMoving())
             {
                 return playerManager.playerStateMachine.playerRunState;
             }
@@ -27,6 +27,11 @@ namespace AF.StateMachine
             if (playerManager.IsAttemptingToDodge())
             {
                 return SwitchState(playerManager, playerManager.playerStateMachine.playerBackstepState);
+            }
+
+            if (playerManager.IsAttemptingAttack())
+            {
+                return SwitchState(playerManager, playerManager.playerStateMachine.playerCombatState);
             }
 
             return this;

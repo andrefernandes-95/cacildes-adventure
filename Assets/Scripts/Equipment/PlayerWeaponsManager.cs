@@ -109,7 +109,7 @@ namespace AF.Equipment
                 currentWeaponInstance.gameObject.SetActive(true);
             }
 
-            playerManager.UpdateAnimatorOverrideControllerClips();
+            // playerManager.UpdateAnimatorOverrideControllerClips();
 
             // If we equipped a bow, we must hide any active shield
             if (equipmentDatabase.IsBowEquipped() || equipmentDatabase.IsStaffEquipped())
