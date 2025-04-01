@@ -45,22 +45,22 @@ namespace AF.Conditions
             }
             else if (requireAllPiecesToBeEquipped)
             {
-                evaluationResult = equipmentDatabase.helmet == helmet
-                && equipmentDatabase.armor == armor
-                && equipmentDatabase.legwear == legwear
-                && equipmentDatabase.gauntlet == gauntlet;
+                evaluationResult = equipmentDatabase.helmet.HasItem(helmet)
+                && equipmentDatabase.armor.HasItem(armor)
+                && equipmentDatabase.legwear.HasItem(legwear)
+                && equipmentDatabase.gauntlet.HasItem(gauntlet);
             }
             else if (requireNoneOfThePiecesToBeEquipped)
             {
                 evaluationResult =
-                    !(equipmentDatabase.helmet != helmet
-                    || equipmentDatabase.armor != armor
-                    || equipmentDatabase.legwear != legwear
-                    || equipmentDatabase.gauntlet != gauntlet);
+                    !(equipmentDatabase.helmet.HasItem(helmet) == false
+                    || equipmentDatabase.armor.HasItem(armor) == false
+                    || equipmentDatabase.legwear.HasItem(legwear) == false
+                    || equipmentDatabase.gauntlet.HasItem(gauntlet) == false);
             }
             else if (requireOnlyTorsoArmorToBeEquipped)
             {
-                evaluationResult = equipmentDatabase.armor == armor;
+                evaluationResult = equipmentDatabase.armor.HasItem(armor);
             }
 
             Utils.UpdateTransformChildren(transform, evaluationResult);

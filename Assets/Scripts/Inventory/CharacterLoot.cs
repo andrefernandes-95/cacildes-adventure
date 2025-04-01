@@ -47,6 +47,7 @@ namespace AF
 
             yield return new WaitForSeconds(1f);
 
+            // TODO Should be its own derived class
             if (GetPlayerManager().statsBonusController != null)
             {
                 var additionalCoinPercentage = GetPlayerManager().statsBonusController.additionalCoinPercentage;

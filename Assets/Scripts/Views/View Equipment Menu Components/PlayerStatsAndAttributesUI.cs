@@ -1,6 +1,7 @@
 
 namespace AF
 {
+    using AF.Health;
     using AF.Stats;
     using AF.StatusEffects;
     using UnityEngine;
@@ -43,7 +44,7 @@ namespace AF
             root = uIDocument.rootVisualElement;
         }
 
-        public void DrawStats(Item item)
+        public void DrawStats(ItemInstance item)
         {
             root.Q<VisualElement>("PlayerName").Q<Label>().text = playerManager.playerAppearance.GetPlayerName();
 
@@ -51,8 +52,28 @@ namespace AF
             SetLocalizedLabel("Gold", " Gold ", " Ouro ", playerStatsDatabase.gold);
             SetGoldForNextLevelLabel();
 
-            int baseAttack = attackStatManager.GetCurrentAttackForWeapon(equipmentDatabase.GetCurrentWeapon());
-            int itemAttack = GetItemAttack(item, baseAttack);
+            // TODO: Get the damage of both left and right weapons
+
+            Damage baseAttackDamage = attackStatManager.GetAttackDamage(null);
+            int baseAttack = baseAttackDamage.GetTotalDamage();
+
+            Damage itemAttackDamage = attackStatManager.GetAttackDamage(equipmentDatabase.GetCurrentRightWeapon());
+            int itemAttack = itemAttackDamage.GetTotalDamage();
+
+            // TODO: I think this code is wrong
+            if (item is AccessoryInstance)
+            {
+                // If previewing some item that augments physical bonus, show it here
+
+                /*if (item is Weapon weapon)
+                {
+                    return (int)attackStatManager.GetWeaponAttack(weapon);
+                }
+                else if (item is Accessory accessory && equipmentDatabase.IsAccessoryEquiped(accessory))
+                {
+                    return baseAttack + accessory.physicalAttackBonus;
+                }*/
+            }
 
             // Physical and Elemental Defenses
             int basePhysicalDefense = (int)defenseStatManager.GetDefenseAbsorption();
@@ -93,7 +114,7 @@ namespace AF
 
             SetStatLabel("PhysicalAttack", baseAttack, itemAttack);
 
-            Weapon weapon = item as Weapon;
+            WeaponInstance weapon = item as WeaponInstance;
             SetAttackLabels(weapon, "FireAttack", WeaponElementType.Fire);
             SetAttackLabels(weapon, "FrostAttack", WeaponElementType.Frost);
             SetAttackLabels(weapon, "LightningAttack", WeaponElementType.Lightning);
@@ -119,7 +140,7 @@ namespace AF
             DrawStatusEffectLabel("Drowning", drowning, item);
         }
 
-        void DrawStatusEffectLabel(string elementName, StatusEffect statusEffect, Item item)
+        void DrawStatusEffectLabel(string elementName, StatusEffect statusEffect, ItemInstance item)
         {
             PlayerStatusController playerStatusController = playerManager.statusController as PlayerStatusController;
 
@@ -127,7 +148,7 @@ namespace AF
                 elementName,
                 playerStatusController.GetResistanceForStatusEffect(statusEffect),
                 item != null
-                    ? EquipmentUtils.GetStatusEffectResistanceFromEquipment(item as ArmorBase, statusEffect, playerStatusController, equipmentDatabase)
+                    ? EquipmentUtils.GetStatusEffectResistanceFromEquipment(item as ArmorBaseInstance, statusEffect, playerStatusController, equipmentDatabase)
                     : 0);
         }
 
@@ -213,64 +234,60 @@ namespace AF
             root.Q<VisualElement>(elementName).Q<Label>().text = label + value;
         }
 
-        private (int vitality, int endurance, int strength, int dexterity, int intelligence, int reputation) GetPlayerBaseStats()
+        private (int vitality, int endurance, int intelligence, int strength, int dexterity, int reputation) GetPlayerBaseStats()
         {
             return (
-                playerStatsBonusController.GetCurrentVitality(),
-                playerStatsBonusController.GetCurrentEndurance(),
-                playerStatsBonusController.GetCurrentStrength(),
-                playerStatsBonusController.GetCurrentDexterity(),
-                playerStatsBonusController.GetCurrentIntelligence(),
-                playerStatsBonusController.GetCurrentReputation()
+                playerManager.characterBaseStats.GetVitality(),
+                playerManager.characterBaseStats.GetEndurance(),
+                playerManager.characterBaseStats.GetIntelligence(),
+                playerManager.characterBaseStats.GetStrength(),
+                playerManager.characterBaseStats.GetDexterity(),
+                playerManager.characterBaseStats.GetReputation()
             );
         }
 
         private (int vitality, int endurance, int strength, int dexterity, int intelligence, int reputation,
-        int healthBonus, int staminaBonus, int magicBonus) GetItemBonusStats(Item item)
+        int healthBonus, int staminaBonus, int magicBonus) GetItemBonusStats(ItemInstance item)
         {
-            if (item is ArmorBase armor)
+            if (item is ArmorBaseInstance armor)
             {
                 return (
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.VITALITY, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.ENDURANCE, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.STRENGTH, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.DEXTERITY, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.INTELLIGENCE, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.REPUTATION, playerStatsBonusController, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromAccessory(armor as Accessory, EquipmentUtils.AccessoryAttributeType.HEALTH_BONUS, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromAccessory(armor as Accessory, EquipmentUtils.AccessoryAttributeType.STAMINA_BONUS, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromAccessory(armor as Accessory, EquipmentUtils.AccessoryAttributeType.MANA_BONUS, playerManager, equipmentDatabase)
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.VITALITY, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.ENDURANCE, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.STRENGTH, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.DEXTERITY, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.INTELLIGENCE, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.REPUTATION, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.HEALTH_BONUS, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.STAMINA_BONUS, playerManager, equipmentDatabase),
+                    EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.MANA_BONUS, playerManager, equipmentDatabase)
                 );
             }
             return (0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
-        private int GetItemAttack(Item item, int baseAttack)
+        private void SetAttackLabels(WeaponInstance itemInstance, string labelName, WeaponElementType elementType)
         {
-            if (item is Weapon weapon)
-            {
-                return (int)attackStatManager.GetWeaponAttack(weapon);
-            }
-            else if (item is Accessory accessory && equipmentDatabase.IsAccessoryEquiped(accessory))
-            {
-                return baseAttack + accessory.physicalAttackBonus;
-            }
-            return 0;
-        }
+            // TODO: Do this for both hands
+            WeaponInstance currentEquippedWeapon = null;
 
-        private void SetAttackLabels(Weapon item, string labelName, WeaponElementType elementType)
-        {
+            if (equipmentDatabase.GetCurrentRightWeapon().Exists())
+            {
+                currentEquippedWeapon = equipmentDatabase.GetCurrentRightWeapon();
+            }
+
             int baseValue = EquipmentUtils.GetElementalAttackForCurrentWeapon(
-                equipmentDatabase.GetCurrentWeapon(), elementType, playerManager.attackStatManager, playerManager.statsBonusController.GetCurrentReputation());
+                currentEquippedWeapon, elementType, playerManager.attackStatManager, playerManager.characterBaseStats.GetReputation());
+
             int itemValue = EquipmentUtils.GetElementalAttackForCurrentWeapon(
-                item, elementType, playerManager.attackStatManager, playerManager.statsBonusController.GetCurrentReputation());
+                itemInstance, elementType, playerManager.attackStatManager, playerManager.characterBaseStats.GetReputation());
 
             SetStatLabel(labelName, baseValue, itemValue);
         }
 
-        private (int physical, int fire, int frost, int lightning, int magic, int darkness, int water) GetItemDefenses(Item item)
+        private (int physical, int fire, int frost, int lightning, int magic, int darkness, int water) GetItemDefenses(ItemInstance item)
         {
-            if (item is ArmorBase armorBase && !(item is Accessory acc && equipmentDatabase.IsAccessoryEquiped(acc)))
+            if (item is ArmorBaseInstance armorBase && !(item is AccessoryInstance acc && equipmentDatabase.IsAccessoryEquiped(acc)))
             {
                 return (
                     EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.None, defenseStatManager, equipmentDatabase),

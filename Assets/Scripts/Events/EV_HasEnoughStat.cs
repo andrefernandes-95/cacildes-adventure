@@ -24,7 +24,7 @@ namespace AF
         public int value = 0;
 
         [Header("Components")]
-        public StatsBonusController playerStatsBonusController;
+        public CharacterBaseStats characterBaseStats;
 
         [Header("Databases")]
         public PlayerStatsDatabase playerStatsDatabase;
@@ -36,23 +36,23 @@ namespace AF
             int currentValue = 0;
             if (isVitality)
             {
-                currentValue = playerStatsBonusController.GetCurrentVitality();
+                currentValue = characterBaseStats.GetVitality();
             }
             else if (isEndurance)
             {
-                currentValue = playerStatsBonusController.GetCurrentEndurance();
+                currentValue = characterBaseStats.GetEndurance();
             }
             else if (isStrength)
             {
-                currentValue = playerStatsBonusController.GetCurrentStrength();
+                currentValue = characterBaseStats.GetStrength();
             }
             else if (isDexterity)
             {
-                currentValue = playerStatsBonusController.GetCurrentDexterity();
+                currentValue = characterBaseStats.GetDexterity();
             }
             else if (isIntelligence)
             {
-                currentValue = playerStatsBonusController.GetCurrentIntelligence();
+                currentValue = characterBaseStats.GetIntelligence();
             }
 
             if (equal)

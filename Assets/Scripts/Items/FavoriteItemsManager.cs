@@ -50,21 +50,21 @@ namespace AF
                 return;
             }
 
-            Item currentItem = equipmentDatabase.GetCurrentConsumable();
+            ConsumableInstance currentConsumable = equipmentDatabase.GetCurrentConsumable();
 
-            if (currentItem == null)
+            if (currentConsumable.IsEmpty())
             {
                 return;
             }
 
-            int itemAmount = inventoryDatabase.GetItemAmount(currentItem);
+            int itemAmount = inventoryDatabase.GetItemAmount(currentConsumable.GetItem<Consumable>());
 
-            if (itemAmount <= 1 && !currentItem.isRenewable)
+            if (itemAmount <= 1 && !currentConsumable.GetItem<Item>().isRenewable)
             {
                 equipmentDatabase.UnequipConsumable(equipmentDatabase.currentConsumableIndex);
             }
 
-            Consumable consumableItem = currentItem as Consumable;
+            Consumable consumableItem = currentConsumable.GetItem<Consumable>();
             playerManager.playerInventory.PrepareItemForConsuming(consumableItem);
 
             uIDocumentPlayerHUDV2.UpdateEquipment();

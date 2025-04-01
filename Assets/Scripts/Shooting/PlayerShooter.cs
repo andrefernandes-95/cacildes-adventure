@@ -94,8 +94,8 @@ namespace AF.Shooting
 
         bool IsRangeWeaponIncompatibleWithProjectile()
         {
-            Weapon currentRangeWeapon = equipmentDatabase.GetCurrentWeapon();
-            Arrow arrow = equipmentDatabase.GetCurrentArrow();
+            Weapon currentRangeWeapon = equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>();
+            Arrow arrow = equipmentDatabase.GetCurrentArrow()?.GetItem<Arrow>();
 
             if (currentRangeWeapon == null || arrow == null)
             {
@@ -137,7 +137,7 @@ namespace AF.Shooting
                         return;
                     }
 
-                    ShootBow(equipmentDatabase.GetCurrentArrow(), transform, lockOnManager.nearestLockOnTarget?.transform);
+                    ShootBow(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>(), transform, lockOnManager.nearestLockOnTarget?.transform);
                     uIDocumentPlayerHUDV2.UpdateEquipment();
                     canShootBow = false;
                     return;
@@ -147,10 +147,10 @@ namespace AF.Shooting
 
                 if (
                    equipmentDatabase.IsStaffEquipped()
-                   && equipmentDatabase.GetCurrentSpell() != null
-                   && playerManager.manaManager.HasEnoughManaForSpell(equipmentDatabase.GetCurrentSpell()))
+                   && equipmentDatabase.GetCurrentSpell().Exists()
+                   && playerManager.manaManager.HasEnoughManaForSpell(equipmentDatabase.GetCurrentSpell().GetItem<Spell>()))
                 {
-                    playerManager.manaManager.DecreaseMana(equipmentDatabase.GetCurrentSpell().costPerCast);
+                    playerManager.manaManager.DecreaseMana(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().manaCostPerCast);
 
                     HandleSpellCastAnimationOverrides();
 
@@ -161,7 +161,7 @@ namespace AF.Shooting
 
         void HandleSpellCastAnimationOverrides()
         {
-            Spell currentSpell = equipmentDatabase.GetCurrentSpell();
+            Spell currentSpell = equipmentDatabase.GetCurrentSpell()?.GetItem<Spell>();
 
             if (currentSpell == previousSpell)
             {
@@ -173,8 +173,8 @@ namespace AF.Shooting
             bool ignoreSpellsAnimationClips = false;
             if (
                 currentSpell.animationCanNotBeOverriden == false &&
-                equipmentDatabase.GetCurrentWeapon() != null &&
-                equipmentDatabase.GetCurrentWeapon().ignoreSpellsAnimationClips)
+                equipmentDatabase.GetCurrentRightWeapon().Exists() &&
+                equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().ignoreSpellsAnimationClips)
             {
                 ignoreSpellsAnimationClips = true;
             }
@@ -204,7 +204,8 @@ namespace AF.Shooting
             {
                 GetPlayerManager().animator.SetBool(hashIsAiming, true);
 
-                cinemachine3RdPersonFollow.CameraDistance = equipmentDatabase.GetCurrentWeapon().isCrossbow ? crossbowAimCameraDistance : bowAimCameraDistance;
+                cinemachine3RdPersonFollow.CameraDistance =
+                    (equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>()?.isCrossbow ?? false) ? crossbowAimCameraDistance : bowAimCameraDistance;
 
                 onBowAim_Begin?.Invoke();
             }
@@ -246,9 +247,9 @@ namespace AF.Shooting
                 achievementOnShootingBowForFirstTime.AwardAchievement();
             }
 
-            if (equipmentDatabase.GetCurrentArrow().loseUponFiring)
+            if (equipmentDatabase.GetCurrentArrow().Exists() && equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().loseUponFiring)
             {
-                inventoryDatabase.RemoveItem(consumableProjectile, 1);
+                inventoryDatabase.RemoveItem(consumableProjectile);
             }
 
             GetPlayerManager().staminaStatManager.DecreaseStamina(minimumStaminaToShoot);
@@ -262,7 +263,7 @@ namespace AF.Shooting
         /// </summary>
         public override void CastSpell()
         {
-            ShootSpell(equipmentDatabase.GetCurrentSpell(), lockOnManager.nearestLockOnTarget?.transform);
+            ShootSpell(equipmentDatabase.GetCurrentSpell()?.GetItem<Spell>(), lockOnManager.nearestLockOnTarget?.transform);
 
             OnShoot();
         }
@@ -447,7 +448,7 @@ namespace AF.Shooting
                 {
                     bool shouldDoubleDamage = false;
 
-                    Weapon currentWeapon = GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentWeapon();
+                    Weapon currentWeapon = GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>();
 
                     if (currentWeapon != null)
                     {
@@ -458,7 +459,7 @@ namespace AF.Shooting
 
                     onDamageCollisionAbstractManager.damage.ScaleSpell(
                         GetPlayerManager().attackStatManager,
-                        currentWeapon,
+                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
                         playerStatsDatabase.GetCurrentReputation(),
                         currentSpell.isFaithSpell,
                         currentSpell.isHexSpell,
@@ -481,7 +482,7 @@ namespace AF.Shooting
                 {
                     onChildDamageCollisionAbstractManager.damage.ScaleSpell(
                         GetPlayerManager().attackStatManager,
-                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentWeapon(),
+                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
                         playerStatsDatabase.GetCurrentReputation(),
                         currentSpell.isFaithSpell,
                         currentSpell.isHexSpell,

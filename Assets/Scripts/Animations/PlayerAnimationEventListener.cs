@@ -18,25 +18,12 @@ namespace AF.Animations
         public AudioSource combatAudioSource;
         public Soundbank soundbank;
 
-        [Header("Settings")]
-        public float animatorSpeed = 1f;
-        float defaultAnimatorSpeed;
-
-        private void Awake()
-        {
-            playerManager.animator.speed = animatorSpeed;
-            defaultAnimatorSpeed = animatorSpeed;
-        }
 
         public void OpenLeftWeaponHitbox()
         {
-            if (playerManager.playerWeaponsManager.leftWeaponInstance != null)
+            if (playerManager.playerWeaponsManager.equippedLeftWeaponInstance != null)
             {
-                playerManager.playerWeaponsManager.leftWeaponInstance.EnableHitbox();
-            }
-            else if (playerManager.playerWeaponsManager.leftHandHitbox != null)
-            {
-                playerManager.playerWeaponsManager.leftHandHitbox.EnableHitbox();
+                playerManager.playerWeaponsManager.equippedLeftWeaponInstance.OpenDamageCollider();
             }
 
             DisableRotation();
@@ -44,26 +31,19 @@ namespace AF.Animations
 
         public void CloseLeftWeaponHitbox()
         {
-            if (playerManager.playerWeaponsManager.leftWeaponInstance != null)
+            if (playerManager.playerWeaponsManager.equippedLeftWeaponInstance != null)
             {
-                playerManager.playerWeaponsManager.leftWeaponInstance.DisableHitbox();
+                playerManager.playerWeaponsManager.equippedLeftWeaponInstance.CloseDamageCollider();
             }
-            else if (playerManager.playerWeaponsManager.leftHandHitbox != null)
-            {
-                playerManager.playerWeaponsManager.leftHandHitbox.DisableHitbox();
-            }
+
             onHitboxesClosed?.Invoke();
         }
 
         public void OpenRightWeaponHitbox()
         {
-            if (playerManager.playerWeaponsManager.currentWeaponInstance != null)
+            if (playerManager.playerWeaponsManager.equippedRightWeaponInstance != null)
             {
-                playerManager.playerWeaponsManager.currentWeaponInstance.EnableHitbox();
-            }
-            else if (playerManager.playerWeaponsManager.rightHandHitbox != null)
-            {
-                playerManager.playerWeaponsManager.rightHandHitbox.EnableHitbox();
+                playerManager.playerWeaponsManager.equippedRightWeaponInstance.OpenDamageCollider();
             }
 
             DisableRotation();
@@ -71,13 +51,9 @@ namespace AF.Animations
 
         public void CloseRightWeaponHitbox()
         {
-            if (playerManager.playerWeaponsManager.currentWeaponInstance != null)
+            if (playerManager.playerWeaponsManager.equippedRightWeaponInstance != null)
             {
-                playerManager.playerWeaponsManager.currentWeaponInstance.DisableHitbox();
-            }
-            if (playerManager.playerWeaponsManager.rightHandHitbox != null)
-            {
-                playerManager.playerWeaponsManager.rightHandHitbox.DisableHitbox();
+                playerManager.playerWeaponsManager.equippedRightWeaponInstance.CloseDamageCollider();
             }
 
             onHitboxesClosed?.Invoke();
@@ -85,55 +61,34 @@ namespace AF.Animations
 
         public void OpenLeftFootHitbox()
         {
-            if (playerManager.playerWeaponsManager.leftFootHitbox != null)
-            {
-                playerManager.playerWeaponsManager.leftFootHitbox.EnableHitbox();
-                playerManager.playerCombatController.isAttackingWithFoot = true;
-            }
 
             DisableRotation();
         }
 
         public void CloseLeftFootHitbox()
         {
-            if (playerManager.playerWeaponsManager.leftFootHitbox != null)
-            {
-                playerManager.playerWeaponsManager.leftFootHitbox.DisableHitbox();
-                playerManager.playerCombatController.isAttackingWithFoot = false;
-            }
 
             onHitboxesClosed?.Invoke();
         }
 
         public void OpenRightFootHitbox()
         {
-            if (playerManager.playerWeaponsManager.rightFootHitbox != null)
-            {
-                playerManager.playerWeaponsManager.rightFootHitbox.EnableHitbox();
-                playerManager.playerCombatController.isAttackingWithFoot = true;
-            }
 
             DisableRotation();
         }
 
         public void CloseRightFootHitbox()
         {
-            if (playerManager.playerWeaponsManager.rightFootHitbox != null)
-            {
-                playerManager.playerWeaponsManager.rightFootHitbox.DisableHitbox();
-                playerManager.playerCombatController.isAttackingWithFoot = false;
-            }
-
             onHitboxesClosed?.Invoke();
         }
         public void EnableRotation()
         {
-            playerManager.canRotate = true;
+            playerManager.EnableCanRotate();
         }
 
         public void DisableRotation()
         {
-            playerManager.canRotate = false;
+            playerManager.DisableCanRotate();
         }
 
         public void EnableRootMotion()
@@ -224,20 +179,6 @@ namespace AF.Animations
             throw new System.NotImplementedException();
         }
 
-        public void RestoreDefaultAnimatorSpeed()
-        {
-            this.animatorSpeed = defaultAnimatorSpeed;
-            playerManager.animator.speed = animatorSpeed;
-
-        }
-
-        public void SetAnimatorSpeed(float speed)
-        {
-            this.animatorSpeed = speed;
-            playerManager.animator.speed = animatorSpeed;
-
-        }
-
         public void OnShakeCamera()
         {
             cinemachineImpulseSource.GenerateImpulse();
@@ -245,7 +186,6 @@ namespace AF.Animations
 
         public void ShowShield()
         {
-            playerManager.playerWeaponsManager.ShowShield();
         }
 
         public void DropIKHelper()
@@ -265,7 +205,6 @@ namespace AF.Animations
 
         public void OnWeaponSpecial()
         {
-            playerManager.playerWeaponsManager.HandleWeaponSpecial();
         }
 
         public void MoveTowardsTarget()

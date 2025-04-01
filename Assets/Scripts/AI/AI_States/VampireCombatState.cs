@@ -37,7 +37,7 @@ namespace AF
 
         public override State Tick(StateManager stateManager)
         {
-            if (equipmentDatabase.accessories.Contains(garlicAccessory) && fleeingAttempts <= maxFleeingAttempts)
+            if (equipmentDatabase.IsAccessoryEquiped(garlicAccessory) && fleeingAttempts <= maxFleeingAttempts)
             {
                 fleeingAttempts++;
 

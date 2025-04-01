@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AF.Health;
 using AF.Inventory;
 using AF.Music;
 using GameAnalyticsSDK;
@@ -334,11 +335,12 @@ namespace AF
             var scrollView = this.root.Q<ScrollView>();
 
             int i = 0;
-            foreach (var itemEntry in GetUpgradeableWeapons())
+
+            foreach (WeaponInstance weaponInstance in GetUpgradeableWeapons())
             {
                 int currentIndex = i;
 
-                Weapon wp = itemEntry.Key as Weapon;
+                Weapon wp = weaponInstance.GetItem<Weapon>();
 
                 if (ShouldSkipUpgrade(wp, wp.level))
                 {
@@ -355,25 +357,25 @@ namespace AF
                 var craftLabel = scrollItem.Q<Label>("CraftLabel");
                 craftLabel.text = GetCraftLabel();
 
-                craftBtn.style.opacity = CraftingUtils.CanImproveWeapon(inventoryDatabase, wp, playerStatsDatabase.gold) ? 1f : 0.25f;
+                craftBtn.style.opacity = CraftingUtils.CanImproveWeapon(inventoryDatabase, weaponInstance, playerStatsDatabase.gold) ? 1f : 0.25f;
 
                 UIUtils.SetupButton(craftBtn, () =>
                 {
                     lastScrollElementIndex = currentIndex;
 
-                    if (!CraftingUtils.CanImproveWeapon(inventoryDatabase, wp, playerStatsDatabase.gold))
+                    if (!CraftingUtils.CanImproveWeapon(inventoryDatabase, weaponInstance, playerStatsDatabase.gold))
                     {
                         HandleCraftError(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Missing ingredients!"));
                         return;
                     }
 
-                    HandleWeaponUpgrade(wp);
+                    HandleWeaponUpgrade(weaponInstance);
 
                     DrawUI();
                 },
                 () =>
                 {
-                    ShowRequirements(wp);
+                    ShowRequirements(weaponInstance);
                     scrollView.ScrollTo(craftBtn);
                 },
                 () => { },
@@ -436,13 +438,15 @@ namespace AF
 
             foreach (var ingredient in recipe.ingredients)
             {
-                playerManager.playerInventory.RemoveItem(ingredient.ingredient, ingredient.amount);
+                playerManager.playerInventory.RemoveItem(ingredient.ingredient);
             }
         }
 
-        Dictionary<Item, ItemAmount> GetUpgradeableWeapons()
+        List<ItemInstance> GetUpgradeableWeapons()
         {
-            return inventoryDatabase.ownedItems.Where(itemEntry => itemEntry.Key is Weapon wp && wp.canBeUpgraded).ToDictionary(item => item.Key, item => item.Value);
+            return inventoryDatabase.ownedItems
+                .Where(itemEntry => itemEntry.Key is Weapon wp && wp.canBeUpgraded)
+                .SelectMany(itemEntry => itemEntry.Value).ToList();
         }
 
         bool ShouldSkipUpgrade(Weapon wp, int nextLevel)
@@ -455,21 +459,21 @@ namespace AF
             return $"{wp.GetName()} +{wp.level} > {wp.GetName()} +{wp.level + 1}";
         }
 
-        void HandleWeaponUpgrade(Weapon wp)
+        void HandleWeaponUpgrade(WeaponInstance wp)
         {
             playerManager.playerAchievementsManager.achievementForUpgradingFirstWeapon.AwardAchievement();
             soundbank.PlaySound(soundbank.craftSuccess);
-            notificationManager.ShowNotification(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Weapon improved!"), wp.sprite);
+            notificationManager.ShowNotification(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Weapon improved!"), wp.GetItem<Weapon>().sprite);
 
 
             LogAnalytic(AnalyticsUtils.OnUIButtonClick("UpgradeWeapon"), new() {
-                { "weapon_upgraded", wp.name }
+                { "weapon_upgraded", wp.GetItem<Weapon>().name }
             });
 
             CraftingUtils.UpgradeWeapon(
                 wp,
                 (goldUsed) => uIDocumentPlayerGold.LoseGold(goldUsed),
-                (upgradeMaterialUsed) => playerManager.playerInventory.RemoveItem(upgradeMaterialUsed.Key, upgradeMaterialUsed.Value)
+                (upgradeMaterialUsed) => playerManager.playerInventory.RemoveItem(upgradeMaterialUsed.Key)
             );
         }
 
@@ -491,7 +495,7 @@ namespace AF
 
                 if (playerOwnedIngredient != null)
                 {
-                    playerOwnedIngredientAmount = playerOwnedIngredient.amount;
+                    playerOwnedIngredientAmount = inventoryDatabase.GetItemAmount(ingredient.ingredient);
                 }
 
                 ingredientItemEntry.Q<Label>("Amount").text = playerOwnedIngredientAmount + " / " + ingredient.amount;
@@ -502,8 +506,9 @@ namespace AF
 
             root.Q<VisualElement>("IngredientsListPreview").style.opacity = 1;
         }
-        void ShowRequirements(Weapon weapon)
+        void ShowRequirements(WeaponInstance weaponInstance)
         {
+            Weapon weapon = weaponInstance.GetItem<Weapon>();
             WeaponUpgradeLevel weaponUpgradeLevel = weapon.weaponUpgrades.ElementAtOrDefault(weapon.level - 1);
 
             if (weaponUpgradeLevel == null)
@@ -511,7 +516,7 @@ namespace AF
                 return;
             }
 
-            var nextLevel = weapon.level + 1;
+            var nextLevel = weaponInstance.level + 1;
             root.Q<VisualElement>("WeaponNextUpgradeDescription").style.display = DisplayStyle.Flex;
 
             // Weapon preview
@@ -523,44 +528,48 @@ namespace AF
             root.Q<Label>("MagicAttack").style.display = DisplayStyle.None;
             root.Q<Label>("DarknessAttack").style.display = DisplayStyle.None;
 
-            if (weapon.GetWeaponAttackForLevel(playerManager.attackStatManager, nextLevel) > 0)
+            Damage currentWeaponDamage = weapon.GetCurrentDamage(playerManager, weaponInstance.level);
+            Damage nextLevelWeaponDamage = weapon.GetCurrentDamage(playerManager, nextLevel);
+
+            if (nextLevelWeaponDamage.physical > 0)
             {
                 root.Q<Label>("PhysicalAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("PhysicalAttack").text = NextPhysicalDamage_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponAttackForLevel(playerManager.attackStatManager, weapon.level) + " > " + weapon.GetWeaponAttackForLevel(playerManager.attackStatManager, nextLevel);
+                    + currentWeaponDamage.physical + " > " + nextLevelWeaponDamage.physical;
             }
-            if (weapon.GetWeaponFireAttackForLevel(playerManager.attackStatManager, nextLevel) > 0)
+            if (nextLevelWeaponDamage.fire > 0)
             {
                 root.Q<Label>("FireAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("FireAttack").text = NextFireBonus_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponFireAttackForLevel(playerManager.attackStatManager, weapon.level) + " > " + weapon.GetWeaponFireAttackForLevel(playerManager.attackStatManager, nextLevel);
+                    + currentWeaponDamage.fire + " > " + nextLevelWeaponDamage.fire;
             }
-            if (weapon.GetWeaponFrostAttackForLevel(playerManager.attackStatManager, nextLevel) > 0)
+            if (nextLevelWeaponDamage.frost > 0)
             {
                 root.Q<Label>("FrostAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("FrostAttack").text = NextFrostBonus_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponFrostAttackForLevel(playerManager.attackStatManager, weapon.level) + " > " + weapon.GetWeaponFrostAttackForLevel(playerManager.attackStatManager, nextLevel);
+                    + currentWeaponDamage.frost + " > " + nextLevelWeaponDamage.frost;
             }
 
-            int playerReputation = playerStatsDatabase.GetCurrentReputation();
-            if (weapon.GetWeaponLightningAttackForLevel(nextLevel, playerReputation, playerManager.attackStatManager) > 0)
+            if (nextLevelWeaponDamage.lightning > 0)
             {
                 root.Q<Label>("LightningAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("LightningAttack").text = NextLightningBonus_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponLightningAttackForLevel(weapon.level, playerReputation, playerManager.attackStatManager) + " > " + weapon.GetWeaponLightningAttackForLevel(nextLevel, playerReputation, playerManager.attackStatManager);
+                    + currentWeaponDamage.lightning + " > " + nextLevelWeaponDamage.lightning;
             }
-            if (weapon.GetWeaponMagicAttackForLevel(nextLevel, playerManager.attackStatManager) > 0)
+            if (nextLevelWeaponDamage.magic > 0)
             {
                 root.Q<Label>("MagicAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("MagicAttack").text = NextMagicBonus_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponMagicAttackForLevel(weapon.level, playerManager.attackStatManager) + " > " + weapon.GetWeaponMagicAttackForLevel(nextLevel, playerManager.attackStatManager);
+                    + currentWeaponDamage.magic + " > " + nextLevelWeaponDamage.magic;
             }
-            if (weapon.GetWeaponDarknessAttackForLevel(nextLevel, playerReputation, playerManager.attackStatManager) > 0)
+            if (nextLevelWeaponDamage.darkness > 0)
             {
                 root.Q<Label>("DarknessAttack").style.display = DisplayStyle.Flex;
                 root.Q<Label>("DarknessAttack").text = NextDarknessBonus_LocalizedString.GetLocalizedString() + " "
-                    + weapon.GetWeaponDarknessAttackForLevel(weapon.level, playerReputation, playerManager.attackStatManager) + " > " + weapon.GetWeaponDarknessAttackForLevel(nextLevel, playerReputation, playerManager.attackStatManager);
+                    + currentWeaponDamage.darkness + " > " + nextLevelWeaponDamage.darkness;
             }
+
+            // TODO: Add Water DMG
 
             // Requirements
 
@@ -582,7 +591,7 @@ namespace AF
                 var playerOwnedIngredientAmount = 0;
                 if (playerOwnedIngredient != null)
                 {
-                    playerOwnedIngredientAmount = playerOwnedIngredient.amount;
+                    playerOwnedIngredientAmount = inventoryDatabase.GetItemAmount(upgradeMaterialItem);
                 }
                 ingredientItemEntry.Q<Label>("Amount").text = playerOwnedIngredientAmount + " / " + amountRequiredFoUpgrade;
                 ingredientItemEntry.Q<Label>("Amount").style.opacity =

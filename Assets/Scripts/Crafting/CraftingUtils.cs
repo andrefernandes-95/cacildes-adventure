@@ -18,13 +18,15 @@ namespace AF
                     ? inventoryDatabase.ownedItems[ingredient.ingredient]
                     : null;
 
+                var itemCount = inventoryDatabase.GetItemAmount(ingredient.ingredient);
+
                 if (itemEntry == null)
                 {
                     hasEnoughMaterial = false;
                     break;
                 }
 
-                if (itemEntry.amount >= ingredient.amount)
+                if (itemCount >= ingredient.amount)
                 {
                     hasEnoughMaterial = true;
                 }
@@ -38,9 +40,9 @@ namespace AF
             return hasEnoughMaterial;
         }
 
-        public static bool CanImproveWeapon(InventoryDatabase inventoryDatabase, Weapon weapon, int ownedGold)
+        public static bool CanImproveWeapon(InventoryDatabase inventoryDatabase, WeaponInstance weaponInstance, int ownedGold)
         {
-            WeaponUpgradeLevel nextWeaponUpgradeLevel = weapon.weaponUpgrades.ElementAtOrDefault(weapon.level - 1);
+            WeaponUpgradeLevel nextWeaponUpgradeLevel = weaponInstance.GetItem<Weapon>().weaponUpgrades.ElementAtOrDefault(weaponInstance.level - 1);
 
             if (nextWeaponUpgradeLevel == null)
             {
@@ -72,14 +74,14 @@ namespace AF
         }
 
         public static void UpgradeWeapon(
-            Weapon weapon,
+            WeaponInstance weaponInstance,
             UnityAction<int> onUpgrade,
             UnityAction<KeyValuePair<UpgradeMaterial, int>> onUpgradeMaterialUsed
         )
         {
-            var currentWeaponLevel = weapon.level;
+            var currentWeaponLevel = weaponInstance.level;
 
-            WeaponUpgradeLevel weaponUpgradeForNextLevel = weapon.weaponUpgrades.ElementAtOrDefault(currentWeaponLevel - 1);
+            WeaponUpgradeLevel weaponUpgradeForNextLevel = weaponInstance.GetItem<Weapon>().weaponUpgrades.ElementAtOrDefault(currentWeaponLevel - 1);
 
             onUpgrade(weaponUpgradeForNextLevel.goldCostForUpgrade);
 
@@ -88,7 +90,7 @@ namespace AF
                 onUpgradeMaterialUsed(upgradeMaterial);
             }
 
-            weapon.level++;
+            weaponInstance.level++;
         }
 
         public static bool IsItemAnIngredientOfCurrentLearnedRecipes(RecipesDatabase recipesDatabase, Item item)

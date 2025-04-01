@@ -51,7 +51,7 @@ namespace AF
 
             if (leftWeapon != null)
             {
-                playerManager.playerWeaponsManager.UnequipLeftWeapon();
+                //playerManager.playerWeaponsManager.UnequipLeftWeapon();
             }
         }
 
@@ -80,7 +80,7 @@ namespace AF
 
             if (leftWeapon != null)
             {
-                playerManager.playerWeaponsManager.UnequipLeftWeapon();
+                // playerManager.playerWeaponsManager.UnequipLeftWeapon();
             }
         }
 
@@ -110,7 +110,7 @@ namespace AF
         {
             if (leftWeapon != null)
             {
-                playerManager.playerWeaponsManager.EquipLeftWeapon(leftWeapon);
+                //  playerManager.playerWeaponsManager.EquipLeftWeapon(leftWeapon);
             }
         }
     }

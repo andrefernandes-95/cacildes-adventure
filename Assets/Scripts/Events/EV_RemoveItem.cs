@@ -29,7 +29,10 @@ namespace AF
 
         IEnumerator RemoveItem()
         {
-            playerManager.playerInventory.RemoveItem(item, amount);
+            for (int i = 0; i < amount; i++)
+            {
+                playerManager.playerInventory.RemoveItem(item);
+            }
 
             if (pickUpSfx != null)
             {

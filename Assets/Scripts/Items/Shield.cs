@@ -15,7 +15,7 @@ namespace AF
     }
 
     [CreateAssetMenu(menuName = "Items / Shield / New Shield")]
-    public class Shield : Item
+    public class Shield : Weapon
     {
         [Header("Stamina Costs")]
         public float blockStaminaCost = 30f;

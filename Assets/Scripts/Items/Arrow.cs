@@ -10,5 +10,6 @@ namespace AF
         public bool isRifleBullet = false;
         public bool loseUponFiring = true;
 
+        public float staminaCostPerCast = 20;
     }
 }

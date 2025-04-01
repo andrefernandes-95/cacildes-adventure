@@ -6,7 +6,6 @@ namespace AF
     public class PlayerPosture : CharacterAbstractPosture
     {
         public PlayerStatsDatabase playerStatsDatabase;
-        public StatsBonusController statsBonusController;
         public PlayerManager playerManager;
 
         public float POSTURE_DECREASE_RATE_BONUS = 2.25f;
@@ -17,7 +16,7 @@ namespace AF
         }
         int GetExtraPostureBasedOnStats()
         {
-            return GetBonusByStat(statsBonusController.GetCurrentStrength()) + GetBonusByStat(statsBonusController.GetCurrentVitality());
+            return GetBonusByStat(playerManager.characterBaseStats.GetStrength()) + GetBonusByStat(playerManager.characterBaseStats.GetVitality());
         }
 
         int GetBonusByStat(int stat)
@@ -47,7 +46,7 @@ namespace AF
 
         public override float GetPostureDecreateRate()
         {
-            return POSTURE_DECREASE_RATE_BONUS + statsBonusController.postureDecreaseRateBonus;
+            return POSTURE_DECREASE_RATE_BONUS + playerManager.statsBonusController.postureDecreaseRateBonus;
         }
 
         public override bool CanPlayPostureDamagedEvent()

@@ -40,8 +40,8 @@ namespace AF
         public override int GetMaxHealth()
         {
             int baseValue = Formulas.CalculateStatForLevel(
-                playerStatsDatabase.maxHealth + playerStatsBonusController.healthBonus,
-                playerStatsBonusController.GetCurrentVitality(),
+                character.characterBaseStats.GetVitality(),
+                character.characterBaseStats.GetVitality(),
                 playerStatsDatabase.levelMultiplierForHealth);
 
             if (hasHealthCutInHalf)
@@ -148,53 +148,6 @@ namespace AF
             return playerStatsDatabase.currentHealth;
         }
 
-        public float GetExtraAttackBasedOnCurrentHealth()
-        {
-            var percentage = playerStatsDatabase.currentHealth * 100 / GetMaxHealth() * 0.01;
-
-            if (percentage > 0.9)
-            {
-                return 0;
-            }
-            else if (percentage > 0.8)
-            {
-                return 0.05f;
-            }
-            else if (percentage > 0.7)
-            {
-                return 0.1f;
-            }
-            else if (percentage > 0.6)
-            {
-                return 0.2f;
-            }
-            else if (percentage > 0.5)
-            {
-                return 0.5f;
-            }
-            else if (percentage > 0.4)
-            {
-                return 0.6f;
-            }
-            else if (percentage > 0.3)
-            {
-                return 0.8f;
-            }
-            else if (percentage > 0.2)
-            {
-                return 1.2f;
-            }
-            else if (percentage > 0.1)
-            {
-                return 1.5f;
-            }
-            else if (percentage > 0)
-            {
-                return 2f;
-            }
-
-            return 0f;
-        }
 
         public override void RestoreFullHealth()
         {

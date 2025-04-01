@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
 using UnityEditor;
@@ -11,9 +13,9 @@ namespace AF.Inventory
 
         [Header("Inventory")]
         [SerializedDictionary("Item", "Quantity")]
-        public SerializedDictionary<Item, ItemAmount> ownedItems = new();
+        public SerializedDictionary<Item, List<ItemInstance>> ownedItems = new();
 
-        public SerializedDictionary<Item, ItemAmount> defaultItems = new();
+        // public SerializedDictionary<Item, ItemAmount> defaultItems = new();
 
         [Header("Databases")]
         public EquipmentDatabase equipmentDatabase;
@@ -43,31 +45,34 @@ namespace AF.Inventory
 
         public void SetDefaultItems()
         {
-            ownedItems.Clear();
+            /*  ownedItems.Clear();
 
-            foreach (var defaultItem in defaultItems)
-            {
-                ownedItems.Add(defaultItem.Key, defaultItem.Value);
+              foreach (var defaultItem in defaultItems)
+              {
+                  ownedItems.Add(defaultItem.Key, defaultItem.Value);
 
-                if (defaultItem.Key is Armor armor)
-                {
-                    equipmentDatabase.EquipArmor(armor);
-                }
-                else if (defaultItem.Key is Legwear legwear)
-                {
-                    equipmentDatabase.EquipLegwear(legwear);
-                }
-            }
+                  if (defaultItem.Key is Armor armor)
+                  {
+                      equipmentDatabase.EquipArmor(armor);
+                  }
+                  else if (defaultItem.Key is Legwear legwear)
+                  {
+                      equipmentDatabase.EquipLegwear(legwear);
+                  }
+              }
+              */
         }
 
         public void ReplenishItems()
         {
-            foreach (var item in ownedItems)
+            foreach (var itemEntry in ownedItems)
             {
-                if (item.Value.usages > 0)
+                if (itemEntry.Key is Consumable)
                 {
-                    item.Value.amount += item.Value.usages;
-                    item.Value.usages = 0;
+                    foreach (ConsumableInstance consumableInstance in itemEntry.Value)
+                    {
+
+                    }
                 }
             }
         }
@@ -77,71 +82,108 @@ namespace AF.Inventory
             AddItem(itemToAdd, 1);
         }
 
-        public void AddItem(Item itemToAdd, int quantity)
+        public List<ItemInstance> AddItem(Item itemToAdd, int quantity)
         {
+            List<ItemInstance> itemsAdded = new();
 
-            if (HasItem(itemToAdd))
+            for (int i = 0; i < quantity; i++)
             {
-                ownedItems[itemToAdd].amount += quantity;
+                string id = Guid.NewGuid().ToString();
+
+                var toAdd = itemToAdd switch
+                {
+                    Shield => new ShieldInstance(id, itemToAdd as Shield),
+                    Weapon => new WeaponInstance(id, itemToAdd as Weapon, 0),
+                    Arrow => new ArrowInstance(id, itemToAdd as Arrow),
+                    Spell => new SpellInstance(id, itemToAdd as Spell),
+                    Helmet => new HelmetInstance(id, itemToAdd as Helmet),
+                    Gauntlet => new GauntletInstance(id, itemToAdd as Gauntlet),
+                    Legwear => new LegwearInstance(id, itemToAdd as Legwear),
+                    Armor => new ArmorInstance(id, itemToAdd as Armor),
+                    Accessory => new AccessoryInstance(id, itemToAdd as Accessory),
+                    Consumable => new ConsumableInstance(id, itemToAdd as Consumable),
+                    CraftingMaterial => new CraftingMaterialInstance(id, itemToAdd as CraftingMaterial),
+                    //Gemstone => new GemstoneInstance(id, itemToAdd),
+                    _ => new ItemInstance(id, itemToAdd),
+                };
+
+                if (ownedItems.ContainsKey(itemToAdd))
+                {
+                    ownedItems[itemToAdd].Add(toAdd);
+                }
+                else
+                {
+                    ownedItems.Add(itemToAdd, new() { toAdd });
+                }
+
+                itemsAdded.Add(toAdd);
             }
-            else
-            {
-                ownedItems.Add(itemToAdd, new ItemAmount() { amount = quantity, usages = 0 });
-            }
+
+            return itemsAdded;
         }
 
-        public void RemoveItem(Item itemToAdd)
+
+        public ItemInstance GetFirst(Item itemToFind)
         {
-            RemoveItem(itemToAdd, 1);
+            if (!ownedItems.ContainsKey(itemToFind))
+            {
+                return null;
+            }
+
+            return ownedItems[itemToFind].FirstOrDefault(ownedItemInstance => ownedItemInstance.HasItem(itemToFind));
         }
 
-        public void RemoveItem(Item itemToRemove, int quantity)
+        public void RemoveItem(Item itemToRemove)
         {
-            if (!ownedItems.ContainsKey(itemToRemove))
+            ItemInstance itemInstanceToRemove = GetFirst(itemToRemove);
+            RemoveItemInstance(itemInstanceToRemove);
+        }
+
+        public void RemoveItemInstance(ItemInstance itemInstance)
+        {
+            if (itemInstance == null)
             {
                 return;
             }
 
-            if (ownedItems[itemToRemove].amount <= 1)
+            if (itemInstance is ConsumableInstance consumableInstance)
             {
-                // If not reusable item
-                if (itemToRemove.isRenewable)
+                if (consumableInstance.GetItem<Consumable>().isRenewable)
                 {
-                    ownedItems[itemToRemove].amount = 0;
-                    ownedItems[itemToRemove].usages++;
+                    consumableInstance.wasUsed = true;
+                    return;
                 }
-                else
-                {
-                    UnequipItemToRemove(itemToRemove);
 
-                    // Remove item 
-                    ownedItems.Remove(itemToRemove);
+                if (GetItemAmount(itemInstance.GetItem<Consumable>()) > 0)
+                {
+                    ownedItems[itemInstance.GetItem<Consumable>()].Remove(itemInstance);
+                    return;
                 }
             }
-            else
+
+            ownedItems[itemInstance.GetItem<Item>()].Remove(itemInstance);
+
+            // If not last arrow, do not unequip item
+            if (itemInstance is ArrowInstance arrowInstance && GetItemAmount(arrowInstance.GetItem<Arrow>()) > 0)
             {
-                ownedItems[itemToRemove].amount -= quantity;
-
-                if (itemToRemove.isRenewable)
-                {
-                    ownedItems[itemToRemove].usages++;
-                }
+                return;
             }
+
+            UnequipItemToRemove(itemInstance);
         }
 
-        void UnequipItemToRemove(Item item)
-        {
-            equipmentDatabase.UnequipItem(item);
-        }
+        void UnequipItemToRemove(ItemInstance item) => equipmentDatabase.UnequipItem(item);
+
+        public ItemInstance FindItemById(string id) => ownedItems.SelectMany(entry => entry.Value).FirstOrDefault(ownedItem => ownedItem.id.Equals(id));
 
         public int GetItemAmount(Item itemToFind)
         {
             if (!ownedItems.ContainsKey(itemToFind))
             {
-                return -1;
+                return 0;
             }
 
-            return this.ownedItems[itemToFind].amount;
+            return ownedItems[itemToFind].Count;
         }
 
         public bool HasItem(Item itemToFind)
@@ -157,6 +199,105 @@ namespace AF.Inventory
         public int GetSpellsCount()
         {
             return ownedItems.Count(x => x.Key is Spell);
+        }
+        public void AddFromSerializedItem(SerializedItem serializedItem)
+        {
+            Item item = Resources.Load<Item>(serializedItem.itemPath);
+
+            if (item is Weapon weapon)
+            {
+                WeaponInstance weaponInstance = new(Guid.NewGuid().ToString(), weapon, serializedItem.level);
+
+                if (ownedItems.ContainsKey(weapon))
+                {
+                    ownedItems[weapon].Add(weaponInstance);
+                }
+                else
+                {
+                    ownedItems.Add(weapon, new() { weaponInstance });
+                }
+            }
+            else if (item is Shield shield)
+            {
+                ShieldInstance shieldInstance = new(Guid.NewGuid().ToString(), shield);
+                AddItemInstance(shield, shieldInstance);
+            }
+            else if (item is Arrow arrow)
+            {
+                ArrowInstance arrowInstance = new(Guid.NewGuid().ToString(), arrow);
+                AddItemInstance(arrow, arrowInstance);
+            }
+            else if (item is Spell spell)
+            {
+                SpellInstance spellInstance = new(Guid.NewGuid().ToString(), spell);
+                AddItemInstance(spell, spellInstance);
+            }
+            else if (item is Consumable consumable)
+            {
+                ConsumableInstance consumableInstance = new(Guid.NewGuid().ToString(), consumable)
+                {
+                    wasUsed = serializedItem.wasUsed
+                };
+                AddItemInstance(consumable, consumableInstance);
+            }
+            else if (item is Armor armor)
+            {
+                ArmorInstance armorInstance = new(Guid.NewGuid().ToString(), armor);
+                AddItemInstance(armor, armorInstance);
+            }
+            else if (item is Helmet helmet)
+            {
+                HelmetInstance helmetInstance = new(Guid.NewGuid().ToString(), helmet);
+                AddItemInstance(helmet, helmetInstance);
+            }
+            else if (item is Gauntlet gauntlet)
+            {
+                GauntletInstance gauntletInstance = new(Guid.NewGuid().ToString(), gauntlet);
+                AddItemInstance(gauntlet, gauntletInstance);
+            }
+            else if (item is Legwear legwear)
+            {
+                LegwearInstance legwearInstance = new(Guid.NewGuid().ToString(), legwear);
+                AddItemInstance(legwear, legwearInstance);
+            }
+            else if (item is Accessory accessory)
+            {
+                AccessoryInstance accessoryInstance = new(Guid.NewGuid().ToString(), accessory);
+                AddItemInstance(accessory, accessoryInstance);
+            }
+            else if (item is CraftingMaterial craftingMaterial)
+            {
+                CraftingMaterialInstance craftingMaterialInstance = new(Guid.NewGuid().ToString(), craftingMaterial);
+                AddItemInstance(craftingMaterial, craftingMaterialInstance);
+            }
+            else if (item is UpgradeMaterial upgradeMaterial)
+            {
+                UpgradeMaterialInstance upgradeMaterialInstance = new(Guid.NewGuid().ToString(), upgradeMaterial);
+                AddItemInstance(upgradeMaterial, upgradeMaterialInstance);
+            }
+            /*
+            else if (item is Gemstone gemstone)
+            {
+                GemstoneInstance gemstoneInstance = new(serializedItem.id, gemstone);
+                AddItemInstance(gemstone, gemstoneInstance);
+            }*/
+            else
+            {
+                ItemInstance itemInstance = new(Guid.NewGuid().ToString(), item);
+                AddItemInstance(item, itemInstance);
+            }
+        }
+
+        private void AddItemInstance<T>(T item, ItemInstance instance) where T : Item
+        {
+            if (ownedItems.ContainsKey(item))
+            {
+                ownedItems[item].Add(instance);
+            }
+            else
+            {
+                ownedItems.Add(item, new() { instance });
+            }
         }
     }
 }

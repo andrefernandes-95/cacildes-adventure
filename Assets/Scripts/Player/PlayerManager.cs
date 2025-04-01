@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using AF.Animations;
 using AF.Equipment;
 using AF.Events;
@@ -10,7 +8,6 @@ using AF.Ladders;
 using AF.Reputation;
 using AF.Shooting;
 using AF.StateMachine;
-using AF.Stats;
 using TigerForge;
 using UnityEngine;
 
@@ -19,14 +16,12 @@ namespace AF
     public class PlayerManager : CharacterBaseManager
     {
         public ThirdPersonController thirdPersonController;
-        public PlayerWeaponsManager playerWeaponsManager;
+        public CharacterWeapons playerWeaponsManager;
         public ClimbController climbController;
         public CharacterRollManager dodgeController;
-        public StatsBonusController statsBonusController;
         public PlayerLevelManager playerLevelManager;
         public PlayerAchievementsManager playerAchievementsManager;
         public CombatNotificationsController combatNotificationsController;
-        public CombatManager playerCombatController;
         public StaminaStatManager staminaStatManager;
         public ManaManager manaManager;
         public DefenseStatManager defenseStatManager;
@@ -61,7 +56,6 @@ namespace AF
         public EquipmentDatabase equipmentDatabase;
 
         // Animator Overrides
-        protected AnimatorOverrideController animatorOverrideController;
         RuntimeAnimatorController defaultAnimatorController;
 
         [Header("IK Helpers")]
@@ -75,13 +69,14 @@ namespace AF
 
         void Start()
         {
-            starterAssetsInputs.onLeftHandAttack.AddListener(() =>
-            {
-                playerCombatController.currentAttackingMember = AttackingMember.LEFT_HAND;
-            });
             starterAssetsInputs.onRightHandAttack.AddListener(() =>
             {
-                playerCombatController.currentAttackingMember = AttackingMember.RIGHT_HAND;
+                combatManager.currentAttackingMember = AttackingMember.RIGHT_HAND;
+            });
+
+            starterAssetsInputs.onLeftHandAttack.AddListener(() =>
+            {
+                combatManager.currentAttackingMember = AttackingMember.LEFT_HAND;
             });
         }
 
@@ -114,7 +109,7 @@ namespace AF
             }
 
             playerInventory.FinishItemConsumption();
-            playerCombatController.ResetStates();
+            combatManager.ResetStates();
             playerShootingManager.ResetStates();
 
             dodgeController.ResetStates();
@@ -140,7 +135,8 @@ namespace AF
 
         public override Damage GetAttackDamage()
         {
-            Damage attackDamage = attackStatManager.GetAttackDamage();
+            // TODO: Change to Attacking Weapon
+            Damage attackDamage = attackStatManager.GetAttackDamage(combatManager.GetAttackingWeapon());
 
             if (playerBlockController.isCounterAttacking)
             {
@@ -185,74 +181,37 @@ namespace AF
 
         public void UpdateAnimatorOverrideControllerClips()
         {
-            SetupAnimRefs();
+            return;
+            /*            SetupAnimRefs();
 
-            animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+                        animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
 
-            var clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
-            animatorOverrideController.GetOverrides(clipOverrides);
-            animator.runtimeAnimatorController = defaultAnimatorController;
+                        var clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
+                        animatorOverrideController.GetOverrides(clipOverrides);
+                        animator.runtimeAnimatorController = defaultAnimatorController;
 
-            Weapon currentWeapon = equipmentDatabase.GetCurrentWeapon();
-            if (currentWeapon != null)
-            {
-                if (currentWeapon.animationOverrides.Count > 0)
-                {
-                    UpdateAnimationOverrides(animator, clipOverrides, currentWeapon.animationOverrides);
-                }
+                        Weapon currentWeapon = equipmentDatabase.GetCurrentRightWeapon();
+                        if (currentWeapon != null)
+                        {
+                            if (currentWeapon.animationOverrides.Count > 0)
+                            {
+                                UpdateAnimationOverrides(animator, clipOverrides, currentWeapon.animationOverrides);
+                            }
 
-                if (equipmentDatabase.isTwoHanding)
-                {
-                    if (currentWeapon.twoHandOverrides != null && currentWeapon.twoHandOverrides.Count > 0)
-                    {
-                        List<AnimationOverride> animationOverrides = new();
-                        animationOverrides.AddRange(currentWeapon.twoHandOverrides);
-                        animationOverrides.AddRange(currentWeapon.blockOverrides);
-                        UpdateAnimationOverrides(animator, clipOverrides, animationOverrides);
-                    }
-                }
-            }
+                            if (equipmentDatabase.isTwoHanding)
+                            {
+                                if (currentWeapon.twoHandOverrides != null && currentWeapon.twoHandOverrides.Count > 0)
+                                {
+                                    List<AnimationOverride> animationOverrides = new();
+                                    animationOverrides.AddRange(currentWeapon.twoHandOverrides);
+                                    animationOverrides.AddRange(currentWeapon.blockOverrides);
+                                    UpdateAnimationOverrides(animator, clipOverrides, animationOverrides);
+                                }
+                            }
+                        }*/
         }
 
-
-
-        public void UpdateAttackAnimations(AttackAction[] attackActions)
-        {
-            SetupAnimRefs();
-
-            var clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
-            animatorOverrideController.GetOverrides(clipOverrides);
-
-            List<AnimationOverride> animationOverrides = new();
-            foreach (var attack in attackActions)
-            {
-                if (attack.attackAnimations.Count > 0)
-                {
-                    foreach (var attackClip in attack.attackAnimations)
-                    {
-                        AnimationOverride animationOverride = new() { animationClip = attackClip.Value, animationName = attackClip.Key.name };
-                        animationOverrides.Add(animationOverride);
-                    }
-                }
-            }
-
-            UpdateAnimationOverrides(animator, clipOverrides, animationOverrides);
-        }
-
-        void UpdateAnimationOverrides(Animator animator, AnimationClipOverrides clipOverrides, List<AnimationOverride> clips)
-        {
-            foreach (var animationOverride in clips)
-            {
-                clipOverrides[animationOverride.animationName] = animationOverride.animationClip;
-                animatorOverrideController.ApplyOverrides(clipOverrides);
-            }
-
-            animator.runtimeAnimatorController = animatorOverrideController;
-
-            RefreshAnimationOverrideState();
-        }
-
-        public void RefreshAnimationOverrideState()
+        public override void RefreshAnimationOverrideState()
         {
             // Hack to refresh lock on while switching animations
             if (lockOnManager.isLockedOn)

@@ -13,6 +13,13 @@ namespace AF
     {
         public readonly int hashBackstabExecuted = Animator.StringToHash("AI Humanoid - Backstabbed");
 
+        [Header("Animations")]
+        public bool useDirectionalDamageAnimations = false;
+        public AnimationEnum hitFromFront;
+        public AnimationEnum hitFromBack;
+        public AnimationEnum hitFromLeft;
+        public AnimationEnum hitFromRight;
+
         [Header("Character")]
         public CharacterBaseManager character;
         [Range(0, 1f)] public float pushForceAbsorption = 1;
@@ -177,6 +184,7 @@ namespace AF
 
                 if (character.characterBlockController.CanBlockDamage(incomingDamage))
                 {
+                    /*
                     if (character is PlayerManager playerManager)
                     {
                         if (playerManager.staminaStatManager.HasEnoughStaminaForAction(playerManager.playerWeaponsManager.GetCurrentBlockStaminaCost()))
@@ -201,7 +209,7 @@ namespace AF
                     {
                         character.characterBlockController.BlockAttack(incomingDamage);
                         return;
-                    }
+                    }*/
                 }
 
                 HandlePlayerReactionToEnemyAttack(damageOwner, character);
@@ -231,21 +239,21 @@ namespace AF
                 return;
             }
 
-            if (playerManager.equipmentDatabase.helmet != null && playerManager.equipmentDatabase.helmet.canDamageEnemiesUponAttack)
+            if (playerManager.equipmentDatabase.helmet.Exists() && playerManager.equipmentDatabase.helmet.GetItem<Helmet>().canDamageEnemiesUponAttack)
             {
-                playerManager.equipmentDatabase.helmet.AttackEnemy(enemy);
+                playerManager.equipmentDatabase.helmet.GetItem<Helmet>().AttackEnemy(enemy);
             }
-            if (playerManager.equipmentDatabase.armor != null && playerManager.equipmentDatabase.armor.canDamageEnemiesUponAttack)
+            if (playerManager.equipmentDatabase.armor.Exists() && playerManager.equipmentDatabase.armor.GetItem<Armor>().canDamageEnemiesUponAttack)
             {
-                playerManager.equipmentDatabase.armor.AttackEnemy(enemy);
+                playerManager.equipmentDatabase.armor.GetItem<Armor>().AttackEnemy(enemy);
             }
-            if (playerManager.equipmentDatabase.gauntlet != null && playerManager.equipmentDatabase.gauntlet.canDamageEnemiesUponAttack)
+            if (playerManager.equipmentDatabase.gauntlet.Exists() && playerManager.equipmentDatabase.gauntlet.GetItem<Gauntlet>().canDamageEnemiesUponAttack)
             {
-                playerManager.equipmentDatabase.gauntlet.AttackEnemy(enemy);
+                playerManager.equipmentDatabase.gauntlet.GetItem<Gauntlet>().AttackEnemy(enemy);
             }
-            if (playerManager.equipmentDatabase.legwear != null && playerManager.equipmentDatabase.legwear.canDamageEnemiesUponAttack)
+            if (playerManager.equipmentDatabase.legwear.Exists() && playerManager.equipmentDatabase.legwear.GetItem<Legwear>().canDamageEnemiesUponAttack)
             {
-                playerManager.equipmentDatabase.legwear.AttackEnemy(enemy);
+                playerManager.equipmentDatabase.legwear.GetItem<Legwear>().AttackEnemy(enemy);
             }
         }
 
@@ -330,7 +338,7 @@ namespace AF
 
             if (character != null && character is PlayerManager player)
             {
-                damage = player.playerWeaponsManager.GetCurrentShieldPassiveDamageFilter(damage);
+                // damage = player.playerWeaponsManager.GetCurrentShieldPassiveDamageFilter(damage);
             }
 
             bool damageFromBackstab = false;

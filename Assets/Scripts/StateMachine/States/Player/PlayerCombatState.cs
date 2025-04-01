@@ -26,7 +26,7 @@ namespace AF.StateMachine
                 ResetPlayerInputs(playerManager);
 
                 hasChosenAttack = true;
-                playerManager.playerCombatController.AttemptAttack();
+                playerManager.combatManager.AttemptAttack();
             }
 
             if (playerManager.isBusy)

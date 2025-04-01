@@ -70,10 +70,12 @@ namespace AF.Equipment
 
         public void OnTwoHandingChanged()
         {
-            if (equipmentDatabase.GetCurrentShield() != shield)
+            // TODO: Check this
+
+            /*if (equipmentDatabase.GetCurrentLeftWeapon() != shield)
             {
                 return;
-            }
+            }*/
 
             if (!equipmentDatabase.isTwoHanding)
             {

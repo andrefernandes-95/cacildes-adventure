@@ -110,10 +110,10 @@ namespace AF
 
             if (onlyAllowOnAttacks)
             {
-                return playerManager.playerCombatController.IsAttacking();
+                return playerManager.combatManager.IsAttacking();
             }
 
-            if (dontAllowIKWhenJumpAttacking && playerManager.playerCombatController.isJumpAttacking)
+            if (dontAllowIKWhenJumpAttacking && playerManager.combatManager.isJumpAttacking)
             {
                 return false;
             }

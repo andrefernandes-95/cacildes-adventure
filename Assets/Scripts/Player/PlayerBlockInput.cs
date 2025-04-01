@@ -109,7 +109,7 @@ namespace AF
 
         bool CanBlock()
         {
-            if (equipmentDatabase.GetCurrentShield() == null)
+            if (equipmentDatabase.GetCurrentLeftWeapon() == null)
             {
                 return false;
             }
@@ -144,7 +144,7 @@ namespace AF
                 return false;
             }
 
-            if (playerManager.playerCombatController.isCombatting)
+            if (playerManager.combatManager.isCombatting)
             {
                 return false;
             }

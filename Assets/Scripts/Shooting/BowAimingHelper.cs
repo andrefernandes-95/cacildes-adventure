@@ -23,7 +23,7 @@ namespace AF
 
         void Evaluate()
         {
-            if (equipmentDatabase.GetCurrentWeapon() != null && equipmentDatabase.GetCurrentWeapon().isCrossbow)
+            if (equipmentDatabase.GetCurrentRightWeapon().Exists() && equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().isCrossbow)
             {
                 transform.localPosition = crossBowPosition;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AF.Animations;
 using AF.Combat;
@@ -46,22 +47,26 @@ namespace AF
         public bool isLightAttacking = false;
 
         [Header("Components")]
-        public PlayerManager playerManager;
+        public CharacterBaseManager character;
         public Animator animator;
         public UIManager uIManager;
-
-        [Header("Heavy Attacks")]
-        public int unarmedHeavyAttackBonus = 35;
 
         [Header("UI")]
         public MenuManager menuManager;
 
-        [Header("Databases")]
-        public EquipmentDatabase equipmentDatabase;
+
+        [Header("Two-Handing")]
+        public bool isTwoHanding = false;
+        public float twoHandingMultiplier = 1.2f;
+
+        [Header("Heavy Attack")]
+        public int unarmedHeavyAttackBonus = 35;
+        public bool isHeavyAttacking = false;
+        public float heavyAttackMultiplier = 1.3f;
 
         [Header("Flags")]
-        public bool isHeavyAttacking = false;
         public bool isJumpAttacking = false;
+        public float jumpAttackMultiplier = 1.3f;
 
         // Coroutines
         Coroutine ResetLightAttackComboIndexCoroutine;
@@ -78,10 +83,6 @@ namespace AF
         private void Start()
         {
             animator.SetFloat(SpeedMultiplierHash, 1f);
-
-            // Update Animators
-            playerManager.UpdateAttackAnimations(unarmedRightHandAttacks);
-            playerManager.UpdateAttackAnimations(unarmedLeftHandAttacks);
         }
 
         public void ResetStates()
@@ -90,11 +91,18 @@ namespace AF
             isHeavyAttacking = false;
             isLightAttacking = false;
             isAttackingWithFoot = false;
+
             animator.SetFloat(SpeedMultiplierHash, 1f);
+
+            // Always restore the animator speed after an attack ends
+            character.RestoreDefaultAnimatorSpeed();
 
             StopComboCoroutine();
 
-            OnGoingResetComboCoroutine = StartCoroutine(ResetComboFlags());
+            if (isActiveAndEnabled)
+            {
+                OnGoingResetComboCoroutine = StartCoroutine(ResetComboFlags());
+            }
         }
 
         void StopComboCoroutine()
@@ -112,6 +120,7 @@ namespace AF
             lastUnarmedRightHandAttackAction = lastUnarmedLeftHandAttackAction = lastUnarmedRightFootAttackAction = lastUnarmedLeftFootAttackAction = null;
         }
 
+        // TODO: Change so that the current active weapons are an array (for dual wielding, we may be attacking with both weapons)
         public void AttemptAttack()
         {
             StopComboCoroutine();
@@ -119,39 +128,35 @@ namespace AF
             // If unarmed
             if (true)
             {
+                //character.staminaStatManager.DecreaseLightAttackStamina();
+
                 AttackAction chosenAttackAction = null;
                 AttackAction lastAttackAction = null;
-                AttackAction[] attackActions = null;
+                List<AttackAction> attackActions = new();
 
                 bool isRightHand = false;
                 bool isLeftHand = false;
-                bool isRightFoot = false;
-                bool isLeftFoot = false;
+
 
                 switch (currentAttackingMember)
                 {
                     case AttackingMember.RIGHT_HAND:
                         lastAttackAction = lastUnarmedRightHandAttackAction;
-                        attackActions = unarmedRightHandAttacks;
+                        attackActions = GetRightWeaponAttackActions();
                         isRightHand = true;
                         break;
                     case AttackingMember.LEFT_HAND:
                         lastAttackAction = lastUnarmedLeftHandAttackAction;
-                        attackActions = unarmedLeftHandAttacks;
+                        attackActions = GetLeftWeaponAttackActions();
                         isLeftHand = true;
-                        break;
-                    case AttackingMember.RIGHT_FOOT:
-                        lastAttackAction = lastUnarmedRightFootAttackAction;
-                        attackActions = unarmedRightFootAttacks;
-                        isRightFoot = true;
-                        break;
-                    case AttackingMember.LEFT_FOOT:
-                        lastAttackAction = lastUnarmedLeftFootAttackAction;
-                        attackActions = unarmedLeftFootAttacks;
-                        isLeftFoot = true;
                         break;
                     default:
                         return;
+                }
+
+                if (attackActions == null || attackActions.Count <= 0)
+                {
+                    return;
                 }
 
                 if (lastAttackAction == null)
@@ -160,8 +165,8 @@ namespace AF
                 }
                 else
                 {
-                    int nextAttackActionIndex = Array.IndexOf(attackActions, lastAttackAction) + 1;
-                    if (nextAttackActionIndex >= attackActions.Length)
+                    int nextAttackActionIndex = Array.IndexOf(attackActions.ToArray(), lastAttackAction) + 1;
+                    if (nextAttackActionIndex >= attackActions.Count)
                     {
                         nextAttackActionIndex = 0;
                     }
@@ -177,42 +182,47 @@ namespace AF
                 {
                     lastUnarmedLeftHandAttackAction = chosenAttackAction;
                 }
-                else if (isRightFoot)
-                {
-                    lastUnarmedRightFootAttackAction = chosenAttackAction;
-                }
-                else if (isLeftFoot)
-                {
-                    lastUnarmedLeftFootAttackAction = chosenAttackAction;
-                }
 
-                chosenAttackAction?.Execute(playerManager);
-
+                chosenAttackAction?.Execute(character);
             }
         }
 
-
-
-
-
-
-
-
-        public void OnLightAttack()
+        List<AttackAction> GetRightWeaponAttackActions()
         {
-            /*
-            if (CanLightAttack())
+            List<AttackAction> attacks = new();
+
+            if (character.characterBaseEquipment.GetRightHandWeapon().Exists())
             {
-                HandleLightAttack();
-            }*/
+                attacks = character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightLightAttacks.ToList();
+            }
+
+            return attacks;
         }
 
-        public void OnHeavyAttack()
+        List<AttackAction> GetLeftWeaponAttackActions()
         {
-            if (CanHeavyAttack())
+            List<AttackAction> attacks = new();
+
+            if (character.characterBaseEquipment.GetLeftHandWeapon().Exists())
             {
-                HandleHeavyAttack(false);
+                attacks = character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>().leftLightAttacks.ToList();
             }
+
+            return attacks;
+        }
+
+        public WeaponInstance GetAttackingWeapon()
+        {
+            if (currentAttackingMember == AttackingMember.RIGHT_HAND)
+            {
+                return character.characterBaseEquipment.GetRightHandWeapon();
+            }
+            else if (currentAttackingMember == AttackingMember.LEFT_HAND)
+            {
+                return character.characterBaseEquipment.GetLeftHandWeapon();
+            }
+
+            return null;
         }
 
         public bool IsAttacking()
@@ -220,79 +230,9 @@ namespace AF
             return isLightAttacking || isHeavyAttacking || isJumpAttacking;
         }
 
-        public void HandleLightAttack()
-        {
-            isHeavyAttacking = false;
-            isLightAttacking = true;
-
-            if (playerManager.thirdPersonController.Grounded)
-            {
-                if (playerManager.playerBackstabController.PerformBackstab())
-                {
-                    return;
-                }
-
-                if (lightAttackComboIndex > GetMaxLightCombo())
-                {
-                    lightAttackComboIndex = 0;
-                }
-
-                if (lightAttackComboIndex == 0)
-                {
-                    playerManager.PlayCrossFadeBusyAnimationWithRootMotion(hashLightAttack1, crossFade);
-                }
-                else if (lightAttackComboIndex == 1)
-                {
-                    playerManager.PlayCrossFadeBusyAnimationWithRootMotion(hashLightAttack2, crossFade);
-                }
-                else if (lightAttackComboIndex == 2)
-                {
-                    playerManager.PlayCrossFadeBusyAnimationWithRootMotion(hashLightAttack3, crossFade);
-                }
-                else if (lightAttackComboIndex == 3)
-                {
-                    playerManager.PlayCrossFadeBusyAnimationWithRootMotion(hashLightAttack4, crossFade);
-                }
-
-                HandleAttackSpeed();
-            }
-            else
-            {
-                HandleJumpAttack();
-            }
-
-            lightAttackComboIndex++;
-            playerManager.staminaStatManager.DecreaseLightAttackStamina();
-
-            if (ResetLightAttackComboIndexCoroutine != null)
-            {
-                StopCoroutine(ResetLightAttackComboIndexCoroutine);
-            }
-            ResetLightAttackComboIndexCoroutine = StartCoroutine(_ResetLightAttackComboIndex());
-        }
-
-        int GetMaxLightCombo()
-        {
-            int maxCombo = 1;
-
-            Weapon currentWeapon = equipmentDatabase.GetCurrentWeapon();
-
-            if (currentWeapon != null)
-            {
-                maxCombo = currentWeapon.lightAttackCombos - 1;
-            }
-
-            return maxCombo;
-        }
-
-        IEnumerator _ResetLightAttackComboIndex()
-        {
-            yield return new WaitForSeconds(maxIdleCombo);
-            lightAttackComboIndex = 0;
-        }
-
         void HandleAttackSpeed()
         {
+            /*
             Weapon currentWeapon = equipmentDatabase.GetCurrentWeapon();
             if (equipmentDatabase.isTwoHanding == false && currentWeapon != null && currentWeapon.oneHandAttackSpeedPenalty != 1)
             {
@@ -305,11 +245,12 @@ namespace AF
             else
             {
                 animator.SetFloat(SpeedMultiplierHash, 1f);
-            }
+            }*/
         }
 
         void HandleJumpAttack()
         {
+            /*
             isHeavyAttacking = false;
             isLightAttacking = false;
             isJumpAttacking = true;
@@ -319,11 +260,12 @@ namespace AF
             playerManager.playerAnimationEventListener.OpenRightWeaponHitbox();
 
             playerManager.PlayCrossFadeBusyAnimationWithRootMotion(hashJumpAttack, crossFade);
-            playerManager.playerComponentManager.DisableCollisionWithEnemies();
+            playerManager.playerComponentManager.DisableCollisionWithEnemies();*/
         }
 
         public void HandleHeavyAttack(bool isCardAttack)
         {
+            /*
             if (isCombatting || playerManager.thirdPersonController.Grounded == false)
             {
                 return;
@@ -360,28 +302,14 @@ namespace AF
 
             HandleAttackSpeed();
 
-            heavyAttackComboIndex++;
-        }
-
-
-
-        int GetMaxHeavyCombo()
-        {
-            int maxCombo = 0;
-
-            Weapon currentWeapon = equipmentDatabase.GetCurrentWeapon();
-
-            if (currentWeapon != null)
-            {
-                maxCombo = currentWeapon.heavyAttackCombos - 1;
-            }
-
-            return maxCombo;
+            heavyAttackComboIndex++;*/
         }
 
 
         public bool CanLightAttack()
         {
+            return true;
+            /*
             if (!this.isActiveAndEnabled)
             {
                 return false;
@@ -397,22 +325,24 @@ namespace AF
                 return false;
             }
 
-            return playerManager.staminaStatManager.HasEnoughStaminaForLightAttack();
+            return playerManager.staminaStatManager.HasEnoughStaminaForLightAttack();*/
         }
 
         public bool CanHeavyAttack()
-        {
+        {/*
             if (CanAttack() == false)
             {
                 return false;
             }
 
-            return playerManager.staminaStatManager.HasEnoughStaminaForHeavyAttack();
+            return playerManager.staminaStatManager.HasEnoughStaminaForHeavyAttack();*/
+            return false;
         }
 
         bool CanAttack()
         {
-            if (playerManager.IsBusy())
+            return true;
+            /*if (playerManager.IsBusy())
             {
                 return false;
             }
@@ -452,7 +382,7 @@ namespace AF
                 return false;
             }
 
-            return true;
+            return true;*/
         }
 
         private void OnDisable()
@@ -462,7 +392,7 @@ namespace AF
 
 
         public void HandlePlayerAttack(IDamageable damageable, Weapon weapon)
-        {
+        {/*
             if (damageable is not DamageReceiver damageReceiver)
             {
                 return;
@@ -487,7 +417,7 @@ namespace AF
             else
             {
                 playerManager.attackStatManager.attackSource = AttackStatManager.AttackSource.UNARMED;
-            }
+            }*/
         }
 
 

@@ -164,7 +164,7 @@ namespace AF
 
                 if (playerManager != null)
                 {
-                    playerManager.playerCombatController.HandlePlayerAttack(damageable, weapon);
+                    playerManager.combatManager.HandlePlayerAttack(damageable, weapon);
                 }
             }
         }

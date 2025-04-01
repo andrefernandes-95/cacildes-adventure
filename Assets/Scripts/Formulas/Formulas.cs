@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace AF
@@ -14,6 +15,29 @@ namespace AF
         public static float A = 2.45f;
         public static float S = 3.25f;
         public static float levelMultiplier = 1.25f;
+
+        public static float GetScalingMultiplier(string scalingTier)
+        {
+            switch (scalingTier)
+            {
+                case "E":
+                    return E;
+                case "D":
+                    return D;
+                case "C":
+                    return C;
+                case "B":
+                    return B;
+                case "A":
+                    return A;
+                case "S":
+                    return S;
+                default:
+                    break;
+            }
+
+            return 1f;
+        }
 
         public static int CalculateStatForLevel(int baseValue, int level, float multiplier)
         {
@@ -86,8 +110,10 @@ namespace AF
         }
 
 
-        public static int GetBonusFromWeapon(int currentStatLevel, float scalingMultiplier)
+        public static int GetBonusFromWeapon(int currentStatLevel, string weaponScaling)
         {
+            float scalingMultiplier = GetScalingMultiplier(weaponScaling);
+
             if (scalingMultiplier <= 0)
             {
                 return 0;
@@ -108,6 +134,10 @@ namespace AF
             return Mathf.Max(1, result <= 0 ? 1 : result);
         }
 
+        public static int GetBonusFromWeapon(int currentStatLevel, float v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

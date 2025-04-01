@@ -14,6 +14,7 @@ namespace AF
         public int physicalAttackBonus = 0;
         public int jumpAttackBonus = 0;
         public float twoHandAttackBonusMultiplier = 0f;
+        public float heavyAttackBonusMultiplier = 0f;
         public float slashDamageMultiplier = 0f;
         public float pierceDamageMultiplier = 0f;
         public float bluntDamageMultiplier = 0f;

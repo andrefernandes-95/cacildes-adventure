@@ -36,9 +36,9 @@ namespace AF
 
         public void OnEnable()
         {
-            Weapon playerWeapon = equipmentDatabase.GetCurrentWeapon();
+            WeaponInstance playerWeapon = equipmentDatabase.GetCurrentRightWeapon();
 
-            if (playerWeapon != null && playerWeapon.isHolyWeapon)
+            if (playerWeapon.Exists() && playerWeapon.GetItem<Weapon>().isHolyWeapon)
             {
                 this.gameObject.SetActive(false);
                 return;

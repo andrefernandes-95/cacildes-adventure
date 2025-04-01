@@ -12,8 +12,12 @@ namespace AF.Pickups
         [Header("Data")]
 
         [Header("Effect Instances")]
+
+        [Obsolete]
         [SerializedDictionary("Item", "Quantity")]
         public SerializedDictionary<Item, ItemAmount> itemsToAdd;
+
+
 
         // Scene References
         UIDocumentReceivedItemPrompt uIDocumentReceivedItemPrompt;

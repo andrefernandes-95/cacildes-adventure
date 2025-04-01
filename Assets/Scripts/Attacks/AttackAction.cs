@@ -11,6 +11,8 @@ namespace AF
         public SerializedDictionary<AnimationEnum, AnimationClip> attackAnimations = new();
         [SerializeField] float crossFade = .2f;
 
+        public float animationSpeed = 1f;
+
         [Header("Modifiers")]
         public float damageMultiplier = 1f;
 
@@ -31,6 +33,10 @@ namespace AF
 
             string attackName = attackAnimations.ElementAt(0).Key.name;
 
+            // Allow rotation if we are in the middle of combos
+            attacker.EnableCanRotate();
+
+            attacker.animator.speed = animationSpeed;
             attacker.PlayCrossFadeBusyAnimationWithRootMotion(attackName, crossFade);
         }
     }

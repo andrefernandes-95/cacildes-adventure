@@ -43,25 +43,25 @@ namespace AF
     public class PlayerPreset : ScriptableObject
     {
         [Header("Inventory")]
-        public SerializedDictionary<Item, ItemAmount> ownedItems = new();
+        public SerializedDictionary<Item, List<ItemInstance>> ownedItems = new();
         public bool loadAllItems = false;
 
         [Header("Equipped Items")]
-        public Weapon[] weapons = new Weapon[3]; // Fixed size array for weapons
+        public WeaponInstance[] weapons = new WeaponInstance[3]; // Fixed size array for weapons
 
-        public Shield[] shields = new Shield[3]; // Fixed size array for shields
+        public ShieldInstance[] shields = new ShieldInstance[3]; // Fixed size array for shields
 
-        public Arrow[] arrows = new Arrow[2];
+        public ArrowInstance[] arrows = new ArrowInstance[2];
 
-        public Spell[] spells = new Spell[5];
+        public SpellInstance[] spells = new SpellInstance[5];
 
-        public Consumable[] consumables = new Consumable[10];
-        public Accessory[] accessories = new Accessory[4];
+        public ConsumableInstance[] consumables = new ConsumableInstance[10];
+        public AccessoryInstance[] accessories = new AccessoryInstance[4];
 
-        public Helmet helmet;
-        public Armor armor;
-        public Gauntlet gauntlet;
-        public Legwear legwear;
+        public HelmetInstance helmet;
+        public ArmorInstance armor;
+        public GauntletInstance gauntlet;
+        public LegwearInstance legwear;
 
         [Header("Stats")]
 
@@ -123,7 +123,7 @@ namespace AF
 
             foreach (var ownedItem in ownedItems)
             {
-                inventoryDatabase.AddItem(ownedItem.Key, ownedItem.Value.amount);
+                inventoryDatabase.AddItem(ownedItem.Key);
             }
         }
 
@@ -133,14 +133,14 @@ namespace AF
             {
                 if (weapons[i] != null)
                 {
-                    equipmentDatabase.EquipWeapon(weapons[i], i);
+                    equipmentDatabase.EquipWeapon(weapons[i], i, true);
                 }
             }
             for (int i = 0; i < shields.Length; i++)
             {
                 if (shields[i] != null)
                 {
-                    equipmentDatabase.EquipShield(shields[i], i);
+                    equipmentDatabase.EquipWeapon(shields[i], i, false);
                 }
             }
             for (int i = 0; i < arrows.Length; i++)

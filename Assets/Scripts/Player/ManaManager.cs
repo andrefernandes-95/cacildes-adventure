@@ -53,7 +53,7 @@ namespace AF
         {
             return Formulas.CalculateStatForLevel(
                 playerStatsDatabase.maxMana + playerStatsBonusController.magicBonus,
-                playerStatsBonusController.GetCurrentIntelligence(),
+                playerManager.characterBaseStats.GetIntelligence(),
                 playerStatsDatabase.levelMultiplierForMana);
         }
 
@@ -69,7 +69,7 @@ namespace AF
                 return false;
             }
 
-            return HasEnoughManaForAction((int)spell.costPerCast);
+            return HasEnoughManaForAction((int)spell.manaCostPerCast);
         }
 
         public bool HasEnoughManaForAction(int actionCost)

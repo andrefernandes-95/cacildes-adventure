@@ -104,7 +104,8 @@ namespace AF
 
         void BeginSpecialAttack()
         {
-            playerManager.playerCombatController.HandleHeavyAttack(true);
+            // TODO: This class needs to be removed
+            //playerManager.playerCombatController.HandleHeavyAttack(true);
         }
 
         public bool HasCard()

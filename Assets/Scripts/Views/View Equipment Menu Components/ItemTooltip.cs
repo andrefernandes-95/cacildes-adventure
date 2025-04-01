@@ -1,11 +1,13 @@
-using System;
-using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
-using UnityEngine.UIElements;
-
-namespace AF.UI.EquipmentMenu
+namespace AF
 {
+    using System;
+    using AF.Health;
+    using UnityEditor.SearchService;
+    using UnityEngine;
+    using UnityEngine.Localization;
+    using UnityEngine.Localization.Settings;
+    using UnityEngine.UIElements;
+
     public class ItemTooltip : MonoBehaviour
     {
         public PlayerManager playerManager;
@@ -218,12 +220,6 @@ namespace AF.UI.EquipmentMenu
         public LocalizedString multiplierWhenTwoHanding;
         public LocalizedString lostUponUse;
 
-        public LocalizedString strengthDamageLabel;
-        public LocalizedString dexterityDamageLabel;
-        public LocalizedString intelligenceDamageLabel;
-        public LocalizedString twoHandDamageLabel;
-        public LocalizedString jumpingDamageLabel;
-
 
         private void OnEnable()
         {
@@ -253,11 +249,15 @@ namespace AF.UI.EquipmentMenu
             tooltipEffectsContainer = tooltip.Q<VisualElement>("ItemAttributes");
         }
 
-        public void PrepareTooltipForItem(Item item)
+        public void PrepareTooltipForItem(ItemInstance itemInstance)
         {
             enabled = true;
+
+            Item item = itemInstance.GetItem<Item>();
+
             tooltipEffectsContainer.Clear();
             tooltipItemSprite.style.backgroundImage = new StyleBackground(item.sprite);
+
 
             if (item is Card)
             {
@@ -284,45 +284,46 @@ namespace AF.UI.EquipmentMenu
 
             string itemName = item.GetName().ToUpper();
 
-            if (item is Weapon wp)
-            {
-                itemName += " +" + wp.level;
-            }
-
             tooltipItemDescription.text = itemName + " \n" + '"' + item.GetDescription() + '"';
 
-            if (item is Weapon weapon)
+            if (itemInstance is WeaponInstance weaponInstance)
             {
-                DrawWeaponEffects(weapon);
-            }
-            else if (item is Shield shield)
-            {
-                DrawShield(shield);
-            }
-            else if (item is ArmorBase armorBase)
-            {
-                DrawArmorBase(armorBase);
+                itemName += " +" + weaponInstance.level;
 
-                if (item is Accessory accessory)
+                DrawWeaponEffects(weaponInstance);
+            }
+            else if (itemInstance is ShieldInstance shieldInstance)
+            {
+                DrawShield(shieldInstance);
+            }
+            else if (itemInstance is ArmorBaseInstance armorBaseInstance)
+            {
+                DrawArmorBase(armorBaseInstance);
+
+                if (itemInstance is AccessoryInstance accessoryInstance)
                 {
-                    DrawAccessory(accessory);
+                    DrawAccessory(accessoryInstance);
                 }
             }
-            else if (item is Consumable consumable)
+            else if (itemInstance is ConsumableInstance consumableInstance)
             {
-                DrawConsumable(consumable);
+                DrawConsumable(consumableInstance);
             }
-            else if (item is Spell spell)
+            else if (itemInstance is ArrowInstance arrowInstance)
             {
-                DrawSpell(spell);
+                DrawArrow(arrowInstance);
             }
-            else if (item is UpgradeMaterial upgradeMaterial)
+            else if (itemInstance is SpellInstance spellInstance)
             {
-                DrawUpgradeMaterial(upgradeMaterial);
+                DrawSpell(spellInstance);
             }
-            else if (item is CraftingMaterial craftingMaterial)
+            else if (itemInstance is UpgradeMaterialInstance upgradeMaterialInstance)
             {
-                DrawCraftingMaterial(craftingMaterial);
+                DrawUpgradeMaterial(upgradeMaterialInstance);
+            }
+            else if (itemInstance is CraftingMaterialInstance craftingMaterialInstance)
+            {
+                DrawCraftingMaterial(craftingMaterialInstance);
             }
         }
 
@@ -413,87 +414,140 @@ namespace AF.UI.EquipmentMenu
             }
         }
 
-        void DrawWeaponEffects(Weapon weapon)
+        void DrawElementAttackTooltips(
+            int fireAttack, int frostAttack, int lightningAttack, int magicAttack, int darknessAttack, int waterAttack
+        )
         {
-            if (weapon.HasRequirements())
-            {
-                CreateTooltip(
-                    requirementsSprite,
-                    weapon.AreRequirementsMet(playerManager.statsBonusController) ? Color.white : requirementsNotMet,
-                    weapon.DrawRequirements(playerManager.statsBonusController));
-            }
-
-            if (attackStatManager.GetWeaponAttack(weapon) > 0)
-            {
-                CreateTooltip(weaponPhysicalAttackSprite, Color.white, TooltipUtils.GetWeaponPhysicalDamageExplanation(playerManager, weapon));
-            }
-
-            if (weapon.GetWeaponFireAttack(attackStatManager) > 0)
+            if (fireAttack > 0)
             {
                 CreateTooltip(
                     fireSprite,
                     fire,
                     String.Format(
                         fireAttackLabel.GetLocalizedString(),
-                        weapon.GetWeaponFireAttack(attackStatManager)));
+                        fireAttack));
             }
 
-            if (weapon.GetWeaponFrostAttack(attackStatManager) > 0)
+            if (frostAttack > 0)
             {
                 CreateTooltip(
                     frostSprite,
                     frost,
                     String.Format(
                         frostAttackLabel.GetLocalizedString(),
-                        weapon.GetWeaponFrostAttack(attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(weapon)));
+                        frostAttack));
             }
 
-            if (weapon.GetWeaponLightningAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager) > 0)
+            if (lightningAttack > 0)
             {
-                int baseLightningAttack = weapon.GetBaseWeaponLightningAttack();
-                int holyDamageScaleFromReputation = weapon.GetWeaponLightningAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager) - baseLightningAttack;
-
                 CreateTooltip(
                 lightningSprite,
                 lightning,
-                TooltipUtils.GetLightiningDamageExplanation(baseLightningAttack, holyDamageScaleFromReputation, 0));
+                String.Format(
+                    lightningAttackLabel.GetLocalizedString(),
+                    lightningAttack));
             }
 
-            if (weapon.GetWeaponMagicAttack(attackStatManager) > 0)
+            if (magicAttack > 0)
             {
                 CreateTooltip(
                 magicSprite,
                 magic,
-                TooltipUtils.GetMagicDamageExplanation(playerManager, weapon));
+                String.Format(
+                    magicAttackLabel.GetLocalizedString(),
+                    magicAttack));
             }
 
-            if (weapon.GetWeaponDarknessAttack(attackStatManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager) > 0)
+            if (darknessAttack > 0)
             {
-                int baseDarknessAttack = weapon.GetBaseWeaponDarknessAttack();
-                int holyDamageScaleFromReputation = weapon.GetWeaponDarknessAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager) - baseDarknessAttack;
-
                 CreateTooltip(
                 darknessSprite,
                 darkness,
-                TooltipUtils.GetDarknessDamageExplanation(baseDarknessAttack, holyDamageScaleFromReputation, 0));
+                String.Format(
+                    darknessAttackLabel.GetLocalizedString(),
+                    darknessAttack));
             }
 
-            if (weapon.damage.weaponAttackType == WeaponAttackType.Blunt)
+            if (waterAttack > 0)
+            {
+                CreateTooltip(
+                waterSprite,
+                water,
+                String.Format(
+                    waterAttackLabel.GetLocalizedString(),
+                    waterAttack));
+            }
+        }
+
+        void DrawDamageTooltips(Damage damage)
+        {
+            if (damage.weaponAttackType == WeaponAttackType.Blunt)
             {
                 CreateTooltip(bluntSprite, Color.white, damageTypeBluntLabel.GetLocalizedString());
             }
-            if (weapon.damage.weaponAttackType == WeaponAttackType.Pierce)
+            if (damage.weaponAttackType == WeaponAttackType.Pierce)
             {
                 CreateTooltip(pierceSprite, Color.white, damageTypePierceLabel.GetLocalizedString());
             }
-            if (weapon.damage.weaponAttackType == WeaponAttackType.Slash)
+            if (damage.weaponAttackType == WeaponAttackType.Slash)
             {
                 CreateTooltip(slashSprite, Color.white, damageTypeSlashLabel.GetLocalizedString());
             }
-            if (weapon.damage.statusEffects != null && weapon.damage.statusEffects.Length > 0)
+
+            if (damage.pushForce > 0)
             {
-                CreateTooltip(statusEffectsSprite, Color.white, weapon.GetFormattedStatusDamages());
+                CreateTooltip(pushForceSprite, Color.white, String.Format(
+                    pushForceLabel.GetLocalizedString(), damage.pushForce));
             }
+
+            if (damage.postureDamage > 0)
+            {
+                CreateTooltip(postureSprite, Color.white, String.Format(
+                    postureDamageLabel.GetLocalizedString(), damage.postureDamage));
+            }
+
+            if (damage.ignoreBlocking)
+            {
+                CreateTooltip(defenseAbsorptionSprite, Color.white, ignoresEnemyShields.GetLocalizedString());
+            }
+
+            if (damage.canNotBeParried)
+            {
+                CreateTooltip(defenseAbsorptionSprite, Color.white, canNotBeParried.GetLocalizedString());
+            }
+        }
+
+        void DrawWeaponEffects(WeaponInstance weaponInstance)
+        {
+            Weapon weapon = weaponInstance.GetItem<Weapon>();
+
+            if (weapon.HasRequirements())
+            {
+                CreateTooltip(
+                    requirementsSprite,
+                    weapon.AreRequirementsMet(playerManager) ? Color.white : requirementsNotMet,
+                    weapon.DrawRequirements(playerManager));
+            }
+
+            var currentWeaponDamage = weapon.GetCurrentDamage(playerManager, weaponInstance.level);
+
+            int playerStrength = playerManager.characterBaseStats.GetStrength();
+            int playerDexterity = playerManager.characterBaseStats.GetDexterity();
+            int playerIntelligence = playerManager.characterBaseStats.GetIntelligence();
+
+            string damageExplanation = String.Format(
+                damageExplanationLabel.GetLocalizedString(),
+                currentWeaponDamage.physical,
+                currentWeaponDamage.physical,
+                weapon.GetStrengthBonusFromWeapon(playerManager),
+                weapon.strengthScaling,
+                weapon.GetDexterityBonusFromWeapon(playerManager),
+                weapon.dexterityScaling,
+                weapon.GetIntelligenceBonusFromWeapon(playerManager),
+                weapon.intelligenceScaling
+            );
+
+            CreateTooltip(weaponPhysicalAttackSprite, Color.white, damageExplanation);
 
             CreateEquipLoadTooltip(weapon.speedPenalty);
 
@@ -502,44 +556,28 @@ namespace AF.UI.EquipmentMenu
                 CreateTooltip(holyWeaponSprite, Color.white, holyWeaponLabel.GetLocalizedString());
             }
 
-            if (weapon.damage.pushForce > 0)
-            {
-                CreateTooltip(pushForceSprite, Color.white, String.Format(
-                    pushForceLabel.GetLocalizedString(), weapon.damage.pushForce));
-            }
+            DrawElementAttackTooltips(
+                currentWeaponDamage.fire, currentWeaponDamage.frost, currentWeaponDamage.lightning, currentWeaponDamage.magic,
+                currentWeaponDamage.darkness, currentWeaponDamage.water
+            );
 
-            if (weapon.damage.postureDamage > 0)
-            {
-                CreateTooltip(postureSprite, Color.white, String.Format(
-                    postureDamageLabel.GetLocalizedString(), weapon.damage.postureDamage));
-            }
+            DrawDamageTooltips(currentWeaponDamage);
 
-            /*            if (weapon.heavyAttackBonus > 0)
-                        {
-                            CreateTooltip(heavyAttackSprite, Color.white,
-                            String.Format(
-                                heavyAttackBonusLabel.GetLocalizedString(), weapon.heavyAttackBonus));
-                        }*/
+            if (currentWeaponDamage.statusEffects != null && currentWeaponDamage.statusEffects.Length > 0)
+            {
+                CreateTooltip(statusEffectsSprite, Color.white, weapon.GetFormattedStatusDamages());
+            }
 
             CreateTooltip(
                 staminaCostSprite,
                 Color.white,
                 String.Format(staminaCostLabel.GetLocalizedString(), weapon.lightAttackStaminaCost, weapon.heavyAttackStaminaCost));
 
-            if (weapon.canBeUpgraded && weapon.CanBeUpgradedFurther())
-            {
-                CreateTooltip(blacksmithSprite, Color.white, weapon.GetMaterialCostForNextLevel());
-            }
-
-            if (weapon.damage.ignoreBlocking)
-            {
-                CreateTooltip(defenseAbsorptionSprite, Color.white, ignoresEnemyShields.GetLocalizedString());
-            }
-
-            if (weapon.damage.canNotBeParried)
-            {
-                CreateTooltip(defenseAbsorptionSprite, Color.white, canNotBeParried.GetLocalizedString());
-            }
+            /*
+                        if (weapon.canBeUpgraded && CraftingUtils.CanBeUpgradedFurther(weaponInstance))
+                        {
+                            CreateTooltip(blacksmithSprite, Color.white, CraftingUtils.GetMaterialCostForNextLevel(weaponInstance));
+                        }*/
 
             if (weapon.blockAbsorption != 1)
             {
@@ -549,10 +587,10 @@ namespace AF.UI.EquipmentMenu
                         100 - (weapon.blockAbsorption * 100)));
             }
 
-            if (weapon.doubleCoinsUponKillingEnemies)
+            /*if (weapon.coinMultiplierPerFallenEnemy != 1f)
             {
                 CreateTooltip(goldCoinSprite, Color.white, doubleCoinsPerEnemyKill.GetLocalizedString());
-            }
+            }*/
 
             if (weapon.healthRestoredWithEachHit > 0)
             {
@@ -562,8 +600,10 @@ namespace AF.UI.EquipmentMenu
             }
         }
 
-        void DrawShield(Shield shield)
+        void DrawShield(ShieldInstance shieldInstance)
         {
+            Shield shield = shieldInstance.GetItem<Shield>();
+
             if (shield.blockStaminaCost != 1)
             {
                 CreateTooltip(
@@ -574,7 +614,6 @@ namespace AF.UI.EquipmentMenu
 
             if (shield.physicalAbsorption != 1)
             {
-
                 CreateTooltip(
                     defenseAbsorptionSprite,
                     Color.white,
@@ -825,8 +864,10 @@ namespace AF.UI.EquipmentMenu
             CreateEquipLoadTooltip(shield.speedPenalty);
         }
 
-        void DrawArmorBase(ArmorBase armor)
+        void DrawArmorBase(ArmorBaseInstance armorBaseInstance)
         {
+            ArmorBase armor = armorBaseInstance.GetItem<ArmorBase>();
+
             if (armor.physicalDefense > 0)
             {
                 CreateTooltip(
@@ -971,7 +1012,6 @@ namespace AF.UI.EquipmentMenu
 
                 if (armor.damageDealtToEnemiesUponAttacked.fire != 0)
                 {
-
                     CreateTooltip(
                         fireSprite,
                         fire,
@@ -979,7 +1019,6 @@ namespace AF.UI.EquipmentMenu
                             fireDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.fire
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.frost != 0)
@@ -992,7 +1031,6 @@ namespace AF.UI.EquipmentMenu
                             frostDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.frost
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.lightning != 0)
@@ -1004,7 +1042,6 @@ namespace AF.UI.EquipmentMenu
                             lightningDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.lightning
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.magic != 0)
@@ -1016,7 +1053,6 @@ namespace AF.UI.EquipmentMenu
                             magicDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.magic
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.darkness != 0)
@@ -1028,7 +1064,6 @@ namespace AF.UI.EquipmentMenu
                             darknessDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.darkness
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.water != 0)
@@ -1040,7 +1075,6 @@ namespace AF.UI.EquipmentMenu
                             magicDamageDealtToAttackingEnemies.GetLocalizedString(),
                             armor.damageDealtToEnemiesUponAttacked.water
                     ));
-
                 }
 
                 if (armor.damageDealtToEnemiesUponAttacked.statusEffects != null && armor.damageDealtToEnemiesUponAttacked.statusEffects.Length > 0)
@@ -1061,8 +1095,10 @@ namespace AF.UI.EquipmentMenu
             }
         }
 
-        void DrawAccessory(Accessory accessory)
+        void DrawAccessory(AccessoryInstance accessoryInstance)
         {
+            Accessory accessory = accessoryInstance.GetItem<Accessory>();
+
             if (accessory.GetShortDescription() != null && accessory.GetShortDescription().Length > 0)
             {
                 CreateTooltip(statusEffectsSprite, Color.white, accessory.GetShortDescription());
@@ -1180,31 +1216,55 @@ namespace AF.UI.EquipmentMenu
             }
         }
 
-        void DrawSpell(Spell spell)
+        void DrawSpell(SpellInstance spellInstance)
         {
+            Spell spell = spellInstance.GetItem<Spell>();
+
+            Damage spellDamage = spell.projectile != null ? spell.projectile.GetComponent<Projectile>()?.damage : null;
+
+            if (spellDamage != null)
+            {
+                DrawElementAttackTooltips(
+                    spellDamage.fire, spellDamage.frost, spellDamage.lightning, spellDamage.magic,
+                    spellDamage.darkness, spellDamage.water
+                );
+
+                DrawDamageTooltips(spellDamage);
+            }
+
             if (spell.HasRequirements())
             {
                 CreateTooltip(
                     requirementsSprite,
-                    spell.AreRequirementsMet(playerManager.statsBonusController) ? Color.white : requirementsNotMet,
-                    spell.DrawRequirements(playerManager.statsBonusController));
+                    spell.AreRequirementsMet(playerManager.characterBaseStats) ? Color.white : requirementsNotMet,
+                    spell.DrawRequirements(playerManager.characterBaseStats));
             }
 
             if (spell.GetShortDescription() != null && spell.GetShortDescription().Length > 0)
             {
                 CreateTooltip(statusEffectsSprite, Color.white, spell.GetShortDescription());
             }
-            if (spell.costPerCast > 0)
-            {
 
+            if (spell.manaCostPerCast > 0)
+            {
                 CreateTooltip(
                     spellCastSprite,
                     Color.white,
                     String.Format(
                         manaPointsRequiredToCast.GetLocalizedString(),
-                        spell.costPerCast
+                        spell.manaCostPerCast
                 ));
+            }
 
+            if (spell.staminaCostPerCast > 0)
+            {
+                CreateTooltip(
+                    staminaCostSprite,
+                    Color.white,
+                    Glossary.IsPortuguese()
+                        ? $"{spell.staminaCostPerCast} pontos de stamina para lançar"
+                        : $"{spell.staminaCostPerCast} stamina points to cast"
+                );
             }
 
             if (spell.statusEffects != null && spell.statusEffects.Length > 0)
@@ -1216,30 +1276,61 @@ namespace AF.UI.EquipmentMenu
                         {
                             CreateTooltip(holyWeaponSprite, Color.white, $"Faith Spell (improves with reputation)");
                         }*/
-
         }
 
-        void DrawCraftingMaterial(CraftingMaterial craftingMaterial)
+        void DrawArrow(ArrowInstance arrowInstance)
         {
+            Arrow arrow = arrowInstance.GetItem<Arrow>();
+
+            Damage arrowDamage = arrow.projectile != null ? arrow.projectile.GetComponent<Projectile>()?.damage : null;
+
+            if (arrowDamage != null)
+            {
+                if (arrowDamage.physical > 0)
+                {
+                    string damageExplanation = Glossary.IsPortuguese()
+                        ? $"+{arrowDamage.physical} Dano Físico"
+                        : $"+{arrowDamage.physical} Physical Damage";
+
+                    CreateTooltip(weaponPhysicalAttackSprite, Color.white, damageExplanation);
+                }
+
+                DrawElementAttackTooltips(
+                    arrowDamage.fire, arrowDamage.frost, arrowDamage.lightning, arrowDamage.magic,
+                    arrowDamage.darkness, arrowDamage.water
+                );
+
+                DrawDamageTooltips(arrowDamage);
+
+                if (arrow.staminaCostPerCast > 0)
+                {
+                    CreateTooltip(
+                        staminaCostSprite,
+                        Color.white,
+                        Glossary.IsPortuguese()
+                            ? $"{arrow.staminaCostPerCast} pontos de stamina por disparo"
+                            : $"{arrow.staminaCostPerCast} stamina points to shoot"
+                    );
+                }
+            }
+        }
+
+        void DrawCraftingMaterial(CraftingMaterialInstance craftingMaterialInstance)
+        {
+            CraftingMaterial craftingMaterial = craftingMaterialInstance.GetItem<CraftingMaterial>();
+
             if (craftingMaterial.GetShortDescription() != null && craftingMaterial.GetShortDescription().Length > 0)
             {
                 CreateTooltip(statusEffectsSprite, Color.white, craftingMaterial.GetShortDescription());
             }
 
             CreateTooltip(craftingMaterialSprite, Color.white, craftingMaterialLabel.GetLocalizedString());
-
-            if (CraftingUtils.IsItemAnIngredientOfCurrentLearnedRecipes(recipesDatabase, craftingMaterial))
-            {
-                CraftingRecipe[] craftingRecipes = CraftingUtils.GetRecipesUsingItem(recipesDatabase, craftingMaterial).ToArray();
-                if (craftingRecipes != null && craftingRecipes.Length > 0)
-                {
-                    CreateTooltip(craftingMaterialSprite, Color.white, CraftingUtils.GetFormattedTextForRecipesUsingItem(craftingRecipes));
-                }
-            }
         }
 
-        void DrawUpgradeMaterial(UpgradeMaterial upgradeMaterial)
+        void DrawUpgradeMaterial(UpgradeMaterialInstance upgradeMaterialInstance)
         {
+            UpgradeMaterial upgradeMaterial = upgradeMaterialInstance.GetItem<UpgradeMaterial>();
+
             if (upgradeMaterial.GetShortDescription() != null && upgradeMaterial.GetShortDescription().Length > 0)
             {
                 CreateTooltip(statusEffectsSprite, Color.white, upgradeMaterial.GetShortDescription());
@@ -1248,15 +1339,13 @@ namespace AF.UI.EquipmentMenu
             CreateTooltip(upgradeMaterialSprite, Color.white, upgradeMaterialLabel.GetLocalizedString());
         }
 
-        void DrawConsumable(Consumable consumable)
+        void DrawConsumable(ConsumableInstance consumableInstance)
         {
+            Consumable consumable = consumableInstance.GetItem<Consumable>();
+
             if (consumable.GetShortDescription() != null && consumable.GetShortDescription().Length > 0)
             {
                 CreateTooltip(statusEffectsSprite, Color.white, consumable.GetShortDescription());
-            }
-            if (consumable.statusesToRemove != null && consumable.statusesToRemove.Length > 0)
-            {
-                CreateTooltip(statusEffectsSprite, Color.white, consumable.GetFormattedRemovedStatusEffects());
             }
             if (consumable.statusEffectsWhenConsumed != null && consumable.statusEffectsWhenConsumed.Length > 0)
             {
@@ -1281,7 +1370,7 @@ namespace AF.UI.EquipmentMenu
             }
             if (consumable is Card card)
             {
-                CreateTooltip(cardSprite, Color.white, LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "IsCard"));
+                CreateTooltip(cardSprite, Color.white, LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "IsCard"));
 
                 if (card.commonlyFoundDescription.IsEmpty == false)
                 {
@@ -1339,7 +1428,5 @@ namespace AF.UI.EquipmentMenu
 
             tooltipEffectsContainer.Add(clone);
         }
-
-
     }
 }

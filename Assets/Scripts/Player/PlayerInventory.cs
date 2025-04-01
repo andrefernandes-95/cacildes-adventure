@@ -115,9 +115,16 @@ namespace AF
             uIDocumentPlayerHUDV2.UpdateEquipment();
         }
 
-        public void RemoveItem(Item item, int quantity)
+        public void RemoveItem(Item item)
         {
-            inventoryDatabase.RemoveItem(item, quantity);
+            inventoryDatabase.RemoveItem(item);
+
+            uIDocumentPlayerHUDV2.UpdateEquipment();
+        }
+
+        public void RemoveItemInstance(ItemInstance item)
+        {
+            inventoryDatabase.RemoveItemInstance(item);
 
             uIDocumentPlayerHUDV2.UpdateEquipment();
         }
@@ -138,7 +145,7 @@ namespace AF
                 return false;
             }
 
-            if (playerManager.playerCombatController.isCombatting)
+            if (playerManager.combatManager.isCombatting)
             {
                 notificationManager.ShowNotification(
                     LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Can't consume item at this time."),
@@ -279,7 +286,7 @@ namespace AF
                 }
                 else
                 {
-                    playerManager.playerInventory.RemoveItem(currentConsumedItem, 1);
+                    playerManager.playerInventory.RemoveItem(currentConsumedItem);
                 }
             }
 

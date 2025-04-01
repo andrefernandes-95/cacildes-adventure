@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AF.Health
 {
@@ -94,7 +95,7 @@ namespace AF.Health
 
         public void ScaleSpell(
             AttackStatManager attackStatManager,
-            Weapon currentWeapon,
+            WeaponInstance currentWeaponInstance,
             int playerReputation,
             bool isFaithSpell,
             bool isHexSpell,
@@ -102,106 +103,70 @@ namespace AF.Health
         {
             float multiplier = shouldDoubleDamage ? 2 : 1f;
 
-            if (this.fire > 0)
+            Weapon currentWeapon = currentWeaponInstance.GetItem<Weapon>();
+
+            Damage currentWeaponDamage = currentWeapon.GetCurrentDamage(attackStatManager.character, currentWeaponInstance.level);
+
+            if (currentWeapon.IsStaffWeapon())
             {
-                this.fire += (int)(currentWeapon.GetWeaponFireAttack(attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.frost > 0)
-            {
-                this.frost += (int)(currentWeapon.GetWeaponFrostAttack(attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.magic > 0)
-            {
-                this.magic += (int)(currentWeapon.GetWeaponMagicAttack(attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.lightning > 0)
-            {
-                this.lightning += (int)(
-                    currentWeapon.GetWeaponLightningAttack(playerReputation, attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.darkness > 0)
-            {
-                this.darkness += (int)(currentWeapon.GetWeaponDarknessAttack(playerReputation, attackStatManager)
-                    + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.water > 0)
-            {
-                this.water += (int)(currentWeapon.GetWeaponWaterAttack(attackStatManager) + attackStatManager.GetIntelligenceBonusFromWeapon(currentWeapon) * multiplier);
-            }
-
-            if (this.pushForce > 0 && isFaithSpell)
-            {
-                this.pushForce += playerReputation > 0 ? (playerReputation * 0.1f) : 0;
-            }
-
-            Damage weaponDamage = currentWeapon.GetWeaponDamage();
-
-
-            if (weaponDamage.statusEffects != null && weaponDamage.statusEffects.Length > 0)
-            {
-                List<StatusEffectEntry> updatedStatusEffects = new List<StatusEffectEntry>();
-
-                // First, copy all existing status effects
-                foreach (StatusEffectEntry existingEffect in this.statusEffects)
-                {
-                    updatedStatusEffects.Add(new StatusEffectEntry() { amountPerHit = existingEffect.amountPerHit, statusEffect = existingEffect.statusEffect });
-                }
-
-                // Then, combine with weapon status effects
-                foreach (StatusEffectEntry weaponStatusEffectEntry in weaponDamage.statusEffects)
-                {
-                    StatusEffectEntry existingEffect = updatedStatusEffects.Find(x => x.statusEffect == weaponStatusEffectEntry.statusEffect);
-
-                    if (existingEffect != null)
-                    {
-                        // Create a new entry with combined amount
-                        int index = updatedStatusEffects.IndexOf(existingEffect);
-                        updatedStatusEffects[index] = new StatusEffectEntry()
-                        {
-                            statusEffect = existingEffect.statusEffect,
-                            amountPerHit = existingEffect.amountPerHit + weaponStatusEffectEntry.amountPerHit
-                        };
-                    }
-                    else
-                    {
-                        // Add a new copy of the weapon status effect
-                        updatedStatusEffects.Add(new StatusEffectEntry() { amountPerHit = weaponStatusEffectEntry.amountPerHit, statusEffect = weaponStatusEffectEntry.statusEffect });
-                    }
-                }
-
-                this.statusEffects = updatedStatusEffects.ToArray();
+                this.Combine(currentWeaponDamage);
             }
         }
 
-        public void ScaleProjectile(AttackStatManager attackStatManager, Weapon currentWeapon)
+        public void ScaleProjectile(AttackStatManager attackStatManager, WeaponInstance currentWeaponInstance)
         {
-            // Steel arrow might inherit magic from a magical bow, hence don't check if base values are greater than zero
-            this.physical += (int)currentWeapon.GetWeaponAttack(attackStatManager);
+            Weapon currentWeapon = currentWeaponInstance.GetItem<Weapon>();
+            Damage currentWeaponDamage = currentWeapon.GetCurrentDamage(attackStatManager.character, currentWeaponInstance.level);
 
-            if (attackStatManager.playerManager.statsBonusController.projectileMultiplierBonus > 0f)
+            if (currentWeapon.IsRangeWeapon())
             {
-                this.physical = (int)(this.physical * attackStatManager.playerManager.statsBonusController.projectileMultiplierBonus);
+                this.Combine(currentWeaponDamage);
             }
-
-            this.fire += (int)currentWeapon.GetWeaponFireAttack(attackStatManager);
-            this.frost += (int)currentWeapon.GetWeaponFrostAttack(attackStatManager);
-            this.magic += (int)currentWeapon.GetWeaponMagicAttack(attackStatManager);
-            this.lightning += (int)currentWeapon.GetWeaponLightningAttack(attackStatManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager);
-            this.darkness += (int)currentWeapon.GetWeaponDarknessAttack(attackStatManager.playerStatsDatabase.GetCurrentReputation(), attackStatManager);
-            this.water += (int)currentWeapon.GetWeaponWaterAttack(attackStatManager);
         }
-
 
         public Damage Clone()
         {
             return (Damage)this.MemberwiseClone();
         }
 
+        public Damage Combine(Damage damageToCombine)
+        {
+            List<StatusEffectEntry> statusEffectsCombined = this.statusEffects.ToList();
+
+            foreach (StatusEffectEntry s in damageToCombine.statusEffects)
+            {
+                int idx = statusEffectsCombined.FindIndex(x => x == s);
+                if (idx != -1)
+                {
+                    statusEffectsCombined[idx].amountPerHit += s.amountPerHit;
+                }
+                else
+                {
+                    statusEffectsCombined.Add(s);
+                }
+            }
+
+
+            Damage newDamage = new()
+            {
+                physical = this.physical + damageToCombine.physical,
+                fire = this.fire + damageToCombine.fire,
+                frost = this.frost + damageToCombine.frost,
+                lightning = this.lightning + damageToCombine.lightning,
+                magic = this.magic + damageToCombine.magic,
+                darkness = this.darkness + damageToCombine.darkness,
+                water = this.water + damageToCombine.water,
+                canNotBeParried = damageToCombine.canNotBeParried,
+                ignoreBlocking = damageToCombine.ignoreBlocking,
+                poiseDamage = this.poiseDamage + damageToCombine.poiseDamage,
+                postureDamage = this.postureDamage + damageToCombine.postureDamage,
+                pushForce = this.pushForce + damageToCombine.pushForce,
+                //weaponAttackType = damageToCombine.weaponAttackType,
+                statusEffects = statusEffectsCombined.ToArray(),
+            };
+
+            return newDamage;
+        }
         public void ScaleDamageForNewGamePlus(GameSession gameSession)
         {
             this.physical = Utils.ScaleWithCurrentNewGameIteration(this.physical, gameSession.currentGameIteration, gameSession.newGamePlusScalingFactor);

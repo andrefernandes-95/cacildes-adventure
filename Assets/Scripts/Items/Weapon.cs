@@ -72,6 +72,14 @@ namespace AF
     {
         public WeaponCategory weaponCategory;
 
+        [Header("Prefab")]
+        public WorldWeapon worldWeapon;
+
+        [Header("Attack Actions")]
+        public List<AttackAction> rightLightAttacks = new();
+        public List<AttackAction> leftLightAttacks = new();
+
+
         [Header("Attack")]
         public Damage damage;
 
@@ -174,9 +182,8 @@ namespace AF
         }
 #endif
 
-        public Damage CalculateValue(int currentLevel)
+        public Damage GetDamageForLevel(int currentLevel)
         {
-
             WeaponUpgradeLevel weaponUpgradeLevel = weaponUpgrades.ElementAtOrDefault(currentLevel - 2);
 
             if (weaponUpgradeLevel != null)
@@ -187,138 +194,68 @@ namespace AF
             return this.damage;
         }
 
-        public int GetWeaponBaseAttack()
+        public int GetStrengthBonusFromWeapon(CharacterBaseManager character)
         {
-            return CalculateValue(this.level).physical;
-        }
-        public int GetWeaponAttack(AttackStatManager attackStatManager)
-        {
-            int strengthBonus = (int)attackStatManager.GetStrengthBonusFromWeapon(this);
-            int dexterityBonus = (int)attackStatManager.GetDexterityBonusFromWeapon(this);
-
-            return GetWeaponBaseAttack() + strengthBonus + dexterityBonus;
-        }
-        public int GetWeaponAttackForLevel(AttackStatManager attackStatManager, int level)
-        {
-            int strengthBonus = (int)attackStatManager.GetStrengthBonusFromWeapon(this);
-            int dexterityBonus = (int)attackStatManager.GetDexterityBonusFromWeapon(this);
-
-            return CalculateValue(level).physical + strengthBonus + dexterityBonus;
-        }
-        public int GetWeaponFireAttack(AttackStatManager attackStatManager)
-        {
-            return CalculateValue(this.level).fire;
-        }
-        public int GetWeaponFireAttackForLevel(AttackStatManager attackStatManager, int level)
-        {
-            return (int)CalculateValue(level).fire;
-        }
-        public int GetWeaponFrostAttack(AttackStatManager attackStatManager)
-        {
-            return (int)CalculateValue(this.level).frost;
-        }
-        public int GetWeaponFrostAttackForLevel(AttackStatManager attackStatManager, int level)
-        {
-            return (int)CalculateValue(level).frost;
-        }
-        public int GetWeaponLightningAttack(int playerReputation, AttackStatManager attackStatManager)
-        {
-            int lightingDamage = CalculateValue(this.level).lightning;
-
-            if (isHolyWeapon && playerReputation > 0)
+            if (damage.physical <= 0)
             {
-                lightingDamage += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(playerReputation), 1.25f));
+                return 0;
             }
 
-            return (int)lightingDamage; ;
+            return Formulas.GetBonusFromWeapon(
+                character.characterBaseStats.GetStrength(),
+                strengthScaling.ToString()
+            );
         }
 
-        public int GetBaseWeaponLightningAttack()
+        public float GetDexterityBonusFromWeapon(CharacterBaseManager character)
         {
-            return CalculateValue(this.level).lightning;
-        }
-
-        public int GetWeaponLightningAttackForLevel(int level, int playerReputation, AttackStatManager attackStatManager)
-        {
-            int lightingDamage = CalculateValue(level).lightning;
-
-            if (isHolyWeapon && playerReputation > 0)
+            if (damage.physical <= 0)
             {
-                lightingDamage += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(playerReputation), 1.25f));
+                return 0;
             }
 
-            return (int)lightingDamage;
+            return Formulas.GetBonusFromWeapon(
+                character.characterBaseStats.GetDexterity(),
+                dexterityScaling.ToString()
+            );
         }
 
-        public int GetBaseWeaponDarknessAttack()
+        public float GetIntelligenceBonusFromWeapon(CharacterBaseManager character)
         {
-            return CalculateValue(this.level).darkness;
+            return Formulas.GetBonusFromWeapon(
+                character.characterBaseStats.GetIntelligence(),
+                intelligenceScaling.ToString()
+            );
         }
-        public int GetWeaponDarknessAttack(int playerReputation, AttackStatManager attackStatManager)
-        {
-            int darknessDamage = CalculateValue(this.level).darkness;
 
-            if (isHexWeapon && playerReputation < 0)
+        public Damage GetScaledDamageForLevel(CharacterBaseManager character, int level)
+        {
+            int strengthBonus = (int)GetStrengthBonusFromWeapon(character);
+            int dexterityBonus = (int)GetDexterityBonusFromWeapon(character);
+            int intelligenceBonus = (int)GetIntelligenceBonusFromWeapon(character);
+
+            Damage scaledDamage = GetDamageForLevel(level);
+
+            scaledDamage.physical += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.fire += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.frost += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.magic += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.lightning += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.darkness += strengthBonus + dexterityBonus + intelligenceBonus;
+            scaledDamage.water += strengthBonus + dexterityBonus + intelligenceBonus;
+
+            int characterReputation = character.characterBaseStats.GetReputation();
+
+            if (isHolyWeapon && characterReputation > 0)
             {
-                darknessDamage += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(playerReputation), 1.25f));
+                scaledDamage.lightning += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(characterReputation), 1.25f));
+            }
+            else if (isHexWeapon && characterReputation < 0)
+            {
+                scaledDamage.darkness += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(characterReputation), 1.25f));
             }
 
-            return (int)darknessDamage;
-        }
-
-        public int GetWeaponDarknessAttackForLevel(int level, int playerReputation, AttackStatManager attackStatManager)
-        {
-            int darknessDamage = CalculateValue(level).darkness;
-
-            if (isHexWeapon && playerReputation < 0)
-            {
-                darknessDamage += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(playerReputation), 1.25f));
-            }
-
-            return (int)darknessDamage;
-        }
-
-        public int GetWeaponWaterAttack(AttackStatManager attackStatManager)
-        {
-            return (int)CalculateValue(this.level).water;
-        }
-
-        public int GetWeaponWaterAttackForLevel(int level, AttackStatManager attackStatManager)
-        {
-            return (int)CalculateValue(level).water;
-        }
-
-        public int GetWeaponBaseMagicAttack()
-        {
-            return (int)CalculateValue(this.level).magic;
-        }
-        public int GetWeaponMagicAttack(AttackStatManager attackStatManager)
-        {
-            int baseMagicDamage = (int)CalculateValue(this.level).magic;
-
-            if (baseMagicDamage > 0)
-            {
-                baseMagicDamage += (int)attackStatManager.GetIntelligenceBonusFromWeapon(this);
-            }
-
-            return baseMagicDamage;
-        }
-
-        public int GetWeaponMagicAttackForLevel(int level, AttackStatManager attackStatManager)
-        {
-            int baseMagicDamage = (int)CalculateValue(level).magic;
-
-            if (baseMagicDamage > 0)
-            {
-                baseMagicDamage += (int)attackStatManager.GetIntelligenceBonusFromWeapon(this);
-            }
-
-            return baseMagicDamage;
-        }
-
-        public Damage GetWeaponDamage()
-        {
-            return CalculateValue(this.level);
+            return scaledDamage;
         }
 
         public string GetFormattedStatusDamages()
@@ -370,30 +307,30 @@ namespace AF
             return strengthRequired != 0 || dexterityRequired != 0 || intelligenceRequired != 0 || positiveReputationRequired != 0 || negativeReputationRequired != 0;
         }
 
-        public bool AreRequirementsMet(StatsBonusController statsBonusController)
+        public bool AreRequirementsMet(CharacterBaseManager character)
         {
-            if (statsBonusController.ignoreWeaponRequirements)
+            if (character.statsBonusController.ignoreWeaponRequirements)
             {
                 return true;
             }
 
-            if (strengthRequired != 0 && statsBonusController.GetCurrentStrength() < strengthRequired)
+            if (strengthRequired != 0 && character.characterBaseStats.GetStrength() < strengthRequired)
             {
                 return false;
             }
-            else if (dexterityRequired != 0 && statsBonusController.GetCurrentDexterity() < dexterityRequired)
+            else if (dexterityRequired != 0 && character.characterBaseStats.GetDexterity() < dexterityRequired)
             {
                 return false;
             }
-            else if (intelligenceRequired != 0 && statsBonusController.GetCurrentIntelligence() < intelligenceRequired)
+            else if (intelligenceRequired != 0 && character.characterBaseStats.GetIntelligence() < intelligenceRequired)
             {
                 return false;
             }
-            else if (positiveReputationRequired != 0 && statsBonusController.GetCurrentReputation() < positiveReputationRequired)
+            else if (positiveReputationRequired != 0 && character.characterBaseStats.GetReputation() < positiveReputationRequired)
             {
                 return false;
             }
-            else if (negativeReputationRequired != 0 && statsBonusController.GetCurrentReputation() > -negativeReputationRequired)
+            else if (negativeReputationRequired != 0 && character.characterBaseStats.GetReputation() > -negativeReputationRequired)
             {
                 return false;
             }
@@ -401,54 +338,196 @@ namespace AF
             return true;
         }
 
-        public string DrawRequirements(StatsBonusController statsBonusController)
+        public string DrawRequirements(CharacterBaseManager character)
         {
-            string text = AreRequirementsMet(statsBonusController)
+            string text = AreRequirementsMet(character)
                 ? LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Requirements met: ")
                 : LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Requirements not met: ");
 
             if (strengthRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Strength Required:")} {strengthRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentStrength()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Strength Required:")} {strengthRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {character.characterBaseStats.GetStrength()}\n";
             }
             if (dexterityRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Dexterity Required:")} {dexterityRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentDexterity()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Dexterity Required:")} {dexterityRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {character.characterBaseStats.GetDexterity()}\n";
             }
             if (intelligenceRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Intelligence Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentIntelligence()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Intelligence Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {character.characterBaseStats.GetIntelligence()}\n";
             }
             if (positiveReputationRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentReputation()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {character.characterBaseStats.GetReputation()}\n";
             }
 
             if (negativeReputationRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} -{negativeReputationRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentReputation()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} -{negativeReputationRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {character.characterBaseStats.GetReputation()}\n";
             }
 
             return text.TrimEnd();
         }
 
-        public bool CanUseUpperLayer(EquipmentDatabase equipmentDatabase)
+        public Damage GetCurrentDamage(CharacterBaseManager character, int weaponLevel)
         {
-            if (!useUpperLayerAnimations)
+            Damage weaponDamage = GetScaledDamageForLevel(character, weaponLevel);
+
+            /*
+            Damage weaponDamage = new(
+                physical: GetWeaponAttack(weapon),
+                fire: (int)weapon.GetWeaponFireAttack(playerManager.attackStatManager),
+                frost: (int)weapon.GetWeaponFrostAttack(playerManager.attackStatManager),
+                magic: (int)weapon.GetWeaponMagicAttack(playerManager.attackStatManager),
+                lightning: (int)weapon.GetWeaponLightningAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), playerManager.attackStatManager),
+                darkness: (int)weapon.GetWeaponDarknessAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), playerManager.attackStatManager),
+                water: (int)weapon.GetWeaponWaterAttack(playerManager.attackStatManager),
+                postureDamage: (IsHeavyAttacking() || IsJumpAttacking())
+                ? (int)(weapon.damage.postureDamage * 1.1f)
+                : weapon.damage.postureDamage,
+                poiseDamage: weapon.damage.poiseDamage,
+                weaponAttackType: weapon.damage.weaponAttackType,
+                statusEffects: weapon.damage.statusEffects,
+                pushForce: weapon.damage.pushForce,
+                canNotBeParried: weapon.damage.canNotBeParried,
+                ignoreBlocking: weapon.damage.ignoreBlocking
+            );*/
+
+            ApplyModifiers(character, weaponDamage);
+
+            return weaponDamage;
+        }
+
+
+        void ApplyModifier(Damage damage, float modifier)
+        {
+            damage.physical = (int)(damage.physical * modifier);
+            damage.fire = (int)(damage.fire * modifier);
+            damage.frost = (int)(damage.frost * modifier);
+            damage.magic = (int)(damage.magic * modifier);
+            damage.lightning = (int)(damage.lightning * modifier);
+            damage.darkness = (int)(damage.darkness * modifier);
+            damage.water = (int)(damage.water * modifier);
+        }
+
+        void AddToDamage(Damage damage, int value)
+        {
+            if (damage.physical > 0)
             {
-                return false;
+                damage.physical += value;
+            }
+            if (damage.fire > 0)
+            {
+                damage.fire += value;
+            }
+            if (damage.frost > 0)
+            {
+                damage.frost += value;
+            }
+            if (damage.magic > 0)
+            {
+                damage.magic += value;
+            }
+            if (damage.lightning > 0)
+            {
+                damage.lightning += value;
+            }
+            if (damage.darkness > 0)
+            {
+                damage.darkness += value;
+            }
+            if (damage.water > 0)
+            {
+                damage.water += value;
+            }
+        }
+
+        void ApplyModifiers(CharacterBaseManager character, Damage damage)
+        {
+            float modifiers = 1f;
+
+            if (character.combatManager.isTwoHanding)
+            {
+                modifiers += character.combatManager.twoHandingMultiplier + character.statsBonusController.twoHandAttackBonusMultiplier;
             }
 
-            if (!allowUpperLayerWhenOneHanding && !equipmentDatabase.isTwoHanding)
+            if (character.combatManager.isHeavyAttacking)
             {
-                return false;
-            }
-            if (!allowUpperLayerWhenTwoHanding && equipmentDatabase.isTwoHanding)
-            {
-                return false;
+                modifiers += character.combatManager.heavyAttackMultiplier + character.statsBonusController.heavyAttackBonusMultiplier;
             }
 
-            return true;
+            if (character.combatManager.isJumpAttacking)
+            {
+                modifiers += character.combatManager.jumpAttackMultiplier + character.statsBonusController.jumpAttackBonusMultiplier;
+            }
+
+            // Bonus for guard counters and parry attacks
+            if (character.characterBlockController.IsWithinCounterAttackWindow())
+            {
+                modifiers += character.characterBlockController.counterAttackMultiplier;
+            }
+
+            if (character.statsBonusController.increaseNextAttackDamage)
+            {
+                character.statsBonusController.increaseNextAttackDamage = false;
+
+                modifiers += character.statsBonusController.nextAttackMultiplierFactor;
+            }
+
+            // If weapon is unarmed
+            /* if (currentWeapon == null)
+            {
+                if (character.statsBonusController.increaseAttackPowerWhenUnarmed)
+                {
+                    attackMultiplierBonuses *= 1.65f;
+                }
+            }*/
+
+            if (damage.weaponAttackType == WeaponAttackType.Pierce)
+            {
+                modifiers += character.statsBonusController.pierceDamageMultiplier;
+            }
+            else if (damage.weaponAttackType == WeaponAttackType.Blunt)
+            {
+                modifiers += character.statsBonusController.bluntDamageMultiplier;
+            }
+            else if (damage.weaponAttackType == WeaponAttackType.Slash)
+            {
+                modifiers += character.statsBonusController.slashDamageMultiplier;
+            }
+            // TODO: Add Range Multiplier
+
+            ApplyModifier(damage, modifiers);
+
+            if (character.statsBonusController.physicalAttackBonus > 0)
+            {
+                damage.physical = (int)(damage.physical + character.statsBonusController.physicalAttackBonus);
+            }
+
+            int extraAttackPower = 0;
+
+            // + Attack the lower the reputation
+            if (character.statsBonusController.increaseAttackPowerTheLowerTheReputation && character.characterBaseStats.GetReputation() < 0)
+            {
+                extraAttackPower += Mathf.Min(150, (int)(Mathf.Abs(character.characterBaseStats.GetReputation()) * 2.25f));
+            }
+
+            // + Attack when health is low
+            if (character.statsBonusController.increaseAttackPowerWithLowerHealth)
+            {
+                extraAttackPower += (int)(value * character.health.GetExtraAttackBasedOnCurrentHealth());
+            }
+
+            AddToDamage(damage, extraAttackPower);
+        }
+
+        public bool IsRangeWeapon()
+        {
+            return damage.weaponAttackType == WeaponAttackType.Range;
+        }
+        public bool IsStaffWeapon()
+        {
+            return damage.weaponAttackType == WeaponAttackType.Staff;
         }
     }
 

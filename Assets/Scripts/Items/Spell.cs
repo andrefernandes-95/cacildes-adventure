@@ -10,7 +10,8 @@ namespace AF
 
         public GameObject projectile;
 
-        public float costPerCast = 20;
+        public float manaCostPerCast = 20;
+        public float staminaCostPerCast = 20;
 
         [Header("Animations")]
         public AnimationClip castAnimationOverride;
@@ -52,17 +53,18 @@ namespace AF
             return result.TrimEnd();
         }
 
-        public bool AreRequirementsMet(StatsBonusController statsBonusController)
+        // TODO: Change to Character Stats
+        public bool AreRequirementsMet(CharacterBaseStats characterBaseStats)
         {
-            if (intelligenceRequired != 0 && statsBonusController.GetCurrentIntelligence() < intelligenceRequired)
+            if (intelligenceRequired != 0 && characterBaseStats.GetIntelligence() < intelligenceRequired)
             {
                 return false;
             }
-            else if (positiveReputationRequired != 0 && statsBonusController.GetCurrentReputation() < positiveReputationRequired)
+            else if (positiveReputationRequired != 0 && characterBaseStats.GetReputation() < positiveReputationRequired)
             {
                 return false;
             }
-            else if (negativeReputationRequired != 0 && statsBonusController.GetCurrentReputation() > -negativeReputationRequired)
+            else if (negativeReputationRequired != 0 && characterBaseStats.GetReputation() > -negativeReputationRequired)
             {
                 return false;
             }
@@ -75,24 +77,24 @@ namespace AF
             return intelligenceRequired != 0 || positiveReputationRequired != 0 || negativeReputationRequired != 0;
         }
 
-        public string DrawRequirements(StatsBonusController statsBonusController)
+        public string DrawRequirements(CharacterBaseStats characterBaseStats)
         {
-            string text = AreRequirementsMet(statsBonusController)
+            string text = AreRequirementsMet(characterBaseStats)
                 ? LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Requirements met: ")
                 : LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Requirements not met: ");
 
             if (intelligenceRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Intelligence Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentIntelligence()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Intelligence Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {characterBaseStats.GetIntelligence()}\n";
             }
             if (positiveReputationRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentReputation()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} {intelligenceRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {characterBaseStats.GetReputation()}\n";
             }
 
             if (negativeReputationRequired != 0)
             {
-                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} -{negativeReputationRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {statsBonusController.GetCurrentReputation()}\n";
+                text += $"  {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Reputation Required:")} -{negativeReputationRequired}   {LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Current:")} {characterBaseStats.GetReputation()}\n";
             }
             return text.TrimEnd();
         }

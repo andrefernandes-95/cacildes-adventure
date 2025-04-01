@@ -86,19 +86,19 @@ namespace AF
             return playerStatsBonusController.lightningDefenseBonus;
         }
 
-        public int CompareHelmet(Helmet helmet)
+        public int CompareHelmet(HelmetInstance helmet)
         {
-            if (equipmentDatabase.helmet == null)
+            if (equipmentDatabase.helmet == null || !equipmentDatabase.helmet.Exists())
             {
                 return 1;
             }
 
-            if (helmet.physicalDefense > equipmentDatabase.helmet.physicalDefense)
+            if (helmet.GetItem<Helmet>().physicalDefense > equipmentDatabase.helmet.GetItem<Helmet>().physicalDefense)
             {
                 return 1;
             }
 
-            if (equipmentDatabase.helmet.physicalDefense == helmet.physicalDefense)
+            if (equipmentDatabase.helmet.GetItem<Helmet>().physicalDefense == helmet.GetItem<Helmet>().physicalDefense)
             {
                 return 0;
             }
@@ -106,19 +106,19 @@ namespace AF
             return -1;
         }
 
-        public int CompareArmor(Armor armor)
+        public int CompareArmor(ArmorInstance armor)
         {
-            if (equipmentDatabase.armor == null)
+            if (equipmentDatabase.armor == null || !equipmentDatabase.armor.Exists())
             {
                 return 1;
             }
 
-            if (armor.physicalDefense > equipmentDatabase.armor.physicalDefense)
+            if (armor.GetItem<Helmet>().physicalDefense > equipmentDatabase.armor.GetItem<Helmet>().physicalDefense)
             {
                 return 1;
             }
 
-            if (equipmentDatabase.armor.physicalDefense == armor.physicalDefense)
+            if (equipmentDatabase.armor.GetItem<Helmet>().physicalDefense == armor.GetItem<Helmet>().physicalDefense)
             {
                 return 0;
             }
@@ -126,19 +126,19 @@ namespace AF
             return -1;
         }
 
-        public int CompareGauntlet(Gauntlet gauntlet)
+        public int CompareGauntlet(GauntletInstance gauntlet)
         {
-            if (equipmentDatabase.gauntlet == null)
+            if (equipmentDatabase.gauntlet == null || !equipmentDatabase.gauntlet.Exists())
             {
                 return 1;
             }
 
-            if (gauntlet.physicalDefense > equipmentDatabase.gauntlet.physicalDefense)
+            if (gauntlet.GetItem<Gauntlet>().physicalDefense > equipmentDatabase.gauntlet.GetItem<Gauntlet>().physicalDefense)
             {
                 return 1;
             }
 
-            if (equipmentDatabase.gauntlet.physicalDefense == gauntlet.physicalDefense)
+            if (equipmentDatabase.gauntlet.GetItem<Gauntlet>().physicalDefense == gauntlet.GetItem<Gauntlet>().physicalDefense)
             {
                 return 0;
             }
@@ -146,19 +146,19 @@ namespace AF
             return -1;
         }
 
-        public int CompareLegwear(Legwear legwear)
+        public int CompareLegwear(LegwearInstance legwear)
         {
-            if (equipmentDatabase.legwear == null)
+            if (equipmentDatabase.legwear == null || !legwear.Exists())
             {
                 return 1;
             }
 
-            if (legwear.physicalDefense > equipmentDatabase.legwear.physicalDefense)
+            if (legwear.GetItem<Legwear>().physicalDefense > equipmentDatabase.legwear.GetItem<Legwear>().physicalDefense)
             {
                 return 1;
             }
 
-            if (equipmentDatabase.legwear.physicalDefense == legwear.physicalDefense)
+            if (equipmentDatabase.legwear.GetItem<Legwear>().physicalDefense == legwear.GetItem<Legwear>().physicalDefense)
             {
                 return 0;
             }

@@ -6,32 +6,28 @@ using AF.Events;
 using System.Linq;
 using AF.Inventory;
 using System;
+using CI.QuickSave;
 
 [CreateAssetMenu(fileName = "Equipment Database", menuName = "System/New Equipment Database", order = 0)]
 public class EquipmentDatabase : ScriptableObject
 {
     [Header("Offensive Gear")]
-    public Weapon[] weapons = new Weapon[3]; // Fixed size array for weapons
-
-    public Shield[] shields = new Shield[3]; // Fixed size array for shields
-
-    public Arrow[] arrows = new Arrow[2];
-
-    public Spell[] spells = new Spell[5];
-
-    public Consumable[] consumables = new Consumable[10];
+    public WeaponInstance[] rightWeapons = new WeaponInstance[3];
+    public WeaponInstance[] leftWeapons = new WeaponInstance[3];
+    public ArrowInstance[] arrows = new ArrowInstance[2];
+    public SpellInstance[] spells = new SpellInstance[5];
+    public ConsumableInstance[] consumables = new ConsumableInstance[10];
 
     [Header("Defensive Gear")]
-    public Helmet helmet;
-    public Armor armor;
-    public Gauntlet gauntlet;
-    public Legwear legwear;
+    public HelmetInstance helmet;
+    public ArmorInstance armor;
+    public GauntletInstance gauntlet;
+    public LegwearInstance legwear;
 
     [Header("Accessories")]
-    public Accessory[] accessories = new Accessory[4];
+    public AccessoryInstance[] accessories = new AccessoryInstance[4];
 
     public int currentWeaponIndex, currentShieldIndex, currentConsumableIndex, currentSpellIndex, currentArrowIndex = 0;
-
 
     [Header("Flags")]
     public bool isTwoHanding = false;
@@ -67,45 +63,46 @@ public class EquipmentDatabase : ScriptableObject
         currentSpellIndex = 0;
         currentArrowIndex = 0;
 
-        for (int i = 0; i < weapons.Length; i++)
+        for (int i = 0; i < rightWeapons.Length; i++)
         {
-            weapons[i] = null;
+            rightWeapons[i].Clear();
         }
 
-        for (int i = 0; i < shields.Length; i++)
+        for (int i = 0; i < leftWeapons.Length; i++)
         {
-            shields[i] = null;
+            leftWeapons[i].Clear();
         }
 
         for (int i = 0; i < spells.Length; i++)
         {
-            spells[i] = null;
+            spells[i].Clear();
         }
 
         for (int i = 0; i < accessories.Length; i++)
         {
-            accessories[i] = null;
+            accessories[i].Clear();
         }
 
         for (int i = 0; i < consumables.Length; i++)
         {
-            consumables[i] = null;
+            consumables[i].Clear();
         }
         for (int i = 0; i < arrows.Length; i++)
         {
-            arrows[i] = null;
+            arrows[i].Clear();
         }
 
-        helmet = null;
-        armor = null;
-        gauntlet = null;
-        legwear = null;
+        helmet.Clear();
+        armor.Clear();
+        gauntlet.Clear();
+        legwear.Clear();
     }
+
     public void SwitchToNextWeapon()
     {
         currentWeaponIndex++;
 
-        if (currentWeaponIndex >= weapons.Length)
+        if (currentWeaponIndex >= rightWeapons.Length)
         {
             currentWeaponIndex = 0;
         }
@@ -113,15 +110,29 @@ public class EquipmentDatabase : ScriptableObject
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipWeapon(Weapon weapon, int slotIndex)
+    public void EquipWeapon(WeaponInstance weapon, int slotIndex, bool isRightHand)
     {
-        weapons[slotIndex] = weapon;
+        if (isRightHand)
+        {
+            rightWeapons[slotIndex] = weapon;
+        }
+        else
+        {
+            leftWeapons[slotIndex] = weapon;
+        }
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
-    public void UnequipWeapon(int slotIndex)
+    public void UnequipWeapon(int slotIndex, bool isRightHand)
     {
-        weapons[slotIndex] = null;
+        if (isRightHand)
+        {
+            rightWeapons[slotIndex].Clear();
+        }
+        else
+        {
+            leftWeapons[slotIndex].Clear();
+        }
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
@@ -130,7 +141,7 @@ public class EquipmentDatabase : ScriptableObject
     {
         currentShieldIndex++;
 
-        if (currentShieldIndex >= shields.Length)
+        if (currentShieldIndex >= leftWeapons.Length)
         {
             currentShieldIndex = 0;
         }
@@ -139,15 +150,16 @@ public class EquipmentDatabase : ScriptableObject
         EventManager.EmitEvent(EventMessages.ON_SHIELD_EQUIPMENT_CHANGED);
     }
 
-    public void EquipShield(Shield shield, int slotIndex)
+    public void EquipShield(WeaponInstance shield, int slotIndex)
     {
-        shields[slotIndex] = shield;
+        leftWeapons[slotIndex] = shield.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         EventManager.EmitEvent(EventMessages.ON_SHIELD_EQUIPMENT_CHANGED);
     }
+
     public void UnequipShield(int slotIndex)
     {
-        shields[slotIndex] = null;
+        leftWeapons[slotIndex].Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         EventManager.EmitEvent(EventMessages.ON_SHIELD_EQUIPMENT_CHANGED);
     }
@@ -159,14 +171,14 @@ public class EquipmentDatabase : ScriptableObject
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipArrow(Arrow arrow, int slotIndex)
+    public void EquipArrow(ArrowInstance arrow, int slotIndex)
     {
-        arrows[slotIndex] = arrow;
+        arrows[slotIndex] = arrow.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
     public void UnequipArrow(int slotIndex)
     {
-        arrows[slotIndex] = null;
+        arrows[slotIndex].Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
@@ -177,15 +189,15 @@ public class EquipmentDatabase : ScriptableObject
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipSpell(Spell spell, int slotIndex)
+    public void EquipSpell(SpellInstance spell, int slotIndex)
     {
-        spells[slotIndex] = spell;
+        spells[slotIndex] = spell.Clone();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
     public void UnequipSpell(int slotIndex)
     {
-        spells[slotIndex] = null;
+        spells[slotIndex].Clear();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
@@ -195,16 +207,16 @@ public class EquipmentDatabase : ScriptableObject
         currentConsumableIndex = UpdateIndex(currentConsumableIndex, consumables);
     }
 
-    public void EquipConsumable(Consumable consumable, int slotIndex)
+    public void EquipConsumable(ConsumableInstance consumable, int slotIndex)
     {
-        consumables[slotIndex] = consumable;
+        consumables[slotIndex] = consumable.Clone();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
     public void UnequipConsumable(int slotIndex)
     {
-        consumables[slotIndex] = null;
+        consumables[slotIndex].Clear();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
@@ -228,107 +240,133 @@ public class EquipmentDatabase : ScriptableObject
         return index;
     }
 
-    public void EquipHelmet(Helmet equip)
+    public void EquipHelmet(HelmetInstance equip)
     {
-        helmet = equip;
+        helmet = equip.Clone();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
     public void UnequipHelmet()
     {
-        helmet = null;
+        helmet.Clear();
 
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipArmor(Armor equip)
+    public void EquipArmor(ArmorInstance equip)
     {
-        armor = equip;
+        armor = equip.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
     public void UnequipArmor()
     {
-        armor = null;
+        armor.Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipGauntlet(Gauntlet equip)
+    public void EquipGauntlet(GauntletInstance equip)
     {
-        gauntlet = equip;
+        gauntlet = equip.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
     public void UnequipGauntlet()
     {
-        gauntlet = null;
+        gauntlet.Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipLegwear(Legwear equip)
+    public void EquipLegwear(LegwearInstance equip)
     {
-        legwear = equip;
+        legwear = equip.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
     public void UnequipLegwear()
     {
-        legwear = null;
+        legwear.Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipAccessory(Accessory accessory, int slotIndex)
+    public void EquipAccessory(AccessoryInstance accessory, int slotIndex)
     {
-        accessories[slotIndex] = accessory;
+        accessories[slotIndex] = accessory.Clone();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
     public void UnequipAccessory(int slotIndex)
     {
-        accessories[slotIndex] = null;
+        accessories[slotIndex].Clear();
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public Weapon GetCurrentWeapon()
+    public WeaponInstance GetCurrentRightWeapon()
     {
-        return weapons[currentWeaponIndex];
+        return rightWeapons[currentWeaponIndex];
     }
 
-    public Shield GetCurrentShield()
+    public WeaponInstance GetCurrentLeftWeapon()
     {
-        return shields[currentShieldIndex];
+        return leftWeapons[currentShieldIndex];
     }
-    public Spell GetCurrentSpell()
+    public SpellInstance GetCurrentSpell()
     {
         return spells[currentSpellIndex];
     }
-    public Arrow GetCurrentArrow()
+    public ArrowInstance GetCurrentArrow()
     {
         return arrows[currentArrowIndex];
     }
-    public Consumable GetCurrentConsumable()
+    public ConsumableInstance GetCurrentConsumable()
     {
         return consumables[currentConsumableIndex];
     }
 
+    public bool IsAccessoryEquiped(AccessoryInstance accessory)
+    {
+        return accessories.Any(acc => acc.IsEqualTo(accessory));
+    }
     public bool IsAccessoryEquiped(Accessory accessory)
     {
-        return accessories.Contains(accessory);
+        return accessories.Any(acc => acc.HasItem(accessory));
     }
 
     public bool IsBowEquipped()
     {
-        return GetCurrentWeapon() != null && GetCurrentWeapon().damage.weaponAttackType == WeaponAttackType.Range;
+        if (GetCurrentRightWeapon().Exists())
+        {
+            return GetCurrentRightWeapon().GetItem<Weapon>().damage.weaponAttackType == WeaponAttackType.Range;
+        }
+        else if (GetCurrentLeftWeapon().Exists())
+        {
+            return GetCurrentLeftWeapon().GetItem<Weapon>().damage.weaponAttackType == WeaponAttackType.Range;
+        }
+        return false;
     }
 
     public bool IsStaffEquipped()
     {
-        return GetCurrentWeapon() != null && GetCurrentWeapon().damage.weaponAttackType == WeaponAttackType.Staff;
+        if (GetCurrentRightWeapon().Exists())
+        {
+            return GetCurrentRightWeapon().GetItem<Weapon>().damage.weaponAttackType == WeaponAttackType.Staff;
+        }
+        else if (GetCurrentLeftWeapon().Exists())
+        {
+            return GetCurrentLeftWeapon().GetItem<Weapon>().damage.weaponAttackType == WeaponAttackType.Staff;
+        }
+        return false;
     }
 
     public bool HasEnoughCurrentArrows()
     {
-        Arrow currentArrow = GetCurrentArrow();
+        ArrowInstance currentArrowInstance = GetCurrentArrow();
+        if (!currentArrowInstance.Exists())
+        {
+            return false;
+        }
+
+        Arrow currentArrow = currentArrowInstance.GetItem<Arrow>();
 
         if (currentArrow == null)
         {
@@ -340,92 +378,96 @@ public class EquipmentDatabase : ScriptableObject
 
     public bool IsPlayerNaked()
     {
-        return helmet == null && armor == null && legwear == null && gauntlet == null;
+        return helmet.IsEmpty() && armor.IsEmpty() && legwear.IsEmpty() && gauntlet.IsEmpty();
     }
 
-    public int GetEquippedWeaponSlot(Weapon weapon)
+    public int GetEquippedRightWeaponSlot(WeaponInstance weapon)
     {
-        return Array.IndexOf(weapons, weapon);
+        return Array.IndexOf(rightWeapons, weapon);
     }
-    public int GetEquippedShieldSlot(Shield shield)
+
+    public int GetEquippedLeftWeaponSlot(WeaponInstance weapon)
     {
-        return Array.IndexOf(shields, shield);
+        return Array.IndexOf(leftWeapons, weapon);
     }
-    public int GetEquippedArrowsSlot(Arrow arrow)
+
+    public int GetEquippedShieldSlot(ShieldInstance shield)
+    {
+        return Array.IndexOf(leftWeapons, shield);
+    }
+    public int GetEquippedArrowsSlot(ArrowInstance arrow)
     {
         return Array.IndexOf(arrows, arrow);
     }
-    public int GetEquippedSpellSlot(Spell spell)
+    public int GetEquippedSpellSlot(SpellInstance spell)
     {
         return Array.IndexOf(spells, spell);
     }
-    public int GetEquippedAccessoriesSlot(Accessory accessory)
+    public int GetEquippedAccessoriesSlot(AccessoryInstance accessory)
     {
         return Array.IndexOf(accessories, accessory);
     }
-    public int GetEquippedConsumablesSlot(Consumable consumable)
+    public int GetEquippedConsumablesSlot(ConsumableInstance consumable)
     {
         return Array.IndexOf(consumables, consumable);
     }
 
-
-
-    public void UnequipItem(Item item)
+    public void UnequipItem(ItemInstance item)
     {
         // Check weapons
-        for (int i = 0; i < weapons.Length; i++)
+        for (int i = 0; i < rightWeapons.Length; i++)
         {
-            if (weapons[i] == item)
+            if (rightWeapons[i].IsEqualTo(item))
             {
-                weapons[i] = null;
+                rightWeapons[i].Clear();
                 EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
             }
         }
 
         // Check shields
-        for (int i = 0; i < shields.Length; i++)
+        for (int i = 0; i < leftWeapons.Length; i++)
         {
-            if (shields[i] == item)
+            if (leftWeapons[i].IsEqualTo(item))
             {
-                shields[i] = null;
+                leftWeapons[i].Clear();
                 EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
             }
         }
 
         // Check helmet
-        if (helmet == item)
+        if (helmet.IsEqualTo(item))
         {
-            helmet = null;
+            helmet.Clear();
             EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         }
 
         // Check armor
-        if (armor == item)
+        if (armor.IsEqualTo(item))
         {
-            armor = null;
+            armor.Clear();
             EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         }
 
         // Check gauntlet
-        if (gauntlet == item)
+        if (gauntlet.IsEqualTo(item))
         {
-            gauntlet = null;
+            gauntlet.Clear();
             EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         }
 
         // Check legwear
-        if (legwear == item)
+        if (legwear.IsEqualTo(item))
         {
-            legwear = null;
+            legwear.Clear();
             EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
         }
 
         // Check arrows
         for (int i = 0; i < arrows.Length; i++)
         {
-            if (arrows[i] == item)
+            if (arrows[i].IsEqualTo(item))
             {
-                arrows[i] = null;
+                arrows[i].Clear();
                 EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
             }
         }
@@ -433,9 +475,9 @@ public class EquipmentDatabase : ScriptableObject
         // Check spells
         for (int i = 0; i < spells.Length; i++)
         {
-            if (spells[i] == item)
+            if (spells[i].IsEqualTo(item))
             {
-                spells[i] = null;
+                spells[i].Clear();
                 EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
             }
         }
@@ -443,15 +485,15 @@ public class EquipmentDatabase : ScriptableObject
         // Check accessories
         for (int i = 0; i < accessories.Length; i++)
         {
-            if (accessories[i] == item)
+            if (accessories[i].IsEqualTo(item))
             {
-                accessories[i] = null;
+                accessories[i].Clear();
                 EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
             }
         }
 
         // Item not found equipped
-        Debug.LogWarning($"UnequipItem: Item '{item.name}' not found equipped");
+        Debug.LogWarning($"UnequipItem: Item with ID '{item.id}' not found in equipment");
     }
 
 
@@ -463,34 +505,221 @@ public class EquipmentDatabase : ScriptableObject
     }
 
 
-    public bool IsEquipped(ArmorBase armorBase)
+    public bool IsEquipped(ArmorBaseInstance armorBase)
     {
-        if (armorBase == null)
+        if (!armorBase.Exists())
         {
             return false;
         }
 
-        if (armorBase is Helmet)
+        if (armorBase is HelmetInstance)
         {
-            return helmet == armorBase;
+            return helmet.IsEqualTo(armorBase);
         }
-        else if (armorBase is Gauntlet)
+        else if (armorBase is GauntletInstance)
         {
-            return gauntlet == armorBase;
+            return gauntlet.IsEqualTo(armorBase);
         }
-        else if (armorBase is Armor)
+        else if (armorBase is ArmorInstance)
         {
-            return armor == armorBase;
+            return armor.IsEqualTo(armorBase);
         }
-        else if (armorBase is Legwear)
+        else if (armorBase is LegwearInstance)
         {
-            return legwear == armorBase;
+            return legwear.IsEqualTo(armorBase);
         }
-        else if (armorBase is Accessory)
+        else if (armorBase is AccessoryInstance)
         {
-            return accessories.Contains(armorBase);
+            return accessories.Any(acc => acc.IsEqualTo(armorBase));
         }
 
         return false;
+    }
+
+    public void LoadEquipmentFromSaveFile(QuickSaveReader quickSaveReader)
+    {
+
+        quickSaveReader.TryRead<int>("currentWeaponIndex", out int currentWeaponIndex);
+        this.currentWeaponIndex = currentWeaponIndex;
+
+        quickSaveReader.TryRead<int>("currentShieldIndex", out int currentShieldIndex);
+        this.currentShieldIndex = currentShieldIndex;
+
+        quickSaveReader.TryRead<int>("currentArrowIndex", out int currentArrowIndex);
+        this.currentArrowIndex = currentArrowIndex;
+
+        quickSaveReader.TryRead<int>("currentSpellIndex", out int currentSpellIndex);
+        this.currentSpellIndex = currentSpellIndex;
+
+        quickSaveReader.TryRead<int>("currentConsumableIndex", out int currentConsumableIndex);
+        this.currentConsumableIndex = currentConsumableIndex;
+
+        quickSaveReader.TryRead<string[]>("weapons", out string[] weapons);
+        if (weapons != null && weapons.Length > 0)
+        {
+            for (int idx = 0; idx < weapons.Length; idx++)
+            {
+                string weaponId = weapons[idx];
+
+                if (!string.IsNullOrEmpty(weaponId))
+                {
+                    if (inventoryDatabase.FindItemById(weaponId) is WeaponInstance weaponInstance)
+                    {
+                        EquipWeapon(weaponInstance, idx, true);
+                    }
+                }
+            }
+        }
+
+        // Try to read shields
+        quickSaveReader.TryRead<string[]>("shields", out string[] shields);
+        if (shields != null && shields.Length > 0)
+        {
+            for (int idx = 0; idx < shields.Length; idx++)
+            {
+                string shieldId = shields[idx];
+
+                if (!string.IsNullOrEmpty(shieldId))
+                {
+                    if (inventoryDatabase.FindItemById(shieldId) is ShieldInstance shieldInstance)
+                    {
+                        EquipWeapon(shieldInstance, idx, false);
+                    }
+                }
+            }
+        }
+
+        // Try to read arrows
+        quickSaveReader.TryRead<string[]>("arrows", out string[] arrows);
+        if (arrows != null && arrows.Length > 0)
+        {
+            for (int idx = 0; idx < arrows.Length; idx++)
+            {
+                string arrowId = arrows[idx];
+
+                if (!string.IsNullOrEmpty(arrowId))
+                {
+                    if (inventoryDatabase.FindItemById(arrowId) is ArrowInstance arrowInstance)
+                    {
+                        EquipArrow(arrowInstance, idx);
+                    }
+                }
+            }
+        }
+
+        // Try to read spells
+        quickSaveReader.TryRead<string[]>("spells", out string[] spells);
+        if (spells != null && spells.Length > 0)
+        {
+            for (int idx = 0; idx < spells.Length; idx++)
+            {
+                string spellId = spells[idx];
+
+                if (!string.IsNullOrEmpty(spellId))
+                {
+                    if (inventoryDatabase.FindItemById(spellId) is SpellInstance spellInstance)
+                    {
+                        EquipSpell(spellInstance, idx);
+                    }
+                }
+            }
+        }
+
+        // Try to read accessories
+        quickSaveReader.TryRead<string[]>("accessories", out string[] accessories);
+        if (accessories != null && accessories.Length > 0)
+        {
+            for (int idx = 0; idx < accessories.Length; idx++)
+            {
+                string accessoryId = accessories[idx];
+
+                if (!string.IsNullOrEmpty(accessoryId))
+                {
+                    if (inventoryDatabase.FindItemById(accessoryId) is AccessoryInstance accessoryInstance)
+                    {
+                        EquipAccessory(accessoryInstance, idx);
+                    }
+                }
+            }
+        }
+
+        // Try to read consumables
+        quickSaveReader.TryRead<string[]>("consumables", out string[] consumables);
+        if (consumables != null && consumables.Length > 0)
+        {
+            for (int idx = 0; idx < consumables.Length; idx++)
+            {
+                string consumableId = consumables[idx];
+
+                if (!string.IsNullOrEmpty(consumableId))
+                {
+                    if (inventoryDatabase.FindItemById(consumableId) is ConsumableInstance consumableInstance)
+                    {
+                        EquipConsumable(consumableInstance, idx);
+                    }
+                }
+            }
+        }
+
+        // Try to read helmet
+        quickSaveReader.TryRead<string>("helmet", out string helmetId);
+        if (!string.IsNullOrEmpty(helmetId))
+        {
+            if (inventoryDatabase.FindItemById(helmetId) is HelmetInstance helmetInstance)
+            {
+                EquipHelmet(helmetInstance);
+            }
+        }
+        else
+        {
+            UnequipHelmet();
+        }
+
+        // Try to read armor
+        quickSaveReader.TryRead<string>("armor", out string armorId);
+        if (!string.IsNullOrEmpty(armorId))
+        {
+            if (inventoryDatabase.FindItemById(armorId) is ArmorInstance armorInstance)
+            {
+                EquipArmor(armorInstance);
+            }
+        }
+        else
+        {
+            UnequipArmor();
+        }
+
+        // Try to read gauntlet
+        quickSaveReader.TryRead<string>("gauntlet", out string gauntletId);
+        if (!string.IsNullOrEmpty(gauntletId))
+        {
+            if (inventoryDatabase.FindItemById(gauntletId) is GauntletInstance gauntletInstance)
+            {
+                EquipGauntlet(gauntletInstance);
+            }
+        }
+        else
+        {
+            UnequipGauntlet();
+        }
+
+        // Try to read legwear
+        quickSaveReader.TryRead<string>("legwear", out string legwearId);
+        if (!string.IsNullOrEmpty(legwearId))
+        {
+            LegwearInstance legwearInstance = inventoryDatabase.FindItemById(legwearId) as LegwearInstance;
+
+            if (legwearInstance != null)
+            {
+                EquipLegwear(legwearInstance);
+            }
+        }
+        else
+        {
+            UnequipLegwear();
+        }
+
+        quickSaveReader.TryRead<bool>("isTwoHanding", out bool isTwoHanding);
+        this.isTwoHanding = isTwoHanding;
     }
 }

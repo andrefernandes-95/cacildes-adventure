@@ -55,7 +55,7 @@ namespace AF.Pickups
 
             GetSoundbank().PlaySound(GetSoundbank().itemLostWithUse);
 
-            inventoryDatabase.RemoveItem(requiredItem, 1);
+            inventoryDatabase.RemoveItem(requiredItem);
             onItemUsed?.Invoke();
             flagsDatabase.AddFlag(monoBehaviourID);
         }

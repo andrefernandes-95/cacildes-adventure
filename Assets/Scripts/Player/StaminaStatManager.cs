@@ -47,7 +47,7 @@ namespace AF
         {
             return Formulas.CalculateStatForLevel(
                 playerStatsDatabase.maxStamina + playerStatsBonusController.staminaBonus,
-                playerStatsBonusController.GetCurrentEndurance(),
+                playerManager.characterBaseStats.GetEndurance(),
                 playerStatsDatabase.levelMultiplierForStamina);
         }
 
@@ -154,30 +154,30 @@ namespace AF
         public void DecreaseLightAttackStamina()
         {
             DecreaseStamina(
-                equipmentDatabase.GetCurrentWeapon() != null
-                    ? equipmentDatabase.GetCurrentWeapon().lightAttackStaminaCost
+                equipmentDatabase.GetCurrentRightWeapon().Exists()
+                    ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().lightAttackStaminaCost
                     : unarmedLightAttackStaminaCost);
         }
         public void DecreaseHeavyAttackStamina()
         {
             DecreaseStamina(
-                equipmentDatabase.GetCurrentWeapon() != null
-                    ? equipmentDatabase.GetCurrentWeapon().heavyAttackStaminaCost
+                equipmentDatabase.GetCurrentRightWeapon().Exists()
+                    ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().heavyAttackStaminaCost
                     : unarmedHeavyAttackStaminaCost);
         }
 
         public bool HasEnoughStaminaForLightAttack()
         {
-            var staminaCost = equipmentDatabase.GetCurrentWeapon() != null
-                ? equipmentDatabase.GetCurrentWeapon().lightAttackStaminaCost : unarmedLightAttackStaminaCost;
+            var staminaCost = equipmentDatabase.GetCurrentRightWeapon().Exists()
+                ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().lightAttackStaminaCost : unarmedLightAttackStaminaCost;
 
             return HasEnoughStaminaForAction(staminaCost);
         }
 
         public bool HasEnoughStaminaForHeavyAttack()
         {
-            var staminaCost = equipmentDatabase.GetCurrentWeapon() != null
-                ? equipmentDatabase.GetCurrentWeapon().heavyAttackStaminaCost : unarmedHeavyAttackStaminaCost;
+            var staminaCost = equipmentDatabase.GetCurrentRightWeapon().Exists()
+                ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().heavyAttackStaminaCost : unarmedHeavyAttackStaminaCost;
 
             return HasEnoughStaminaForAction(staminaCost);
         }

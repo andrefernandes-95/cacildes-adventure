@@ -280,6 +280,8 @@ namespace AF
 
         void UpdateAppearance()
         {
+            return;
+
             LoadColors();
             LoadBodyType();
             LoadFaceType();
@@ -291,7 +293,7 @@ namespace AF
         void LoadBodyType()
         {
             int type = GetBodyType();
-
+            return;
             foreach (GameObject bodyGameObject in bodyContainers)
             {
                 for (int i = 0; i < bodyGameObject.transform.childCount; i++)
@@ -303,6 +305,8 @@ namespace AF
 
         void LoadFaceType()
         {
+            return;
+
             int type = GetFaceType();
             for (int i = 0; i < headContainer.transform.childCount; i++)
             {
@@ -312,6 +316,8 @@ namespace AF
 
         void LoadHairType()
         {
+            return;
+
             int type = GetHairType();
             for (int i = 0; i < hairContainer.transform.childCount; i++)
             {
@@ -323,6 +329,8 @@ namespace AF
 
         void LoadEyebrowType()
         {
+            return;
+
             int type = GetEyebrowType();
             for (int i = 0; i < eyebrowContainer.transform.childCount; i++)
             {
@@ -332,6 +340,8 @@ namespace AF
 
         void LoadBeardType()
         {
+            return;
+
             int type = GetBeardType();
             for (int i = 0; i < beardContainer.transform.childCount; i++)
             {
@@ -341,6 +351,8 @@ namespace AF
 
         void LoadColors()
         {
+            return;
+
             foreach (var playerMaterial in playerMaterials)
             {
                 ColorUtility.TryParseHtmlString(GetHairColor(), out var hairColor);
@@ -360,6 +372,8 @@ namespace AF
 
         public void ResetDefaults()
         {
+            return;
+
             UpdatePlayerName(defaultPlayerName);
             SetBodyType(0);
             SetHairType(0);

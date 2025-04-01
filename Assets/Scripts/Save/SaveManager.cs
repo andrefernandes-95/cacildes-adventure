@@ -16,6 +16,7 @@ using System;
 using System.IO;
 using AF.Loading;
 using UnityEngine.Localization.Settings;
+using System.Collections.Generic;
 
 namespace AF
 {
@@ -115,36 +116,54 @@ namespace AF
             quickSaveWriter.Write("currentArrowIndex", equipmentDatabase.currentArrowIndex);
             quickSaveWriter.Write("currentSpellIndex", equipmentDatabase.currentSpellIndex);
             quickSaveWriter.Write("currentConsumableIndex", equipmentDatabase.currentConsumableIndex);
-            quickSaveWriter.Write("weapons", equipmentDatabase.weapons.Select(weapon => weapon != null ? weapon.name + "|" + weapon.level : ""));
-            quickSaveWriter.Write("shields", equipmentDatabase.shields.Select(shield => shield != null ? shield.name : ""));
-            quickSaveWriter.Write("arrows", equipmentDatabase.arrows.Select(arrow => arrow != null ? arrow.name : ""));
-            quickSaveWriter.Write("spells", equipmentDatabase.spells.Select(spell => spell != null ? spell.name : ""));
-            quickSaveWriter.Write("accessories", equipmentDatabase.accessories.Select(accessory => accessory != null ? accessory.name : ""));
-            quickSaveWriter.Write("consumables", equipmentDatabase.consumables.Select(consumable => consumable != null ? consumable.name : ""));
-            quickSaveWriter.Write("helmet", equipmentDatabase.helmet != null ? equipmentDatabase.helmet.name : "");
-            quickSaveWriter.Write("armor", equipmentDatabase.armor != null ? equipmentDatabase.armor.name : "");
-            quickSaveWriter.Write("gauntlet", equipmentDatabase.gauntlet != null ? equipmentDatabase.gauntlet.name : "");
-            quickSaveWriter.Write("legwear", equipmentDatabase.legwear != null ? equipmentDatabase.legwear.name : "");
+            quickSaveWriter.Write("weapons", equipmentDatabase.rightWeapons.Select(weapon => weapon.Exists() ? weapon.id : ""));
+            quickSaveWriter.Write("shields", equipmentDatabase.leftWeapons.Select(shield => shield.Exists() ? shield.id : ""));
+            quickSaveWriter.Write("arrows", equipmentDatabase.arrows.Select(arrow => arrow.Exists() ? arrow.id : ""));
+            quickSaveWriter.Write("spells", equipmentDatabase.spells.Select(spell => spell.Exists() ? spell.id : ""));
+            quickSaveWriter.Write("accessories", equipmentDatabase.accessories.Select(accessory => accessory.Exists() ? accessory.id : ""));
+            quickSaveWriter.Write("consumables", equipmentDatabase.consumables.Select(consumable => consumable.Exists() ? consumable.id : ""));
+            quickSaveWriter.Write("helmet", equipmentDatabase.helmet.Exists() ? equipmentDatabase.helmet.id : "");
+            quickSaveWriter.Write("armor", equipmentDatabase.armor.Exists() ? equipmentDatabase.armor.id : "");
+            quickSaveWriter.Write("gauntlet", equipmentDatabase.gauntlet.Exists() ? equipmentDatabase.gauntlet.id : "");
+            quickSaveWriter.Write("legwear", equipmentDatabase.legwear.Exists() ? equipmentDatabase.legwear.id : "");
             quickSaveWriter.Write("isTwoHanding", equipmentDatabase.isTwoHanding);
         }
 
 
+
         void SavePlayerInventory(QuickSaveWriter quickSaveWriter)
         {
-            SerializedDictionary<string, ItemAmount> keyValuePairs = new();
+            List<SerializedItem> serializedItems = new();
 
-            foreach (var ownedItem in inventoryDatabase.ownedItems)
+            //            List<SerializedUserCreatedItem> userCreatedItems = new();
+
+            foreach (var ownedItem in inventoryDatabase.ownedItems.SelectMany(entry => entry.Value))
             {
-                string path = Utils.GetItemPath(ownedItem.Key);
+                /*              if (ownedItem is ConsumableInstance consumable && consumable.isUserCreatedItem)
+                              {
+                                  SerializedUserCreatedItem userCreatedItem = consumable.ConvertToSerializedUserCreatedItem();
 
-                if (!keyValuePairs.ContainsKey(path))
+                                  userCreatedItems.Add(userCreatedItem);
+                                  continue;
+                              }
+                              */
+
+                string path = Utils.GetItemPath(ownedItem.GetItem<Item>());
+
+                serializedItems.Add(new()
                 {
-                    keyValuePairs.Add(path, ownedItem.Value);
-                }
+                    id = ownedItem.id,
+                    itemPath = path,
+                    level = ownedItem is WeaponInstance weaponInstance ? weaponInstance.level : 1,
+                    wasUsed = ownedItem is ConsumableInstance consumableInstance ? consumableInstance.wasUsed : false,
+                });
             }
 
-            quickSaveWriter.Write("ownedItems", keyValuePairs);
+            // quickSaveWriter.Write("userCreatedItems", userCreatedItems);
+
+            quickSaveWriter.Write("ownedItems", serializedItems);
         }
+
         void SavePickups(QuickSaveWriter quickSaveWriter)
         {
             quickSaveWriter.Write("pickups", pickupDatabase.pickups);
@@ -259,264 +278,40 @@ namespace AF
 
         void LoadPlayerEquipment(QuickSaveReader quickSaveReader)
         {
-            quickSaveReader.TryRead<int>("currentWeaponIndex", out int currentWeaponIndex);
-            equipmentDatabase.currentWeaponIndex = currentWeaponIndex;
-
-            quickSaveReader.TryRead<int>("currentShieldIndex", out int currentShieldIndex);
-            equipmentDatabase.currentShieldIndex = currentShieldIndex;
-
-            quickSaveReader.TryRead<int>("currentArrowIndex", out int currentArrowIndex);
-            equipmentDatabase.currentArrowIndex = currentArrowIndex;
-
-            quickSaveReader.TryRead<int>("currentSpellIndex", out int currentSpellIndex);
-            equipmentDatabase.currentSpellIndex = currentSpellIndex;
-
-            quickSaveReader.TryRead<int>("currentConsumableIndex", out int currentConsumableIndex);
-            equipmentDatabase.currentConsumableIndex = currentConsumableIndex;
-
-            quickSaveReader.TryRead<string[]>("weapons", out string[] weapons);
-            if (weapons != null && weapons.Length > 0)
-            {
-                for (int idx = 0; idx < weapons.Length; idx++)
-                {
-                    string weaponNameAndLevel = weapons[idx];
-
-                    if (!string.IsNullOrEmpty(weaponNameAndLevel))
-                    {
-                        Weapon weaponInstance = Resources.Load<Weapon>("Items/Weapons/" + weaponNameAndLevel.Split("|")[0]);
-
-                        if (weaponInstance != null && inventoryDatabase.HasItem(weaponInstance))
-                        {
-                            equipmentDatabase.weapons[idx] = weaponInstance;
-
-                            string level = weaponNameAndLevel.Split("|")[1];
-                            if (int.TryParse(level, out int levelValue))
-                            {
-                                equipmentDatabase.weapons[idx].level = levelValue;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Try to read shields
-            quickSaveReader.TryRead<string[]>("shields", out string[] shields);
-            if (shields != null && shields.Length > 0)
-            {
-                for (int idx = 0; idx < shields.Length; idx++)
-                {
-                    string shieldName = shields[idx];
-
-                    if (!string.IsNullOrEmpty(shieldName))
-                    {
-                        Shield shieldInstance = Resources.Load<Shield>("Items/Shields/" + shieldName);
-
-                        if (shieldInstance != null)
-                        {
-                            equipmentDatabase.shields[idx] = shieldInstance;
-                        }
-                    }
-                }
-            }
-
-            // Try to read arrows
-            quickSaveReader.TryRead<string[]>("arrows", out string[] arrows);
-            if (arrows != null && arrows.Length > 0)
-            {
-                for (int idx = 0; idx < arrows.Length; idx++)
-                {
-                    string arrowName = arrows[idx];
-
-                    if (!string.IsNullOrEmpty(arrowName))
-                    {
-                        Arrow arrowInstance = Resources.Load<Arrow>("Items/Arrows/" + arrowName);
-
-                        if (arrowInstance != null)
-                        {
-                            equipmentDatabase.arrows[idx] = arrowInstance;
-                        }
-                    }
-                }
-            }
-
-            // Try to read spells
-            quickSaveReader.TryRead<string[]>("spells", out string[] spells);
-            if (spells != null && spells.Length > 0)
-            {
-                for (int idx = 0; idx < spells.Length; idx++)
-                {
-                    string spellName = spells[idx];
-
-                    if (!string.IsNullOrEmpty(spellName))
-                    {
-                        Spell spellInstance = Resources.Load<Spell>("Items/Spells/" + spellName);
-
-                        if (spellInstance != null)
-                        {
-                            equipmentDatabase.spells[idx] = spellInstance;
-                        }
-                    }
-                }
-            }
-
-            // Try to read accessories
-            quickSaveReader.TryRead<string[]>("accessories", out string[] accessories);
-            if (accessories != null && accessories.Length > 0)
-            {
-                for (int idx = 0; idx < accessories.Length; idx++)
-                {
-                    string accessoryName = accessories[idx];
-
-                    if (!string.IsNullOrEmpty(accessoryName))
-                    {
-                        Accessory accessoryInstance = Resources.Load<Accessory>("Items/Accessories/" + accessoryName);
-
-                        if (accessoryInstance != null)
-                        {
-                            equipmentDatabase.accessories[idx] = accessoryInstance;
-                        }
-                    }
-                }
-            }
-
-            // Try to read consumables
-            quickSaveReader.TryRead<string[]>("consumables", out string[] consumables);
-            if (consumables != null && consumables.Length > 0)
-            {
-                for (int idx = 0; idx < consumables.Length; idx++)
-                {
-                    string consumableName = consumables[idx];
-
-                    if (!string.IsNullOrEmpty(consumableName))
-                    {
-                        Consumable consumableInstance = Resources.Load<Consumable>("Items/Consumables/" + consumableName);
-
-                        if (consumableInstance != null)
-                        {
-                            equipmentDatabase.consumables[idx] = consumableInstance;
-                        }
-                    }
-                }
-            }
-
-
-            // Try to read card
-            quickSaveReader.TryRead<string[]>("consumables", out string[] cards);
-            if (cards != null && cards.Length > 0)
-            {
-                for (int idx = 0; idx < cards.Length; idx++)
-                {
-                    string cardName = cards[idx];
-
-                    if (!string.IsNullOrEmpty(cardName))
-                    {
-                        Card cardInstance = Resources.Load<Card>("Items/Cards/" + cardName);
-
-                        if (cardInstance != null)
-                        {
-                            equipmentDatabase.consumables[idx] = cardInstance;
-                        }
-                    }
-                }
-            }
-
-            // Try to read helmet
-            quickSaveReader.TryRead<string>("helmet", out string helmetName);
-            if (!string.IsNullOrEmpty(helmetName))
-            {
-                Helmet helmetInstance = Resources.Load<Helmet>("Items/Helmets/" + helmetName);
-
-                if (helmetInstance != null)
-                {
-                    equipmentDatabase.helmet = helmetInstance;
-                }
-            }
-            else
-            {
-                equipmentDatabase.UnequipHelmet();
-            }
-
-            // Try to read armor
-            quickSaveReader.TryRead<string>("armor", out string armorName);
-            if (!string.IsNullOrEmpty(armorName))
-            {
-                Armor armorInstance = Resources.Load<Armor>("Items/Armors/" + armorName);
-
-                if (armorInstance != null)
-                {
-                    equipmentDatabase.armor = armorInstance;
-                }
-            }
-            else
-            {
-                equipmentDatabase.UnequipArmor();
-            }
-
-            // Try to read gauntlet
-            quickSaveReader.TryRead<string>("gauntlet", out string gauntletName);
-            if (!string.IsNullOrEmpty(gauntletName))
-            {
-                Gauntlet gauntletInstance = Resources.Load<Gauntlet>("Items/Gauntlets/" + gauntletName);
-
-                if (gauntletInstance != null)
-                {
-                    equipmentDatabase.gauntlet = gauntletInstance;
-                }
-            }
-            else
-            {
-                equipmentDatabase.UnequipGauntlet();
-            }
-
-            // Try to read legwear
-            quickSaveReader.TryRead<string>("legwear", out string legwearName);
-            if (!string.IsNullOrEmpty(legwearName))
-            {
-                Legwear legwearInstance = Resources.Load<Legwear>("Items/Legwears/" + legwearName);
-
-                if (legwearInstance != null)
-                {
-                    equipmentDatabase.legwear = legwearInstance;
-                }
-            }
-            else
-            {
-                equipmentDatabase.UnequipLegwear();
-            }
-
-            quickSaveReader.TryRead<bool>("isTwoHanding", out bool isTwoHanding);
-            equipmentDatabase.isTwoHanding = isTwoHanding;
+            equipmentDatabase.LoadEquipmentFromSaveFile(quickSaveReader);
         }
-
 
         void LoadPlayerInventory(QuickSaveReader quickSaveReader)
         {
             inventoryDatabase.ownedItems.Clear();
 
-            quickSaveReader.TryRead("ownedItems", out SerializedDictionary<string, ItemAmount> ownedItems);
+            quickSaveReader.TryRead("ownedItems", out List<SerializedItem> serializedOwnedItems);
 
-            if (ownedItems != null && ownedItems.Count > 0)
+            if (serializedOwnedItems != null && serializedOwnedItems.Count > 0)
             {
-                for (int idx = 0; idx < ownedItems.Count; idx++)
+                foreach (SerializedItem serializedItem in serializedOwnedItems)
                 {
-                    var itemEntry = ownedItems.ElementAt(idx);
+                    inventoryDatabase.AddFromSerializedItem(serializedItem);
 
-                    if (!string.IsNullOrEmpty(itemEntry.Key))
-                    {
-                        Item itemInstance = Resources.Load<Item>(itemEntry.Key);
-
-                        if (itemInstance != null)
-                        {
-                            inventoryDatabase.ownedItems.Add(itemInstance, new()
-                            {
-                                amount = itemEntry.Value.amount,
-                                chanceToGet = itemEntry.Value.chanceToGet,
-                                usages = itemEntry.Value.usages
-                            });
-                        }
-                    }
                 }
             }
+
+            /*
+                        quickSaveReader.TryRead("userCreatedItems", out List<SerializedUserCreatedItem> serializedUserCreatedItems);
+
+                        foreach (var serializedUserCreatedItem in serializedUserCreatedItems)
+                        {
+                            Consumable consumable = serializedUserCreatedItem.GenerateConsumable();
+
+                            if (consumable != null)
+                            {
+                                ConsumableInstance consumableInstance = new ConsumableInstance(serializedUserCreatedItem.id, consumable);
+                                consumableInstance.createdItemThumbnailName = serializedUserCreatedItem.itemThumbnailName;
+                                consumableInstance.isUserCreatedItem = true;
+
+                                inventoryDatabase.ownedItems.Add(consumableInstance);
+                            }
+                        }*/
         }
 
         void LoadPickups(QuickSaveReader quickSaveReader)

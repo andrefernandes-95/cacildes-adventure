@@ -44,7 +44,7 @@ namespace AF
 
         public void Apply()
         {
-            GetPlayerManager().playerWeaponsManager.ApplyWeaponBuffToWeapon(weaponBuffName, buffDuration);
+            // GetPlayerManager().playerWeaponsManager.ApplyWeaponBuffToWeapon(weaponBuffName, buffDuration);
         }
 
         PlayerManager GetPlayerManager()

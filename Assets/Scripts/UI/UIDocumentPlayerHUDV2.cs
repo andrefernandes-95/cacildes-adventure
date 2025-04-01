@@ -182,7 +182,8 @@ namespace AF
                 root.Q<VisualElement>("SwimmingIndicator").style.display = DisplayStyle.None;
             }
 
-            InputSystem.onDeviceChange += HandleDeviceChangeCallback;
+            // This seems to run on every frame
+            //InputSystem.onDeviceChange += HandleDeviceChangeCallback;
 
             Load();
         }
@@ -208,15 +209,16 @@ namespace AF
             }
         }
 
-        private void OnDisable()
-        {
-            InputSystem.onDeviceChange -= HandleDeviceChangeCallback;
-        }
+        /*
+                private void OnDisable()
+                {
+                    InputSystem.onDeviceChange -= HandleDeviceChangeCallback;
+                }
 
-        void HandleDeviceChangeCallback(InputDevice device, InputDeviceChange change)
-        {
-            HandleDeviceChange();
-        }
+                void HandleDeviceChangeCallback(InputDevice device, InputDeviceChange change)
+                {
+                    HandleDeviceChange();
+                }*/
 
         void HandleDeviceChange()
         {
@@ -320,13 +322,13 @@ namespace AF
         private void Update()
         {
             healthContainer.style.width = (healthContainerBaseWidth +
-                playerStatsBonusController.GetCurrentVitality() * _containerMultiplierPerLevel) * (playerHealth.hasHealthCutInHalf ? .5f : 1f);
+                playerManager.characterBaseStats.GetVitality() * _containerMultiplierPerLevel) * (playerHealth.hasHealthCutInHalf ? .5f : 1f);
 
             staminaContainer.style.width = staminaContainerBaseWidth + ((
-                playerStatsBonusController.GetCurrentEndurance()) * _containerMultiplierPerLevel);
+                playerManager.characterBaseStats.GetEndurance()) * _containerMultiplierPerLevel);
 
             manaContainer.style.width = manaContainerBaseWidth + ((
-                playerStatsBonusController.GetCurrentIntelligence()) * _containerMultiplierPerLevel);
+                playerManager.characterBaseStats.GetIntelligence()) * _containerMultiplierPerLevel);
 
             this.healthFill.style.width = new Length(playerManager.health.GetCurrentHealthPercentage() * ((playerHealth.hasHealthCutInHalf ? .5f : 1f)), LengthUnit.Percent);
             this.staminaFill.style.width = new Length(playerManager.staminaStatManager.GetCurrentStaminaPercentage(), LengthUnit.Percent);
@@ -376,35 +378,35 @@ namespace AF
 
             if (equipmentDatabase.IsBowEquipped())
             {
-                arrowsLabel.text = equipmentDatabase.GetCurrentArrow() != null
-                    ? equipmentDatabase.GetCurrentArrow().GetName() + " (" + inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentArrow()) + ")"
+                arrowsLabel.text = equipmentDatabase.GetCurrentArrow().Exists()
+                    ? equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().GetName() + " (" + inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>()) + ")"
                     : "";
 
-                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentArrow() != null
-                    ? new StyleBackground(equipmentDatabase.GetCurrentArrow().sprite)
+                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentArrow().Exists()
+                    ? new StyleBackground(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().sprite)
                     : new StyleBackground(unequippedArrowSlot);
             }
             else
             {
-                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentSpell() != null
-                    ? new StyleBackground(equipmentDatabase.GetCurrentSpell().sprite)
+                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentSpell().Exists()
+                    ? new StyleBackground(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().sprite)
                     : new StyleBackground(unequippedSpellSlot);
             }
 
-            shieldSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentShield() != null
-                ? new StyleBackground(equipmentDatabase.GetCurrentShield().sprite)
+            shieldSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentLeftWeapon().Exists()
+                ? new StyleBackground(equipmentDatabase.GetCurrentLeftWeapon().GetItem<Weapon>().sprite)
                 : new StyleBackground(unequippedShieldSlot);
 
             shieldBlockedIcon.style.display = equipmentDatabase.IsBowEquipped() || equipmentDatabase.IsStaffEquipped()
                 ? DisplayStyle.Flex
                 : DisplayStyle.None;
 
-            weaponSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentWeapon() != null
-                ? new StyleBackground(equipmentDatabase.GetCurrentWeapon().sprite)
+            weaponSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentRightWeapon().Exists()
+                ? new StyleBackground(equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().sprite)
                 : new StyleBackground(unequippedWeaponSlot);
 
-            quickItemName.text = equipmentDatabase.GetCurrentConsumable() != null ?
-                equipmentDatabase.GetCurrentConsumable().GetName() + $" ({inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentConsumable())})"
+            quickItemName.text = equipmentDatabase.GetCurrentConsumable().Exists()
+                ? equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().GetName() + $" ({inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>())})"
                 : "";
 
             if (equipmentDatabase.GetCurrentConsumable() is Card)
@@ -427,8 +429,8 @@ namespace AF
                 consumableSlotContainer.style.borderRightWidth = new StyleFloat(1);
             }
 
-            consumableSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentConsumable() != null
-                ? new StyleBackground(equipmentDatabase.GetCurrentConsumable().sprite)
+            consumableSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentConsumable().Exists()
+                ? new StyleBackground(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().sprite)
                 : new StyleBackground(unequippedConsumableSlot);
         }
 

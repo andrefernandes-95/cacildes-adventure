@@ -11,52 +11,32 @@ namespace AF.Stats
 {
     public class StatsBonusController : MonoBehaviour
     {
-        [Header("Bonus")]
+        [Header("Attribute Bonus")]
         public int healthBonus = 0;
         public int magicBonus = 0;
         public int staminaBonus = 0;
+        public float staminaRegenerationBonus = 0f;
+        public bool shouldRegenerateMana = false;
 
+        [Header("Stats Bonus")]
         public int vitalityBonus = 0;
         public int enduranceBonus = 0;
         public int strengthBonus = 0;
         public int dexterityBonus = 0;
         public int intelligenceBonus = 0;
-
         public int vitalityBonusFromConsumable = 0;
         public int enduranceBonusFromConsumable = 0;
         public int strengthBonusFromConsumable = 0;
         public int dexterityBonusFromConsumable = 0;
         public int intelligenceBonusFromConsumable = 0;
+
+        [Header("Elemental Defenses Bonus")]
         public float fireDefenseBonus = 0;
         public float frostDefenseBonus = 0;
         public float lightningDefenseBonus = 0;
         public float magicDefenseBonus = 0;
         public float darkDefenseBonus = 0;
         public float waterDefenseBonus = 0;
-        public float additionalCoinPercentage = 0;
-        public int parryPostureDamageBonus = 0;
-        public float parryPostureWindowBonus = 0;
-        public int reputationBonus = 0;
-        public float discountPercentage = 0f;
-        public float spellDamageBonusMultiplier = 0f;
-        public int postureBonus = 0;
-        public int movementSpeedBonus = 0;
-
-        public float postureDecreaseRateBonus = 0f;
-
-        public float staminaRegenerationBonus = 0f;
-        public bool chanceToRestoreHealthUponDeath = false;
-        public bool chanceToNotLoseItemUponConsumption = false;
-        public float projectileMultiplierBonus = 0f;
-        public bool canRage = false;
-        public float backStabAngleBonus = 0f;
-        public bool shouldRegenerateMana = false;
-        public bool increaseAttackPowerWhenUnarmed = false;
-        public float twoHandAttackBonusMultiplier = 0f;
-        public float slashDamageMultiplier = 0f;
-        public float pierceDamageMultiplier = 0f;
-        public float bluntDamageMultiplier = 0f;
-        public float footDamageMultiplier = 0f;
 
         [Header("Equipment Modifiers")]
         public float weightPenalty = 0f;
@@ -64,60 +44,231 @@ namespace AF.Stats
         public float equipmentPhysicalDefense = 0;
         public bool ignoreWeaponRequirements = false;
 
+        [Header("Gold & Experience")]
+        public float additionalCoinPercentage = 0;
+
+        [Header("Block & Parry")]
+        public int parryPostureDamageBonus = 0;
+        public float parryPostureWindowBonus = 0;
+
+        [Header("Posture")]
+        public int postureBonus = 0;
+        public float postureDecreaseRateBonus = 0f;
+
+        [Header("Shop Discounts")]
+        public int reputationBonus = 0;
+        public float discountPercentage = 0f;
+
+        [Header("Skills & Spells")]
+        public float spellDamageBonusMultiplier = 0f;
+
+        [Header("Locomotion")]
+        public int movementSpeedBonus = 0;
+
+        [Header("Chances")]
+        public bool chanceToRestoreHealthUponDeath = false;
+        public bool chanceToNotLoseItemUponConsumption = false;
+
+        [Header("Combat")]
+        public float projectileMultiplierBonus = 0f;
+        public bool canRage = false;
+        public float backStabAngleBonus = 0f;
+        public bool increaseAttackPowerWhenUnarmed = false;
+        public bool increaseAttackPowerTheLowerTheReputation = false;
+        public bool increaseAttackPowerWithLowerHealth = false;
+        public float twoHandAttackBonusMultiplier = 0f;
+        public float heavyAttackBonusMultiplier = 0f;
+        public float jumpAttackBonusMultiplier = 0f;
+        public float slashDamageMultiplier = 0f;
+        public float pierceDamageMultiplier = 0f;
+        public float bluntDamageMultiplier = 0f;
+        public float footDamageMultiplier = 0f;
+        public float physicalAttackBonus = 0f;
+
+        [Header("Increase Next Attack Damage?")]
+        public bool increaseNextAttackDamage = false;
+        public float nextAttackMultiplierFactor = 1.3f;
+
         [Header("Status Controller")]
+        public CharacterBaseManager character;
         public StatusController statusController;
 
         [Header("Databases")]
-        public EquipmentDatabase equipmentDatabase;
-        public PlayerStatsDatabase playerStatsDatabase;
         public UIDocumentPlayerGold uIDocumentPlayerGold;
         public NotificationManager notificationManager;
 
         [Header("Status Effect Resistances")]
         public Dictionary<StatusEffect, float> statusEffectCancellationRates = new();
 
-
-
         private void Awake()
         {
+            // TODO: This needs to be a character event, not global, otherwise it will run every time the player changes his equipment!
+
+            /*
             EventManager.StartListening(EventMessages.ON_SHIELD_EQUIPMENT_CHANGED, () =>
             {
                 RecalculateEquipmentBonus();
-            });
+            });*/
         }
+
+
+        (Weapon, Weapon) GetCurrentWeapons()
+        {
+            Weapon currentRightWeapon = character.characterBaseEquipment.GetRightHandWeapon().Exists()
+                ? character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>()
+                : null;
+
+            Weapon currentLeftWeapon = character.characterBaseEquipment.GetLeftHandWeapon().Exists()
+                ? character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>()
+                : null;
+
+            return (currentRightWeapon, currentLeftWeapon);
+        }
+
+        (Shield, Shield) GetCurrentShield()
+        {
+            Shield currentRightShield = character.characterBaseEquipment.GetRightHandWeapon().Exists()
+                ? character.characterBaseEquipment.GetRightHandWeapon().GetItem<Shield>()
+                : null;
+
+            Shield currentLeftShield = character.characterBaseEquipment.GetLeftHandWeapon().Exists()
+                ? character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Shield>()
+                : null;
+
+            return (currentRightShield, currentLeftShield);
+        }
+
+        Helmet GetCurrentHelmet()
+        {
+            Helmet currentHelmet = character.characterBaseEquipment.GetHelmetInstance().Exists()
+                ? character.characterBaseEquipment.GetHelmetInstance().GetItem<Helmet>()
+                : null;
+
+            return currentHelmet;
+        }
+
+        Armor GetCurrentArmor()
+        {
+            Armor currentArmor = character.characterBaseEquipment.GetArmorInstance().Exists()
+                ? character.characterBaseEquipment.GetArmorInstance().GetItem<Armor>()
+                : null;
+
+            return currentArmor;
+        }
+
+        Gauntlet GetCurrentGauntlets()
+        {
+            Gauntlet currentGauntlets = character.characterBaseEquipment.GetGauntletInstance().Exists()
+                ? character.characterBaseEquipment.GetGauntletInstance().GetItem<Gauntlet>()
+                : null;
+
+            return currentGauntlets;
+        }
+
+        Legwear GetCurrentLegwears()
+        {
+            Legwear currentLegwears = character.characterBaseEquipment.GetLegwearInstance().Exists()
+                ? character.characterBaseEquipment.GetLegwearInstance().GetItem<Legwear>()
+                : null;
+
+            return currentLegwears;
+        }
+
+        public List<Accessory> GetCurrentAccessories()
+        {
+            List<Accessory> accessories = new();
+
+            List<AccessoryInstance> equippedAccessoryInstances = character.characterBaseEquipment.GetAccessoryInstances().ToList();
+
+            foreach (AccessoryInstance accessoryInstance in equippedAccessoryInstances)
+            {
+                if (accessoryInstance.Exists())
+                {
+                    accessories.Add(accessoryInstance.GetItem<Accessory>());
+                }
+            }
+
+            return accessories;
+        }
+
+        List<Shield> GetCurrentShields()
+        {
+            List<Shield> shields = new();
+
+            List<ShieldInstance> equippedShieldInstances = character.characterBaseEquipment.GetShieldInstances().ToList();
+
+            foreach (ShieldInstance shieldInstance in equippedShieldInstances)
+            {
+                if (shieldInstance.Exists())
+                {
+                    shields.Add(shieldInstance.GetItem<Shield>());
+                }
+            }
+
+            return shields;
+        }
+
 
         public void RecalculateEquipmentBonus()
         {
+            (Weapon currentRightWeapon, Weapon currentLeftWeapon) = GetCurrentWeapons();
+            (Shield currentRightShield, Shield currentLeftShield) = GetCurrentShield();
+            Helmet currentHelmet = GetCurrentHelmet();
+            Armor currentArmor = GetCurrentArmor();
+            Gauntlet currentGauntlet = GetCurrentGauntlets();
+            Legwear currentLegwear = GetCurrentLegwears();
+            List<Accessory> currentAccessories = GetCurrentAccessories();
+
             UpdateStatusEffectCancellationRates();
-            UpdateWeightPenalty();
-            UpdateArmorPoise();
-            UpdateEquipmentPhysicalDefense();
-            UpdateStatusEffectResistances();
-            UpdateAttributes();
-            UpdateAdditionalCoinPercentage();
+            UpdateWeightPenalty(currentRightWeapon, currentLeftWeapon, currentRightShield, currentLeftShield,
+            currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories);
+
+            UpdateArmorPoise(currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories);
+
+            UpdateEquipmentPhysicalDefense(currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories);
+            UpdateStatusEffectResistances(currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories);
+            UpdateAttributes(currentRightWeapon, currentLeftWeapon, currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories, currentRightShield, currentLeftShield);
+            UpdateAdditionalCoinPercentage(currentHelmet, currentArmor, currentGauntlet, currentLegwear, currentAccessories);
         }
 
         void UpdateStatusEffectCancellationRates()
         {
             statusEffectCancellationRates.Clear();
-            List<ArmorBase> items = new() {
-                equipmentDatabase.helmet, equipmentDatabase.armor, equipmentDatabase.gauntlet, equipmentDatabase.legwear,
-            };
-            items.AddRange(equipmentDatabase.accessories);
 
-            foreach (var item in items)
+            List<ArmorBaseInstance> itemInstances = new() {
+                character.characterBaseEquipment.GetHelmetInstance(),
+                character.characterBaseEquipment.GetArmorInstance(),
+                character.characterBaseEquipment.GetGauntletInstance(),
+                character.characterBaseEquipment.GetLegwearInstance()
+            };
+
+            itemInstances.AddRange(character.characterBaseEquipment.GetAccessoryInstances());
+
+            foreach (var itemInstance in itemInstances)
             {
-                if (item != null && item.statusEffectCancellationRates != null && item.statusEffectCancellationRates.Length > 0)
+                if (!itemInstance.Exists())
                 {
-                    EvaluateItemResistance(item.statusEffectCancellationRates);
+                    continue;
+                }
+
+                StatusEffectCancellationRate[] statusEffectCancellationRates = itemInstance.GetItem<ArmorBase>().statusEffectCancellationRates;
+                if (statusEffectCancellationRates.Length > 0)
+                {
+                    EvaluateItemResistance(statusEffectCancellationRates);
                 }
             }
 
-            foreach (var item in equipmentDatabase.shields)
+            foreach (ShieldInstance shieldInstance in character.characterBaseEquipment.GetShieldInstances())
             {
-                if (item != null && item.statusEffectCancellationRates != null && item.statusEffectCancellationRates.Length > 0)
+                if (!shieldInstance.Exists())
                 {
-                    EvaluateItemResistance(item.statusEffectCancellationRates);
+                    continue;
+                }
+
+                StatusEffectCancellationRate[] statusEffectCancellationRates = shieldInstance.GetItem<Shield>().statusEffectCancellationRates;
+                if (statusEffectCancellationRates.Length > 0)
+                {
+                    EvaluateItemResistance(statusEffectCancellationRates);
                 }
             }
         }
@@ -137,101 +288,110 @@ namespace AF.Stats
             }
         }
 
-        void UpdateWeightPenalty()
+        void UpdateWeightPenalty(Weapon rightWeapon, Weapon leftWeapon, Shield rightShield, Shield leftShield,
+        Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
             weightPenalty = 0f;
 
-            if (equipmentDatabase.GetCurrentWeapon() != null)
+            if (rightWeapon != null)
             {
-                weightPenalty += equipmentDatabase.GetCurrentWeapon().speedPenalty;
+                weightPenalty += rightWeapon.speedPenalty;
             }
-            if (equipmentDatabase.GetCurrentShield() != null)
+            if (leftWeapon != null)
             {
-                weightPenalty += equipmentDatabase.GetCurrentShield().speedPenalty;
+                weightPenalty += leftWeapon.speedPenalty;
             }
-            if (equipmentDatabase.helmet != null)
+            if (rightShield != null)
             {
-                weightPenalty += equipmentDatabase.helmet.speedPenalty;
+                weightPenalty += rightShield.speedPenalty;
             }
-            if (equipmentDatabase.armor != null)
+            if (leftShield != null)
             {
-                weightPenalty += equipmentDatabase.armor.speedPenalty;
+                weightPenalty += leftShield.speedPenalty;
             }
-            if (equipmentDatabase.gauntlet != null)
+            if (helmet != null)
             {
-                weightPenalty += equipmentDatabase.gauntlet.speedPenalty;
+                weightPenalty += helmet.speedPenalty;
             }
-            if (equipmentDatabase.legwear != null)
+            if (armor != null)
             {
-                weightPenalty += equipmentDatabase.legwear.speedPenalty;
+                weightPenalty += armor.speedPenalty;
+            }
+            if (gauntlet != null)
+            {
+                weightPenalty += gauntlet.speedPenalty;
+            }
+            if (legwear != null)
+            {
+                weightPenalty += legwear.speedPenalty;
             }
 
-            weightPenalty += equipmentDatabase.accessories.Sum(x => x == null ? 0 : x.speedPenalty);
+            weightPenalty += accessories.Sum(x => x == null ? 0 : x.speedPenalty);
 
             weightPenalty = Mathf.Max(0, weightPenalty); // Ensure weightPenalty is non-negative
         }
 
-        void UpdateArmorPoise()
+        void UpdateArmorPoise(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
             equipmentPoise = 0;
 
-            if (equipmentDatabase.helmet != null)
+            if (helmet != null)
             {
-                equipmentPoise += equipmentDatabase.helmet.poiseBonus;
+                equipmentPoise += helmet.poiseBonus;
             }
-            if (equipmentDatabase.armor != null)
+            if (armor != null)
             {
-                equipmentPoise += equipmentDatabase.armor.poiseBonus;
+                equipmentPoise += armor.poiseBonus;
             }
-            if (equipmentDatabase.gauntlet != null)
+            if (gauntlet != null)
             {
-                equipmentPoise += equipmentDatabase.gauntlet.poiseBonus;
+                equipmentPoise += gauntlet.poiseBonus;
             }
-            if (equipmentDatabase.legwear != null)
+            if (legwear != null)
             {
-                equipmentPoise += equipmentDatabase.legwear.poiseBonus;
+                equipmentPoise += legwear.poiseBonus;
             }
 
-            equipmentPoise += equipmentDatabase.accessories.Sum(x => x == null ? 0 : x.poiseBonus);
+            equipmentPoise += accessories.Sum(x => x == null ? 0 : x.poiseBonus);
         }
 
-        void UpdateEquipmentPhysicalDefense()
+        void UpdateEquipmentPhysicalDefense(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
             equipmentPhysicalDefense = 0f;
 
-            if (equipmentDatabase.helmet != null)
+            if (helmet != null)
             {
-                equipmentPhysicalDefense += equipmentDatabase.helmet.physicalDefense;
+                equipmentPhysicalDefense += helmet.physicalDefense;
             }
 
-            if (equipmentDatabase.armor != null)
+            if (armor != null)
             {
-                equipmentPhysicalDefense += equipmentDatabase.armor.physicalDefense;
+                equipmentPhysicalDefense += armor.physicalDefense;
             }
 
-            if (equipmentDatabase.gauntlet != null)
+            if (gauntlet != null)
             {
-                equipmentPhysicalDefense += equipmentDatabase.gauntlet.physicalDefense;
+                equipmentPhysicalDefense += gauntlet.physicalDefense;
             }
 
-            if (equipmentDatabase.legwear != null)
+            if (legwear != null)
             {
-                equipmentPhysicalDefense += equipmentDatabase.legwear.physicalDefense;
+                equipmentPhysicalDefense += legwear.physicalDefense;
             }
 
-            equipmentPhysicalDefense += equipmentDatabase.accessories.Sum(x => x == null ? 0 : x.physicalDefense);
+            equipmentPhysicalDefense += accessories.Sum(x => x == null ? 0 : x.physicalDefense);
         }
 
-        void UpdateStatusEffectResistances()
+        void UpdateStatusEffectResistances(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
             statusController.statusEffectResistanceBonuses.Clear();
 
-            HandleStatusEffectEntries(equipmentDatabase.helmet?.statusEffectResistances);
-            HandleStatusEffectEntries(equipmentDatabase.armor?.statusEffectResistances);
-            HandleStatusEffectEntries(equipmentDatabase.gauntlet?.statusEffectResistances);
-            HandleStatusEffectEntries(equipmentDatabase.legwear?.statusEffectResistances);
+            HandleStatusEffectEntries(helmet?.statusEffectResistances);
+            HandleStatusEffectEntries(armor?.statusEffectResistances);
+            HandleStatusEffectEntries(gauntlet?.statusEffectResistances);
+            HandleStatusEffectEntries(legwear?.statusEffectResistances);
 
-            var accessoryResistances = equipmentDatabase.accessories
+            var accessoryResistances = accessories
                 .Where(a => a != null)
                 .SelectMany(a => a.statusEffectResistances ?? Enumerable.Empty<StatusEffectResistance>())
                 .ToArray();
@@ -263,20 +423,23 @@ namespace AF.Stats
             }
         }
 
-        void UpdateAttributes()
+        void UpdateAttributes(Weapon rightWeapon, Weapon leftWeapon, Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear,
+        List<Accessory> accessories, Shield rightShield, Shield leftShield)
         {
             ResetAttributes();
 
-            ApplyWeaponAttributes(equipmentDatabase.GetCurrentWeapon());
+            ApplyWeaponAttributes(rightWeapon);
+            ApplyWeaponAttributes(leftWeapon);
 
-            ApplyEquipmentAttributes(equipmentDatabase.helmet);
-            ApplyEquipmentAttributes(equipmentDatabase.armor);
-            ApplyEquipmentAttributes(equipmentDatabase.gauntlet);
-            ApplyEquipmentAttributes(equipmentDatabase.legwear);
+            ApplyEquipmentAttributes(helmet);
+            ApplyEquipmentAttributes(armor);
+            ApplyEquipmentAttributes(gauntlet);
+            ApplyEquipmentAttributes(legwear);
 
-            ApplyAccessoryAttributes();
+            ApplyAccessoryAttributes(accessories);
 
-            ApplyShieldAttributes();
+            ApplyShieldAttributes(rightShield);
+            ApplyShieldAttributes(leftShield);
         }
 
         void ResetAttributes()
@@ -288,9 +451,11 @@ namespace AF.Stats
 
             parryPostureWindowBonus = staminaRegenerationBonus = postureDecreaseRateBonus = projectileMultiplierBonus = backStabAngleBonus = 0f;
 
-            shouldRegenerateMana = chanceToRestoreHealthUponDeath = canRage = chanceToNotLoseItemUponConsumption = increaseAttackPowerWhenUnarmed = false;
+            shouldRegenerateMana = chanceToRestoreHealthUponDeath = canRage = chanceToNotLoseItemUponConsumption = increaseAttackPowerWhenUnarmed =
+            increaseAttackPowerTheLowerTheReputation = increaseAttackPowerWithLowerHealth = false;
 
-            twoHandAttackBonusMultiplier = slashDamageMultiplier = pierceDamageMultiplier = bluntDamageMultiplier = footDamageMultiplier = 0f;
+            twoHandAttackBonusMultiplier = heavyAttackBonusMultiplier = jumpAttackBonusMultiplier = slashDamageMultiplier =
+            pierceDamageMultiplier = bluntDamageMultiplier = footDamageMultiplier = physicalAttackBonus = 0f;
         }
 
         void ApplyWeaponAttributes(Weapon currentWeapon)
@@ -330,9 +495,9 @@ namespace AF.Stats
             }
         }
 
-        void ApplyAccessoryAttributes()
+        void ApplyAccessoryAttributes(List<Accessory> accessories)
         {
-            foreach (var accessory in equipmentDatabase.accessories)
+            foreach (var accessory in accessories)
             {
                 vitalityBonus += accessory?.vitalityBonus ?? 0;
                 enduranceBonus += accessory?.enduranceBonus ?? 0;
@@ -377,9 +542,29 @@ namespace AF.Stats
                         increaseAttackPowerWhenUnarmed = true;
                     }
 
+                    if (accessory.increaseAttackPowerTheLowerTheReputation)
+                    {
+                        increaseAttackPowerTheLowerTheReputation = true;
+                    }
+
+                    if (accessory.increaseAttackPowerWithLowerHealth)
+                    {
+                        increaseAttackPowerWithLowerHealth = true;
+                    }
+
                     if (accessory.twoHandAttackBonusMultiplier > 0)
                     {
                         twoHandAttackBonusMultiplier += accessory.twoHandAttackBonusMultiplier;
+                    }
+
+                    if (accessory.heavyAttackBonusMultiplier > 0)
+                    {
+                        heavyAttackBonusMultiplier += accessory.heavyAttackBonusMultiplier;
+                    }
+
+                    if (accessory.jumpAttackBonus > 0)
+                    {
+                        jumpAttackBonusMultiplier += accessory.jumpAttackBonus;
                     }
                     if (accessory.footDamageMultiplier > 0)
                     {
@@ -400,29 +585,32 @@ namespace AF.Stats
                     {
                         pierceDamageMultiplier += accessory.pierceDamageMultiplier;
                     }
+
+                    if (accessory.physicalAttackBonus > 0)
+                    {
+                        physicalAttackBonus += accessory.physicalAttackBonus;
+                    }
                 }
             }
         }
 
-        void ApplyShieldAttributes()
+        void ApplyShieldAttributes(Shield shield)
         {
-            Shield currentShield = equipmentDatabase.GetCurrentShield();
-            if (currentShield != null)
+            if (shield != null)
             {
-
-                parryPostureWindowBonus += currentShield.parryWindowBonus;
-                parryPostureDamageBonus += currentShield.parryPostureDamageBonus;
-                staminaRegenerationBonus += currentShield.staminaRegenBonus;
+                parryPostureWindowBonus += shield.parryWindowBonus;
+                parryPostureDamageBonus += shield.parryPostureDamageBonus;
+                staminaRegenerationBonus += shield.staminaRegenBonus;
             }
         }
 
-        void UpdateAdditionalCoinPercentage()
+        void UpdateAdditionalCoinPercentage(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
-            additionalCoinPercentage = GetEquipmentCoinPercentage(equipmentDatabase.helmet)
-                                   + GetEquipmentCoinPercentage(equipmentDatabase.armor)
-                                   + GetEquipmentCoinPercentage(equipmentDatabase.gauntlet)
-                                   + GetEquipmentCoinPercentage(equipmentDatabase.legwear)
-                                   + equipmentDatabase.accessories.Sum(x => x == null ? 0 : x.additionalCoinPercentage);
+            additionalCoinPercentage = GetEquipmentCoinPercentage(helmet)
+                                   + GetEquipmentCoinPercentage(armor)
+                                   + GetEquipmentCoinPercentage(gauntlet)
+                                   + GetEquipmentCoinPercentage(legwear)
+                                   + accessories.Sum(x => x == null ? 0 : x.additionalCoinPercentage);
         }
 
         float GetEquipmentCoinPercentage(ArmorBase equipment)
@@ -432,9 +620,17 @@ namespace AF.Stats
 
         public bool ShouldDoubleCoinFromFallenEnemy()
         {
-            bool hasDoublingCoinAccessoryEquipped = equipmentDatabase.accessories.Any(acc => acc != null && acc.chanceToDoubleCoinsFromFallenEnemies);
+            (Weapon rightWeapon, Weapon leftWeapon) = GetCurrentWeapons();
+            List<Accessory> accessories = GetCurrentAccessories();
 
-            if (equipmentDatabase.GetCurrentWeapon() != null && equipmentDatabase.GetCurrentWeapon().doubleCoinsUponKillingEnemies)
+            bool hasDoublingCoinAccessoryEquipped = accessories.Any(acc => acc != null && acc.chanceToDoubleCoinsFromFallenEnemies);
+
+            if (rightWeapon != null && rightWeapon.doubleCoinsUponKillingEnemies)
+            {
+                return true;
+            }
+
+            if (leftWeapon != null && leftWeapon.doubleCoinsUponKillingEnemies)
             {
                 return true;
             }
@@ -447,34 +643,34 @@ namespace AF.Stats
             return Random.Range(0, 1f) <= 0.05f;
         }
 
-        public int GetCurrentIntelligence()
+        public int GetCurrentIntelligenceBonus()
         {
-            return playerStatsDatabase.intelligence + intelligenceBonus + intelligenceBonusFromConsumable;
+            return intelligenceBonus + intelligenceBonusFromConsumable;
         }
 
-        public int GetCurrentDexterity()
+        public int GetCurrentDexterityBonus()
         {
-            return playerStatsDatabase.dexterity + dexterityBonus + dexterityBonusFromConsumable;
+            return dexterityBonus + dexterityBonusFromConsumable;
         }
 
-        public int GetCurrentStrength()
+        public int GetCurrentStrengthBonus()
         {
-            return playerStatsDatabase.strength + strengthBonus + strengthBonusFromConsumable;
+            return strengthBonus + strengthBonusFromConsumable;
         }
 
-        public int GetCurrentVitality()
+        public int GetCurrentVitalityBonus()
         {
-            return playerStatsDatabase.vitality + vitalityBonus + vitalityBonusFromConsumable;
+            return vitalityBonus + vitalityBonusFromConsumable;
         }
 
-        public int GetCurrentEndurance()
+        public int GetCurrentEnduranceBonus()
         {
-            return playerStatsDatabase.endurance + enduranceBonus + enduranceBonusFromConsumable;
+            return enduranceBonus + enduranceBonusFromConsumable;
         }
 
-        public int GetCurrentReputation()
+        public int GetCurrentReputationBonus()
         {
-            return playerStatsDatabase.GetCurrentReputation() + reputationBonus;
+            return reputationBonus;
         }
 
         /// <summary>
@@ -501,14 +697,10 @@ namespace AF.Stats
 
         public void ReturnGoldAndResetStats()
         {
+            int goldAmount = LevelUtils.GetRequiredExperienceForLevel(character.characterBaseStats.GetCurrentLevel());
+            character.characterBaseStats.ResetStats();
 
-            int goldAmount = LevelUtils.GetRequiredExperienceForLevel(playerStatsDatabase.GetCurrentLevel());
-
-            playerStatsDatabase.vitality = 1;
-            playerStatsDatabase.endurance = 1;
-            playerStatsDatabase.intelligence = 1;
-            playerStatsDatabase.strength = 1;
-            playerStatsDatabase.dexterity = 1;
+            // TODO: Override in PlayerStatsBonusController
 
             uIDocumentPlayerGold.AddGold(goldAmount);
 

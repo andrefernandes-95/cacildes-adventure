@@ -83,7 +83,10 @@ namespace AF
 
         void EnforceVerticalVelocity()
         {
-            characterBaseManager.characterController.Move(new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
+            if (characterBaseManager.characterController.enabled)
+            {
+                characterBaseManager.characterController.Move(new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
+            }
         }
 
         public void Jump(float jumpHeightBonus = 0)

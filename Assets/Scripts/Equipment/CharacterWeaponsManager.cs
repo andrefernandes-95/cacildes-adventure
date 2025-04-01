@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace AF.Equipment
 {
+    [System.Obsolete("CharacterWeaponsManager is deprecated and will be removed in future versions.")]
     public class CharacterWeaponsManager : MonoBehaviour
     {
 
