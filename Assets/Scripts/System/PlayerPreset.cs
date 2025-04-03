@@ -129,6 +129,7 @@ namespace AF
 
         void LoadEquipment()
         {
+            /*
             for (int i = 0; i < weapons.Length; i++)
             {
                 if (weapons[i] != null)
@@ -175,7 +176,7 @@ namespace AF
             equipmentDatabase.EquipHelmet(helmet);
             equipmentDatabase.EquipArmor(armor);
             equipmentDatabase.EquipLegwear(legwear);
-            equipmentDatabase.EquipGauntlet(gauntlet);
+            equipmentDatabase.EquipGauntlet(gauntlet);*/
         }
 
         void LoadQuests()

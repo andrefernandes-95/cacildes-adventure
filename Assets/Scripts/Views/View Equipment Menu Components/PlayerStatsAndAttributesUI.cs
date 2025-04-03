@@ -13,7 +13,7 @@ namespace AF
         [Header("Components")]
         public PlayerManager playerManager;
         public StatsBonusController playerStatsBonusController;
-        public EquipmentGraphicsHandler equipmentGraphicsHandler;
+        public SyntyCharacterModelManager equipmentGraphicsHandler;
         public AttackStatManager attackStatManager;
         public DefenseStatManager defenseStatManager;
 
@@ -85,7 +85,7 @@ namespace AF
             int basePosture = playerManager.characterPosture.GetMaxPostureDamage();
             int itemPosture = EquipmentUtils.GetPostureChangeFromItem(basePosture, equipmentDatabase, item);
 
-            float baseEquipLoad = equipmentGraphicsHandler.GetEquipLoad();
+            float baseEquipLoad = playerManager.statsBonusController.weightPenalty;
             float itemEquipLoad = EquipmentUtils.GetEquipLoadFromItem(item, baseEquipLoad, equipmentDatabase);
 
             var playerBaseStats = GetPlayerBaseStats();
@@ -198,13 +198,35 @@ namespace AF
             description.text = hasEnoughGoldForLevellingUp ? enoughGoldLabel : notEnoughGoldLabel;
             description.style.opacity = hasEnoughGoldForLevellingUp ? 1 : 0.5f;
         }
+
+
+
+        public string GetWeightLoadLabel(float givenWeightLoad)
+        {
+            /*
+            if (IsLightWeightForGivenValue(givenWeightLoad))
+            {
+                return LocalizationSettings.SelectedLocale.Identifier.Code == "en" ? "Light Load" : "Leve";
+            }
+            if (IsMidWeightForGivenValue(givenWeightLoad))
+            {
+                return LocalizationSettings.SelectedLocale.Identifier.Code == "en" ? "Medium Load" : "Médio";
+            }
+            if (IsHeavyWeightForGivenValue(givenWeightLoad))
+            {
+                return LocalizationSettings.SelectedLocale.Identifier.Code == "en" ? "Heavy Load" : "Pesado";
+            }*/
+
+            return "";
+        }
+
         private void SetWeightLoadLabel(string elementName, float baseValue, float itemValue)
         {
             // Format baseValue and itemValue as percentages with two decimal places
             string formattedBaseValue = (baseValue * 100).ToString("F2") + "%";
             string formattedItemValue = (itemValue * 100).ToString("F2") + "%";
 
-            string label = formattedBaseValue + $" ({equipmentGraphicsHandler.GetWeightLoadLabel(baseValue)})";
+            string label = formattedBaseValue + $" ({GetWeightLoadLabel(baseValue)})";
 
             Label changeIndicator =
                   root.Q<VisualElement>(elementName).Q<Label>("ChangeIndicator");
@@ -221,7 +243,8 @@ namespace AF
                     changeIndicator.style.color = Color.red;
                 }
 
-                changeIndicator.text = " > " + formattedItemValue + $" ({equipmentGraphicsHandler.GetWeightLoadLabel(itemValue)})";
+                // TODO: Revise equipment load logic
+                //changeIndicator.text = " > " + formattedItemValue + $" ({equipmentGraphicsHandler.GetWeightLoadLabel(itemValue)})";
                 changeIndicator.style.display = DisplayStyle.Flex;
             }
 

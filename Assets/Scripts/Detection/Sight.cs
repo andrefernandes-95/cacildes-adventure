@@ -1,102 +1,82 @@
 
-using System.Collections.Generic;
-using System.Linq;
-using AF.Characters;
-using AF.Combat;
 using UnityEngine;
-using UnityEngine.Events;
 using Vector3 = UnityEngine.Vector3;
 
 namespace AF.Detection
 {
     public class Sight : MonoBehaviour
     {
-        public float viewDistance = 10f;
-        public LayerMask targetLayer;
-
         [Header("Components")]
-        public Transform origin;
-        public TargetManager targetManager;
-
-        [Header("Tags")]
-        public List<string> tagsToDetect = new();
-
-        [Header("Factions")]
-        public List<CharacterFaction> factionsToIgnore = new();
-
-        [Header("Events")]
-        public UnityEvent OnTargetSighted;
+        [SerializeField] CharacterManager character;
 
         [Header("Settings")]
-        public bool debug = false;
+        [SerializeField] float detectionRadius = 15f;
+        [SerializeField] float minimumDetectionAngle = -35;
+        [SerializeField] float maximumDetectionAngle = 35;
 
-        [Header("Flags")]
-        [SerializeField] bool isSighted = false;
-        public bool canSight = true;
+        [Header("Layer Masks")]
+        public LayerMask environmentBlockLayer;
+        public LayerMask characterLayer;
 
-        public Transform IsTargetInSight()
+        public void FindATargetViaLineOfSight()
         {
-            Vector3 originPosition = origin.transform.position;
-
-            Vector3 direction = origin.transform.forward * viewDistance;
-
-            // Perform the raycast
-            if (Physics.Raycast(originPosition, direction, out RaycastHit hit, viewDistance, targetLayer))
-            {
-                if (debug) Debug.DrawLine(originPosition, hit.point, Color.red); // Draw a red line for the raycast
-
-                return hit.transform;
-            }
-
-            // Draw a green debug line if no target is hit
-            if (debug) Debug.DrawRay(originPosition, direction, Color.green);
-            return null;
-        }
-        public void CastSight()
-        {
-            if (canSight == false)
+            if (character.targetManager.currentTarget != null)
             {
                 return;
             }
 
-            Transform hit = IsTargetInSight();
-
-            if (hit != null)
+            Collider[] colliders = Physics.OverlapSphere(character.transform.position, detectionRadius, characterLayer);
+            for (int i = 0; i < colliders.Length; i++)
             {
-                // Check if the hit object's tag is in the list of tags to detect
+                CharacterBaseManager targetCharacter = colliders[i].transform.GetComponent<CharacterBaseManager>();
 
-                if (tagsToDetect.Count > 0)
+                if (targetCharacter == null)
                 {
-                    isSighted = tagsToDetect.Contains(hit.transform.gameObject.tag);
+                    continue;
                 }
 
-                if (isSighted && hit.TryGetComponent(out CharacterBaseManager target))
+                // Target is self? Ignore
+                if (targetCharacter.transform.root == character.transform.root)
                 {
-                    if (factionsToIgnore == null || factionsToIgnore.Count == 0 || !target.characterFactions.Any(faction => factionsToIgnore.Contains(faction)))
+                    continue;
+                }
+
+                if (targetCharacter.health.IsDead())
+                {
+                    continue;
+                }
+
+                if (IsFriendlyTowardsTarget(targetCharacter))
+                {
+                    continue;
+                }
+
+                // If a potential target is found, it has to be in front of us
+                Vector3 possibleTargetDirection = targetCharacter.transform.position - character.transform.position;
+                float viewableAngleOfPossibleTarget = Vector3.Angle(possibleTargetDirection, character.transform.forward);
+
+                if (viewableAngleOfPossibleTarget > minimumDetectionAngle && viewableAngleOfPossibleTarget < maximumDetectionAngle)
+                {
+                    // Lastly, check for environment blocks
+                    bool isObstructed = Physics.Linecast(character.lockOnReference.position, character.lockOnReference.position, environmentBlockLayer);
+                    if (!isObstructed)
                     {
-                        targetManager.SetTarget(target, () =>
-                        {
-                            OnTargetSighted?.Invoke();
-                        }, false);
+                        character.targetManager.SetTarget(targetCharacter);
                     }
                 }
             }
         }
 
-        public void SetDetectionLayer(string layerName)
+
+        public bool IsFriendlyTowardsTarget(CharacterBaseManager target)
         {
-            this.targetLayer = LayerMask.GetMask(layerName);
+            if (character.IsFromSameFaction(target))
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public void SetTagsToDetect(List<string> tagsToDetect)
-        {
-            this.tagsToDetect.Clear();
-            this.tagsToDetect = tagsToDetect;
-        }
-
-        public void Set_CanSight(bool value)
-        {
-            canSight = value;
-        }
     }
 }

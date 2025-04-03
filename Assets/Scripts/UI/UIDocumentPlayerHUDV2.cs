@@ -55,7 +55,7 @@ namespace AF
 
         [Header("Components")]
         public PlayerManager playerManager;
-        public EquipmentGraphicsHandler equipmentGraphicsHandler;
+        public SyntyCharacterModelManager equipmentGraphicsHandler;
 
         IMGUIContainer spellSlotContainer, consumableSlotContainer, weaponSlotContainer, shieldSlotContainer;
 

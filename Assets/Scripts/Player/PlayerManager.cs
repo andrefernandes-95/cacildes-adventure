@@ -30,7 +30,7 @@ namespace AF
         public FavoriteItemsManager favoriteItemsManager;
         public PlayerShooter playerShootingManager;
         public ProjectileSpawner projectileSpawner;
-        public EquipmentGraphicsHandler equipmentGraphicsHandler;
+        public SyntyCharacterModelManager equipmentGraphicsHandler;
         public FootstepListener footstepListener;
         public PlayerComponentManager playerComponentManager;
         public EventNavigator eventNavigator;

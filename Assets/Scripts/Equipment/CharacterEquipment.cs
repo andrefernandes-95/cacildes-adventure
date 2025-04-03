@@ -25,6 +25,7 @@ namespace AF
         public int currentWeaponIndex, currentShieldIndex, currentConsumableIndex, currentSpellIndex, currentArrowIndex = 0;
 
 
+        #region Equipment Getters
         public override List<AccessoryInstance> GetAccessoryInstances()
         {
             return accessories.ToList();
@@ -81,5 +82,38 @@ namespace AF
         {
             return spells[currentSpellIndex];
         }
+        #endregion
+
+        #region Equipment Setters
+        public override void SetHelmet(HelmetInstance helmetInstance)
+        {
+            helmet = helmetInstance.Clone();
+        }
+
+        public override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            leftWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        public override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            rightWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        public override void ClearHelmet()
+        {
+            helmet.Clear();
+        }
+
+        public override void ClearLeftWeapon(int slotIndex)
+        {
+            leftWeapons[slotIndex].Clear();
+        }
+
+        public override void ClearRightWeapon(int slotIndex)
+        {
+            rightWeapons[slotIndex].Clear();
+        }
+        #endregion
     }
 }

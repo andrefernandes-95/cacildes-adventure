@@ -549,11 +549,11 @@ namespace AF.UI.EquipmentMenu
             {
                 if (!isEquipped)
                 {
-                    playerManager.equipmentGraphicsHandler.EquipHelmet(helmetInstance);
+                    playerManager.characterBaseEquipment.EquipHelmet(helmetInstance);
                 }
                 else
                 {
-                    playerManager.equipmentGraphicsHandler.UnequipHelmet();
+                    playerManager.characterBaseEquipment.UnequipHelmet();
                 }
             }
             else if (itemInstance is ArmorInstance armorInstance)

@@ -12,6 +12,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using System;
 using AF.StateMachine;
+using AF.Detection;
 
 
 namespace AF
@@ -27,6 +28,7 @@ namespace AF
         public CharacterBossController characterBossController;
         public ExecutionManager executionManager;
         public CharacterStateMachine characterStateMachine;
+        public Sight sight;
 
         // Animator Overrides
         [HideInInspector] public AnimatorOverrideController animatorOverrideController;
@@ -312,9 +314,18 @@ namespace AF
                    !float.IsNaN(position.x) && !float.IsNaN(position.y) && !float.IsNaN(position.z);
         }
 
-        internal IEnumerable<CharacterManager> Where(Func<object, object> value)
+
+        public void EnableNavmeshAgent()
         {
-            throw new NotImplementedException();
+            agent.enabled = true;
+            agent.isStopped = false;
         }
+
+        public void DisableNavmeshAgent()
+        {
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
+
     }
 }

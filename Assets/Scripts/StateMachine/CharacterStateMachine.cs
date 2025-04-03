@@ -1,9 +1,8 @@
 namespace AF.StateMachine
 {
     using UnityEngine;
-    using NaughtyAttributes;
 
-    public abstract class CharacterStateMachine : MonoBehaviour
+    public class CharacterStateMachine : MonoBehaviour
     {
         [SerializeField] CharacterManager characterManager;
 
@@ -14,12 +13,16 @@ namespace AF.StateMachine
         [SerializeField] AIState defaultState;
 
         [Header("States")]
-        public AIState pursueTargetState;
+        public AIIdleState idleState;
+        public AIPursueTargetState pursueTargetState;
 
 
         private void Awake()
         {
-            currentState = defaultState;
+            // Always instantiate new copies of scriptable objects, especially the AI States which have flags within them
+            currentState = Instantiate(defaultState);
+            idleState = Instantiate(idleState);
+            pursueTargetState = Instantiate(pursueTargetState);
         }
 
         void Update()

@@ -15,26 +15,27 @@ namespace AF.Equipment
         public WorldWeapon equippedRightWeaponInstance;
         public WorldWeapon equippedLeftWeaponInstance;
 
-        [Header("Unarmed Weapons")]
-        public WorldWeapon unarmedRightHandWeapon;
-        public WorldWeapon unarmedLeftHandWeapon;
-
+        [Header("Unarmed Weapon Prefab")]
+        public UnarmedWorldWeapon unarmedWeaponPrefab;
 
         [Header("Character Transform Refs")]
         [SerializeField] Transform rightWeaponHandler;
         [SerializeField] Transform leftWeaponHandler;
 
-        [Header("Current Weapon")]
-        public CharacterWeaponHitbox currentWeaponInstance;
-
-        [Header("Dual Wielding")]
-        public CharacterWeaponHitbox leftWeaponInstance;
-
-        [Header("Database")]
-        public EquipmentDatabase equipmentDatabase;
-
         [Header("Components")]
         public CharacterBaseManager character;
+
+        void Awake()
+        {
+            if (unarmedWeaponPrefab != null)
+            {
+                equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
+                equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
+
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightLightAttacks.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
+            }
+        }
 
         public void ResetStates()
         {
@@ -81,24 +82,21 @@ namespace AF.Equipment
             }
 
             WeaponInstance clonedWeaponInstance = weaponToEquip.Clone();
-
-            equipmentDatabase.EquipWeapon(clonedWeaponInstance, slot, isRightHand);
+            character.characterBaseEquipment.EquipWeapon(clonedWeaponInstance, slot, isRightHand);
 
             Weapon weapon = clonedWeaponInstance.GetItem<Weapon>();
-
             if (isRightHand)
             {
                 equippedRightWeaponInstance = Instantiate(weapon.worldWeapon, rightWeaponHandler);
                 equippedRightWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
+                character.UpdateAttackAnimations(weapon.rightLightAttacks.ToArray());
             }
             else
             {
                 equippedLeftWeaponInstance = Instantiate(weapon.worldWeapon, leftWeaponHandler);
                 equippedLeftWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
+                character.UpdateAttackAnimations(weapon.leftLightAttacks.ToArray());
             }
-
-            character.UpdateAttackAnimations(weapon.rightLightAttacks.ToArray());
-            character.UpdateAttackAnimations(weapon.leftLightAttacks.ToArray());
 
             character.statsBonusController.RecalculateEquipmentBonus();
 
@@ -106,18 +104,29 @@ namespace AF.Equipment
 
         public void UnequipWeapon(int slot, bool isRightHand)
         {
-            equipmentDatabase.UnequipWeapon(slot, isRightHand);
+            character.characterBaseEquipment.UnequipWeapon(slot, isRightHand);
 
             if (isRightHand)
             {
                 DestroyRightWeaponInstance();
-                equippedRightWeaponInstance = Instantiate(unarmedRightHandWeapon, rightWeaponHandler);
+
+                if (unarmedWeaponPrefab != null)
+                {
+                    equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.rightLightAttacks.ToArray());
+                }
             }
             else
             {
                 DestroyLeftWeaponInstance();
-                equippedLeftWeaponInstance = Instantiate(unarmedLeftHandWeapon, leftWeaponHandler);
+
+                if (unarmedWeaponPrefab != null)
+                {
+                    equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
+                }
             }
+
 
             character.statsBonusController.RecalculateEquipmentBonus();
         }

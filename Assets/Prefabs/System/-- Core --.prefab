@@ -2926,7 +2926,7 @@ MonoBehaviour:
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
   playerStatsBonusController: {fileID: 6020033262264106722}
   inputs: {fileID: 3450680162556713538}
-  equipmentGraphicsHandler: {fileID: 7619780919293714056}
+  equipmentGraphicsHandler: {fileID: 0}
   playerManager: {fileID: 4363140735506542586}
   MANA_REGENERATION_RATE: 3
 --- !u!1 &1451403975102139995
@@ -3392,56 +3392,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crossBowPosition: {x: 0.8999996, y: -0.0999999, z: -7.75}
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
---- !u!1 &1776340151287523012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2008684425081124719}
-  - component: {fileID: 7619780919293714056}
-  m_Layer: 8
-  m_Name: ' Player Equipment Manager'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2008684425081124719
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776340151287523012}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6558083026297358713}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7619780919293714056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776340151287523012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8acab30fdbc534b6092ae639c4bad300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statsBonusController: {fileID: 6020033262264106722}
-  playerManager: {fileID: 0}
-  notificationManager: {fileID: 6922590514710513798}
-  playerStatsDatabase: {fileID: 11400000, guid: 5700f759ff00d104a97ef4af25190ddd, type: 2}
-  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
-  playerEquipmentRoot: {fileID: 7193482347483229447}
 --- !u!1 &1807263565566117170
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,27 +4042,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9864235a5c574b9e88d6b126d6c38fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unarmedRightHandAttacks:
-  - {fileID: 11400000, guid: a582772e7acd2fe42902b844af532d6e, type: 2}
-  - {fileID: 11400000, guid: 42527516ab77f7841973472735a71dba, type: 2}
-  - {fileID: 11400000, guid: 37779481a9ebc714c9eddbf615fe9b4f, type: 2}
-  unarmedLeftHandAttacks:
-  - {fileID: 11400000, guid: 6450c201034f2c44d8dcf24780ae79f7, type: 2}
-  - {fileID: 11400000, guid: 9470dd593722f2f41bc7acbb4c6091b0, type: 2}
-  unarmedRightFootAttacks: []
-  unarmedLeftFootAttacks: []
-  unarmedHeadAttacks: []
   currentAttackingMember: 0
-  crossFade: 0.2
-  maxIdleCombo: 3
-  lightAttackComboIndex: 0
-  heavyAttackComboIndex: 0
   isCombatting: 0
   isLightAttacking: 0
   character: {fileID: 4363140735506542586}
-  animator: {fileID: 2974784862855873894}
-  uIManager: {fileID: 7631411710013860570}
-  menuManager: {fileID: 5309569915440144546}
   isTwoHanding: 0
   twoHandingMultiplier: 1.2
   unarmedHeavyAttackBonus: 35
@@ -14041,94 +13974,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBaseManager: {fileID: 4363140735506542586}
   defaultRightHandWeapons:
-  - id: 
-    item: {fileID: 0}
-    level: 0
-  - id: 
-    item: {fileID: 0}
-    level: 0
-  - id: 
-    item: {fileID: 0}
-    level: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   defaultLeftHandWeapons:
-  - id: 
-    item: {fileID: 0}
-    level: 0
-  - id: 
-    item: {fileID: 0}
-    level: 0
-  - id: 
-    item: {fileID: 0}
-    level: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   defaultArrows:
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  defaultArrowNumber: 30
   defaultSpells:
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   defaultConsumables:
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  minConsumableAmount: 1
+  maxConsumableAmount: 1
+  defaultHelmet: {fileID: 0}
+  defaultArmor: {fileID: 0}
+  defaultGauntlet: {fileID: 0}
+  defaultLegwear: {fileID: 0}
   defaultAccessories:
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
-  defaultHelmet:
-    id: 
-    item: {fileID: 0}
-  defaultArmor:
-    id: 
-    item: {fileID: 0}
-  defaultGauntlet:
-    id: 
-    item: {fileID: 0}
-  defaultLegwear:
-    id: 
-    item: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
+  playerManager: {fileID: 0}
 --- !u!1 &5228711549046457963
 GameObject:
   m_ObjectHideFlags: 0
@@ -14940,7 +14826,7 @@ MonoBehaviour:
   unequippedShieldSlot: {fileID: 2800000, guid: 5a7b9b0f453a7a54d86cd5e6e924cf20, type: 3}
   unequippedArrowSlot: {fileID: 2800000, guid: c3e93846fa6add2478056f084b410020, type: 3}
   playerManager: {fileID: 4363140735506542586}
-  equipmentGraphicsHandler: {fileID: 7619780919293714056}
+  equipmentGraphicsHandler: {fileID: 0}
   popEffectWhenSwitchingSlots: {x: 0.7, y: 0.7, z: 0.7}
   starterAssetsInputs: {fileID: 3450680162556713538}
   oneHandIndicator_LocalizedString:
@@ -16111,7 +15997,7 @@ MonoBehaviour:
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
   playerStatsBonusController: {fileID: 6020033262264106722}
   inputs: {fileID: 3450680162556713538}
-  equipmentGraphicsHandler: {fileID: 7619780919293714056}
+  equipmentGraphicsHandler: {fileID: 0}
   playerManager: {fileID: 4363140735506542586}
 --- !u!1 &5832089248791959294
 GameObject:
@@ -16442,7 +16328,7 @@ GameObject:
   - component: {fileID: 3925226053210021350}
   - component: {fileID: 9079116784592991426}
   m_Layer: 8
-  m_Name: ' Player Inventory'
+  m_Name: "\U0001F4B0 Inventory Manager"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16565,7 +16451,6 @@ Transform:
   - {fileID: 1292857798401039077}
   - {fileID: 4390135399442330960}
   - {fileID: 2480027892541595346}
-  - {fileID: 2008684425081124719}
   - {fileID: 5716049014711707849}
   - {fileID: 2435883047842922672}
   - {fileID: 7896689136054864766}
@@ -16590,6 +16475,7 @@ Transform:
   - {fileID: 6455542526068174039}
   - {fileID: 1410221599596641039}
   - {fileID: 3258292572371002113}
+  - {fileID: 8523506115791238718}
   m_Father: {fileID: 9198782313407061788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6138053284208692608
@@ -16721,6 +16607,74 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &6205596420015942958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8523506115791238718}
+  - component: {fileID: 220308081219909978}
+  m_Layer: 8
+  m_Name: "\U0001F484 Appearance Manager"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8523506115791238718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205596420015942958}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6558083026297358713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &220308081219909978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205596420015942958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f7f2215151e94479f335f1beeae283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMale: 1
+  hairs:
+  - Chr_Hair_23
+  eyebrows: []
+  beards: []
+  maleHead:
+  - _Chr_Head_Male_00
+  maleTorso:
+  - _Chr_Torso_Male_00
+  - _Chr_ArmUpperRight_Male_00
+  - _Chr_ArmUpperLeft_Male_00
+  maleHands:
+  - _Chr_HandLeft_Male_00
+  - _Chr_HandRight_Male_00
+  - _Chr_ArmLowerLeft_Male_00
+  - _Chr_ArmLowerRight_Male_00
+  maleLegs:
+  - _Chr_LegLeft_Male_00
+  - _Chr_LegRight_Male_00
+  - _Chr_Hips_Male_00
+  femaleHead: []
+  femaleTorso: []
+  femaleHands: []
+  femaleLegs: []
 --- !u!1 &6244017603199229704
 GameObject:
   m_ObjectHideFlags: 0
@@ -18428,13 +18382,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 4363140735506542586}
-  lockOnManager: {fileID: 5309569913858928647}
-  uIManager: {fileID: 7631411710013860570}
   dodgeCost: 15
   isDodging: 0
-  maxRequestForRollDuration: 0.4
-  currentRequestForRollDuration: Infinity
-  dodgeAttackBonus: 30
   onDodge:
     m_PersistentCalls:
       m_Calls: []
@@ -19393,13 +19342,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equippedRightWeaponInstance: {fileID: 0}
   equippedLeftWeaponInstance: {fileID: 0}
-  unarmedRightHandWeapon: {fileID: 0}
-  unarmedLeftHandWeapon: {fileID: 0}
+  unarmedWeaponPrefab: {fileID: 8601803003116587545, guid: d3a488e1057e37349a7c91c3c81772af, type: 3}
   rightWeaponHandler: {fileID: 4095284375261365662}
   leftWeaponHandler: {fileID: 7845504205824551809}
-  currentWeaponInstance: {fileID: 0}
-  leftWeaponInstance: {fileID: 0}
-  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
   character: {fileID: 4363140735506542586}
 --- !u!1 &7532350374114553735
 GameObject:
@@ -20814,7 +20759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerManager: {fileID: 4363140735506542586}
   playerStatsBonusController: {fileID: 6020033262264106722}
-  equipmentGraphicsHandler: {fileID: 7619780919293714056}
+  equipmentGraphicsHandler: {fileID: 0}
   attackStatManager: {fileID: 2958563883327309659}
   defenseStatManager: {fileID: 4452107583212851662}
   uIDocument: {fileID: 6946409240526184979}
@@ -21349,6 +21294,7 @@ GameObject:
   - component: {fileID: 6579124912733073354}
   - component: {fileID: 2608982866249001740}
   - component: {fileID: 4661063206559614087}
+  - component: {fileID: 6470821467060622624}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -21371,6 +21317,7 @@ Transform:
   m_Children:
   - {fileID: 4185366188446170362}
   - {fileID: 1850715745803407039}
+  - {fileID: 396033348521637727}
   - {fileID: 7193482347483229447}
   - {fileID: 5309569914534136765}
   - {fileID: 5309569914972834157}
@@ -21443,7 +21390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2974784862855873894}
-  agent: {fileID: 0}
+  agent: {fileID: 6470821467060622624}
   characterController: {fileID: 8422702628398843308}
   combatAudioSource: {fileID: 5309569913989880748}
   characterFactions:
@@ -21452,6 +21399,7 @@ MonoBehaviour:
   isConfused: 0
   canMove: 1
   canRotate: 1
+  lockOnReference: {fileID: 396033348521637727}
   statusController: {fileID: 2557134072425247624}
   health: {fileID: 2254563081667588534}
   characterPosture: {fileID: 464338051145829896}
@@ -21468,6 +21416,10 @@ MonoBehaviour:
   characterBaseEquipment: {fileID: 2886897392795580788}
   statsBonusController: {fileID: 6020033262264106722}
   characterWeapons: {fileID: 897694540558054072}
+  characterBaseInventory: {fileID: 3925226053210021350}
+  syntyCharacterModelManager: {fileID: 6383117140852044533}
+  characterBaseAppearance: {fileID: 220308081219909978}
+  animatorSpeed: 1
   thirdPersonController: {fileID: 5122672870407089929}
   playerWeaponsManager: {fileID: 897694540558054072}
   climbController: {fileID: 4336404304033871157}
@@ -21483,7 +21435,7 @@ MonoBehaviour:
   favoriteItemsManager: {fileID: 9079116784592991426}
   playerShootingManager: {fileID: 6982558639531093206}
   projectileSpawner: {fileID: 0}
-  equipmentGraphicsHandler: {fileID: 7619780919293714056}
+  equipmentGraphicsHandler: {fileID: 0}
   footstepListener: {fileID: 6899095654960183681}
   playerComponentManager: {fileID: 6413798519938569210}
   eventNavigator: {fileID: 5008335905565155116}
@@ -21553,7 +21505,6 @@ MonoBehaviour:
   cinemachineImpulseSource: {fileID: 2608982866249001740}
   combatAudioSource: {fileID: 5309569913989880748}
   soundbank: {fileID: 7321280117501162532}
-  animatorSpeed: 1
 --- !u!114 &7213845079889638620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21742,6 +21693,28 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
+--- !u!195 &6470821467060622624
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422702628398843302}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.23
+  m_Speed: 3.5
+  m_Acceleration: 16
+  avoidancePriority: 50
+  m_AngularSpeed: 360
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 1.83
+  m_BaseOffset: -0.08
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &8474617227183452653
 GameObject:
   m_ObjectHideFlags: 0
@@ -21965,7 +21938,7 @@ Transform:
   m_GameObject: {fileID: 8619754588792639567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.589999, y: 2.1599998, z: 8.7}
+  m_LocalPosition: {x: 10.75, y: 8.87, z: -4.4300003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22004,7 +21977,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 70
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -23013,6 +22986,37 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &9121907518619311999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 396033348521637727}
+  m_Layer: 0
+  m_Name: PlayerLockOnChestReference
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &396033348521637727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9121907518619311999}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.329, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9198782313407061788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9132190880835934743
 GameObject:
   m_ObjectHideFlags: 0
@@ -28841,7 +28845,11 @@ PrefabInstance:
     - {fileID: 1856577729314452338, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6927303315946168392, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
-    m_AddedGameObjects: []
+    - {fileID: 4929224854835426226, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2398087699509727713, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5361976508358295598}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
 --- !u!82 &909537920045268111 stripped
@@ -29096,6 +29104,99 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 4608345896844090772, guid: 74c08fe769494034dae154aeac746d9f, type: 3}
   m_PrefabInstance: {fileID: 4797417839965584614}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4844739485013099961
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7193482347483229447}
+    m_Modifications:
+    - target: {fileID: 83513088600574773, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994703057617860428, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 4363140735506542586}
+    - target: {fileID: 3809250598772050439, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856090321199840572, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863450090295755634, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_Name
+      value: Humanoid Synty Graphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408744851888449778, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+--- !u!4 &5361976508358295598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 671715692661982615, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+  m_PrefabInstance: {fileID: 4844739485013099961}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6383117140852044533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1994703057617860428, guid: ed54a68fcf423ad4eaf8711a4a817a37, type: 3}
+  m_PrefabInstance: {fileID: 4844739485013099961}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d8fe9347d597542bb51ad982eda906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4934537652076770063
 PrefabInstance:
   m_ObjectHideFlags: 0

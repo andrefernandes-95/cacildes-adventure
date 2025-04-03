@@ -274,13 +274,15 @@ namespace AF
         {
             if (damageOwner is PlayerManager playerManager)
             {
+                // TODO: Change this logic
+                /*
                 if (
                     playerManager.playerWeaponsManager?.currentWeaponInstance != null
                     && playerManager.playerWeaponsManager?.currentWeaponInstance?.weapon != null
                     && playerManager.playerWeaponsManager?.currentWeaponInstance?.weapon?.healthRestoredWithEachHit > 0)
                 {
                     playerManager.health.RestoreHealth(playerManager.playerWeaponsManager.currentWeaponInstance.weapon.healthRestoredWithEachHit);
-                }
+                }*/
             }
         }
 

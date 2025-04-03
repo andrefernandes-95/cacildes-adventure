@@ -252,7 +252,7 @@ namespace AF
             }
 
             // Check currently equipped items
-            if (armorBase is HelmetInstance && equipmentDatabase.helmet != null)
+            if (armorBase is HelmetInstance && equipmentDatabase.helmet.Exists())
             {
                 valueFromCurrentEquipment = equipmentDatabase.helmet switch
                 {
@@ -269,7 +269,7 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is ArmorInstance && equipmentDatabase.armor != null)
+            else if (armorBase is ArmorInstance && equipmentDatabase.armor.Exists())
             {
                 valueFromCurrentEquipment = equipmentDatabase.armor switch
                 {
@@ -286,7 +286,7 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is GauntletInstance && equipmentDatabase.gauntlet != null)
+            else if (armorBase is GauntletInstance && equipmentDatabase.gauntlet.Exists())
             {
                 valueFromCurrentEquipment = equipmentDatabase.gauntlet switch
                 {
@@ -303,7 +303,7 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is LegwearInstance && equipmentDatabase.legwear != null)
+            else if (armorBase is LegwearInstance && equipmentDatabase.legwear.Exists())
             {
                 valueFromCurrentEquipment = equipmentDatabase.legwear switch
                 {
@@ -325,6 +325,11 @@ namespace AF
                 // Loop through each accessory in the accessories collection
                 foreach (var equippedAccessory in equipmentDatabase.accessories)
                 {
+                    if (equippedAccessory.IsEmpty())
+                    {
+                        continue;
+                    }
+
                     // Switch based on the specific type of attribute for the accessory
                     valueFromCurrentEquipment += attributeType switch
                     {

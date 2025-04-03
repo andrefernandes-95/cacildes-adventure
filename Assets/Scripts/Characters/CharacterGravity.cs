@@ -83,7 +83,7 @@ namespace AF
 
         void EnforceVerticalVelocity()
         {
-            if (characterBaseManager.characterController.enabled)
+            if (characterBaseManager.characterController.enabled && !characterBaseManager.agent.enabled)
             {
                 characterBaseManager.characterController.Move(new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
             }

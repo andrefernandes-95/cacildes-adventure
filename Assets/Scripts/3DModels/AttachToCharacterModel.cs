@@ -51,7 +51,12 @@ namespace AF
         {
             foreach (Transform child in parent)
             {
-                if (child.name == name)
+                if (!child.gameObject.activeSelf)
+                {
+                    continue;
+                }
+
+                if (child.name.Equals(name, System.StringComparison.Ordinal))
                     return child;
 
                 Transform found = FindChildByName(child, name); // Recursive search

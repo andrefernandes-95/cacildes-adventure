@@ -44,10 +44,6 @@ namespace AF
         public StatusEffectResistance[] statusEffectResistances;
         public StatusEffectCancellationRate[] statusEffectCancellationRates;
 
-        [Header("Graphics")]
-        public string graphicNameToShow;
-        public string[] graphicNamesToHide;
-
         [Header("Attribute Bonus")]
         public int vitalityBonus = 0;
         public int enduranceBonus = 0;
@@ -95,6 +91,7 @@ namespace AF
 
         [Header("Rage Mode")]
         public bool canRage = false;
+
 
         public string GetFormattedStatusResistances()
         {

@@ -22,8 +22,7 @@ namespace AF.StateMachine
 
         private void Awake()
         {
-            currentState = defaultState;
-
+            currentState = Instantiate(defaultState);
             playerIdleState = Instantiate(playerIdleState);
             playerRunState = Instantiate(playerRunState);
             playerJumpState = Instantiate(playerJumpState);

@@ -3,6 +3,7 @@ using System.Linq;
 using AF.Inventory;
 using AF.Ladders;
 using AF.StatusEffects;
+using AYellowpaper.SerializedCollections;
 using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,10 +11,9 @@ using UnityEngine.Localization.Settings;
 
 namespace AF
 {
-    public class PlayerInventory : MonoBehaviour
+    public class PlayerInventory : CharacterBaseInventory
     {
         public Consumable currentConsumedItem;
-
 
         [Header("UI Components")]
         public NotificationManager notificationManager;
@@ -37,7 +37,6 @@ namespace AF
         public bool disableAshesUsage = false;
         public Item ashes;
         public UnityEvent onDisabledAshes;
-
 
         public void ResetStates()
         {
@@ -88,9 +87,8 @@ namespace AF
             GameAnalytics.NewDesignEvent(eventName);
         }
 
-        public void AddItem(Item item, int quantity)
+        public override List<ItemInstance> AddItem(Item item, int quantity)
         {
-
             if (item is Weapon weapon)
             {
                 if (weapon.tradingItemRequirements != null && weapon.tradingItemRequirements.Count > 0)
@@ -110,12 +108,14 @@ namespace AF
 
             HandleItemAchievements(item);
 
-            inventoryDatabase.AddItem(item, quantity);
+            List<ItemInstance> itemsAdded = inventoryDatabase.AddItem(item, quantity);
 
             uIDocumentPlayerHUDV2.UpdateEquipment();
+
+            return itemsAdded;
         }
 
-        public void RemoveItem(Item item)
+        public override void RemoveItem(Item item)
         {
             inventoryDatabase.RemoveItem(item);
 
@@ -330,6 +330,22 @@ namespace AF
         {
             onDisabledAshes?.Invoke();
             disableAshesUsage = true;
+        }
+
+
+        public override int GetItemQuantity(Item item)
+        {
+            return inventoryDatabase.GetItemAmount(item);
+        }
+
+        public override bool HasItem(Item item)
+        {
+            return inventoryDatabase.GetItemAmount(item) > 0;
+        }
+
+        public override SerializedDictionary<Item, List<ItemInstance>> GetInventory()
+        {
+            return inventoryDatabase.ownedItems;
         }
     }
 }

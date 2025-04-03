@@ -8,6 +8,9 @@ using AF.Inventory;
 using System;
 using CI.QuickSave;
 
+/// <summary>
+/// Use this to store player equipment data across scenes. Do not use methods, lets leave that to the character base weapon system
+/// </summary>
 [CreateAssetMenu(fileName = "Equipment Database", menuName = "System/New Equipment Database", order = 0)]
 public class EquipmentDatabase : ScriptableObject
 {
@@ -110,32 +113,6 @@ public class EquipmentDatabase : ScriptableObject
         EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
     }
 
-    public void EquipWeapon(WeaponInstance weapon, int slotIndex, bool isRightHand)
-    {
-        if (isRightHand)
-        {
-            rightWeapons[slotIndex] = weapon;
-        }
-        else
-        {
-            leftWeapons[slotIndex] = weapon;
-        }
-
-        EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
-    }
-    public void UnequipWeapon(int slotIndex, bool isRightHand)
-    {
-        if (isRightHand)
-        {
-            rightWeapons[slotIndex].Clear();
-        }
-        else
-        {
-            leftWeapons[slotIndex].Clear();
-        }
-
-        EventManager.EmitEvent(EventMessages.ON_EQUIPMENT_CHANGED);
-    }
 
     public void SwitchToNextShield()
     {
@@ -565,7 +542,8 @@ public class EquipmentDatabase : ScriptableObject
                 {
                     if (inventoryDatabase.FindItemById(weaponId) is WeaponInstance weaponInstance)
                     {
-                        EquipWeapon(weaponInstance, idx, true);
+                        // TODO: Change to Player Equipment Logic
+                        // EquipWeapon(weaponInstance, idx, true);
                     }
                 }
             }
@@ -583,7 +561,8 @@ public class EquipmentDatabase : ScriptableObject
                 {
                     if (inventoryDatabase.FindItemById(shieldId) is ShieldInstance shieldInstance)
                     {
-                        EquipWeapon(shieldInstance, idx, false);
+                        // TODO :Change to PlayerEquipment logic
+                        // EquipWeapon(shieldInstance, idx, false);
                     }
                 }
             }

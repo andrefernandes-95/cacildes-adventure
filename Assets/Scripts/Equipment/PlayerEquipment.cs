@@ -9,6 +9,9 @@ namespace AF
         // TODO: Turn EquipmentDatabase private, make character base equipment have all the shared methods for AI as well
         public EquipmentDatabase equipmentDatabase;
 
+        public PlayerManager playerManager;
+
+        #region Equipment Getters
         public override List<AccessoryInstance> GetAccessoryInstances()
         {
             return equipmentDatabase.accessories.ToList();
@@ -65,5 +68,40 @@ namespace AF
         {
             return equipmentDatabase.GetCurrentSpell();
         }
+        #endregion
+
+
+        #region Equipment Setters
+
+        public override void SetHelmet(HelmetInstance helmetInstance)
+        {
+            equipmentDatabase.helmet = helmetInstance.Clone();
+        }
+
+        public override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            equipmentDatabase.leftWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        public override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            equipmentDatabase.rightWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        public override void ClearHelmet()
+        {
+            equipmentDatabase.helmet.Clear();
+        }
+
+        public override void ClearLeftWeapon(int slotIndex)
+        {
+            equipmentDatabase.leftWeapons[slotIndex].Clear();
+        }
+
+        public override void ClearRightWeapon(int slotIndex)
+        {
+            equipmentDatabase.rightWeapons[slotIndex].Clear();
+        }
+        #endregion
     }
 }

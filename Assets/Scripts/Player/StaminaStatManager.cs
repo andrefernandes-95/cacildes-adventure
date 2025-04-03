@@ -27,7 +27,7 @@ namespace AF
 
         public StarterAssetsInputs inputs;
 
-        public EquipmentGraphicsHandler equipmentGraphicsHandler;
+        public SyntyCharacterModelManager equipmentGraphicsHandler;
 
         public PlayerManager playerManager;
 

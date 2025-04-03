@@ -1,74 +1,143 @@
 namespace AF
 {
-    using System;
     using System.Collections.Generic;
     using UnityEngine;
+    using AYellowpaper.SerializedCollections;
+    using UnityEngine.UI;
     using System.Linq;
-    using AF.Stats;
-    using TigerForge;
-    using AF.Events;
-    using AF.Health;
-    using UnityEngine.Localization.Settings;
 
-    public class EquipmentGraphicsHandler : MonoBehaviour
+    public class SyntyCharacterModelManager : MonoBehaviour
     {
+        public SerializedDictionary<string, GameObject> syntyCharacterBodyParts = new();
 
-        [Header("Components")]
-        public StatsBonusController statsBonusController;
-        public PlayerManager playerManager;
+        public CharacterBaseManager character;
 
-        readonly List<string> _helmetNakedParts = new()
+        void Awake()
         {
-            "HairContainer",
-            "HeadContainer",
-            "EyebrowContainer",
-            "BeardContainer",
-        };
-
-        readonly List<string> _armorNakedParts = new()
-        {
-            "TorsoContainer",
-            "UpperRightArmContainer",
-            "UpperLeftArmContainer",
-        };
-
-        readonly List<string> _gauntletsNakedParts = new()
-        {
-            "LeftLowerArmContainer",
-            "RightLowerArmContainer",
-            "LeftHandContainer",
-            "RightHandContainer"
-        };
-
-        readonly List<string> _legwearNakedParts = new()
-        {
-            "HipContainer",
-            "LeftLegContainer",
-            "RightLegContainer"
-        };
-
-        [Header("UI Systems")]
-        public NotificationManager notificationManager;
-
-        [Header("Databases")]
-        public PlayerStatsDatabase playerStatsDatabase;
-        public EquipmentDatabase equipmentDatabase;
-
-        [Header("Transform References")]
-        public Transform playerEquipmentRoot;
-
-        private void Awake()
-        {
-            //playerManager.damageReceiver.onDamageEvent += OnDamageEvent;
+            CacheCharacterParts();
+            InitializeDefaultBodyParts();
         }
 
-        void Start()
+        void InitializeDefaultBodyParts()
         {
-            InitializeEquipment();
+            ToggleHair(true);
+            ToggleBeard(true);
+            ToggleEyebrows(true);
+            ToggleFace(true);
+            ToggleTorso(true);
+            ToggleHands(true);
+            ToggleLegs(true);
         }
+
+        void CacheCharacterParts()
+        {
+            syntyCharacterBodyParts.Clear();
+
+            var syntyPieces = transform.GetChild(0).GetComponentsInChildren<Transform>(true);
+
+            foreach (Transform t in syntyPieces)
+            {
+                if (!syntyCharacterBodyParts.ContainsKey(t.gameObject.name))
+                {
+                    syntyCharacterBodyParts.Add(t.gameObject.name, t.gameObject);
+
+                    // Hide All Pieces By Default
+                    t.gameObject.SetActive(false);
+                }
+            }
+
+            if (syntyCharacterBodyParts.ContainsKey("Armature"))
+            {
+                // TODO: Improve this logic
+
+                syntyCharacterBodyParts["Armature"].SetActive(true);
+                foreach (Transform child in syntyCharacterBodyParts["Armature"].transform)
+                {
+                    SetActiveRecursively(child.gameObject, true);
+                }
+            }
+
+            if (syntyCharacterBodyParts.ContainsKey("Exported Synty Character"))
+            {
+                syntyCharacterBodyParts["Exported Synty Character"].SetActive(true);
+            }
+        }
+        void SetActiveRecursively(GameObject obj, bool isActive)
+        {
+            obj.SetActive(isActive);
+
+            foreach (Transform child in obj.transform)
+            {
+                SetActiveRecursively(child.gameObject, isActive);
+            }
+        }
+
+        public void ShowPiece(string gameObjectName)
+        {
+            if (syntyCharacterBodyParts.ContainsKey(gameObjectName))
+            {
+                syntyCharacterBodyParts[gameObjectName].SetActive(true);
+            }
+        }
+
+        public void HidePiece(string gameObjectName)
+        {
+            if (syntyCharacterBodyParts.ContainsKey(gameObjectName))
+            {
+                syntyCharacterBodyParts[gameObjectName].SetActive(false);
+            }
+        }
+
+        void TogglePiece(List<string> pieces, bool show)
+        {
+            foreach (string gameObjectName in pieces)
+            {
+                if (show)
+                {
+                    ShowPiece(gameObjectName);
+                }
+                else
+                {
+                    HidePiece(gameObjectName);
+                }
+            }
+        }
+
+        public void ToggleHair(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetHairs(), show);
+        }
+        public void ToggleEyebrows(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetEyebrows(), show);
+        }
+        public void ToggleBeard(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetBeard(), show);
+        }
+        public void ToggleFace(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetFace(), show);
+        }
+        public void ToggleTorso(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetTorso(), show);
+        }
+        public void ToggleHands(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetHands(), show);
+        }
+        public void ToggleLegs(bool show)
+        {
+            TogglePiece(character.characterBaseAppearance.GetLegs(), show);
+        }
+
+
+
 
         public void InitializeEquipment()
         {
+            /*
             DrawCharacterGraphics();
 
             if (equipmentDatabase.helmet.Exists())
@@ -94,12 +163,12 @@ namespace AF
             for (int i = 0; i < equipmentDatabase.accessories.Length; i++)
             {
                 EquipAccessory(equipmentDatabase.accessories[i], i);
-            }
+            }*/
         }
 
         #region Helmet
         public void EquipHelmet(HelmetInstance helmetToEquip)
-        {
+        {/*
             HelmetInstance helmetToEquipClone = helmetToEquip.Clone();
 
             if (helmetToEquip.IsEmpty())
@@ -116,11 +185,11 @@ namespace AF
 
             DrawCharacterGraphics();
 
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
 
         public void UnequipHelmet()
-        {
+        {/*
             foreach (Transform t in playerEquipmentRoot.GetComponentsInChildren<Transform>(true))
             {
                 if (equipmentDatabase.helmet.Exists())
@@ -141,13 +210,13 @@ namespace AF
 
             DrawCharacterGraphics();
 
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
         #endregion
 
         #region Armor
         public void EquipArmor(ArmorInstance armorToEquip)
-        {
+        {/*
             ArmorInstance armorToEquipClone = armorToEquip.Clone();
 
             if (armorToEquip.IsEmpty())
@@ -166,11 +235,11 @@ namespace AF
 
             statsBonusController.RecalculateEquipmentBonus();
 
-            EventManager.EmitEvent(EventMessages.ON_BODY_TYPE_CHANGED);
+            EventManager.EmitEvent(EventMessages.ON_BODY_TYPE_CHANGED);*/
         }
 
         public void UnequipArmor()
-        {
+        {/*
             foreach (Transform t in playerEquipmentRoot.GetComponentsInChildren<Transform>(true))
             {
                 if (equipmentDatabase.armor.Exists())
@@ -192,12 +261,14 @@ namespace AF
             DrawCharacterGraphics();
 
             statsBonusController.RecalculateEquipmentBonus();
+            */
         }
         #endregion
 
         #region Gauntlets
         public void EquipGauntlet(GauntletInstance gauntletToEquip)
         {
+            /*
             GauntletInstance gauntletToEquipClone = gauntletToEquip.Clone();
             if (gauntletToEquip.IsEmpty())
             {
@@ -212,11 +283,12 @@ namespace AF
             }
 
             DrawCharacterGraphics();
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
 
         public void UnequipGauntlet()
         {
+            /*
             foreach (Transform t in playerEquipmentRoot.GetComponentsInChildren<Transform>(true))
             {
                 if (equipmentDatabase.gauntlet.Exists())
@@ -235,13 +307,13 @@ namespace AF
 
             equipmentDatabase.UnequipGauntlet();
             DrawCharacterGraphics();
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
         #endregion
 
         #region Legwear
         public void EquipLegwear(LegwearInstance legwearToEquip)
-        {
+        {/*
             LegwearInstance legwearToEquipClone = legwearToEquip.Clone();
 
             if (legwearToEquip.IsEmpty())
@@ -258,11 +330,11 @@ namespace AF
 
             DrawCharacterGraphics();
 
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
 
         public void UnequipLegwear()
-        {
+        {/*
             foreach (Transform t in playerEquipmentRoot.GetComponentsInChildren<Transform>(true))
             {
                 if (equipmentDatabase.legwear.Exists())
@@ -283,6 +355,7 @@ namespace AF
             DrawCharacterGraphics();
 
             statsBonusController.RecalculateEquipmentBonus();
+            */
         }
         #endregion
 
@@ -290,7 +363,7 @@ namespace AF
 
 
         public void EquipAccessory(AccessoryInstance accessoryToEquip, int slotIndex)
-        {
+        {/*
             if (accessoryToEquip.IsEmpty())
             {
                 return;
@@ -298,19 +371,20 @@ namespace AF
 
             equipmentDatabase.EquipAccessory(accessoryToEquip, slotIndex);
 
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
         #endregion
 
         public void UnequipAccessory(int slotIndex)
-        {
+        {/*
             equipmentDatabase.UnequipAccessory(slotIndex);
 
-            statsBonusController.RecalculateEquipmentBonus();
+            statsBonusController.RecalculateEquipmentBonus();*/
         }
 
         void DrawCharacterGraphics()
-        {
+        {/*
+
             // Cache the list of all transforms in the player's equipment root
             var allTransforms = playerEquipmentRoot.GetComponentsInChildren<Transform>(true);
 
@@ -337,15 +411,16 @@ namespace AF
 
             foreach (Transform t in allTransforms)
             {
+                /*
                 HandleGraphics(t, helmet, _helmetNakedParts, helmetGraphicsToShow, helmetGraphicsToHide);
                 HandleGraphics(t, armor, _armorNakedParts, armorGraphicsToShow, armorGraphicsToHide);
                 HandleGraphics(t, gauntlet, _gauntletsNakedParts, gauntletGraphicsToShow, gauntletGraphicsToHide);
                 HandleGraphics(t, legwear, _legwearNakedParts, legwearGraphicsToShow, legwearGraphicsToHide);
-            }
+        }*/
         }
 
         void HandleGraphics(Transform t, ArmorBaseInstance equipment, List<string> nakedParts, string graphicToShow, IEnumerable<string> graphicsToHide)
-        {
+        {/*
             if (equipment.IsEmpty())
             {
                 // Show naked parts if no equipment is equipped
@@ -370,8 +445,10 @@ namespace AF
                         t.gameObject.SetActive(false);
                     }
                 }
-            }
+            }*/
         }
+
+        /*
 
         public float GetHeavyWeightThreshold()
         {
@@ -477,6 +554,6 @@ namespace AF
             }
 
             return damage;
-        }
+        }*/
     }
 }

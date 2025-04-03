@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace AF
@@ -8,7 +9,13 @@ namespace AF
     {
         [HideInInspector] public CharacterBaseManager owner;
 
+        [ShowIf("IsWorldWeapon")]
         public MeleeDamageCollider damageCollider;
+        public bool IsWorldWeapon()
+        {
+            return this is WorldWeapon;
+        }
+
         public TrailRenderer trailRenderer;
 
         [Header("Sounds")]
@@ -21,8 +28,7 @@ namespace AF
                 owner = GetComponentInParent<CharacterBaseManager>();
             }
 
-            damageCollider.enabled = false;
-
+            DisableCollider();
             StopTrail();
         }
 
@@ -42,9 +48,18 @@ namespace AF
             }
         }
 
-        public void OpenDamageCollider()
+        public virtual void EnableCollider()
         {
             damageCollider.enabled = true;
+        }
+
+        public virtual void DisableCollider()
+        {
+            damageCollider.enabled = false;
+        }
+
+        public void OpenDamageCollider()
+        {
             EnableTrail();
 
             owner.characterSoundManager.PlaySoundpack(swooshes);
@@ -52,7 +67,8 @@ namespace AF
 
         public void CloseDamageCollider()
         {
-            damageCollider.enabled = false;
+            DisableCollider();
+
             StopTrail();
         }
     }

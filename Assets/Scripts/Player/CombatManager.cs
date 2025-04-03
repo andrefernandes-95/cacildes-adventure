@@ -12,35 +12,13 @@ namespace AF
     public class CombatManager : MonoBehaviour
     {
         [Header("Unarmed Attacks")]
-        public AttackAction[] unarmedRightHandAttacks;
         private AttackAction lastUnarmedRightHandAttackAction;
-
-        public AttackAction[] unarmedLeftHandAttacks;
         private AttackAction lastUnarmedLeftHandAttackAction;
-
-        public AttackAction[] unarmedRightFootAttacks;
         private AttackAction lastUnarmedRightFootAttackAction;
-
-        public AttackAction[] unarmedLeftFootAttacks;
         private AttackAction lastUnarmedLeftFootAttackAction;
-
-        public AttackAction[] unarmedHeadAttacks;
 
         [HideInInspector] public AttackingMember currentAttackingMember = AttackingMember.NONE;
 
-        public float crossFade = 0.1f;
-        public readonly string hashLightAttack1 = "Light Attack 1";
-        public readonly string hashLightAttack2 = "Light Attack 2";
-        public readonly string hashLightAttack3 = "Light Attack 3";
-        public readonly string hashLightAttack4 = "Light Attack 4";
-        public readonly string hashHeavyAttack1 = "Heavy Attack 1";
-        public readonly string hashHeavyAttack2 = "Heavy Attack 2";
-        public readonly int hashSpecialAttack = Animator.StringToHash("Special Attack");
-        public readonly string hashJumpAttack = "Jump Attack";
-
-        [Header("Attack Combo Index")]
-        public float maxIdleCombo = 2f;
-        [SerializeField] int lightAttackComboIndex, heavyAttackComboIndex = 0;
 
         [Header("Flags")]
         public bool isCombatting = false;
@@ -48,11 +26,6 @@ namespace AF
 
         [Header("Components")]
         public CharacterBaseManager character;
-        public Animator animator;
-        public UIManager uIManager;
-
-        [Header("UI")]
-        public MenuManager menuManager;
 
 
         [Header("Two-Handing")]
@@ -68,8 +41,6 @@ namespace AF
         public bool isJumpAttacking = false;
         public float jumpAttackMultiplier = 1.3f;
 
-        // Coroutines
-        Coroutine ResetLightAttackComboIndexCoroutine;
 
         public readonly string SpeedMultiplierHash = "SpeedMultiplier";
 
@@ -82,7 +53,7 @@ namespace AF
 
         private void Start()
         {
-            animator.SetFloat(SpeedMultiplierHash, 1f);
+            character.animator.SetFloat(SpeedMultiplierHash, 1f);
         }
 
         public void ResetStates()
@@ -92,7 +63,7 @@ namespace AF
             isLightAttacking = false;
             isAttackingWithFoot = false;
 
-            animator.SetFloat(SpeedMultiplierHash, 1f);
+            character.animator.SetFloat(SpeedMultiplierHash, 1f);
 
             // Always restore the animator speed after an attack ends
             character.RestoreDefaultAnimatorSpeed();
@@ -196,6 +167,12 @@ namespace AF
                 attacks = character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightLightAttacks.ToList();
             }
 
+            if (attacks.Count <= 0 && character.characterWeapons.equippedRightWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
+            {
+                // Try the unarmed weapons
+                attacks = unarmedWorldWeapon.rightLightAttacks;
+            }
+
             return attacks;
         }
 
@@ -206,6 +183,12 @@ namespace AF
             if (character.characterBaseEquipment.GetLeftHandWeapon().Exists())
             {
                 attacks = character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>().leftLightAttacks.ToList();
+            }
+
+            if (attacks.Count <= 0 && character.characterWeapons.equippedLeftWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
+            {
+                // Try the unarmed weapons
+                attacks = unarmedWorldWeapon.leftLightAttacks;
             }
 
             return attacks;

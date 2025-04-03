@@ -14,20 +14,12 @@ namespace AF
 
         [Header("Components")]
         public CharacterBaseManager character;
-        public LockOnManager lockOnManager;
-        public UIManager uIManager;
 
         [Header("Stamina Settings")]
         public int dodgeCost = 15;
 
         [Header("In-game flags")]
         public bool isDodging = false;
-
-        public float maxRequestForRollDuration = 0.4f;
-        [HideInInspector] public float currentRequestForRollDuration = Mathf.Infinity;
-
-        [Header("Dodge Attacks")]
-        public int dodgeAttackBonus = 30;
 
         [Header("Unity Events")]
         public UnityEvent onDodge;
@@ -100,20 +92,6 @@ namespace AF
             }*/
         }
 
-        IEnumerator StopMidRollRootmotion()
-        {
-            yield return new WaitForSeconds(0.75f);
-            character.animator.applyRootMotion = false;
-        }
-
-        IEnumerator StopHeavyRollRootmotion()
-        {
-            yield return new WaitForSeconds(0.3f);
-            isDodging = false;
-
-            yield return new WaitForSeconds(0.3f);
-            character.animator.applyRootMotion = false;
-        }
 
         public bool ShouldBackstep()
         {
@@ -153,11 +131,6 @@ namespace AF
                         {
                             return false;
                         }*/
-
-            if (uIManager.IsShowingGUI())
-            {
-                return false;
-            }
 
             return true;
         }

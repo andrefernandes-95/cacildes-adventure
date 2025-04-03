@@ -1,12 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AF.Animations;
 using AF.Characters;
-using AF.Combat;
 using AF.Equipment;
 using AF.Health;
-using AF.StateMachine;
 using AF.Stats;
 using AF.StatusEffects;
 using UnityEngine;
@@ -34,6 +32,9 @@ namespace AF
         public bool canMove = true;
         public bool canRotate = true;
 
+        [Header("Transform References")]
+        public Transform lockOnReference; // Player can have a lock on to make calculations easier for line casts, or future multiplayer
+
         [Header("Components")]
         public StatusController statusController;
         public CharacterBaseHealth health;
@@ -51,6 +52,9 @@ namespace AF
         public CharacterBaseEquipment characterBaseEquipment;
         public StatsBonusController statsBonusController;
         public CharacterWeapons characterWeapons;
+        public CharacterBaseInventory characterBaseInventory;
+        public SyntyCharacterModelManager syntyCharacterModelManager;
+        public CharacterBaseAppearance characterBaseAppearance;
 
         // Animator Overrides
         protected AnimatorOverrideController animatorOverrideController;
@@ -241,5 +245,6 @@ namespace AF
         {
             canRotate = false;
         }
+
     }
 }

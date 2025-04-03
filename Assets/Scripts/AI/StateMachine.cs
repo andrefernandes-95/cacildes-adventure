@@ -18,12 +18,14 @@ namespace AF
 
         private void Start()
         {
+            /*
             if (currentState != null)
             {
                 currentState.OnStateEnter(this);
-            }
+            }*/
         }
 
+        /*
         void FixedUpdate()
         {
             if (scheduledState != null)
@@ -41,7 +43,7 @@ namespace AF
                     ScheduleState(nextState);
                 }
             }
-        }
+        }*/
 
         public void ScheduleState(State state)
         {

@@ -695,6 +695,7 @@ namespace AF.Stats
             ignoreWeaponRequirements = value;
         }
 
+        // TODO: Stuff related to rebirth, move it to its own proper class
         public void ReturnGoldAndResetStats()
         {
             int goldAmount = LevelUtils.GetRequiredExperienceForLevel(character.characterBaseStats.GetCurrentLevel());

@@ -12,7 +12,7 @@ namespace AF
 
         public void ThrowWeapon()
         {
-            CharacterWeaponHitbox currentWeapon = playerManager.playerWeaponsManager.currentWeaponInstance;
+            var currentWeapon = playerManager.playerWeaponsManager.equippedRightWeaponInstance;
 
             if (currentWeapon == null)
             {
@@ -57,7 +57,7 @@ namespace AF
 
         public void ShowCurrentWeapon()
         {
-            CharacterWeaponHitbox currentWeapon = playerManager.playerWeaponsManager.currentWeaponInstance;
+            var currentWeapon = playerManager.playerWeaponsManager.equippedRightWeaponInstance;
 
             if (currentWeapon == null)
             {
