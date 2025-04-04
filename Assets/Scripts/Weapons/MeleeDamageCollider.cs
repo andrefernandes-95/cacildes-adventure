@@ -16,11 +16,14 @@ namespace AF
                 return;
             }
 
-            Damage finalDamage = weaponInstance.GetItem<Weapon>().GetCurrentDamage(attacker, weaponInstance.level);
+            Damage finalDamage = attacker.characterBaseAttackManager.GetAttackingWeaponDamage();
 
             TakeDamageEffect takeDamageEffect = Instantiate(damageReceiver.character.characterEffectsManager.characterEffectsDatabase.takeDamageEffect);
             takeDamageEffect.damage = finalDamage;
             takeDamageEffect.contactPoint = contactPoint;
+            takeDamageEffect.attacker = attacker;
+            takeDamageEffect.receiver = damageReceiver.character;
+            takeDamageEffect.angleHitFrom = Vector3.SignedAngle(attacker.transform.forward, damageReceiver.transform.forward, Vector3.up);
 
             damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
         }

@@ -9,7 +9,7 @@ namespace AF.Tests
     {
         PlayerDamageResistances playerDamageResistances;
         PlayerManager playerManager;
-        DefenseStatManager defenseStatManager;
+        CharacterDefenseManager defenseStatManager;
 
         PlayerStatsDatabase playerStatsDatabase;
         StatsBonusController statsBonusController;
@@ -22,14 +22,12 @@ namespace AF.Tests
 
             playerManager = new GameObject().AddComponent<PlayerManager>();
             playerDamageResistances.playerManager = playerManager;
-            defenseStatManager = new GameObject().AddComponent<DefenseStatManager>();
-            playerManager.defenseStatManager = defenseStatManager;
+            defenseStatManager = new GameObject().AddComponent<CharacterDefenseManager>();
+            playerManager.characterBaseDefenseManager = defenseStatManager;
 
             statsBonusController = new GameObject().AddComponent<StatsBonusController>();
-            playerManager.defenseStatManager.playerStatsBonusController = statsBonusController;
+            playerManager.characterBaseDefenseManager.character = playerManager;
 
-            playerStatsDatabase = ScriptableObject.CreateInstance<PlayerStatsDatabase>();
-            playerManager.defenseStatManager.playerStatsDatabase = playerStatsDatabase;
         }
 
         [Test]
@@ -40,7 +38,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 0;
+            defenseStatManager.damagedAbsorbed.physical = 0;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -56,7 +54,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 5;
+            defenseStatManager.damagedAbsorbed.physical = 5;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -72,7 +70,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 50;
+            defenseStatManager.damagedAbsorbed.physical = 50;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -88,7 +86,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 75;
+            defenseStatManager.damagedAbsorbed.physical = 75;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -104,7 +102,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 100;
+            defenseStatManager.damagedAbsorbed.physical = 100;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -120,7 +118,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 150;
+            defenseStatManager.damagedAbsorbed.physical = 150;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -136,7 +134,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 200;
+            defenseStatManager.damagedAbsorbed.physical = 200;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -152,7 +150,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 300;
+            defenseStatManager.damagedAbsorbed.physical = 300;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -168,8 +166,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 0;
-            defenseStatManager.physicalDefenseAbsorption = 30;
+            defenseStatManager.damagedAbsorbed.physical = 0;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 
@@ -185,8 +182,7 @@ namespace AF.Tests
             incomingDamage.physical = initialDamage;
 
             playerStatsDatabase.endurance = 0;
-            defenseStatManager.basePhysicalDefense = 0;
-            defenseStatManager.physicalDefenseAbsorption = 100;
+            defenseStatManager.damagedAbsorbed.physical = 0;
 
             var filteredDamage = playerDamageResistances.FilterIncomingDamage(incomingDamage);
 

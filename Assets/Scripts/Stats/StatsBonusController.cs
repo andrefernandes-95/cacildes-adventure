@@ -31,17 +31,17 @@ namespace AF.Stats
         public int intelligenceBonusFromConsumable = 0;
 
         [Header("Elemental Defenses Bonus")]
-        public float fireDefenseBonus = 0;
-        public float frostDefenseBonus = 0;
-        public float lightningDefenseBonus = 0;
-        public float magicDefenseBonus = 0;
-        public float darkDefenseBonus = 0;
-        public float waterDefenseBonus = 0;
+        public int equipmentPhysicalDefenseBonus = 0;
+        public int equipmentFireDefenseBonus = 0;
+        public int equipmentFrostDefenseBonus = 0;
+        public int equipmentLightningDefenseBonus = 0;
+        public int equipmentMagicDefenseBonus = 0;
+        public int equipmentDarkDefenseBonus = 0;
+        public int equipmentWaterDefenseBonus = 0;
 
         [Header("Equipment Modifiers")]
         public float weightPenalty = 0f;
         public int equipmentPoise = 0;
-        public float equipmentPhysicalDefense = 0;
         public bool ignoreWeaponRequirements = false;
 
         [Header("Gold & Experience")]
@@ -357,29 +357,29 @@ namespace AF.Stats
 
         void UpdateEquipmentPhysicalDefense(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
         {
-            equipmentPhysicalDefense = 0f;
+            equipmentPhysicalDefenseBonus = 0;
 
             if (helmet != null)
             {
-                equipmentPhysicalDefense += helmet.physicalDefense;
+                equipmentPhysicalDefenseBonus += helmet.damageAbsorbed.physical;
             }
 
             if (armor != null)
             {
-                equipmentPhysicalDefense += armor.physicalDefense;
+                equipmentPhysicalDefenseBonus += armor.damageAbsorbed.physical;
             }
 
             if (gauntlet != null)
             {
-                equipmentPhysicalDefense += gauntlet.physicalDefense;
+                equipmentPhysicalDefenseBonus += gauntlet.damageAbsorbed.physical;
             }
 
             if (legwear != null)
             {
-                equipmentPhysicalDefense += legwear.physicalDefense;
+                equipmentPhysicalDefenseBonus += legwear.damageAbsorbed.physical;
             }
 
-            equipmentPhysicalDefense += accessories.Sum(x => x == null ? 0 : x.physicalDefense);
+            equipmentPhysicalDefenseBonus += accessories.Sum(x => x == null ? 0 : x.damageAbsorbed.physical);
         }
 
         void UpdateStatusEffectResistances(Helmet helmet, Armor armor, Gauntlet gauntlet, Legwear legwear, List<Accessory> accessories)
@@ -446,7 +446,11 @@ namespace AF.Stats
         {
 
             healthBonus = magicBonus = staminaBonus = vitalityBonus = enduranceBonus = strengthBonus = dexterityBonus = intelligenceBonus = 0;
-            fireDefenseBonus = frostDefenseBonus = lightningDefenseBonus = magicDefenseBonus = darkDefenseBonus = waterDefenseBonus = discountPercentage = spellDamageBonusMultiplier = 0;
+            equipmentFireDefenseBonus = equipmentFrostDefenseBonus = equipmentLightningDefenseBonus = equipmentMagicDefenseBonus =
+            equipmentDarkDefenseBonus = equipmentWaterDefenseBonus = 0;
+
+            discountPercentage = spellDamageBonusMultiplier = 0;
+
             reputationBonus = parryPostureDamageBonus = postureBonus = movementSpeedBonus = 0;
 
             parryPostureWindowBonus = staminaRegenerationBonus = postureDecreaseRateBonus = projectileMultiplierBonus = backStabAngleBonus = 0f;
@@ -475,12 +479,12 @@ namespace AF.Stats
                 strengthBonus += equipment.strengthBonus;
                 dexterityBonus += equipment.dexterityBonus;
                 intelligenceBonus += equipment.intelligenceBonus;
-                fireDefenseBonus += equipment.fireDefense;
-                frostDefenseBonus += equipment.frostDefense;
-                lightningDefenseBonus += equipment.lightningDefense;
-                magicDefenseBonus += equipment.magicDefense;
-                darkDefenseBonus += equipment.darkDefense;
-                waterDefenseBonus += equipment.waterDefense;
+                equipmentFireDefenseBonus += equipment.damageAbsorbed.fire;
+                equipmentFrostDefenseBonus += equipment.damageAbsorbed.frost;
+                equipmentLightningDefenseBonus += equipment.damageAbsorbed.lightning;
+                equipmentMagicDefenseBonus += equipment.damageAbsorbed.magic;
+                equipmentDarkDefenseBonus += equipment.damageAbsorbed.darkness;
+                equipmentWaterDefenseBonus += equipment.damageAbsorbed.water;
                 reputationBonus += equipment.reputationBonus;
                 discountPercentage += equipment.discountPercentage;
                 postureBonus += equipment.postureBonus;
@@ -504,12 +508,12 @@ namespace AF.Stats
                 strengthBonus += accessory?.strengthBonus ?? 0;
                 dexterityBonus += accessory?.dexterityBonus ?? 0;
                 intelligenceBonus += accessory?.intelligenceBonus ?? 0;
-                fireDefenseBonus += accessory?.fireDefense ?? 0;
-                frostDefenseBonus += accessory?.frostDefense ?? 0;
-                lightningDefenseBonus += accessory?.lightningDefense ?? 0;
-                magicDefenseBonus += accessory?.magicDefense ?? 0;
-                darkDefenseBonus += accessory?.darkDefense ?? 0;
-                waterDefenseBonus += accessory?.waterDefense ?? 0;
+                equipmentFireDefenseBonus += accessory?.damageAbsorbed.fire ?? 0;
+                equipmentFrostDefenseBonus += accessory?.damageAbsorbed.frost ?? 0;
+                equipmentLightningDefenseBonus += accessory?.damageAbsorbed.lightning ?? 0;
+                equipmentMagicDefenseBonus += accessory?.damageAbsorbed.magic ?? 0;
+                equipmentDarkDefenseBonus += accessory?.damageAbsorbed.darkness ?? 0;
+                equipmentWaterDefenseBonus += accessory?.damageAbsorbed.water ?? 0;
                 reputationBonus += accessory?.reputationBonus ?? 0;
                 parryPostureDamageBonus += accessory?.postureDamagePerParry ?? 0;
 

@@ -31,6 +31,7 @@ namespace AF
         public bool isConfused = false;
         public bool canMove = true;
         public bool canRotate = true;
+        public bool isTakingDamage = false;
 
         [Header("Transform References")]
         public Transform lockOnReference; // Player can have a lock on to make calculations easier for line casts, or future multiplayer
@@ -55,6 +56,12 @@ namespace AF
         public CharacterBaseInventory characterBaseInventory;
         public SyntyCharacterModelManager syntyCharacterModelManager;
         public CharacterBaseAppearance characterBaseAppearance;
+        public CharacterBaseAvatar characterBaseAvatar;
+        public CharacterBaseDefenseManager characterBaseDefenseManager;
+        public CharacterBaseAttackManager characterBaseAttackManager;
+
+        // We need a reference to the base class so we can access certain methods that are common to both player and AI
+        public CharacterBaseStateMachine characterBaseStateMachine;
 
         // Animator Overrides
         protected AnimatorOverrideController animatorOverrideController;
@@ -62,6 +69,38 @@ namespace AF
 
         public float animatorSpeed = 1f;
         float defaultAnimatorSpeed = 1f;
+
+        protected virtual void Awake()
+        {
+            // Order of execution is important here
+
+            // Calculate base defense absorption
+            characterBaseDefenseManager.RecalculateDamageAbsorbed();
+
+            // Calculate base attack
+            characterBaseAttackManager.RecalculateDamages();
+
+            // Initialize synty models
+            syntyCharacterModelManager.Initialize();
+
+            // Then evaluate default equipment
+            characterBaseEquipment.SetupDefaultEquipment();
+
+            SetupAnimRefs();
+        }
+
+        void SetupAnimRefs()
+        {
+            if (defaultAnimatorController == null)
+            {
+                defaultAnimatorController = animator.runtimeAnimatorController;
+            }
+            if (animatorOverrideController == null)
+            {
+                animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            }
+        }
+
 
         public abstract void ResetStates();
 
@@ -78,18 +117,6 @@ namespace AF
         public void SetIsBusy(bool value)
         {
             isBusy = value;
-        }
-
-        void SetupAnimRefs()
-        {
-            if (defaultAnimatorController == null)
-            {
-                defaultAnimatorController = animator.runtimeAnimatorController;
-            }
-            if (animatorOverrideController == null)
-            {
-                animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            }
         }
 
         public void UpdateAttackAnimations(AttackAction[] attackActions)
@@ -190,8 +217,6 @@ namespace AF
             animator.Play(animationName);
         }
         #endregion
-
-        public abstract Damage GetAttackDamage();
 
         public bool IsFromSameFaction(CharacterBaseManager target)
         {

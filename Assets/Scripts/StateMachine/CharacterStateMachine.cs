@@ -2,7 +2,7 @@ namespace AF.StateMachine
 {
     using UnityEngine;
 
-    public class CharacterStateMachine : MonoBehaviour
+    public class CharacterStateMachine : CharacterBaseStateMachine
     {
         [SerializeField] CharacterManager characterManager;
 
@@ -15,6 +15,7 @@ namespace AF.StateMachine
         [Header("States")]
         public AIIdleState idleState;
         public AIPursueTargetState pursueTargetState;
+        public AITakeDamageState takeDamageState;
 
 
         private void Awake()
@@ -23,6 +24,7 @@ namespace AF.StateMachine
             currentState = Instantiate(defaultState);
             idleState = Instantiate(idleState);
             pursueTargetState = Instantiate(pursueTargetState);
+            takeDamageState = Instantiate(takeDamageState);
         }
 
         void Update()
@@ -68,6 +70,18 @@ namespace AF.StateMachine
                         {
                             aICharacterNetworkManager.isMoving.Value = false;
                         }*/
+        }
+
+        public override void ChangeToTakeDamageState()
+        {
+            if (currentState != null)
+            {
+                currentState = currentState.SwitchState(this.characterManager, takeDamageState);
+            }
+            else
+            {
+                currentState = takeDamageState;
+            }
         }
     }
 }

@@ -9,8 +9,9 @@ namespace AF
     {
         private CharacterBaseManager damageOwner;
         List<DamageReceiver> damagedTargets = new();
-
         protected Vector3 contactPoint;
+
+        new Collider collider => GetComponent<Collider>();
 
         protected virtual void Awake()
         {
@@ -20,6 +21,18 @@ namespace AF
             {
                 damageOwner = GetComponentInParent<CharacterBaseManager>();
             }
+
+            DisableCollider();
+        }
+
+        public void EnableCollider()
+        {
+            collider.enabled = true;
+        }
+
+        public void DisableCollider()
+        {
+            collider.enabled = false;
         }
 
         void ClearDamagedTargets()

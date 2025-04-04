@@ -9,7 +9,7 @@ namespace AF
     {
         [HideInInspector] public CharacterBaseManager owner;
 
-        [ShowIf("IsWorldWeapon")]
+        [ShowIf("IsWorldWeapon()")]
         public MeleeDamageCollider damageCollider;
         public bool IsWorldWeapon()
         {
@@ -50,17 +50,18 @@ namespace AF
 
         public virtual void EnableCollider()
         {
-            damageCollider.enabled = true;
+            damageCollider.EnableCollider();
         }
 
         public virtual void DisableCollider()
         {
-            damageCollider.enabled = false;
+            damageCollider.DisableCollider();
         }
 
         public void OpenDamageCollider()
         {
             EnableTrail();
+            EnableCollider();
 
             owner.characterSoundManager.PlaySoundpack(swooshes);
         }

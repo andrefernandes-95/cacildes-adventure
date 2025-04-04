@@ -7,15 +7,18 @@ namespace AF
     public class UnarmedDamageCollider : DamageCollider
     {
         [InfoBox("This is the collider own damage. It will be combined with the character base attack damage")]
-        public Damage damage;
+        public Damage damage = new();
 
         protected override void ProcessDamageEffect(CharacterBaseManager attacker, DamageReceiver damageReceiver)
         {
-            Damage finalDamage = attacker.GetAttackDamage().Combine(damage);
-
             TakeDamageEffect takeDamageEffect = Instantiate(damageReceiver.character.characterEffectsManager.characterEffectsDatabase.takeDamageEffect);
-            takeDamageEffect.damage = finalDamage;
+            takeDamageEffect.damage = attacker.characterBaseAttackManager.GetAttackingWeaponDamage();
             takeDamageEffect.contactPoint = contactPoint;
+            takeDamageEffect.attacker = attacker;
+            takeDamageEffect.receiver = damageReceiver.character;
+            takeDamageEffect.angleHitFrom = Vector3.SignedAngle(attacker.transform.forward, damageReceiver.transform.forward, Vector3.up);
+
+            damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
         }
     }
 }

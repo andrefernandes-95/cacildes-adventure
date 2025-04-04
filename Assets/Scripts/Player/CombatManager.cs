@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AF.Animations;
 using AF.Combat;
+using AF.Health;
 using AF.Ladders;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ namespace AF
 
         [HideInInspector] public AttackingMember currentAttackingMember = AttackingMember.NONE;
 
-
         [Header("Flags")]
         public bool isCombatting = false;
         public bool isLightAttacking = false;
@@ -33,7 +33,6 @@ namespace AF
         public float twoHandingMultiplier = 1.2f;
 
         [Header("Heavy Attack")]
-        public int unarmedHeavyAttackBonus = 35;
         public bool isHeavyAttacking = false;
         public float heavyAttackMultiplier = 1.3f;
 
@@ -194,19 +193,6 @@ namespace AF
             return attacks;
         }
 
-        public WeaponInstance GetAttackingWeapon()
-        {
-            if (currentAttackingMember == AttackingMember.RIGHT_HAND)
-            {
-                return character.characterBaseEquipment.GetRightHandWeapon();
-            }
-            else if (currentAttackingMember == AttackingMember.LEFT_HAND)
-            {
-                return character.characterBaseEquipment.GetLeftHandWeapon();
-            }
-
-            return null;
-        }
 
         public bool IsAttacking()
         {

@@ -9,8 +9,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using AF.Companions;
 using UnityEngine.AI;
-using System.Collections.Generic;
-using System;
 using AF.StateMachine;
 using AF.Detection;
 
@@ -68,9 +66,9 @@ namespace AF
         public GameSession gameSession;
 
 
-        private void Awake()
+        protected override void Awake()
         {
-            SetupAnimatorOverrides();
+            base.Awake();
 
             initialPosition = transform.position;
             initialRotation = transform.rotation;
@@ -78,13 +76,6 @@ namespace AF
             EventManager.StartListening(EventMessages.ON_LEAVING_BONFIRE, Revive);
         }
 
-        void SetupAnimatorOverrides()
-        {
-
-            animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            animator.runtimeAnimatorController = animatorOverrideController;
-
-        }
 
         private void Start()
         {
@@ -114,11 +105,6 @@ namespace AF
 
         public void UpdateAnimatorOverrideControllerClips(string animationName, AnimationClip animationClip)
         {
-            if (animatorOverrideController == null)
-            {
-                SetupAnimatorOverrides();
-            }
-
             var clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
             animatorOverrideController.GetOverrides(clipOverrides);
             clipOverrides[animationName] = animationClip;
@@ -169,11 +155,6 @@ namespace AF
                     characterController.Move(rootMotionPosition);
                 }
             }
-        }
-
-        public override Damage GetAttackDamage()
-        {
-            return characterCombatController.GetCurrentDamage();
         }
 
         /// <summary>
@@ -317,14 +298,20 @@ namespace AF
 
         public void EnableNavmeshAgent()
         {
-            agent.enabled = true;
-            agent.isStopped = false;
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+                agent.isStopped = false;
+            }
         }
 
         public void DisableNavmeshAgent()
         {
-            agent.isStopped = true;
-            agent.enabled = false;
+            if (agent.enabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+                agent.enabled = false;
+            }
         }
 
     }

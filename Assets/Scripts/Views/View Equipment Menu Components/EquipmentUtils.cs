@@ -78,7 +78,7 @@ namespace AF
             return currentPosture + itemPostureBonus;
         }
 
-        public static int GetElementalAttackForCurrentWeapon(WeaponInstance weaponInstance, WeaponElementType elementType, AttackStatManager attackStatManager, int playerCurrentReputation)
+        public static int GetElementalAttackForCurrentWeapon(WeaponInstance weaponInstance, WeaponElementType elementType, CharacterBaseAttackManager attackStatManager, int playerCurrentReputation)
         {
             if (weaponInstance == null || !weaponInstance.Exists())
             {
@@ -86,7 +86,7 @@ namespace AF
             }
             Weapon weapon = weaponInstance.GetItem<Weapon>();
 
-            Damage weaponDamage = weapon.GetCurrentDamage(attackStatManager.character, weaponInstance.level);
+            Damage weaponDamage = attackStatManager.CalculateDamageOutput(weapon.damage);
 
             return elementType switch
             {
@@ -100,17 +100,17 @@ namespace AF
             };
         }
 
-        public static int GetElementalDefenseFromItem(ArmorBaseInstance armorBaseInstance, WeaponElementType weaponElementType, DefenseStatManager defenseStatManager, EquipmentDatabase equipmentDatabase)
+        public static int GetElementalDefenseFromItem(ArmorBaseInstance armorBaseInstance, WeaponElementType weaponElementType, CharacterBaseDefenseManager defenseStatManager, EquipmentDatabase equipmentDatabase)
         {
             int baseElementalDefense = weaponElementType switch
             {
-                WeaponElementType.Fire => (int)defenseStatManager.GetFireDefense(),
-                WeaponElementType.Frost => (int)defenseStatManager.GetFrostDefense(),
-                WeaponElementType.Lightning => (int)defenseStatManager.GetLightningDefense(),
-                WeaponElementType.Magic => (int)defenseStatManager.GetMagicDefense(),
-                WeaponElementType.Darkness => (int)defenseStatManager.GetDarknessDefense(),
-                WeaponElementType.Water => (int)defenseStatManager.GetWaterDefense(),
-                WeaponElementType.None => (int)defenseStatManager.GetDefenseAbsorption(),
+                WeaponElementType.Fire => (int)defenseStatManager.damagedAbsorbed.fire,
+                WeaponElementType.Frost => (int)defenseStatManager.damagedAbsorbed.frost,
+                WeaponElementType.Lightning => (int)defenseStatManager.damagedAbsorbed.lightning,
+                WeaponElementType.Magic => (int)defenseStatManager.damagedAbsorbed.magic,
+                WeaponElementType.Darkness => (int)defenseStatManager.damagedAbsorbed.darkness,
+                WeaponElementType.Water => (int)defenseStatManager.damagedAbsorbed.water,
+                WeaponElementType.None => (int)defenseStatManager.damagedAbsorbed.physical,
                 _ => 0
             };
 
@@ -131,13 +131,13 @@ namespace AF
 
                 currentDefenseFromItem = weaponElementType switch
                 {
-                    WeaponElementType.Fire => (int)equippedArmor.fireDefense,
-                    WeaponElementType.Frost => (int)equippedArmor.frostDefense,
-                    WeaponElementType.Lightning => (int)equippedArmor.lightningDefense,
-                    WeaponElementType.Magic => (int)equippedArmor.magicDefense,
-                    WeaponElementType.Darkness => (int)equippedArmor.darkDefense,
-                    WeaponElementType.Water => (int)equippedArmor.waterDefense,
-                    WeaponElementType.None => (int)equippedArmor.physicalDefense,
+                    WeaponElementType.Fire => (int)equippedArmor.damageAbsorbed.fire,
+                    WeaponElementType.Frost => (int)equippedArmor.damageAbsorbed.frost,
+                    WeaponElementType.Lightning => (int)equippedArmor.damageAbsorbed.lightning,
+                    WeaponElementType.Magic => (int)equippedArmor.damageAbsorbed.magic,
+                    WeaponElementType.Darkness => (int)equippedArmor.damageAbsorbed.darkness,
+                    WeaponElementType.Water => (int)equippedArmor.damageAbsorbed.water,
+                    WeaponElementType.None => (int)equippedArmor.damageAbsorbed.physical,
                     _ => 0
                 };
             }
@@ -148,13 +148,13 @@ namespace AF
 
             int newDefenseFromItem = equipmentDatabase.IsEquipped(armorBaseInstance) ? 0 : weaponElementType switch
             {
-                WeaponElementType.Fire => (int)armorBase.fireDefense,
-                WeaponElementType.Frost => (int)armorBase.frostDefense,
-                WeaponElementType.Lightning => (int)armorBase.lightningDefense,
-                WeaponElementType.Magic => (int)armorBase.magicDefense,
-                WeaponElementType.Darkness => (int)armorBase.darkDefense,
-                WeaponElementType.Water => (int)armorBase.waterDefense,
-                WeaponElementType.None => (int)armorBase.physicalDefense,
+                WeaponElementType.Fire => (int)armorBase.damageAbsorbed.fire,
+                WeaponElementType.Frost => (int)armorBase.damageAbsorbed.frost,
+                WeaponElementType.Lightning => (int)armorBase.damageAbsorbed.lightning,
+                WeaponElementType.Magic => (int)armorBase.damageAbsorbed.magic,
+                WeaponElementType.Darkness => (int)armorBase.damageAbsorbed.darkness,
+                WeaponElementType.Water => (int)armorBase.damageAbsorbed.water,
+                WeaponElementType.None => (int)armorBase.damageAbsorbed.physical,
                 _ => 0
             };
 

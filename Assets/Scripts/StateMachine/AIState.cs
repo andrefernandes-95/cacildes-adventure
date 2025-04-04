@@ -14,7 +14,7 @@ namespace AF.StateMachine
             return this;
         }
 
-        protected virtual AIState SwitchState(CharacterBaseManager characterBaseManager, AIState newState)
+        public virtual AIState SwitchState(CharacterBaseManager characterBaseManager, AIState newState)
         {
             if (newState != this)
             {

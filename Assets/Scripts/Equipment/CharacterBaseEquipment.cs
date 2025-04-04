@@ -30,12 +30,7 @@ namespace AF
         [SerializeField] Legwear defaultLegwear;
         [SerializeField] Accessory[] defaultAccessories = new Accessory[4];
 
-        private void Awake()
-        {
-            SetupDefaultEquipment();
-        }
-
-        void SetupDefaultEquipment()
+        public void SetupDefaultEquipment()
         {
             int rightSlotIndex = 0;
             foreach (Weapon weapon in defaultRightHandWeapons)
@@ -166,6 +161,8 @@ namespace AF
             }
 
             SetHelmet(helmetInstance);
+
+            UpdateEquipmentValues();
         }
 
         public void UnequipHelmet()
@@ -176,6 +173,14 @@ namespace AF
             }
 
             ClearHelmet();
+
+            UpdateEquipmentValues();
+        }
+
+        void UpdateEquipmentValues()
+        {
+            characterBaseManager.statsBonusController.RecalculateEquipmentBonus();
+            characterBaseManager.characterBaseDefenseManager.RecalculateDamageAbsorbed();
         }
 
     }

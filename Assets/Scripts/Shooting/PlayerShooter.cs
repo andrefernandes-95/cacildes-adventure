@@ -443,57 +443,57 @@ namespace AF.Shooting
             if (projectileInstance.TryGetComponent(out OnDamageCollisionAbstractManager onDamageCollisionAbstractManager))
             {
                 onDamageCollisionAbstractManager.damageOwner = GetPlayerManager();
+                /*
+                                if (currentSpell != null)
+                                {
+                                    bool shouldDoubleDamage = false;
 
-                if (currentSpell != null)
-                {
-                    bool shouldDoubleDamage = false;
+                                    Weapon currentWeapon = GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>();
 
-                    Weapon currentWeapon = GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>();
+                                    if (currentWeapon != null)
+                                    {
+                                        shouldDoubleDamage =
+                                            currentWeapon.doubleDamageDuringNightTime && gameSession.IsNightTime() ||
+                                            currentWeapon.doubleDamageDuringDayTime && !gameSession.IsNightTime();
+                                    }
 
-                    if (currentWeapon != null)
-                    {
-                        shouldDoubleDamage =
-                            currentWeapon.doubleDamageDuringNightTime && gameSession.IsNightTime() ||
-                            currentWeapon.doubleDamageDuringDayTime && !gameSession.IsNightTime();
-                    }
+                                    onDamageCollisionAbstractManager.damage.ScaleSpell(
+                                        GetPlayerManager().attackStatManager,
+                                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
+                                        playerStatsDatabase.GetCurrentReputation(),
+                                        currentSpell.isFaithSpell,
+                                        currentSpell.isHexSpell,
+                                        shouldDoubleDamage);
+                                }
 
-                    onDamageCollisionAbstractManager.damage.ScaleSpell(
-                        GetPlayerManager().attackStatManager,
-                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
-                        playerStatsDatabase.GetCurrentReputation(),
-                        currentSpell.isFaithSpell,
-                        currentSpell.isHexSpell,
-                        shouldDoubleDamage);
-                }
-
-                if (GetPlayerManager().statsBonusController.spellDamageBonusMultiplier > 0)
-                {
-                    onDamageCollisionAbstractManager.damage.ScaleDamage(GetPlayerManager().statsBonusController.spellDamageBonusMultiplier);
-                }
+                                if (GetPlayerManager().statsBonusController.spellDamageBonusMultiplier > 0)
+                                {
+                                    onDamageCollisionAbstractManager.damage.ScaleDamage(GetPlayerManager().statsBonusController.spellDamageBonusMultiplier);
+                                }*/
             }
+            /*
+                        // Assign the damage owner to all child OnDamageCollisionAbstractManagers of the projectile instance
+                        OnDamageCollisionAbstractManager[] onDamageCollisionAbstractManagers = GetAllChildOnDamageCollisionManagers(projectileInstance);
+                        foreach (var onChildDamageCollisionAbstractManager in onDamageCollisionAbstractManagers)
+                        {
+                            onChildDamageCollisionAbstractManager.damageOwner = GetPlayerManager();
 
-            // Assign the damage owner to all child OnDamageCollisionAbstractManagers of the projectile instance
-            OnDamageCollisionAbstractManager[] onDamageCollisionAbstractManagers = GetAllChildOnDamageCollisionManagers(projectileInstance);
-            foreach (var onChildDamageCollisionAbstractManager in onDamageCollisionAbstractManagers)
-            {
-                onChildDamageCollisionAbstractManager.damageOwner = GetPlayerManager();
+                            if (currentSpell != null)
+                            {
+                                onChildDamageCollisionAbstractManager.damage.ScaleSpell(
+                                    GetPlayerManager().attackStatManager,
+                                    GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
+                                    playerStatsDatabase.GetCurrentReputation(),
+                                    currentSpell.isFaithSpell,
+                                    currentSpell.isHexSpell,
+                                    gameSession);
+                            }
 
-                if (currentSpell != null)
-                {
-                    onChildDamageCollisionAbstractManager.damage.ScaleSpell(
-                        GetPlayerManager().attackStatManager,
-                        GetPlayerManager().attackStatManager.equipmentDatabase.GetCurrentRightWeapon(),
-                        playerStatsDatabase.GetCurrentReputation(),
-                        currentSpell.isFaithSpell,
-                        currentSpell.isHexSpell,
-                        gameSession);
-                }
-
-                if (GetPlayerManager().statsBonusController.spellDamageBonusMultiplier > 0)
-                {
-                    onChildDamageCollisionAbstractManager.damage.ScaleDamage(GetPlayerManager().statsBonusController.spellDamageBonusMultiplier);
-                }
-            }
+                            if (GetPlayerManager().statsBonusController.spellDamageBonusMultiplier > 0)
+                            {
+                                onChildDamageCollisionAbstractManager.damage.ScaleDamage(GetPlayerManager().statsBonusController.spellDamageBonusMultiplier);
+                            }
+                        }*/
         }
 
         public OnDamageCollisionAbstractManager[] GetAllChildOnDamageCollisionManagers(GameObject obj)

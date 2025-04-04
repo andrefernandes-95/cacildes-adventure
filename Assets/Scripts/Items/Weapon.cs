@@ -30,13 +30,6 @@ namespace AF
         Staff,
     }
 
-    public enum WeaponCategory
-    {
-        Melee,
-        Range,
-        Staff,
-    }
-
     public enum WeaponElementType
     {
         None,
@@ -46,16 +39,6 @@ namespace AF
         Magic,
         Darkness,
         Water,
-    }
-
-    public enum PushForce
-    {
-        None = 1,
-        Light = 2,
-        Medium = 3,
-        Large = 4,
-        VeryLarge = 5,
-        Colossal = 6,
     }
 
     [System.Serializable]
@@ -70,7 +53,6 @@ namespace AF
     [CreateAssetMenu(menuName = "Items / Weapon / New Weapon")]
     public class Weapon : Item
     {
-        public WeaponCategory weaponCategory;
 
         [Header("Prefab")]
         public WorldWeapon worldWeapon;
@@ -78,7 +60,6 @@ namespace AF
         [Header("Attack Actions")]
         public List<AttackAction> rightLightAttacks = new();
         public List<AttackAction> leftLightAttacks = new();
-
 
         [Header("Attack")]
         public Damage damage;
@@ -228,35 +209,6 @@ namespace AF
             );
         }
 
-        public Damage GetScaledDamageForLevel(CharacterBaseManager character, int level)
-        {
-            int strengthBonus = (int)GetStrengthBonusFromWeapon(character);
-            int dexterityBonus = (int)GetDexterityBonusFromWeapon(character);
-            int intelligenceBonus = (int)GetIntelligenceBonusFromWeapon(character);
-
-            Damage scaledDamage = GetDamageForLevel(level);
-
-            scaledDamage.physical += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.fire += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.frost += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.magic += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.lightning += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.darkness += strengthBonus + dexterityBonus + intelligenceBonus;
-            scaledDamage.water += strengthBonus + dexterityBonus + intelligenceBonus;
-
-            int characterReputation = character.characterBaseStats.GetReputation();
-
-            if (isHolyWeapon && characterReputation > 0)
-            {
-                scaledDamage.lightning += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(characterReputation), 1.25f));
-            }
-            else if (isHexWeapon && characterReputation < 0)
-            {
-                scaledDamage.darkness += (int)Math.Min(100, Mathf.Pow(Mathf.Abs(characterReputation), 1.25f));
-            }
-
-            return scaledDamage;
-        }
 
         public string GetFormattedStatusDamages()
         {
@@ -369,157 +321,7 @@ namespace AF
             return text.TrimEnd();
         }
 
-        public Damage GetCurrentDamage(CharacterBaseManager character, int weaponLevel)
-        {
-            Damage weaponDamage = GetScaledDamageForLevel(character, weaponLevel);
 
-            /*
-            Damage weaponDamage = new(
-                physical: GetWeaponAttack(weapon),
-                fire: (int)weapon.GetWeaponFireAttack(playerManager.attackStatManager),
-                frost: (int)weapon.GetWeaponFrostAttack(playerManager.attackStatManager),
-                magic: (int)weapon.GetWeaponMagicAttack(playerManager.attackStatManager),
-                lightning: (int)weapon.GetWeaponLightningAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), playerManager.attackStatManager),
-                darkness: (int)weapon.GetWeaponDarknessAttack(playerManager.playerStatsDatabase.GetCurrentReputation(), playerManager.attackStatManager),
-                water: (int)weapon.GetWeaponWaterAttack(playerManager.attackStatManager),
-                postureDamage: (IsHeavyAttacking() || IsJumpAttacking())
-                ? (int)(weapon.damage.postureDamage * 1.1f)
-                : weapon.damage.postureDamage,
-                poiseDamage: weapon.damage.poiseDamage,
-                weaponAttackType: weapon.damage.weaponAttackType,
-                statusEffects: weapon.damage.statusEffects,
-                pushForce: weapon.damage.pushForce,
-                canNotBeParried: weapon.damage.canNotBeParried,
-                ignoreBlocking: weapon.damage.ignoreBlocking
-            );*/
-
-            ApplyModifiers(character, weaponDamage);
-
-            return weaponDamage;
-        }
-
-
-        void ApplyModifier(Damage damage, float modifier)
-        {
-            damage.physical = (int)(damage.physical * modifier);
-            damage.fire = (int)(damage.fire * modifier);
-            damage.frost = (int)(damage.frost * modifier);
-            damage.magic = (int)(damage.magic * modifier);
-            damage.lightning = (int)(damage.lightning * modifier);
-            damage.darkness = (int)(damage.darkness * modifier);
-            damage.water = (int)(damage.water * modifier);
-        }
-
-        void AddToDamage(Damage damage, int value)
-        {
-            if (damage.physical > 0)
-            {
-                damage.physical += value;
-            }
-            if (damage.fire > 0)
-            {
-                damage.fire += value;
-            }
-            if (damage.frost > 0)
-            {
-                damage.frost += value;
-            }
-            if (damage.magic > 0)
-            {
-                damage.magic += value;
-            }
-            if (damage.lightning > 0)
-            {
-                damage.lightning += value;
-            }
-            if (damage.darkness > 0)
-            {
-                damage.darkness += value;
-            }
-            if (damage.water > 0)
-            {
-                damage.water += value;
-            }
-        }
-
-        void ApplyModifiers(CharacterBaseManager character, Damage damage)
-        {
-            float modifiers = 1f;
-
-            if (character.combatManager.isTwoHanding)
-            {
-                modifiers += character.combatManager.twoHandingMultiplier + character.statsBonusController.twoHandAttackBonusMultiplier;
-            }
-
-            if (character.combatManager.isHeavyAttacking)
-            {
-                modifiers += character.combatManager.heavyAttackMultiplier + character.statsBonusController.heavyAttackBonusMultiplier;
-            }
-
-            if (character.combatManager.isJumpAttacking)
-            {
-                modifiers += character.combatManager.jumpAttackMultiplier + character.statsBonusController.jumpAttackBonusMultiplier;
-            }
-
-            // Bonus for guard counters and parry attacks
-            if (character.characterBlockController.IsWithinCounterAttackWindow())
-            {
-                modifiers += character.characterBlockController.counterAttackMultiplier;
-            }
-
-            if (character.statsBonusController.increaseNextAttackDamage)
-            {
-                character.statsBonusController.increaseNextAttackDamage = false;
-
-                modifiers += character.statsBonusController.nextAttackMultiplierFactor;
-            }
-
-            // If weapon is unarmed
-            /* if (currentWeapon == null)
-            {
-                if (character.statsBonusController.increaseAttackPowerWhenUnarmed)
-                {
-                    attackMultiplierBonuses *= 1.65f;
-                }
-            }*/
-
-            if (damage.weaponAttackType == WeaponAttackType.Pierce)
-            {
-                modifiers += character.statsBonusController.pierceDamageMultiplier;
-            }
-            else if (damage.weaponAttackType == WeaponAttackType.Blunt)
-            {
-                modifiers += character.statsBonusController.bluntDamageMultiplier;
-            }
-            else if (damage.weaponAttackType == WeaponAttackType.Slash)
-            {
-                modifiers += character.statsBonusController.slashDamageMultiplier;
-            }
-            // TODO: Add Range Multiplier
-
-            ApplyModifier(damage, modifiers);
-
-            if (character.statsBonusController.physicalAttackBonus > 0)
-            {
-                damage.physical = (int)(damage.physical + character.statsBonusController.physicalAttackBonus);
-            }
-
-            int extraAttackPower = 0;
-
-            // + Attack the lower the reputation
-            if (character.statsBonusController.increaseAttackPowerTheLowerTheReputation && character.characterBaseStats.GetReputation() < 0)
-            {
-                extraAttackPower += Mathf.Min(150, (int)(Mathf.Abs(character.characterBaseStats.GetReputation()) * 2.25f));
-            }
-
-            // + Attack when health is low
-            if (character.statsBonusController.increaseAttackPowerWithLowerHealth)
-            {
-                extraAttackPower += (int)(value * character.health.GetExtraAttackBasedOnCurrentHealth());
-            }
-
-            AddToDamage(damage, extraAttackPower);
-        }
 
         public bool IsRangeWeapon()
         {

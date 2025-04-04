@@ -23,7 +23,7 @@ namespace AF
         public VisualTreeAsset itemEffectTooltipEntry;
 
         [Header("Components")]
-        public AttackStatManager attackStatManager;
+        public CharacterBaseAttackManager attackStatManager;
         public RecipesDatabase recipesDatabase;
 
         [Header("UI Documents")]
@@ -529,7 +529,7 @@ namespace AF
                     weapon.DrawRequirements(playerManager));
             }
 
-            var currentWeaponDamage = weapon.GetCurrentDamage(playerManager, weaponInstance.level);
+            var currentWeaponDamage = playerManager.characterBaseAttackManager.CalculateDamageOutput(weaponInstance);
 
             int playerStrength = playerManager.characterBaseStats.GetStrength();
             int playerDexterity = playerManager.characterBaseStats.GetDexterity();
@@ -868,14 +868,14 @@ namespace AF
         {
             ArmorBase armor = armorBaseInstance.GetItem<ArmorBase>();
 
-            if (armor.physicalDefense > 0)
+            if (armor.damageAbsorbed.physical > 0)
             {
                 CreateTooltip(
                     defenseAbsorptionSprite,
                     Color.white,
                     String.Format(
                         physicalDefenseBonus.GetLocalizedString(),
-                        armor.physicalDefense));
+                        armor.damageAbsorbed.physical));
             }
 
             if (armor.speedPenalty > 0)
@@ -883,60 +883,60 @@ namespace AF
                 CreateEquipLoadTooltip(armor.speedPenalty);
             }
 
-            if (armor.fireDefense > 0)
+            if (armor.damageAbsorbed.fire > 0)
             {
                 CreateTooltip(
                     fireSprite,
                     fire,
                     String.Format(
                         fireDefenseBonus.GetLocalizedString(),
-                        armor.fireDefense));
+                        armor.damageAbsorbed.fire));
 
             }
-            if (armor.frostDefense > 0)
+            if (armor.damageAbsorbed.frost > 0)
             {
                 CreateTooltip(
                     frostSprite,
                     frost,
                     String.Format(
                         frostDefenseBonus.GetLocalizedString(),
-                        armor.frostDefense));
+                        armor.damageAbsorbed.frost));
             }
-            if (armor.lightningDefense > 0)
+            if (armor.damageAbsorbed.lightning > 0)
             {
                 CreateTooltip(
                     lightningSprite,
                     lightning,
                     String.Format(
                         lightningDefenseBonus.GetLocalizedString(),
-                        armor.lightningDefense));
+                        armor.damageAbsorbed.lightning));
             }
-            if (armor.magicDefense > 0)
+            if (armor.damageAbsorbed.magic > 0)
             {
                 CreateTooltip(
                     magicSprite,
                     magic,
                     String.Format(
                         magicDefenseBonus.GetLocalizedString(),
-                        armor.magicDefense));
+                        armor.damageAbsorbed.magic));
             }
-            if (armor.darkDefense > 0)
+            if (armor.damageAbsorbed.darkness > 0)
             {
                 CreateTooltip(
                     darknessSprite,
                     darkness,
                     String.Format(
                         darknessDefenseBonus.GetLocalizedString(),
-                        armor.darkDefense));
+                        armor.damageAbsorbed.darkness));
             }
-            if (armor.waterDefense > 0)
+            if (armor.damageAbsorbed.water > 0)
             {
                 CreateTooltip(
                     waterSprite,
                     water,
                     String.Format(
                         waterDefenseBonus.GetLocalizedString(),
-                        armor.waterDefense));
+                        armor.damageAbsorbed.water));
             }
 
             if (armor.poiseBonus != 0)

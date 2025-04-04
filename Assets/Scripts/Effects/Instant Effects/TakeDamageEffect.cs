@@ -45,8 +45,7 @@ namespace AF
             // Calculate damage
             CalculateDamage();
 
-            // Play damage animation
-            PlayDirectionalBasedDamageAnimation();
+            characterBeingDamaged.damageReceiver.angleFromLastHit = angleHitFrom;
 
             // Check for build ups (Poison, Bleed)
 
@@ -57,7 +56,7 @@ namespace AF
             PlayDamageVFX();
 
             // If character is AI, check for new target if character causing damage is present
-
+            characterBeingDamaged.characterBaseStateMachine.ChangeToTakeDamageState();
         }
 
         private void CalculateDamage()
@@ -89,51 +88,5 @@ namespace AF
             receiver.characterSoundManager.PlayDamageGrunt();
         }
 
-        private void PlayDirectionalBasedDamageAnimation()
-        {
-            if (receiver.health.IsDead())
-            {
-                return;
-            }
-
-            if (!receiver.damageReceiver.useDirectionalDamageAnimations)
-            {
-                return;
-            }
-
-            // Calculate if poise is broken
-            poiseIsBroken = true;
-
-            if (angleHitFrom >= 145 && angleHitFrom <= 180)
-            {
-                // Play Front Animation
-                damageAnimation = receiver.damageReceiver.hitFromFront.name;
-            }
-            else if (angleHitFrom <= -145 && angleHitFrom >= -180)
-            {
-                // Play Front Animation
-                damageAnimation = receiver.damageReceiver.hitFromFront.name;
-            }
-            else if (angleHitFrom >= -45 && angleHitFrom <= 45)
-            {
-                // Play Back Animation
-                damageAnimation = receiver.damageReceiver.hitFromBack.name;
-            }
-            else if (angleHitFrom >= -144 && angleHitFrom <= -45)
-            {
-                // Play Left Animation
-                damageAnimation = receiver.damageReceiver.hitFromLeft.name;
-            }
-            else if (angleHitFrom >= 45 && angleHitFrom <= 144)
-            {
-                // Play Right Animation
-                damageAnimation = receiver.damageReceiver.hitFromRight.name;
-            }
-
-            if (poiseIsBroken && !string.IsNullOrEmpty(damageAnimation))
-            {
-                receiver.PlayCrossFadeBusyAnimationWithRootMotion(damageAnimation, 0.2f);
-            }
-        }
     }
 }

@@ -234,7 +234,6 @@ MonoBehaviour:
   character: {fileID: 1759811369383153655}
   isTwoHanding: 0
   twoHandingMultiplier: 1.2
-  unarmedHeavyAttackBonus: 35
   isHeavyAttacking: 0
   heavyAttackMultiplier: 1.3
   isJumpAttacking: 0
@@ -4525,9 +4524,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 11
   frequency: 0.35
@@ -11584,9 +11587,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 24
   frequency: 0.733
@@ -12670,6 +12677,7 @@ MonoBehaviour:
   defaultState: {fileID: 11400000, guid: 73d1c7b364dbde64f90c5ecc4e1faa3d, type: 2}
   idleState: {fileID: 11400000, guid: 73d1c7b364dbde64f90c5ecc4e1faa3d, type: 2}
   pursueTargetState: {fileID: 11400000, guid: daf30e47ae549ff4198d260285225a2a, type: 2}
+  takeDamageState: {fileID: 11400000, guid: fa7e0f61452e19443a2fc51aeda69d4a, type: 2}
 --- !u!1 &1376650525953834824
 GameObject:
   m_ObjectHideFlags: 0
@@ -13939,9 +13947,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 2
   frequency: 0.5
@@ -19581,15 +19593,15 @@ MonoBehaviour:
   strengthBonusFromConsumable: 0
   dexterityBonusFromConsumable: 0
   intelligenceBonusFromConsumable: 0
-  fireDefenseBonus: 0
-  frostDefenseBonus: 0
-  lightningDefenseBonus: 0
-  magicDefenseBonus: 0
-  darkDefenseBonus: 0
-  waterDefenseBonus: 0
+  equipmentPhysicalDefenseBonus: 0
+  equipmentFireDefenseBonus: 0
+  equipmentFrostDefenseBonus: 0
+  equipmentLightningDefenseBonus: 0
+  equipmentMagicDefenseBonus: 0
+  equipmentDarkDefenseBonus: 0
+  equipmentWaterDefenseBonus: 0
   weightPenalty: 0
   equipmentPoise: 0
-  equipmentPhysicalDefense: 0
   ignoreWeaponRequirements: 0
   additionalCoinPercentage: 0
   parryPostureDamageBonus: 0
@@ -22181,9 +22193,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 15
   frequency: 0.35
@@ -35404,6 +35420,8 @@ Transform:
   - {fileID: 8699723855916890898}
   - {fileID: 6318209651482101018}
   - {fileID: 5409332314645059800}
+  - {fileID: 4700016453926838382}
+  - {fileID: 7704516446950710702}
   m_Father: {fileID: 6242450190264014007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3705549246472038351
@@ -36605,9 +36623,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 13
   frequency: 0.4
@@ -38298,7 +38320,7 @@ NavMeshAgent:
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -38327,6 +38349,7 @@ MonoBehaviour:
   isConfused: 0
   canMove: 1
   canRotate: 1
+  isTakingDamage: 0
   lockOnReference: {fileID: 826813144468769505}
   statusController: {fileID: 3490696110170032846}
   health: {fileID: 8818868876428911327}
@@ -38347,6 +38370,10 @@ MonoBehaviour:
   characterBaseInventory: {fileID: 5458522511936333649}
   syntyCharacterModelManager: {fileID: 5367183659880256516}
   characterBaseAppearance: {fileID: 877070252249097531}
+  characterBaseAvatar: {fileID: 0}
+  characterBaseDefenseManager: {fileID: 4216785718268101194}
+  characterBaseAttackManager: {fileID: 9099275497380788027}
+  characterBaseStateMachine: {fileID: 8170815007969967083}
   animatorSpeed: 1
   companionID: {fileID: 0}
   characterCombatController: {fileID: 8518529533467014141}
@@ -38645,11 +38672,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b55a9b3282586468c5077a091792fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useDirectionalDamageAnimations: 0
-  hitFromFront: {fileID: 0}
-  hitFromBack: {fileID: 0}
-  hitFromLeft: {fileID: 0}
-  hitFromRight: {fileID: 0}
+  useDirectionalDamageAnimations: 1
+  hitFromFront: {fileID: 11400000, guid: 79781d339521ad54e9af0828a7a6463d, type: 2}
+  hitFromBack: {fileID: 11400000, guid: 98bd4a0c0bd14024d8d152788d00513b, type: 2}
+  hitFromLeft: {fileID: 11400000, guid: ed81ff3b08d39d4429db70f452edf2ba, type: 2}
+  hitFromRight: {fileID: 11400000, guid: 7810f082527fbf74dbd3ebc60817c076, type: 2}
+  angleFromLastHit: -1
   character: {fileID: 1759811369383153655}
   pushForceAbsorption: 1
   canBeBackstabbed: 1
@@ -53565,9 +53593,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 9
   frequency: 0.6
@@ -57494,9 +57526,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 13
   frequency: 0.6
@@ -57600,6 +57636,91 @@ SkinnedMeshRenderer:
     m_Center: {x: -37.206707, y: 24.568352, z: 0.72242355}
     m_Extent: {x: 20.877388, y: 23.960777, z: 8.353977}
   m_DirtyAABB: 0
+--- !u!1 &6154488377766737340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7704516446950710702}
+  - component: {fileID: 9099275497380788027}
+  m_Layer: 22
+  m_Name: "\U0001F4AA Attack Manager"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7704516446950710702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154488377766737340}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1438186108084557261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9099275497380788027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154488377766737340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0103df3d3150aa144bdcffd26d26c8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 1759811369383153655}
+  currentRightWeaponDamage:
+    physical: 0
+    fire: 0
+    frost: 0
+    magic: 0
+    lightning: 0
+    darkness: 0
+    water: 0
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
+  currentLeftWeaponDamage:
+    physical: 0
+    fire: 0
+    frost: 0
+    magic: 0
+    lightning: 0
+    darkness: 0
+    water: 0
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
 --- !u!1 &6155146739327157142
 GameObject:
   m_ObjectHideFlags: 0
@@ -57870,9 +57991,13 @@ MonoBehaviour:
     pushForce: 0
     weaponAttackType: 0
     statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
-    damageType: 0
   targetHitReaction: {fileID: 0}
   maxCooldown: 2
   frequency: 0.5
@@ -68457,6 +68582,71 @@ SkinnedMeshRenderer:
     m_Center: {x: 28.338913, y: 3.5496616, z: -8.430326}
     m_Extent: {x: 18.669464, y: 8.96685, z: 15.35796}
   m_DirtyAABB: 0
+--- !u!1 &7142684040662479564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4700016453926838382}
+  - component: {fileID: 4216785718268101194}
+  m_Layer: 22
+  m_Name: "\U0001F6E1\uFE0F  Defense Manager"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4700016453926838382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142684040662479564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1438186108084557261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4216785718268101194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142684040662479564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49242997af84a8f4bb9bd3a0edad5f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagedAbsorbed:
+    physical: 0
+    fire: 0
+    frost: 0
+    magic: 0
+    lightning: 0
+    darkness: 0
+    water: 0
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
+  character: {fileID: 1759811369383153655}
 --- !u!1 &7152250399461421629
 GameObject:
   m_ObjectHideFlags: 0
@@ -69276,6 +69466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7559860682547393125}
   - component: {fileID: 76180757360602365}
+  - component: {fileID: 3782428676415894259}
   m_Layer: 22
   m_Name: "\U0001F456 Equipment Manager"
   m_TagString: Untagged
@@ -69444,6 +69635,22 @@ MonoBehaviour:
   currentConsumableIndex: 0
   currentSpellIndex: 0
   currentArrowIndex: 0
+--- !u!114 &3782428676415894259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203665425869060355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c46936529ec62448dc3e422ae67b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 1759811369383153655}
+  helmet: {fileID: 0}
+  equipHelmet: 0
+  clearHelmet: 0
 --- !u!1 &7205761002516163858
 GameObject:
   m_ObjectHideFlags: 0

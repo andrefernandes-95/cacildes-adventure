@@ -8,7 +8,6 @@ namespace AF
     public class Card : Consumable
     {
         [Header("Card Settings")]
-        public WeaponCategory weaponCategory;
         public int maximumCardsAllowedInInventory = 99;
 
         [Header("Damage Settings")]

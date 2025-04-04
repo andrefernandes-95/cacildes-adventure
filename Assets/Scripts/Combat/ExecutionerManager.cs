@@ -61,7 +61,7 @@ namespace AF
 
             playerManager.PlayBusyAnimationWithRootMotion(hashExecuting);
             target.executionManager.ReceiveExecution(
-                currentExecutedClip, executedTransformRef.position, executedTransformRef.rotation, playerManager.GetAttackDamage());
+                currentExecutedClip, executedTransformRef.position, executedTransformRef.rotation, playerManager.characterBaseAttackManager.GetAttackingWeaponDamage());
         }
 
 

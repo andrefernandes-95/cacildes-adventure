@@ -29,16 +29,9 @@ namespace AF
             public float amountToCancelPerSecond = 0.1f;
         }
 
-        [Header("Stats")]
-        public float physicalDefense;
+        [Header("Damage Absorption")]
+        public Damage damageAbsorbed = new();
 
-        [Header("Elemental")]
-        public float fireDefense;
-        public float frostDefense;
-        public float lightningDefense;
-        public float magicDefense = 0;
-        public float darkDefense = 0;
-        public float waterDefense = 0;
 
         [Header("Negative Status Resistances")]
         public StatusEffectResistance[] statusEffectResistances;

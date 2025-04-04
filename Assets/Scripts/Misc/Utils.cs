@@ -194,5 +194,25 @@ namespace AF
                 x => x.currentTarget != null
                 && x.characterManager.health.GetCurrentHealth() > 0);
         }
+
+        // Recursively searches for a child with the specified name
+        public static Transform FindChildByName(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (!child.gameObject.activeSelf)
+                {
+                    continue;
+                }
+
+                if (child.name.Equals(name, StringComparison.Ordinal))
+                    return child;
+
+                Transform found = FindChildByName(child, name); // Recursive search
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
     }
 }

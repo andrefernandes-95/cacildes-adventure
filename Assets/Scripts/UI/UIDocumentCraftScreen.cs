@@ -528,8 +528,8 @@ namespace AF
             root.Q<Label>("MagicAttack").style.display = DisplayStyle.None;
             root.Q<Label>("DarknessAttack").style.display = DisplayStyle.None;
 
-            Damage currentWeaponDamage = weapon.GetCurrentDamage(playerManager, weaponInstance.level);
-            Damage nextLevelWeaponDamage = weapon.GetCurrentDamage(playerManager, nextLevel);
+            Damage currentWeaponDamage = playerManager.characterBaseAttackManager.currentRightWeaponDamage;
+            Damage nextLevelWeaponDamage = weapon.GetDamageForLevel(weaponInstance.level);
 
             if (nextLevelWeaponDamage.physical > 0)
             {

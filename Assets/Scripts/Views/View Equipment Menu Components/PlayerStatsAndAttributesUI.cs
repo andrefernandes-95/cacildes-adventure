@@ -2,7 +2,6 @@
 namespace AF
 {
     using AF.Health;
-    using AF.Stats;
     using AF.StatusEffects;
     using UnityEngine;
     using UnityEngine.Localization.Settings;
@@ -12,10 +11,6 @@ namespace AF
     {
         [Header("Components")]
         public PlayerManager playerManager;
-        public StatsBonusController playerStatsBonusController;
-        public SyntyCharacterModelManager equipmentGraphicsHandler;
-        public AttackStatManager attackStatManager;
-        public DefenseStatManager defenseStatManager;
 
         [Header("UI Documents")]
         public UIDocument uIDocument;
@@ -54,10 +49,16 @@ namespace AF
 
             // TODO: Get the damage of both left and right weapons
 
-            Damage baseAttackDamage = attackStatManager.GetAttackDamage(null);
+            Damage baseAttackDamage = playerManager.characterBaseAttackManager.GetAttackingWeaponDamage();
             int baseAttack = baseAttackDamage.GetTotalDamage();
 
-            Damage itemAttackDamage = attackStatManager.GetAttackDamage(equipmentDatabase.GetCurrentRightWeapon());
+            Damage itemAttackDamage = new();
+
+            if (item is WeaponInstance weaponInstanceToEquip)
+            {
+                itemAttackDamage = playerManager.characterBaseAttackManager.CalculateDamageOutput(weaponInstanceToEquip.GetItem<Weapon>().damage);
+            }
+
             int itemAttack = itemAttackDamage.GetTotalDamage();
 
             // TODO: I think this code is wrong
@@ -76,7 +77,7 @@ namespace AF
             }
 
             // Physical and Elemental Defenses
-            int basePhysicalDefense = (int)defenseStatManager.GetDefenseAbsorption();
+            int basePhysicalDefense = playerManager.characterBaseDefenseManager.damagedAbsorbed.physical;
             var itemDefenses = GetItemDefenses(item);
 
             int basePoise = playerManager.characterPoise.GetMaxPoiseHits();
@@ -123,12 +124,12 @@ namespace AF
             SetAttackLabels(weapon, "WaterAttack", WeaponElementType.Water);
 
             SetStatLabel("PhysicalDefense", basePhysicalDefense, itemDefenses.physical);
-            SetStatLabel("FireDefense", (int)playerManager.defenseStatManager.GetFireDefense(), itemDefenses.fire);
-            SetStatLabel("FrostDefense", (int)playerManager.defenseStatManager.GetFrostDefense(), itemDefenses.frost);
-            SetStatLabel("LightningDefense", (int)playerManager.defenseStatManager.GetLightningDefense(), itemDefenses.lightning);
-            SetStatLabel("MagicDefense", (int)playerManager.defenseStatManager.GetMagicDefense(), itemDefenses.magic);
-            SetStatLabel("DarknessDefense", (int)playerManager.defenseStatManager.GetDarknessDefense(), itemDefenses.darkness);
-            SetStatLabel("WaterDefense", (int)playerManager.defenseStatManager.GetWaterDefense(), itemDefenses.water);
+            SetStatLabel("FireDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.fire, itemDefenses.fire);
+            SetStatLabel("FrostDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.frost, itemDefenses.frost);
+            SetStatLabel("LightningDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.lightning, itemDefenses.lightning);
+            SetStatLabel("MagicDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.magic, itemDefenses.magic);
+            SetStatLabel("DarknessDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.darkness, itemDefenses.darkness);
+            SetStatLabel("WaterDefense", (int)playerManager.characterBaseDefenseManager.damagedAbsorbed.water, itemDefenses.water);
 
             DrawStatusEffectLabel("Poison", poison, item);
             DrawStatusEffectLabel("Bleed", bleed, item);
@@ -300,10 +301,10 @@ namespace AF
             }
 
             int baseValue = EquipmentUtils.GetElementalAttackForCurrentWeapon(
-                currentEquippedWeapon, elementType, playerManager.attackStatManager, playerManager.characterBaseStats.GetReputation());
+                currentEquippedWeapon, elementType, playerManager.characterBaseAttackManager, playerManager.characterBaseStats.GetReputation());
 
             int itemValue = EquipmentUtils.GetElementalAttackForCurrentWeapon(
-                itemInstance, elementType, playerManager.attackStatManager, playerManager.characterBaseStats.GetReputation());
+                itemInstance, elementType, playerManager.characterBaseAttackManager, playerManager.characterBaseStats.GetReputation());
 
             SetStatLabel(labelName, baseValue, itemValue);
         }
@@ -313,13 +314,13 @@ namespace AF
             if (item is ArmorBaseInstance armorBase && !(item is AccessoryInstance acc && equipmentDatabase.IsAccessoryEquiped(acc)))
             {
                 return (
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.None, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Fire, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Frost, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Lightning, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Magic, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Darkness, defenseStatManager, equipmentDatabase),
-                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Water, defenseStatManager, equipmentDatabase)
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.None, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Fire, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Frost, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Lightning, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Magic, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Darkness, playerManager.characterBaseDefenseManager, equipmentDatabase),
+                    EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Water, playerManager.characterBaseDefenseManager, equipmentDatabase)
                 );
             }
             return (0, -1, -1, -1, -1, -1, -1);

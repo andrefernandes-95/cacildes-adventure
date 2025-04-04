@@ -20,7 +20,9 @@ namespace AF.Equipment
 
         [Header("Character Transform Refs")]
         [SerializeField] Transform rightWeaponHandler;
+        Transform defaultRightWeaponHandler;
         [SerializeField] Transform leftWeaponHandler;
+        Transform defaultLeftWeaponHandler;
 
         [Header("Components")]
         public CharacterBaseManager character;
@@ -35,6 +37,9 @@ namespace AF.Equipment
                 character.UpdateAttackAnimations(unarmedWeaponPrefab.rightLightAttacks.ToArray());
                 character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
             }
+
+            defaultRightWeaponHandler = rightWeaponHandler;
+            defaultLeftWeaponHandler = leftWeaponHandler;
         }
 
         public void ResetStates()
@@ -154,6 +159,87 @@ namespace AF.Equipment
                 equippedLeftWeaponInstance.gameObject.SetActive(false);
             }
         }
+
+
+        public void RestoreDefaultsForWeaponPivots()
+        {
+            if (equippedRightWeaponInstance != null)
+            {
+                rightWeaponHandler = defaultRightWeaponHandler;
+                equippedRightWeaponInstance.transform.SetParent(rightWeaponHandler);
+                equippedRightWeaponInstance.transform.localPosition = Vector3.zero;
+                equippedRightWeaponInstance.transform.localEulerAngles = Vector3.zero;
+            }
+            if (equippedLeftWeaponInstance != null)
+            {
+                leftWeaponHandler = defaultRightWeaponHandler;
+                equippedLeftWeaponInstance.transform.SetParent(leftWeaponHandler);
+                equippedLeftWeaponInstance.transform.localPosition = Vector3.zero;
+                equippedLeftWeaponInstance.transform.localEulerAngles = Vector3.zero;
+            }
+        }
+
+        public void AssignWeaponPivotsToAvatar(CharacterAvatar avatar, GameObject avatarGameObject)
+        {
+            if (avatar == null || avatarGameObject == null)
+            {
+                Debug.LogError("AssignWeaponPivotsToAvatar: Invalid avatar or avatarGameObject.");
+                return;
+            }
+
+            // Assign right-hand weapon pivot
+            rightWeaponHandler = CreateWeaponHandler(
+                avatarGameObject,
+                avatar.rightWeaponBoneName,
+                avatar.rightHandWeaponPivot,
+                avatar.rightHandWeaponRotation,
+                equippedRightWeaponInstance
+            );
+
+            // Assign left-hand weapon pivot
+            leftWeaponHandler = CreateWeaponHandler(
+                avatarGameObject,
+                avatar.leftWeaponBoneName,
+                avatar.leftHandWeaponPivot,
+                avatar.leftHandWeaponRotation,
+                equippedLeftWeaponInstance
+            );
+        }
+
+        private Transform CreateWeaponHandler(GameObject avatarGameObject, string boneName, Vector3 position, Vector3 rotation, WorldWeapon equippedWeapon)
+        {
+            if (string.IsNullOrEmpty(boneName))
+            {
+                Debug.LogError("CreateWeaponHandler: Bone name is null or empty.");
+                return null;
+            }
+
+            Transform boneTransform = Utils.FindChildByName(avatarGameObject.transform, boneName);
+            if (boneTransform == null)
+            {
+                Debug.LogError($"CreateWeaponHandler: Cannot find bone '{boneName}' in avatar.");
+                return null;
+            }
+
+            // Create a new empty game object as the weapon handler
+            GameObject weaponHandlerGO = new GameObject($"{boneName}_WeaponHandler");
+            Transform weaponHandlerTransform = weaponHandlerGO.transform;
+
+            weaponHandlerTransform.SetParent(boneTransform, worldPositionStays: false);
+            weaponHandlerTransform.localPosition = position;
+            weaponHandlerTransform.localEulerAngles = rotation;
+
+            // Attach the equipped weapon if available
+            if (equippedWeapon != null)
+            {
+                equippedWeapon.transform.SetParent(weaponHandlerTransform, worldPositionStays: false);
+                equippedWeapon.transform.localPosition = Vector3.zero;
+                equippedWeapon.transform.localEulerAngles = Vector3.zero;
+            }
+
+            return weaponHandlerTransform;
+        }
+
 
         // TODO: Handle Later
         /*

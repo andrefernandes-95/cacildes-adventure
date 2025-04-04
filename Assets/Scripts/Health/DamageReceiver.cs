@@ -4,7 +4,6 @@ using AF.Health;
 using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
 
 namespace AF
 {
@@ -19,6 +18,9 @@ namespace AF
         public AnimationEnum hitFromBack;
         public AnimationEnum hitFromLeft;
         public AnimationEnum hitFromRight;
+
+        [Header("Directional Damage")]
+        public float angleFromLastHit = -1f;
 
         [Header("Character")]
         public CharacterBaseManager character;
@@ -144,7 +146,7 @@ namespace AF
                 return;
             }
 
-            Damage incomingDamage = damageOwner.GetAttackDamage();
+            Damage incomingDamage = damageOwner.characterBaseAttackManager.GetAttackingWeaponDamage();
             if (incomingDamage == null)
             {
                 if (!GameAnalytics.Initialized)
@@ -390,14 +392,6 @@ namespace AF
                     {
                         combatNotificationsController.ShowPostureBroken(damage.physical);
                     }
-                    else if (damage.damageType == DamageType.COUNTER_ATTACK)
-                    {
-                        combatNotificationsController.ShowGuardCounter(damage.physical);
-                    }
-                    else if (damage.damageType == DamageType.ENRAGED)
-                    {
-                        combatNotificationsController.ShowRageCounter(damage.physical);
-                    }
                     else if (damageFromBackstab)
                     {
                         combatNotificationsController.ShowBackstab(damage.physical);
@@ -513,6 +507,49 @@ namespace AF
                     target.PlayBusyAnimationWithRootMotion(aiCharacter.characterCombatController.currentCombatAction.targetHitReaction.name);
                 }
             }
+        }
+
+        public string GetDirectionalDamagedAnimation()
+        {
+            if (character.health.IsDead())
+            {
+                return "";
+            }
+
+            if (!useDirectionalDamageAnimations)
+            {
+                return "";
+            }
+
+            string damageAnimation = "";
+
+            if (angleFromLastHit >= 145 && angleFromLastHit <= 180)
+            {
+                // Play Front Animation
+                damageAnimation = hitFromFront.name;
+            }
+            else if (angleFromLastHit <= -145 && angleFromLastHit >= -180)
+            {
+                // Play Front Animation
+                damageAnimation = hitFromFront.name;
+            }
+            else if (angleFromLastHit >= -45 && angleFromLastHit <= 45)
+            {
+                // Play Back Animation
+                damageAnimation = hitFromBack.name;
+            }
+            else if (angleFromLastHit >= -144 && angleFromLastHit <= -45)
+            {
+                // Play Left Animation
+                damageAnimation = hitFromLeft.name;
+            }
+            else if (angleFromLastHit >= 45 && angleFromLastHit <= 144)
+            {
+                // Play Right Animation
+                damageAnimation = hitFromRight.name;
+            }
+
+            return damageAnimation;
         }
 
     }

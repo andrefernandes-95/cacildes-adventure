@@ -55,7 +55,6 @@ namespace AF
                 pushForce = incomingDamage.pushForce,
                 weaponAttackType = incomingDamage.weaponAttackType,
                 statusEffects = incomingDamage.statusEffects,
-                damageType = incomingDamage.damageType
             };
 
             filteredDamage.physical = (int)((filteredDamage.physical

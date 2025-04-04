@@ -16,12 +16,12 @@ namespace AF
 
         public override void EnableCollider()
         {
-            unarmedDamageCollider.enabled = true;
+            unarmedDamageCollider.EnableCollider();
         }
 
         public override void DisableCollider()
         {
-            unarmedDamageCollider.enabled = false;
+            unarmedDamageCollider.DisableCollider();
         }
 
     }

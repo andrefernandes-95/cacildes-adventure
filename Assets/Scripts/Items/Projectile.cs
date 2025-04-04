@@ -126,15 +126,18 @@ namespace AF
 
             if (shooter is PlayerManager playerManager)
             {
+                // TODO: Improve this logic
+
+                /*
                 if (scaleWithIntelligence)
                 {
                     damage.ScaleSpell(
-                        playerManager.attackStatManager, playerManager.attackStatManager.equipmentDatabase.GetCurrentRightWeapon(), 0, false, false, false);
+                        playerManager.characterBaseAttackManager, playerManager.characterBaseAttackManager.equipmentDatabase.GetCurrentRightWeapon(), 0, false, false, false);
                 }
-                else if (playerManager.attackStatManager.HasBowEquipped())
+                else if (playerManager.characterBaseAttackManager.HasBowEquipped())
                 {
-                    damage.ScaleProjectile(playerManager.attackStatManager, playerManager.attackStatManager.equipmentDatabase.GetCurrentRightWeapon());
-                }
+                    damage.ScaleProjectile(playerManager.characterBaseAttackManager, playerManager.characterBaseAttackManager.equipmentDatabase.GetCurrentRightWeapon());
+                }*/
             }
             else if (shooter is CharacterManager enemy)
             {

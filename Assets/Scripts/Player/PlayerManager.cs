@@ -24,8 +24,6 @@ namespace AF
         public CombatNotificationsController combatNotificationsController;
         public StaminaStatManager staminaStatManager;
         public ManaManager manaManager;
-        public DefenseStatManager defenseStatManager;
-        public AttackStatManager attackStatManager;
         public PlayerInventory playerInventory;
         public FavoriteItemsManager favoriteItemsManager;
         public PlayerShooter playerShootingManager;
@@ -62,9 +60,9 @@ namespace AF
         bool _canUseWeaponIK = true;
 
 
-        private void Awake()
+        protected override void Awake()
         {
-            SetupAnimRefs();
+            base.Awake();
         }
 
         void Start()
@@ -80,17 +78,6 @@ namespace AF
             });
         }
 
-        void SetupAnimRefs()
-        {
-            if (defaultAnimatorController == null)
-            {
-                defaultAnimatorController = animator.runtimeAnimatorController;
-            }
-            if (animatorOverrideController == null)
-            {
-                animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-            }
-        }
 
         public override void ResetStates()
         {
@@ -130,25 +117,7 @@ namespace AF
 
             playerBlockController.ResetStates();
 
-            attackStatManager.ResetStates();
-        }
-
-        public override Damage GetAttackDamage()
-        {
-            // TODO: Change to Attacking Weapon
-            Damage attackDamage = attackStatManager.GetAttackDamage(combatManager.GetAttackingWeapon());
-
-            if (playerBlockController.isCounterAttacking)
-            {
-                attackDamage.damageType = DamageType.COUNTER_ATTACK;
-            }
-
-            if (playerCardManager.HasCard() && playerCardManager.currentCard.useDamage)
-            {
-                return playerCardManager.CombineDamageWithCard(attackDamage);
-            }
-
-            return attackDamage;
+            characterBaseAttackManager.ResetStates();
         }
 
         private void OnTriggerStay(Collider other)

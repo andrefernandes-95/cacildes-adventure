@@ -66,6 +66,7 @@ namespace AF.Animations
 
         private void OnAnimatorMove()
         {
+            /*
             if (ignoreAnimatorSpeed || characterManager.isCuttingDistanceToTarget)
             {
                 return;
@@ -84,7 +85,7 @@ namespace AF.Animations
             else
             {
                 characterManager.animator.SetFloat(speedParameter, Mathf.Clamp01(characterManager.agent.speed / characterManager.chaseSpeed));
-            }
+            }*/
         }
 
         public void OnLeftFootstep()

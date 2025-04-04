@@ -718,29 +718,31 @@ namespace AF.UI.EquipmentMenu
         {
             bool shouldReturn = false;
             int value = 0;
+
+            // TODO: Add support for right / left weapons
             if (item is WeaponInstance weapon)
             {
-                value = playerManager.attackStatManager.CompareWeapon(weapon);
+                value = playerManager.characterBaseAttackManager.CompareRightWeapon(weapon);
                 shouldReturn = true;
             }
             else if (item is HelmetInstance helmet)
             {
-                value = playerManager.defenseStatManager.CompareHelmet(helmet);
+                value = playerManager.characterBaseDefenseManager.CompareHelmet(helmet);
                 shouldReturn = true;
             }
             else if (item is ArmorInstance armor)
             {
-                value = playerManager.defenseStatManager.CompareArmor(armor);
+                value = playerManager.characterBaseDefenseManager.CompareArmor(armor);
                 shouldReturn = true;
             }
             else if (item is GauntletInstance gauntlet)
             {
-                value = playerManager.defenseStatManager.CompareGauntlet(gauntlet);
+                value = playerManager.characterBaseDefenseManager.CompareGauntlets(gauntlet);
                 shouldReturn = true;
             }
             else if (item is LegwearInstance legwear)
             {
-                value = playerManager.defenseStatManager.CompareLegwear(legwear);
+                value = playerManager.characterBaseDefenseManager.CompareLegwears(legwear);
                 shouldReturn = true;
             }
 

@@ -2,7 +2,7 @@ namespace AF.StateMachine
 {
     using UnityEngine;
 
-    public class PlayerStateMachine : MonoBehaviour
+    public class PlayerStateMachine : CharacterBaseStateMachine
     {
         [SerializeField] PlayerManager playerManager;
 
@@ -13,6 +13,7 @@ namespace AF.StateMachine
         public PlayerRollState playerRollState;
         public PlayerBackstepState playerBackstepState;
         public PlayerCombatState playerCombatState;
+        public PlayerTakeDamageState playerTakeDamageState;
 
         [Header("Debug")]
         [SerializeField] protected AIState currentState;
@@ -30,6 +31,7 @@ namespace AF.StateMachine
             playerRollState = Instantiate(playerRollState);
             playerBackstepState = Instantiate(playerBackstepState);
             playerCombatState = Instantiate(playerCombatState);
+            playerTakeDamageState = Instantiate(playerTakeDamageState);
 
             // Allow combos
             playerManager.playerAnimationEventListener.onHitboxesClosed.AddListener(() => playerCombatState.CheckForCombos(playerManager));
@@ -47,6 +49,11 @@ namespace AF.StateMachine
             {
                 currentState = nextState;
             }
+        }
+
+        public override void ChangeToTakeDamageState()
+        {
+            currentState = playerTakeDamageState;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AF
 
         public CharacterBaseManager character;
 
-        void Awake()
+        public void Initialize()
         {
             CacheCharacterParts();
             InitializeDefaultBodyParts();
