@@ -1388,7 +1388,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742515730243258021}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.053096216, y: -0.7899911, z: 0.6068921, w: 0.06911531}
+  m_LocalRotation: {x: 0.053057093, y: -0.7903344, z: 0.6064449, w: 0.069145344}
   m_LocalPosition: {x: 0.7648863, y: 3, z: 0.953166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1405,7 +1405,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 0.78206706, g: 0.78206706, b: 0.78206706, a: 1}
+  m_Color: {r: 0.7817168, g: 0.7817168, b: 0.7817168, a: 1}
   m_Intensity: 0.01
   m_Range: 10
   m_SpotAngle: 30
@@ -4000,8 +4000,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 4363140735506542586}
-  scalingTable:
-    _serializedList: []
   currentRightWeaponDamage:
     physical: 0
     fire: 0
@@ -13097,7 +13095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &975956352010862987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19239,6 +19237,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  gUIManager: {fileID: 11400000, guid: 47b8ceaf7b0ea2f4489a45d96da76055, type: 2}
   analogMovement: 0
   cursorInputForLook: 1
   onNextMenu:
@@ -19612,7 +19611,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7586393476769456676}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -21484,6 +21483,7 @@ MonoBehaviour:
   isConfused: 0
   canMove: 1
   canRotate: 1
+  isTakingDamage: 0
   lockOnReference: {fileID: 396033348521637727}
   statusController: {fileID: 2557134072425247624}
   health: {fileID: 2254563081667588534}
@@ -22026,7 +22026,7 @@ Transform:
   m_GameObject: {fileID: 8619754588792639567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.75, y: 8.87, z: -4.4300003}
+  m_LocalPosition: {x: 8.589999, y: 2.1599998, z: 8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22065,7 +22065,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 70
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

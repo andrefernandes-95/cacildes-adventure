@@ -71,6 +71,38 @@ namespace AF
         #endregion
 
 
+        #region Getters By Slot Index
+        public override WeaponInstance GetRightWeaponInSlot(int slot)
+        {
+            return equipmentDatabase.rightWeapons[slot];
+        }
+
+        public override WeaponInstance GetLeftWeaponInSlot(int slot)
+        {
+            return equipmentDatabase.leftWeapons[slot];
+        }
+
+        public override SpellInstance GetSpellInSlot(int slot)
+        {
+            return equipmentDatabase.spells[slot];
+        }
+
+        public override ArrowInstance GetArrowInSlot(int slot)
+        {
+            return equipmentDatabase.arrows[slot];
+        }
+
+        public override AccessoryInstance GetAccessoryInSlot(int slot)
+        {
+            return equipmentDatabase.accessories[slot];
+        }
+
+        public override ConsumableInstance GetConsumableInSlot(int slot)
+        {
+            return equipmentDatabase.consumables[slot];
+        }
+        #endregion
+
         #region Equipment Setters
 
         public override void SetHelmet(HelmetInstance helmetInstance)

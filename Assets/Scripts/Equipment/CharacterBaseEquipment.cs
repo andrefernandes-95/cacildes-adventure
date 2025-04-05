@@ -109,15 +109,26 @@ namespace AF
 
         public abstract WeaponInstance GetRightHandWeapon();
         public abstract WeaponInstance GetLeftHandWeapon();
+        public abstract WeaponInstance GetRightWeaponInSlot(int slot);
+        public abstract WeaponInstance GetLeftWeaponInSlot(int slot);
+
         public abstract List<ShieldInstance> GetShieldInstances();
         public abstract SpellInstance GetSpellInstance();
+        public abstract SpellInstance GetSpellInSlot(int slot);
+
         public abstract ArrowInstance GetArrowInstance();
+        public abstract ArrowInstance GetArrowInSlot(int slot);
+
         public abstract HelmetInstance GetHelmetInstance();
         public abstract ArmorInstance GetArmorInstance();
         public abstract GauntletInstance GetGauntletInstance();
         public abstract LegwearInstance GetLegwearInstance();
+
         public abstract List<AccessoryInstance> GetAccessoryInstances();
+        public abstract AccessoryInstance GetAccessoryInSlot(int slot);
+
         public abstract ConsumableInstance GetConsumableInstance();
+        public abstract ConsumableInstance GetConsumableInSlot(int slot);
 
         public abstract void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex);
         public abstract void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex);

@@ -16,7 +16,8 @@ namespace AF.StateMachine
         public AIIdleState idleState;
         public AIPursueTargetState pursueTargetState;
         public AITakeDamageState takeDamageState;
-
+        public AIJumpState jumpState;
+        public AIFallState fallState;
 
         private void Awake()
         {
@@ -25,6 +26,8 @@ namespace AF.StateMachine
             idleState = Instantiate(idleState);
             pursueTargetState = Instantiate(pursueTargetState);
             takeDamageState = Instantiate(takeDamageState);
+            jumpState = Instantiate(jumpState);
+            fallState = Instantiate(fallState);
         }
 
         void Update()

@@ -38,7 +38,6 @@ namespace AF
         public float patrolSpeed = 2f;
         public float chaseSpeed = 4.5f;
         public float cutDistanceToTargetSpeed = 12f;
-        public float rotationSpeed = 6f;
         [HideInInspector] public bool isCuttingDistanceToTarget = false;
 
         [Header("Settings")]

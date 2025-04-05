@@ -325,7 +325,7 @@ namespace AF.Animations
 
         public void ApplyJumpVelocity()
         {
-
+            characterManager.characterGravity.Jump();
         }
 
         public void EnableCanMove()

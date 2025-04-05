@@ -12678,6 +12678,8 @@ MonoBehaviour:
   idleState: {fileID: 11400000, guid: 73d1c7b364dbde64f90c5ecc4e1faa3d, type: 2}
   pursueTargetState: {fileID: 11400000, guid: daf30e47ae549ff4198d260285225a2a, type: 2}
   takeDamageState: {fileID: 11400000, guid: fa7e0f61452e19443a2fc51aeda69d4a, type: 2}
+  jumpState: {fileID: 11400000, guid: 685b39e5ba2a8b1499fa39617c8bb93c, type: 2}
+  fallState: {fileID: 11400000, guid: 781282acf8508b747932d0dddebddb7f, type: 2}
 --- !u!1 &1376650525953834824
 GameObject:
   m_ObjectHideFlags: 0
@@ -38350,6 +38352,7 @@ MonoBehaviour:
   canMove: 1
   canRotate: 1
   isTakingDamage: 0
+  rotationSpeed: 6
   lockOnReference: {fileID: 826813144468769505}
   statusController: {fileID: 3490696110170032846}
   health: {fileID: 8818868876428911327}
@@ -38388,7 +38391,6 @@ MonoBehaviour:
   patrolSpeed: 2
   chaseSpeed: 4.5
   cutDistanceToTargetSpeed: 12
-  rotationSpeed: 6
   isCuttingDistanceToTarget: 0
   canRevive: 1
   shouldReturnToInitialPositionOnRevive: 1

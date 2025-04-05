@@ -33,6 +33,9 @@ namespace AF
         public bool canRotate = true;
         public bool isTakingDamage = false;
 
+        [Header("Settings")]
+        public float rotationSpeed = 6f;
+
         [Header("Transform References")]
         public Transform lockOnReference; // Player can have a lock on to make calculations easier for line casts, or future multiplayer
 
@@ -271,5 +274,12 @@ namespace AF
             canRotate = false;
         }
 
+        public void RotateTowards(Transform target)
+        {
+
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0;
+            transform.transform.rotation = Quaternion.Slerp(transform.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
+        }
     }
 }

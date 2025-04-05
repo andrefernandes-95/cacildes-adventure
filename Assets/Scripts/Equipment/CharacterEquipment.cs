@@ -114,6 +114,40 @@ namespace AF
         {
             rightWeapons[slotIndex].Clear();
         }
+
         #endregion
+
+        #region Getters By Slot Index
+        public override WeaponInstance GetRightWeaponInSlot(int slot)
+        {
+            return rightWeapons[slot];
+        }
+
+        public override WeaponInstance GetLeftWeaponInSlot(int slot)
+        {
+            return leftWeapons[slot];
+        }
+
+        public override SpellInstance GetSpellInSlot(int slot)
+        {
+            return spells[slot];
+        }
+
+        public override ArrowInstance GetArrowInSlot(int slot)
+        {
+            return arrows[slot];
+        }
+
+        public override AccessoryInstance GetAccessoryInSlot(int slot)
+        {
+            return accessories[slot];
+        }
+
+        public override ConsumableInstance GetConsumableInSlot(int slot)
+        {
+            return consumables[slot];
+        }
+        #endregion
+
     }
 }
