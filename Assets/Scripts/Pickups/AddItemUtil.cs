@@ -54,11 +54,11 @@ namespace AF.Pickups
 
                 if (item.Key is Weapon weapon)
                 {
-                    GetPlayerInventory().AddWeapon(weapon, GetPlayerInventory().inventoryDatabase.ownedItems);
+                    GetPlayerInventory().AddWeapon(weapon);
                 }
                 else if (item.Key is Helmet helmet)
                 {
-                    GetPlayerInventory().AddHelmet(helmet, GetPlayerInventory().inventoryDatabase.ownedItems);
+                    GetPlayerInventory().AddHelmet(helmet);
                 }
 
                 //GetPlayerInventory().AddItem(item.Key, item.Value.amount);

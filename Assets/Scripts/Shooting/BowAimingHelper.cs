@@ -8,7 +8,7 @@ namespace AF
     public class BowAimingHelper : MonoBehaviour
     {
         public Vector3 crossBowPosition;
-        public EquipmentDatabase equipmentDatabase;
+        public CharacterBaseManager character;
 
         Vector3 originalPosition;
 
@@ -23,7 +23,7 @@ namespace AF
 
         void Evaluate()
         {
-            if (equipmentDatabase.GetCurrentRightWeapon().Exists() && equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().isCrossbow)
+            if (character.characterBaseEquipment.GetRightHandWeapon().Exists() && character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().isCrossbow)
             {
                 transform.localPosition = crossBowPosition;
             }

@@ -81,13 +81,13 @@ namespace AF
             var itemDefenses = GetItemDefenses(item);
 
             int basePoise = playerManager.characterPoise.GetMaxPoiseHits();
-            int itemPoise = EquipmentUtils.GetPoiseChangeFromItem(basePoise, equipmentDatabase, item);
+            int itemPoise = EquipmentUtils.GetPoiseChangeFromItem(basePoise, playerManager.characterBaseEquipment, item);
 
             int basePosture = playerManager.characterPosture.GetMaxPostureDamage();
-            int itemPosture = EquipmentUtils.GetPostureChangeFromItem(basePosture, equipmentDatabase, item);
+            int itemPosture = EquipmentUtils.GetPostureChangeFromItem(basePosture, playerManager.characterBaseEquipment, item);
 
             float baseEquipLoad = playerManager.statsBonusController.weightPenalty;
-            float itemEquipLoad = EquipmentUtils.GetEquipLoadFromItem(item, baseEquipLoad, equipmentDatabase);
+            float itemEquipLoad = EquipmentUtils.GetEquipLoadFromItem(item, baseEquipLoad, playerManager.characterBaseEquipment);
 
             var playerBaseStats = GetPlayerBaseStats();
             var itemBonusStats = GetItemBonusStats(item);
@@ -276,12 +276,12 @@ namespace AF
             if (item is ArmorBaseInstance armor)
             {
                 return (
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.VITALITY, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.ENDURANCE, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.STRENGTH, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.DEXTERITY, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.INTELLIGENCE, playerManager, equipmentDatabase),
-                    EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.REPUTATION, playerManager, equipmentDatabase),
+                    0,//EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.VITALITY, playerManager, equipmentDatabase),
+                    0,//EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.ENDURANCE, playerManager, equipmentDatabase),
+                    0,////EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.STRENGTH, playerManager, equipmentDatabase),
+                    0,//EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.DEXTERITY, playerManager, equipmentDatabase),
+                    0,//EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.INTELLIGENCE, playerManager, equipmentDatabase),
+                    0,//EquipmentUtils.GetAttributeFromEquipment(armor, EquipmentUtils.AttributeType.REPUTATION, playerManager, equipmentDatabase),
                     EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.HEALTH_BONUS, playerManager, equipmentDatabase),
                     EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.STAMINA_BONUS, playerManager, equipmentDatabase),
                     EquipmentUtils.GetAttributeFromAccessory(armor as AccessoryInstance, EquipmentUtils.AccessoryAttributeType.MANA_BONUS, playerManager, equipmentDatabase)
@@ -295,9 +295,9 @@ namespace AF
             // TODO: Do this for both hands
             WeaponInstance currentEquippedWeapon = null;
 
-            if (equipmentDatabase.GetCurrentRightWeapon().Exists())
+            if (playerManager.characterBaseEquipment.GetRightHandWeapon().Exists())
             {
-                currentEquippedWeapon = equipmentDatabase.GetCurrentRightWeapon();
+                currentEquippedWeapon = playerManager.characterBaseEquipment.GetRightHandWeapon();
             }
 
             int baseValue = EquipmentUtils.GetElementalAttackForCurrentWeapon(
@@ -311,6 +311,7 @@ namespace AF
 
         private (int physical, int fire, int frost, int lightning, int magic, int darkness, int water) GetItemDefenses(ItemInstance item)
         {
+            /*
             if (item is ArmorBaseInstance armorBase && !(item is AccessoryInstance acc && equipmentDatabase.IsAccessoryEquiped(acc)))
             {
                 return (
@@ -322,7 +323,7 @@ namespace AF
                     EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Darkness, playerManager.characterBaseDefenseManager, equipmentDatabase),
                     EquipmentUtils.GetElementalDefenseFromItem(armorBase, WeaponElementType.Water, playerManager.characterBaseDefenseManager, equipmentDatabase)
                 );
-            }
+            }*/
             return (0, -1, -1, -1, -1, -1, -1);
         }
     }

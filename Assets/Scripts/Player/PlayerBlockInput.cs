@@ -109,6 +109,8 @@ namespace AF
 
         bool CanBlock()
         {
+            // TODO: Handle this
+            /*
             if (equipmentDatabase.GetCurrentLeftWeapon() == null)
             {
                 return false;
@@ -122,7 +124,7 @@ namespace AF
             if (equipmentDatabase.IsStaffEquipped())
             {
                 return false;
-            }
+            }*/
 
             if (playerManager.IsBusy())
             {

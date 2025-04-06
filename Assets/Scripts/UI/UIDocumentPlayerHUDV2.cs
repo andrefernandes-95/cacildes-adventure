@@ -372,66 +372,67 @@ namespace AF
             rightGamepad.style.display = Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
             downGamepad.style.display = Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
 
-            useGamepad.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
-            useXbox.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
-            useKeyboard.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current == null ? DisplayStyle.Flex : DisplayStyle.None;
+            /*            useGamepad.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
+                        useXbox.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current != null ? DisplayStyle.Flex : DisplayStyle.None;
+                        useKeyboard.style.display = equipmentDatabase.GetCurrentConsumable() != null && Gamepad.current == null ? DisplayStyle.Flex : DisplayStyle.None;
 
-            if (equipmentDatabase.IsBowEquipped())
-            {
-                arrowsLabel.text = equipmentDatabase.GetCurrentArrow().Exists()
-                    ? equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().GetName() + " (" + inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>()) + ")"
-                    : "";
+                        if (equipmentDatabase.IsBowEquipped())
+                        {
+                            arrowsLabel.text = equipmentDatabase.GetCurrentArrow().Exists()
+                                ? equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().GetName() + " (" + inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>()) + ")"
+                                : "";
 
-                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentArrow().Exists()
-                    ? new StyleBackground(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().sprite)
-                    : new StyleBackground(unequippedArrowSlot);
-            }
-            else
-            {
-                spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentSpell().Exists()
-                    ? new StyleBackground(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().sprite)
-                    : new StyleBackground(unequippedSpellSlot);
-            }
+                            spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentArrow().Exists()
+                                ? new StyleBackground(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().sprite)
+                                : new StyleBackground(unequippedArrowSlot);
+                        }
+                        else
+                        {
+                            spellSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentSpell().Exists()
+                                ? new StyleBackground(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().sprite)
+                                : new StyleBackground(unequippedSpellSlot);
+                        }
 
-            shieldSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentLeftWeapon().Exists()
-                ? new StyleBackground(equipmentDatabase.GetCurrentLeftWeapon().GetItem<Weapon>().sprite)
-                : new StyleBackground(unequippedShieldSlot);
 
-            shieldBlockedIcon.style.display = equipmentDatabase.IsBowEquipped() || equipmentDatabase.IsStaffEquipped()
-                ? DisplayStyle.Flex
-                : DisplayStyle.None;
+                        shieldSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentLeftWeapon().Exists()
+                            ? new StyleBackground(equipmentDatabase.GetCurrentLeftWeapon().GetItem<Weapon>().sprite)
+                            : new StyleBackground(unequippedShieldSlot);
 
-            weaponSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentRightWeapon().Exists()
-                ? new StyleBackground(equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().sprite)
-                : new StyleBackground(unequippedWeaponSlot);
+                        shieldBlockedIcon.style.display = equipmentDatabase.IsBowEquipped() || equipmentDatabase.IsStaffEquipped()
+                            ? DisplayStyle.Flex
+                            : DisplayStyle.None;
 
-            quickItemName.text = equipmentDatabase.GetCurrentConsumable().Exists()
-                ? equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().GetName() + $" ({inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>())})"
-                : "";
+                        weaponSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentRightWeapon().Exists()
+                            ? new StyleBackground(equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().sprite)
+                            : new StyleBackground(unequippedWeaponSlot);
 
-            if (equipmentDatabase.GetCurrentConsumable() is Card)
-            {
-                consumableSlotContainer.style.height = 55;
-                consumableSlotContainer.style.unityBackgroundScaleMode = ScaleMode.ScaleToFit;
-                consumableSlotContainer.style.borderTopWidth = 0;
-                consumableSlotContainer.style.borderBottomWidth = 0;
-                consumableSlotContainer.style.borderLeftWidth = 0;
-                consumableSlotContainer.style.borderRightWidth = 0;
+                        quickItemName.text = equipmentDatabase.GetCurrentConsumable().Exists()
+                            ? equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().GetName() + $" ({inventoryDatabase.GetItemAmount(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>())})"
+                            : "";
 
-            }
-            else
-            {
-                consumableSlotContainer.style.unityBackgroundScaleMode = ScaleMode.ScaleAndCrop;
-                consumableSlotContainer.style.height = 45;
-                consumableSlotContainer.style.borderTopWidth = new StyleFloat(1);
-                consumableSlotContainer.style.borderBottomWidth = new StyleFloat(1);
-                consumableSlotContainer.style.borderLeftWidth = new StyleFloat(1);
-                consumableSlotContainer.style.borderRightWidth = new StyleFloat(1);
-            }
+                        if (equipmentDatabase.GetCurrentConsumable() is Card)
+                        {
+                            consumableSlotContainer.style.height = 55;
+                            consumableSlotContainer.style.unityBackgroundScaleMode = ScaleMode.ScaleToFit;
+                            consumableSlotContainer.style.borderTopWidth = 0;
+                            consumableSlotContainer.style.borderBottomWidth = 0;
+                            consumableSlotContainer.style.borderLeftWidth = 0;
+                            consumableSlotContainer.style.borderRightWidth = 0;
 
-            consumableSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentConsumable().Exists()
-                ? new StyleBackground(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().sprite)
-                : new StyleBackground(unequippedConsumableSlot);
+                        }
+                        else
+                        {
+                            consumableSlotContainer.style.unityBackgroundScaleMode = ScaleMode.ScaleAndCrop;
+                            consumableSlotContainer.style.height = 45;
+                            consumableSlotContainer.style.borderTopWidth = new StyleFloat(1);
+                            consumableSlotContainer.style.borderBottomWidth = new StyleFloat(1);
+                            consumableSlotContainer.style.borderLeftWidth = new StyleFloat(1);
+                            consumableSlotContainer.style.borderRightWidth = new StyleFloat(1);
+                        }
+
+                        consumableSlotContainer.style.backgroundImage = equipmentDatabase.GetCurrentConsumable().Exists()
+                            ? new StyleBackground(equipmentDatabase.GetCurrentConsumable().GetItem<Consumable>().sprite)
+                            : new StyleBackground(unequippedConsumableSlot);*/
         }
 
         public void OnSwitchWeapon()

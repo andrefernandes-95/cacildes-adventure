@@ -18,7 +18,7 @@ namespace AF
         public CharacterManager characterManager;
 
         [Header("Components")]
-        public EquipmentDatabase equipmentDatabase;
+        public PlayerManager playerManager;
 
         public UnityEvent onRevival;
         public UnityEvent onStoppingRevival;
@@ -36,7 +36,18 @@ namespace AF
 
         public void OnEnable()
         {
-            WeaponInstance playerWeapon = equipmentDatabase.GetCurrentRightWeapon();
+            // TODO Handle this code later
+            if (playerManager == null)
+            {
+                playerManager = FindAnyObjectByType<PlayerManager>(FindObjectsInactive.Include);
+            }
+
+            if (playerManager == null)
+            {
+                return;
+            }
+
+            WeaponInstance playerWeapon = playerManager.characterBaseEquipment.GetRightHandWeapon();
 
             if (playerWeapon.Exists() && playerWeapon.GetItem<Weapon>().isHolyWeapon)
             {

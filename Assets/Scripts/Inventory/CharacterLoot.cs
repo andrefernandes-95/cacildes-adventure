@@ -80,13 +80,13 @@ namespace AF
 
             foreach (var dropCurrency in lootTable)
             {
-                if (dropCurrency.Value.ignoreIfPlayerOwns && playerManager.playerInventory.inventoryDatabase.HasItem(dropCurrency.Key))
+                if (dropCurrency.Value.ignoreIfPlayerOwns && playerManager.playerInventory.HasItem(dropCurrency.Key))
                 {
                     continue;
                 }
 
                 if (dropCurrency.Key is Card card
-                    && playerManager.playerInventory.inventoryDatabase.GetItemAmount(dropCurrency.Key) >= card.maximumCardsAllowedInInventory)
+                    && playerManager.playerInventory.GetItemQuantity(dropCurrency.Key) >= card.maximumCardsAllowedInInventory)
                 {
                     continue;
                 }
@@ -112,7 +112,7 @@ namespace AF
 
             foreach (var item in itemsToReceive)
             {
-                GetPlayerManager().playerInventory.AddItem(item.Key, item.Value.amount);
+                InventoryUtils.AddItem(item.Key, item.Value.amount, GetPlayerManager().playerInventory);
 
                 bool isCard = item.Key is Card;
 

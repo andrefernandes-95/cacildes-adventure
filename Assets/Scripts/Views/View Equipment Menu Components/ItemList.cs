@@ -230,6 +230,8 @@ namespace AF.UI.EquipmentMenu
 
         bool IsItemEquipped(ItemInstance item, int slotIndex)
         {
+            // TODO: Handle this
+
             if (item is WeaponInstance)
             {
                 return equipmentDatabase.rightWeapons[slotIndex].IsEqualTo(item);
@@ -238,10 +240,10 @@ namespace AF.UI.EquipmentMenu
             {
                 return equipmentDatabase.leftWeapons[slotIndex].IsEqualTo(item);
             }
-            else if (item is ArrowInstance)
-            {
-                return equipmentDatabase.arrows[slotIndex].IsEqualTo(item);
-            }
+            /*            else if (item is ArrowInstance)
+                        {
+                            return equipmentDatabase.arrows[slotIndex] == item;
+                        }*/
             else if (item is SpellInstance)
             {
                 return equipmentDatabase.spells[slotIndex].IsEqualTo(item);
@@ -250,10 +252,11 @@ namespace AF.UI.EquipmentMenu
             {
                 return equipmentDatabase.accessories[slotIndex].IsEqualTo(item);
             }
+            /*
             else if (item is ConsumableInstance)
             {
                 return equipmentDatabase.consumables[slotIndex].IsEqualTo(item);
-            }
+            }*/
             else if (item is HelmetInstance)
             {
                 return equipmentDatabase.helmet.IsEqualTo(item);
@@ -295,50 +298,60 @@ namespace AF.UI.EquipmentMenu
             }
 
             int equippedSlotIndex = -1;
-            if (item is Weapon && itemInstance is ShieldInstance shieldInstance)
-            {
-                equippedSlotIndex = equipmentDatabase.GetEquippedLeftWeaponSlot(shieldInstance);
-            }
-            else if (item is Arrow && itemInstance is ArrowInstance arrowInstance)
-            {
-                equippedSlotIndex = equipmentDatabase.GetEquippedArrowsSlot(arrowInstance);
-            }
-            else if (item is Spell && itemInstance is SpellInstance spellInstance)
-            {
-                equippedSlotIndex = equipmentDatabase.GetEquippedSpellSlot(spellInstance);
-            }
-            else if (item is Accessory && itemInstance is AccessoryInstance accessoryInstance)
-            {
-                equippedSlotIndex = equipmentDatabase.GetEquippedAccessoriesSlot(accessoryInstance);
-            }
-            else if (item is Consumable && itemInstance is ConsumableInstance consumableInstance)
-            {
-                equippedSlotIndex = equipmentDatabase.GetEquippedConsumablesSlot(consumableInstance);
-            }
+            /* if (item is Weapon && itemInstance is ShieldInstance shieldInstance)
+             {
+                 equippedSlotIndex = equipmentDatabase.GetEquippedLeftWeaponSlot(shieldInstance);
+             }
+             else if (item is Arrow && itemInstance is ArrowInstance arrowInstance)
+             {
+                 equippedSlotIndex = equipmentDatabase.GetEquippedArrowsSlot(arrowInstance);
+             }
+             else if (item is Spell && itemInstance is SpellInstance spellInstance)
+             {
+                 equippedSlotIndex = equipmentDatabase.GetEquippedSpellSlot(spellInstance);
+             }
+             else if (item is Accessory && itemInstance is AccessoryInstance accessoryInstance)
+             {
+                 equippedSlotIndex = equipmentDatabase.GetEquippedAccessoriesSlot(accessoryInstance);
+             }
+             else if (item is Consumable && itemInstance is ConsumableInstance consumableInstance)
+             {
+                 equippedSlotIndex = equipmentDatabase.GetEquippedConsumablesSlot(consumableInstance);
+             }
 
-            if (equippedSlotIndex >= 0 && equippedSlotIndex != slotIndexToEquip)
-            {
-                return false;
-            }
+             if (equippedSlotIndex >= 0 && equippedSlotIndex != slotIndexToEquip)
+             {
+                 return false;
+             }*/
 
             return true;
         }
 
         bool ShouldDisplayWeaponInstanceOnItemList(WeaponInstance weaponInstance, bool isShieldSlot, int equippedSlotIndex)
         {
-            int equippedPrimarySlot = equipmentDatabase.GetEquippedRightWeaponSlot(weaponInstance);
-            int equippedSecondarySlot = equipmentDatabase.GetEquippedLeftWeaponSlot(weaponInstance);
-            bool isNotEquipped = equippedSecondarySlot == -1 && equippedPrimarySlot == -1;
+            return false;
+            /*
+                int equippedPrimarySlot = equipmentDatabase.GetEquippedRightWeaponSlot(weaponInstance);
+                int equippedSecondarySlot = equipmentDatabase.GetEquippedLeftWeaponSlot(weaponInstance);
+                bool isNotEquipped = equippedSecondarySlot == -1 && equippedPrimarySlot == -1;
 
-            if (isShieldSlot)
-            {
-                if (weaponInstance.GetItem<Weapon>().IsRangeWeapon())
+                if (isShieldSlot)
                 {
-                    return false;
-                }
-                if (weaponInstance.GetItem<Weapon>().IsStaffWeapon())
-                {
-                    return false;
+                    if (weaponInstance.GetItem<Weapon>().IsRangeWeapon())
+                    {
+                        return false;
+                    }
+                    if (weaponInstance.GetItem<Weapon>().IsStaffWeapon())
+                    {
+                        return false;
+                    }
+
+                    if (isNotEquipped)
+                    {
+                        return true;
+                    }
+
+                    return equippedSecondarySlot == equippedSlotIndex;
                 }
 
                 if (isNotEquipped)
@@ -346,15 +359,8 @@ namespace AF.UI.EquipmentMenu
                     return true;
                 }
 
-                return equippedSecondarySlot == equippedSlotIndex;
-            }
-
-            if (isNotEquipped)
-            {
-                return true;
-            }
-
-            return equippedPrimarySlot == equippedSlotIndex;
+                return equippedPrimarySlot == equippedSlotIndex;
+                */
         }
 
         void PopulateScrollView<ItemType>(bool showOnlyKeyItems, int slotIndex, bool isShieldSlot) where ItemType : Item
@@ -506,7 +512,8 @@ namespace AF.UI.EquipmentMenu
             ignoreRerender = false;
 
             Item item = itemInstance.GetItem<Item>();
-
+            return true;
+            /*
             if (item is Weapon weapon)
             {
                 if (!isEquipped)
@@ -642,7 +649,7 @@ namespace AF.UI.EquipmentMenu
                     equipmentDatabase.UnequipSpell(slotIndex);
                 }
             }
-
+*/
             return true;
         }
 
@@ -652,10 +659,11 @@ namespace AF.UI.EquipmentMenu
             {
                 return equipmentDatabase.rightWeapons[slotIndex].IsEqualTo(item) || equipmentDatabase.leftWeapons[slotIndex].IsEqualTo(item);
             }
+            /*
             else if (item is ArrowInstance)
             {
                 return equipmentDatabase.arrows[slotIndex].IsEqualTo(item);
-            }
+            }*/
             else if (item is SpellInstance)
             {
                 return equipmentDatabase.spells[slotIndex].IsEqualTo(item);
@@ -664,10 +672,11 @@ namespace AF.UI.EquipmentMenu
             {
                 return equipmentDatabase.accessories[slotIndex].IsEqualTo(item);
             }
+            /*
             else if (item is ConsumableInstance)
             {
                 return equipmentDatabase.consumables[slotIndex].IsEqualTo(item);
-            }
+            }*/
             else if (item is HelmetInstance)
             {
                 return equipmentDatabase.helmet.IsEqualTo(item);

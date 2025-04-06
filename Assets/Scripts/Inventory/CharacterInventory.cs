@@ -9,31 +9,6 @@ namespace AF
     {
         public SerializedDictionary<Item, List<ItemInstance>> ownedItems = new();
 
-        public override List<ItemInstance> AddItem(Item itemToAdd, int quantity)
-        {
-            List<ItemInstance> itemsAdded = new();
-
-            for (int i = 0; i < quantity; i++)
-            {
-                ItemInstance toAdd = null;
-
-                if (ownedItems.ContainsKey(itemToAdd))
-                {
-                    toAdd = InventoryUtils.ItemToItemInstance<ItemInstance>(itemToAdd);
-
-                    ownedItems[itemToAdd].Add(toAdd);
-                }
-                else
-                {
-                    ownedItems.Add(itemToAdd, new() { toAdd });
-                }
-
-                itemsAdded.Add(toAdd);
-            }
-
-            return itemsAdded;
-        }
-
         public override void RemoveItem(Item item)
         {
             ItemInstance itemInstanceToRemove = GetFirst(item);
@@ -71,16 +46,6 @@ namespace AF
             }
 
             //UnequipItemToRemove(itemInstance);
-        }
-
-        public ItemInstance GetFirst(Item itemToFind)
-        {
-            if (!ownedItems.ContainsKey(itemToFind))
-            {
-                return null;
-            }
-
-            return ownedItems[itemToFind].FirstOrDefault(ownedItemInstance => ownedItemInstance.HasItem(itemToFind));
         }
 
         public override int GetItemQuantity(Item item)

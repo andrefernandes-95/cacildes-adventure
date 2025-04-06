@@ -22,7 +22,7 @@ namespace AF.Conditions
         public bool requirePlayerToBeNaked = false;
 
         [Header("Databases")]
-        public EquipmentDatabase equipmentDatabase;
+        public CharacterBaseManager characterToTest;
 
         [Header("Events")]
         public UnityEvent onTrue;
@@ -41,26 +41,26 @@ namespace AF.Conditions
 
             if (requirePlayerToBeNaked)
             {
-                evaluationResult = equipmentDatabase.IsPlayerNaked();
+                evaluationResult = characterToTest.characterBaseEquipment.IsNaked();
             }
             else if (requireAllPiecesToBeEquipped)
             {
-                evaluationResult = equipmentDatabase.helmet.HasItem(helmet)
-                && equipmentDatabase.armor.HasItem(armor)
-                && equipmentDatabase.legwear.HasItem(legwear)
-                && equipmentDatabase.gauntlet.HasItem(gauntlet);
+                evaluationResult = characterToTest.characterBaseEquipment.GetHelmetInstance().HasItem(helmet)
+                && characterToTest.characterBaseEquipment.GetArmorInstance().HasItem(armor)
+                && characterToTest.characterBaseEquipment.GetLegwearInstance().HasItem(legwear)
+                && characterToTest.characterBaseEquipment.GetGauntletInstance().HasItem(gauntlet);
             }
             else if (requireNoneOfThePiecesToBeEquipped)
             {
                 evaluationResult =
-                    !(equipmentDatabase.helmet.HasItem(helmet) == false
-                    || equipmentDatabase.armor.HasItem(armor) == false
-                    || equipmentDatabase.legwear.HasItem(legwear) == false
-                    || equipmentDatabase.gauntlet.HasItem(gauntlet) == false);
+                    !(characterToTest.characterBaseEquipment.GetHelmetInstance().HasItem(helmet) == false
+                    || characterToTest.characterBaseEquipment.GetArmorInstance().HasItem(armor) == false
+                    || characterToTest.characterBaseEquipment.GetLegwearInstance().HasItem(legwear) == false
+                    || characterToTest.characterBaseEquipment.GetGauntletInstance().HasItem(gauntlet) == false);
             }
             else if (requireOnlyTorsoArmorToBeEquipped)
             {
-                evaluationResult = equipmentDatabase.armor.HasItem(armor);
+                evaluationResult = characterToTest.characterBaseEquipment.GetArmorInstance().HasItem(armor);
             }
 
             Utils.UpdateTransformChildren(transform, evaluationResult);

@@ -24,7 +24,7 @@ namespace AF
 
         [Header("Required Item to Open")]
         public Item requiredItemToOpen;
-        public InventoryDatabase inventoryDatabase;
+        public CharacterBaseManager characterBaseManager;
 
         bool canInteract = true;
 
@@ -92,11 +92,11 @@ namespace AF
         {
             bool canActivate = true;
 
-            if (requiredItemToOpen != null && inventoryDatabase != null)
+            if (requiredItemToOpen != null && characterBaseManager != null)
             {
-                if (inventoryDatabase.HasItem(requiredItemToOpen))
+                if (characterBaseManager.characterBaseInventory.HasItem(requiredItemToOpen))
                 {
-                    inventoryDatabase.RemoveItem(requiredItemToOpen);
+                    characterBaseManager.characterBaseInventory.RemoveItem(requiredItemToOpen);
                     GetNotificationManager().ShowNotification($"{requiredItemToOpen.GetName()} " + LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "was lost with its use."));
                 }
                 else

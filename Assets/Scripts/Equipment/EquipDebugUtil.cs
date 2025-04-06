@@ -18,7 +18,7 @@ namespace AF
             {
                 equipHelmet = false;
 
-                character.characterBaseEquipment.EquipHelmet(character.characterBaseInventory.AddHelmet(helmet, character.characterBaseInventory.GetInventory()));
+                character.characterBaseEquipment.EquipHelmet(character.characterBaseInventory.AddHelmet(helmet));
             }
 
             if (clearHelmet)

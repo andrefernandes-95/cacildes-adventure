@@ -44,18 +44,12 @@ namespace AF
             onResetState?.Invoke();
         }
 
-        public void ReplenishItems()
-        {
-            inventoryDatabase.ReplenishItems();
-
-            uIDocumentPlayerHUDV2.UpdateEquipment();
-        }
 
         void HandleItemAchievements(Item item)
         {
             if (item is Weapon)
             {
-                int numberOfWeapons = inventoryDatabase.GetWeaponsCount();
+                int numberOfWeapons = GetAllWeaponInstances().Count;
 
                 if (numberOfWeapons <= 0)
                 {
@@ -68,7 +62,7 @@ namespace AF
             }
             else if (item is Spell)
             {
-                int numberOfSpells = inventoryDatabase.GetSpellsCount();
+                int numberOfSpells = GetAllSpellInstances().Count;
 
                 if (numberOfSpells <= 0)
                 {
@@ -87,46 +81,45 @@ namespace AF
             GameAnalytics.NewDesignEvent(eventName);
         }
 
-        public override List<ItemInstance> AddItem(Item item, int quantity)
-        {
-            if (item is Weapon weapon)
-            {
-                if (weapon.tradingItemRequirements != null && weapon.tradingItemRequirements.Count > 0)
-                {
-                    // Special Weapon Found
-                    LogAnalytic(AnalyticsUtils.OnBossWeaponAcquired(weapon.name));
-                }
-            }
-            else if (item is Armor armor)
-            {
-                LogAnalytic(AnalyticsUtils.OnArmorAcquired(armor.name));
-            }
-            else if (item is Spell spell)
-            {
-                LogAnalytic(AnalyticsUtils.OnSpellAcquired(spell.name));
-            }
-
-            HandleItemAchievements(item);
-
-            List<ItemInstance> itemsAdded = inventoryDatabase.AddItem(item, quantity);
-
-            uIDocumentPlayerHUDV2.UpdateEquipment();
-
-            return itemsAdded;
-        }
-
         public override void RemoveItem(Item item)
         {
-            inventoryDatabase.RemoveItem(item);
+            ItemInstance itemInstance = GetFirst(item);
 
-            uIDocumentPlayerHUDV2.UpdateEquipment();
+            RemoveItemInstance(itemInstance);
         }
 
-        public void RemoveItemInstance(ItemInstance item)
-        {
-            inventoryDatabase.RemoveItemInstance(item);
 
-            uIDocumentPlayerHUDV2.UpdateEquipment();
+        public void RemoveItemInstance(ItemInstance itemInstance)
+        {
+            if (itemInstance == null)
+            {
+                return;
+            }
+
+            if (itemInstance is ConsumableInstance consumableInstance)
+            {
+                if (consumableInstance.GetItem<Consumable>().isRenewable)
+                {
+                    consumableInstance.wasUsed = true;
+                    return;
+                }
+
+                if (GetItemQuantity(itemInstance.GetItem<Consumable>()) > 0)
+                {
+                    inventoryDatabase.ownedItems[itemInstance.GetItem<Consumable>()].Remove(itemInstance);
+                    return;
+                }
+            }
+
+            inventoryDatabase.ownedItems[itemInstance.GetItem<Item>()].Remove(itemInstance);
+
+            // If not last arrow, do not unequip item
+            if (itemInstance is ArrowInstance arrowInstance && GetItemQuantity(arrowInstance.GetItem<Arrow>()) > 0)
+            {
+                return;
+            }
+
+            //UnequipItemToRemove(itemInstance);
         }
 
         bool CanConsumeItem(Consumable consumable)
@@ -136,7 +129,7 @@ namespace AF
                 return false;
             }
 
-            if (consumable.isRenewable && inventoryDatabase.GetItemAmount(consumable) <= 0)
+            if (consumable.isRenewable && GetItemQuantity(consumable) <= 0)
             {
                 notificationManager.ShowNotification(
                     LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Consumable depleted"),
@@ -335,17 +328,44 @@ namespace AF
 
         public override int GetItemQuantity(Item item)
         {
-            return inventoryDatabase.GetItemAmount(item);
+            if (!inventoryDatabase.ownedItems.ContainsKey(item))
+            {
+                return 0;
+            }
+
+            return inventoryDatabase.ownedItems[item].Count;
         }
 
         public override bool HasItem(Item item)
         {
-            return inventoryDatabase.GetItemAmount(item) > 0;
+            return GetItemQuantity(item) > 0;
         }
 
         public override SerializedDictionary<Item, List<ItemInstance>> GetInventory()
         {
             return inventoryDatabase.ownedItems;
+        }
+
+        public override WeaponInstance AddWeapon(Weapon weapon)
+        {
+            WeaponInstance addedWeapon = base.AddWeapon(weapon);
+
+            // Analytics
+            LogAnalytic(AnalyticsUtils.OnWeaponAcquired(weapon.name));
+
+            // Achievements
+            int numberOfWeapons = GetAllWeaponInstances().Count;
+
+            if (numberOfWeapons <= 0)
+            {
+                playerManager.playerAchievementsManager.achievementOnAcquiringFirstWeapon.AwardAchievement();
+            }
+            else if (numberOfWeapons == 10)
+            {
+                playerManager.playerAchievementsManager.achievementOnAcquiringTenWeapons.AwardAchievement();
+            }
+
+            return addedWeapon;
         }
     }
 }

@@ -288,14 +288,14 @@ namespace AF
                 var craftLabel = scrollItem.Q<Label>("CraftLabel");
                 craftLabel.text = GetCraftLabel();
 
-                craftBtn.style.opacity = CraftingUtils.CanCraftItem(inventoryDatabase, recipe) ? 1f : 0.25f;
+                craftBtn.style.opacity = CraftingUtils.CanCraftItem(playerManager.characterBaseInventory, recipe) ? 1f : 0.25f;
 
                 UIUtils.SetupButton(craftBtn,
                 () =>
                 {
                     lastScrollElementIndex = currentIndex;
 
-                    if (!CraftingUtils.CanCraftItem(inventoryDatabase, recipe))
+                    if (!CraftingUtils.CanCraftItem(playerManager.characterBaseInventory, recipe))
                     {
                         HandleCraftError(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Missing ingredients!"));
                         return;
@@ -357,13 +357,13 @@ namespace AF
                 var craftLabel = scrollItem.Q<Label>("CraftLabel");
                 craftLabel.text = GetCraftLabel();
 
-                craftBtn.style.opacity = CraftingUtils.CanImproveWeapon(inventoryDatabase, weaponInstance, playerStatsDatabase.gold) ? 1f : 0.25f;
+                craftBtn.style.opacity = CraftingUtils.CanImproveWeapon(playerManager.characterBaseInventory, weaponInstance, playerStatsDatabase.gold) ? 1f : 0.25f;
 
                 UIUtils.SetupButton(craftBtn, () =>
                 {
                     lastScrollElementIndex = currentIndex;
 
-                    if (!CraftingUtils.CanImproveWeapon(inventoryDatabase, weaponInstance, playerStatsDatabase.gold))
+                    if (!CraftingUtils.CanImproveWeapon(playerManager.characterBaseInventory, weaponInstance, playerStatsDatabase.gold))
                     {
                         HandleCraftError(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Missing ingredients!"));
                         return;
@@ -433,7 +433,16 @@ namespace AF
             });
 
             soundbank.PlaySound(soundbank.craftSuccess);
-            playerManager.playerInventory.AddItem(recipe.resultingItem, recipe.resultingAmount);
+
+            // Must be consumable?
+            for (int i = 0; i < recipe.resultingAmount; i++)
+            {
+                if (recipe.resultingItem is Consumable createdConsumable)
+                {
+                    playerManager.playerInventory.AddConsumable(createdConsumable);
+                }
+            }
+
             notificationManager.ShowNotification(LocalizationSettings.StringDatabase.GetLocalizedString("UIDocuments", "Received") + $" x{recipe.resultingAmount} " + recipe.resultingItem?.GetName(), recipe.resultingItem?.sprite);
 
             foreach (var ingredient in recipe.ingredients)
@@ -489,13 +498,13 @@ namespace AF
 
                 var playerOwnedIngredientAmount = 0;
 
-                var playerOwnedIngredient = inventoryDatabase.HasItem(ingredient.ingredient)
+                var playerOwnedIngredient = playerManager.characterBaseInventory.HasItem(ingredient.ingredient)
                     ? inventoryDatabase.ownedItems[ingredient.ingredient]
                     : null;
 
                 if (playerOwnedIngredient != null)
                 {
-                    playerOwnedIngredientAmount = inventoryDatabase.GetItemAmount(ingredient.ingredient);
+                    playerOwnedIngredientAmount = playerManager.characterBaseInventory.GetItemQuantity(ingredient.ingredient);
                 }
 
                 ingredientItemEntry.Q<Label>("Amount").text = playerOwnedIngredientAmount + " / " + ingredient.amount;
@@ -584,14 +593,15 @@ namespace AF
                 ingredientItemEntry.Q<IMGUIContainer>("ItemIcon").style.backgroundImage = new StyleBackground(upgradeMaterialItem.sprite);
                 ingredientItemEntry.Q<Label>("Title").text = upgradeMaterialItem.GetName();
 
-                var playerOwnedIngredient = inventoryDatabase.HasItem(upgradeMaterialItem)
+                var playerOwnedIngredient = playerManager.characterBaseInventory.HasItem(upgradeMaterialItem)
                     ? inventoryDatabase.ownedItems[upgradeMaterialItem]
                     : null;
 
                 var playerOwnedIngredientAmount = 0;
                 if (playerOwnedIngredient != null)
                 {
-                    playerOwnedIngredientAmount = inventoryDatabase.GetItemAmount(upgradeMaterialItem);
+
+                    playerOwnedIngredientAmount = playerManager.characterBaseInventory.GetItemQuantity(upgradeMaterialItem);
                 }
                 ingredientItemEntry.Q<Label>("Amount").text = playerOwnedIngredientAmount + " / " + amountRequiredFoUpgrade;
                 ingredientItemEntry.Q<Label>("Amount").style.opacity =

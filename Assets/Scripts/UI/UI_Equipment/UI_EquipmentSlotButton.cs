@@ -28,7 +28,7 @@ namespace AF
         public int slotIndex = 0;
 
         [Header("Equipment")]
-        public CharacterBaseManager character;
+        public UI_CharacterEquipment uI_CharacterEquipment;
 
         private void Awake()
         {
@@ -41,48 +41,7 @@ namespace AF
 
         void DrawSprite()
         {
-            ItemInstance itemInstance = null;
-
-            if (isRightHand)
-            {
-                itemInstance = character.characterBaseEquipment.GetRightWeaponInSlot(slotIndex);
-            }
-            else if (isLeftHand)
-            {
-                itemInstance = character.characterBaseEquipment.GetLeftWeaponInSlot(slotIndex);
-            }
-            else if (isArrow)
-            {
-                itemInstance = character.characterBaseEquipment.GetArrowInSlot(slotIndex);
-            }
-            else if (isSkills)
-            {
-                itemInstance = character.characterBaseEquipment.GetSpellInSlot(slotIndex);
-            }
-            else if (isConsumables)
-            {
-                itemInstance = character.characterBaseEquipment.GetConsumableInSlot(slotIndex);
-            }
-            else if (isAccessories)
-            {
-                itemInstance = character.characterBaseEquipment.GetAccessoryInSlot(slotIndex);
-            }
-            else if (isHelmet)
-            {
-                itemInstance = character.characterBaseEquipment.GetHelmetInstance();
-            }
-            else if (isArmor)
-            {
-                itemInstance = character.characterBaseEquipment.GetArmorInstance();
-            }
-            else if (isGauntlets)
-            {
-                itemInstance = character.characterBaseEquipment.GetGauntletInstance();
-            }
-            else if (isBoots)
-            {
-                itemInstance = character.characterBaseEquipment.GetLegwearInstance();
-            }
+            ItemInstance itemInstance = GetSlotItemInstance();
 
             if (itemInstance == null || itemInstance.IsEmpty())
             {
@@ -124,11 +83,184 @@ namespace AF
 
         private void OnHover()
         {
+            string enTooltip = "";
+            string ptTooltip = "";
+
+
+            Item item = GetSlotItem();
+            if (item == null)
+            {
+                enTooltip = GetSlotEnglishLabel();
+                ptTooltip = GetSlotPortugueseLabel();
+            }
+            else
+            {
+                enTooltip = item.GetName();
+                ptTooltip = item.GetName();
+            }
+
+            uI_CharacterEquipment.ShowFooterTooltip(enTooltip, ptTooltip);
         }
 
         private void OnLostFocus()
         {
         }
 
+        ItemInstance GetSlotItemInstance()
+        {
+            ItemInstance itemInstance = null;
+
+            if (isRightHand)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetRightWeaponInSlot(slotIndex);
+            }
+            else if (isLeftHand)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetLeftWeaponInSlot(slotIndex);
+            }
+            else if (isSkills)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetSpellInSlot(slotIndex);
+            }
+            else if (isAccessories)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetAccessoryInSlot(slotIndex);
+            }
+            else if (isHelmet)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetHelmetInstance();
+            }
+            else if (isArmor)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetArmorInstance();
+            }
+            else if (isGauntlets)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetGauntletInstance();
+            }
+            else if (isBoots)
+            {
+                itemInstance = uI_CharacterEquipment.character.characterBaseEquipment.GetLegwearInstance();
+            }
+
+            return itemInstance;
+        }
+
+        public Item GetSlotItem()
+        {
+            if (isArrow)
+            {
+                return uI_CharacterEquipment.character.characterBaseEquipment.GetArrowInSlot(slotIndex);
+            }
+            else if (isConsumables)
+            {
+                return uI_CharacterEquipment.character.characterBaseEquipment.GetConsumableInSlot(slotIndex);
+            }
+            ItemInstance itemInstance = GetSlotItemInstance();
+
+            if (itemInstance.Exists())
+            {
+                return itemInstance.GetItem<Item>();
+            }
+
+            return null;
+        }
+
+        string GetSlotEnglishLabel()
+        {
+            string label = "";
+
+            if (isRightHand)
+            {
+                label = "Right Hand Weapons & Shields";
+            }
+            else if (isLeftHand)
+            {
+                label = "Left Hand Weapons & Shields";
+            }
+            else if (isArrow)
+            {
+                label = "Arrows";
+            }
+            else if (isSkills)
+            {
+                label = "Skills & Spells";
+            }
+            else if (isConsumables)
+            {
+                label = "Consumables";
+            }
+            else if (isAccessories)
+            {
+                label = "Accessories";
+            }
+            else if (isHelmet)
+            {
+                label = "Helmet";
+            }
+            else if (isArmor)
+            {
+                label = "Armor";
+            }
+            else if (isGauntlets)
+            {
+                label = "Gauntlets";
+            }
+            else if (isBoots)
+            {
+                label = "Boots";
+            }
+
+            return label;
+        }
+
+
+        string GetSlotPortugueseLabel()
+        {
+            string label = "";
+
+            if (isRightHand)
+            {
+                label = "Mão Direita (Armas & Escudos)";
+            }
+            else if (isLeftHand)
+            {
+                label = "Mão Esquerda (Armas & Escudos)";
+            }
+            else if (isArrow)
+            {
+                label = "Flechas";
+            }
+            else if (isSkills)
+            {
+                label = "Abilidades & Feitiços";
+            }
+            else if (isConsumables)
+            {
+                label = "Consumíveis";
+            }
+            else if (isAccessories)
+            {
+                label = "Acessórios";
+            }
+            else if (isHelmet)
+            {
+                label = "Elmos";
+            }
+            else if (isArmor)
+            {
+                label = "Armaduras";
+            }
+            else if (isGauntlets)
+            {
+                label = "Manoplas";
+            }
+            else if (isBoots)
+            {
+                label = "Botas";
+            }
+
+            return label;
+        }
     }
 }

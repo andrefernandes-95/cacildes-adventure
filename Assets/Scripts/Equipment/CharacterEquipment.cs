@@ -9,9 +9,9 @@ namespace AF
         [Header("Offensive Gear")]
         public WeaponInstance[] rightWeapons = new WeaponInstance[3];
         public WeaponInstance[] leftWeapons = new WeaponInstance[3];
-        public ArrowInstance[] arrows = new ArrowInstance[2];
+        public Arrow[] arrows = new Arrow[2];
         public SpellInstance[] spells = new SpellInstance[5];
-        public ConsumableInstance[] consumables = new ConsumableInstance[10];
+        public Consumable[] consumables = new Consumable[10];
 
         [Header("Defensive Gear")]
         public HelmetInstance helmet;
@@ -22,8 +22,64 @@ namespace AF
         [Header("Accessories")]
         public AccessoryInstance[] accessories = new AccessoryInstance[4];
 
-        public int currentWeaponIndex, currentShieldIndex, currentConsumableIndex, currentSpellIndex, currentArrowIndex = 0;
+        [Header("Index")]
+        public int currentRightWeaponIndex = 0;
+        public int currentLeftWeaponIndex = 0;
+        public int currentSkillIndex = 0;
+        public int currentArrowIndex = 0;
+        public int currentConsumableIndex = 0;
 
+        #region Equipment Indexes
+        public override void SwitchRightWeapon()
+        {
+            currentRightWeaponIndex++;
+
+            if (currentRightWeaponIndex >= GetRightHandWeapons().Length)
+            {
+                currentRightWeaponIndex = 0;
+            }
+        }
+
+        public override void SwitchLeftWeapon()
+        {
+            currentLeftWeaponIndex++;
+
+            if (currentLeftWeaponIndex >= GetLeftHandWeapons().Length)
+            {
+                currentLeftWeaponIndex = 0;
+            }
+        }
+
+        public override void SwitchSkill()
+        {
+            currentSkillIndex++;
+
+            if (currentSkillIndex >= GetSpells().Length)
+            {
+                currentSkillIndex = 0;
+            }
+        }
+
+        public override void SwitchConsumable()
+        {
+            currentConsumableIndex++;
+
+            if (currentConsumableIndex >= GetConsumables().Length)
+            {
+                currentConsumableIndex = 0;
+            }
+        }
+
+        public override void SwitchArrow()
+        {
+            currentArrowIndex++;
+
+            if (currentArrowIndex >= GetArrows().Length)
+            {
+                currentArrowIndex = 0;
+            }
+        }
+        #endregion
 
         #region Equipment Getters
         public override List<AccessoryInstance> GetAccessoryInstances()
@@ -36,12 +92,12 @@ namespace AF
             return armor;
         }
 
-        public override ArrowInstance GetArrowInstance()
+        public override Arrow GetCurrentArrow()
         {
             return arrows[currentArrowIndex];
         }
 
-        public override ConsumableInstance GetConsumableInstance()
+        public override Consumable GetConsumable()
         {
             return consumables[currentConsumableIndex];
         }
@@ -58,7 +114,7 @@ namespace AF
 
         public override WeaponInstance GetLeftHandWeapon()
         {
-            return leftWeapons[currentShieldIndex];
+            return leftWeapons[currentLeftWeaponIndex];
         }
 
         public override LegwearInstance GetLegwearInstance()
@@ -68,7 +124,7 @@ namespace AF
 
         public override WeaponInstance GetRightHandWeapon()
         {
-            return rightWeapons[currentWeaponIndex];
+            return rightWeapons[currentRightWeaponIndex];
         }
 
         public override List<ShieldInstance> GetShieldInstances()
@@ -80,42 +136,10 @@ namespace AF
 
         public override SpellInstance GetSpellInstance()
         {
-            return spells[currentSpellIndex];
+            return spells[currentSkillIndex];
         }
         #endregion
 
-        #region Equipment Setters
-        public override void SetHelmet(HelmetInstance helmetInstance)
-        {
-            helmet = helmetInstance.Clone();
-        }
-
-        public override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
-        {
-            leftWeapons[slotIndex] = weaponInstance.Clone();
-        }
-
-        public override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
-        {
-            rightWeapons[slotIndex] = weaponInstance.Clone();
-        }
-
-        public override void ClearHelmet()
-        {
-            helmet.Clear();
-        }
-
-        public override void ClearLeftWeapon(int slotIndex)
-        {
-            leftWeapons[slotIndex].Clear();
-        }
-
-        public override void ClearRightWeapon(int slotIndex)
-        {
-            rightWeapons[slotIndex].Clear();
-        }
-
-        #endregion
 
         #region Getters By Slot Index
         public override WeaponInstance GetRightWeaponInSlot(int slot)
@@ -133,7 +157,7 @@ namespace AF
             return spells[slot];
         }
 
-        public override ArrowInstance GetArrowInSlot(int slot)
+        public override Arrow GetArrowInSlot(int slot)
         {
             return arrows[slot];
         }
@@ -143,11 +167,142 @@ namespace AF
             return accessories[slot];
         }
 
-        public override ConsumableInstance GetConsumableInSlot(int slot)
+        public override Consumable GetConsumableInSlot(int slot)
         {
             return consumables[slot];
         }
+
+        public override WeaponInstance[] GetRightHandWeapons()
+        {
+            return rightWeapons;
+        }
+
+        public override WeaponInstance[] GetLeftHandWeapons()
+        {
+            return leftWeapons;
+        }
+
+        public override Arrow[] GetArrows()
+        {
+            return arrows;
+        }
+
+        public override Consumable[] GetConsumables()
+        {
+            return consumables;
+        }
+
+        public override SpellInstance[] GetSpells()
+        {
+            return spells;
+        }
+
         #endregion
 
+
+        protected override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            rightWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        protected override void ClearRightWeapon(int slotIndex)
+        {
+            rightWeapons[slotIndex].Clear();
+        }
+
+        protected override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            leftWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        protected override void ClearLeftWeapon(int slotIndex)
+        {
+            leftWeapons[slotIndex].Clear();
+        }
+
+        protected override void SetHelmet(HelmetInstance helmetInstance)
+        {
+            helmet = helmetInstance.Clone();
+        }
+
+        protected override void ClearHelmet()
+        {
+            helmet.Clear();
+        }
+
+        protected override void SetArrow(Arrow arrow, int slotIndex)
+        {
+            arrows[slotIndex] = arrow;
+        }
+
+        protected override void ClearArrow(int slotIndex)
+        {
+            arrows[slotIndex] = null;
+        }
+
+        protected override void SetSkill(SpellInstance skillInstance, int slotIndex)
+        {
+            spells[slotIndex] = skillInstance.Clone();
+        }
+
+        protected override void ClearSkill(int slotIndex)
+        {
+            spells[slotIndex].Clear();
+        }
+
+        protected override void SetAccessory(AccessoryInstance accessoryInstance, int slotIndex)
+        {
+            accessories[slotIndex] = accessoryInstance.Clone();
+        }
+
+        protected override void ClearAccessory(int slotIndex)
+        {
+            accessories[slotIndex].Clear();
+        }
+
+        protected override void SetArmor(ArmorInstance armorInstance)
+        {
+            armor = armorInstance.Clone();
+        }
+
+        protected override void ClearArmor()
+        {
+            armor.Clear();
+        }
+
+        protected override void SetGauntlets(GauntletInstance gauntletInstance)
+        {
+            gauntlet = gauntletInstance.Clone();
+        }
+
+        protected override void ClearGauntlets()
+        {
+            gauntlet.Clear();
+        }
+
+        protected override void SetLegwear(LegwearInstance legwearInstance)
+        {
+            legwear = legwearInstance.Clone();
+        }
+
+        protected override void ClearLegwear()
+        {
+            legwear.Clear();
+        }
+
+        protected override void SetConsumable(Consumable consumable, int slotIndex)
+        {
+            consumables[slotIndex] = consumable;
+        }
+
+        protected override void ClearConsumable(int slotIndex)
+        {
+            consumables[slotIndex] = null;
+        }
+
+        public override void UnequipCurrentConsumable()
+        {
+            UnequipConsumable(currentConsumableIndex);
+        }
     }
 }

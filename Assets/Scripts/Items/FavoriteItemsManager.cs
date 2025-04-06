@@ -50,22 +50,21 @@ namespace AF
                 return;
             }
 
-            ConsumableInstance currentConsumable = equipmentDatabase.GetCurrentConsumable();
+            Consumable currentConsumable = playerManager.characterBaseEquipment.GetConsumable();
 
-            if (currentConsumable.IsEmpty())
+            if (currentConsumable == null)
             {
                 return;
             }
 
-            int itemAmount = inventoryDatabase.GetItemAmount(currentConsumable.GetItem<Consumable>());
+            int itemAmount = playerManager.playerInventory.GetItemQuantity(currentConsumable);
 
-            if (itemAmount <= 1 && !currentConsumable.GetItem<Item>().isRenewable)
+            if (itemAmount <= 1 && !currentConsumable.isRenewable)
             {
-                equipmentDatabase.UnequipConsumable(equipmentDatabase.currentConsumableIndex);
+                playerManager.characterBaseEquipment.UnequipCurrentConsumable();
             }
 
-            Consumable consumableItem = currentConsumable.GetItem<Consumable>();
-            playerManager.playerInventory.PrepareItemForConsuming(consumableItem);
+            playerManager.playerInventory.PrepareItemForConsuming(currentConsumable);
 
             uIDocumentPlayerHUDV2.UpdateEquipment();
         }
@@ -80,7 +79,7 @@ namespace AF
                 return;
             }
 
-            equipmentDatabase.SwitchToNextWeapon();
+            playerManager.characterBaseEquipment.SwitchRightWeapon();
 
             uIDocumentPlayerHUDV2.OnSwitchWeapon();
 
@@ -97,7 +96,7 @@ namespace AF
                 return;
             }
 
-            equipmentDatabase.SwitchToNextShield();
+            playerManager.characterBaseEquipment.SwitchLeftWeapon();
 
             uIDocumentPlayerHUDV2.OnSwitchShield();
 
@@ -114,7 +113,7 @@ namespace AF
                 return;
             }
 
-            equipmentDatabase.SwitchToNextConsumable();
+            playerManager.characterBaseEquipment.SwitchConsumable();
 
             uIDocumentPlayerHUDV2.OnSwitchConsumable();
             UpdateCanSwitchFlag();
@@ -130,16 +129,7 @@ namespace AF
                 return;
             }
 
-            if (equipmentDatabase.IsBowEquipped())
-            {
-                equipmentDatabase.SwitchToNextArrow();
-            }
-            else
-            {
-                equipmentDatabase.SwitchToNextSpell();
-            }
-
-            uIDocumentPlayerHUDV2.OnSwitchSpell();
+            playerManager.characterBaseEquipment.SwitchSkill();
             UpdateCanSwitchFlag();
         }
 

@@ -52,7 +52,7 @@ namespace AF.Shops
             onTransactionCompleted(itemToBuy);
         }
 
-        public static string GetItemDisplayName(Item item, bool playerIsBuying, InventoryDatabase inventoryDatabase, SerializedDictionary<Item, ShopItemEntry> npcItemsToSell)
+        public static string GetItemDisplayName(Item item, bool playerIsBuying, CharacterBaseManager customer, SerializedDictionary<Item, ShopItemEntry> npcItemsToSell)
         {
             if (item == null)
             {
@@ -67,7 +67,7 @@ namespace AF.Shops
             }
             else if (item is not Weapon)
             {
-                int itemAmount = inventoryDatabase.GetItemAmount(item);
+                int itemAmount = customer.characterBaseInventory.GetItemQuantity(item);
                 if (itemAmount > 0)
                 {
                     itemName += $" ({itemAmount})";

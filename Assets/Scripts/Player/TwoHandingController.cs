@@ -38,7 +38,7 @@ namespace AF
                 return;
             }
 
-            equipmentDatabase.SetIsTwoHanding(!equipmentDatabase.isTwoHanding);
+            // equipmentDatabase.SetIsTwoHanding(!equipmentDatabase.isTwoHanding);
             soundbank.PlaySound(soundbank.switchTwoHand);
         }
 

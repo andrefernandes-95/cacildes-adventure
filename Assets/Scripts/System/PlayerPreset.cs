@@ -111,19 +111,20 @@ namespace AF
 
         void LoadInventory()
         {
+            PlayerManager playerManager = FindAnyObjectByType<PlayerManager>(FindObjectsInactive.Include);
             if (loadAllItems)
             {
                 Item[] items = Resources.LoadAll<Item>("Items");
                 foreach (var item in items)
                 {
-                    inventoryDatabase.AddItem(item);
+                    InventoryUtils.AddItem(item, 1, playerManager.characterBaseInventory);
                 }
                 return;
             }
 
             foreach (var ownedItem in ownedItems)
             {
-                inventoryDatabase.AddItem(ownedItem.Key);
+                InventoryUtils.AddItem(ownedItem.Key, 1, playerManager.characterBaseInventory);
             }
         }
 

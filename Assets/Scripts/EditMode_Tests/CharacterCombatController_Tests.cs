@@ -16,7 +16,7 @@ namespace AF.Tests
             characterCombatController.characterManager = characterManager;
             Animator animator = characterCombatController.characterManager.gameObject.AddComponent<Animator>();
             characterCombatController.characterManager.animator = animator;
-            characterCombatController.characterManager.animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            //            characterCombatController.characterManager.animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
 
             CombatAction reactionAction1 = new GameObject().AddComponent<CombatAction>();
             characterCombatController.reactionsToTarget.Add(reactionAction1);

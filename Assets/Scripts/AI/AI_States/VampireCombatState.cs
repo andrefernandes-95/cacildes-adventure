@@ -37,12 +37,14 @@ namespace AF
 
         public override State Tick(StateManager stateManager)
         {
-            if (equipmentDatabase.IsAccessoryEquiped(garlicAccessory) && fleeingAttempts <= maxFleeingAttempts)
-            {
-                fleeingAttempts++;
+            // TODO: Replace with current target to check if current target has garlic equipped
+            /*            if 
+                        if (characterManager.targetManager.IsAccessoryEquiped(garlicAccessory) && fleeingAttempts <= maxFleeingAttempts)
+                        {
+                            fleeingAttempts++;
 
-                return fleeState;
-            }
+                            return fleeState;
+                        }*/
 
             return base.Tick(stateManager);
         }

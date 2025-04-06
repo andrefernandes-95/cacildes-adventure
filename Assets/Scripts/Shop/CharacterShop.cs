@@ -95,11 +95,11 @@ namespace AF.Shops
             itemsToSell[item].quantity += amount;
         }
 
-        public int GetItemEvaluation(Item item, InventoryDatabase inventoryDatabase, StatsBonusController statsBonusController, bool isBuying)
+        public int GetItemEvaluation(Item item, CharacterBaseManager character, StatsBonusController statsBonusController, bool isBuying)
         {
             float discountPercentage = 0f;
 
-            if (requiredItemForDiscounts != null && discountGivenByItemInInventory != 1 && inventoryDatabase.HasItem(requiredItemForDiscounts))
+            if (requiredItemForDiscounts != null && discountGivenByItemInInventory != 1 && character.characterBaseInventory.HasItem(requiredItemForDiscounts))
             {
                 discountPercentage += discountGivenByItemInInventory;
             }
@@ -125,11 +125,11 @@ namespace AF.Shops
             return ShopUtils.GetItemFinalPrice(item, isBuying, Mathf.Min(1f, discountPercentage));
         }
 
-        List<string> GetDiscountDescriptions(InventoryDatabase inventoryDatabase, StatsBonusController statsBonusController, bool isBuying)
+        List<string> GetDiscountDescriptions(CharacterBaseManager character, StatsBonusController statsBonusController, bool isBuying)
         {
             List<string> discountDescriptions = new();
 
-            if (requiredItemForDiscounts != null && discountGivenByItemInInventory != 1 && inventoryDatabase.HasItem(requiredItemForDiscounts))
+            if (requiredItemForDiscounts != null && discountGivenByItemInInventory != 1 && character.characterBaseInventory.HasItem(requiredItemForDiscounts))
             {
                 discountDescriptions.Add(
                     (isBuying ? "-" : "+") + (discountGivenByItemInInventory * 100)
@@ -158,9 +158,9 @@ namespace AF.Shops
             return discountDescriptions;
         }
 
-        public string GetShopDiscountsDescription(InventoryDatabase inventoryDatabase, StatsBonusController statsBonusController, bool isBuying)
+        public string GetShopDiscountsDescription(CharacterBaseManager customer, StatsBonusController statsBonusController, bool isBuying)
         {
-            List<string> discounts = GetDiscountDescriptions(inventoryDatabase, statsBonusController, isBuying);
+            List<string> discounts = GetDiscountDescriptions(customer, statsBonusController, isBuying);
 
             if (discounts.Count <= 0)
             {

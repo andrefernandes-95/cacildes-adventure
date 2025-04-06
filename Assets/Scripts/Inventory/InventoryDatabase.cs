@@ -15,12 +15,6 @@ namespace AF.Inventory
         [SerializedDictionary("Item", "Quantity")]
         public SerializedDictionary<Item, List<ItemInstance>> ownedItems = new();
 
-        // public SerializedDictionary<Item, ItemAmount> defaultItems = new();
-
-        [Header("Databases")]
-        public EquipmentDatabase equipmentDatabase;
-
-
 #if UNITY_EDITOR
         private void OnEnable()
         {
@@ -33,15 +27,11 @@ namespace AF.Inventory
         {
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
-                // Clear the list when exiting play mode
-                Clear();
+                ownedItems.Clear();
+
             }
         }
 #endif
-        public void Clear()
-        {
-            ownedItems.Clear();
-        }
 
         public void SetDefaultItems()
         {
@@ -60,9 +50,10 @@ namespace AF.Inventory
                       equipmentDatabase.EquipLegwear(legwear);
                   }
               }
-              */
+            */
         }
 
+        /*
         public void ReplenishItems()
         {
             foreach (var itemEntry in ownedItems)
@@ -75,116 +66,9 @@ namespace AF.Inventory
                     }
                 }
             }
-        }
+        }*/
 
-        public void AddItem(Item itemToAdd)
-        {
-            AddItem(itemToAdd, 1);
-        }
-
-        public List<ItemInstance> AddItem(Item itemToAdd, int quantity)
-        {
-            List<ItemInstance> itemsAdded = new();
-
-            for (int i = 0; i < quantity; i++)
-            {
-                ItemInstance toAdd = null;
-
-                if (ownedItems.ContainsKey(itemToAdd))
-                {
-                    toAdd = InventoryUtils.ItemToItemInstance<ItemInstance>(itemToAdd);
-
-                    ownedItems[itemToAdd].Add(toAdd);
-                }
-                else
-                {
-                    ownedItems.Add(itemToAdd, new() { toAdd });
-                }
-
-                itemsAdded.Add(toAdd);
-            }
-
-            return itemsAdded;
-        }
-
-
-        public ItemInstance GetFirst(Item itemToFind)
-        {
-            if (!ownedItems.ContainsKey(itemToFind))
-            {
-                return null;
-            }
-
-            return ownedItems[itemToFind].FirstOrDefault(ownedItemInstance => ownedItemInstance.HasItem(itemToFind));
-        }
-
-        public void RemoveItem(Item itemToRemove)
-        {
-            ItemInstance itemInstanceToRemove = GetFirst(itemToRemove);
-            RemoveItemInstance(itemInstanceToRemove);
-        }
-
-        public void RemoveItemInstance(ItemInstance itemInstance)
-        {
-            if (itemInstance == null)
-            {
-                return;
-            }
-
-            if (itemInstance is ConsumableInstance consumableInstance)
-            {
-                if (consumableInstance.GetItem<Consumable>().isRenewable)
-                {
-                    consumableInstance.wasUsed = true;
-                    return;
-                }
-
-                if (GetItemAmount(itemInstance.GetItem<Consumable>()) > 0)
-                {
-                    ownedItems[itemInstance.GetItem<Consumable>()].Remove(itemInstance);
-                    return;
-                }
-            }
-
-            ownedItems[itemInstance.GetItem<Item>()].Remove(itemInstance);
-
-            // If not last arrow, do not unequip item
-            if (itemInstance is ArrowInstance arrowInstance && GetItemAmount(arrowInstance.GetItem<Arrow>()) > 0)
-            {
-                return;
-            }
-
-            UnequipItemToRemove(itemInstance);
-        }
-
-        void UnequipItemToRemove(ItemInstance item) => equipmentDatabase.UnequipItem(item);
-
-        public ItemInstance FindItemById(string id) => ownedItems.SelectMany(entry => entry.Value).FirstOrDefault(ownedItem => ownedItem.id.Equals(id));
-
-        public int GetItemAmount(Item itemToFind)
-        {
-            if (!ownedItems.ContainsKey(itemToFind))
-            {
-                return 0;
-            }
-
-            return ownedItems[itemToFind].Count;
-        }
-
-        public bool HasItem(Item itemToFind)
-        {
-            return this.ownedItems.ContainsKey(itemToFind);
-        }
-
-        public int GetWeaponsCount()
-        {
-            return ownedItems.Count(x => x.Key is Weapon);
-        }
-
-        public int GetSpellsCount()
-        {
-            return ownedItems.Count(x => x.Key is Spell);
-        }
+        /*
         public void AddFromSerializedItem(SerializedItem serializedItem)
         {
             Item item = Resources.Load<Item>(serializedItem.itemPath);
@@ -265,24 +149,25 @@ namespace AF.Inventory
             {
                 GemstoneInstance gemstoneInstance = new(serializedItem.id, gemstone);
                 AddItemInstance(gemstone, gemstoneInstance);
-            }*/
+            }
             else
             {
                 ItemInstance itemInstance = new(Guid.NewGuid().ToString(), item);
-                AddItemInstance(item, itemInstance);
-            }
-        }
+        AddItemInstance(item, itemInstance);
+    }
+}
 
-        private void AddItemInstance<T>(T item, ItemInstance instance) where T : Item
-        {
-            if (ownedItems.ContainsKey(item))
-            {
-                ownedItems[item].Add(instance);
-            }
-            else
-            {
-                ownedItems.Add(item, new() { instance });
-            }
-        }
+private void AddItemInstance<T>(T item, ItemInstance instance) where T : Item
+{
+    if (ownedItems.ContainsKey(item))
+    {
+        ownedItems[item].Add(instance);
+    }
+    else
+    {
+        ownedItems.Add(item, new() { instance });
+    }
+}
+*/
     }
 }

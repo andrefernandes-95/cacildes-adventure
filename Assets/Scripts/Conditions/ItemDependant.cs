@@ -8,7 +8,7 @@ namespace AF.Conditions
     {
         public Item item;
 
-        public InventoryDatabase inventoryDatabase;
+        public CharacterBaseManager character;
 
         [Header("Events")]
         public UnityEvent onTrue;
@@ -21,7 +21,7 @@ namespace AF.Conditions
 
         public void Evaluate()
         {
-            if (inventoryDatabase.HasItem(item))
+            if (character.characterBaseInventory.HasItem(item))
             {
                 onTrue?.Invoke();
             }

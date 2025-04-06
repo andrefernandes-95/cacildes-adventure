@@ -1,29 +1,23 @@
 using System;
 using System.Collections;
-using AF.Inventory;
 
 namespace AF
 {
-
     public class EV_AutoEquipConsumable : EventBase
     {
-        public EquipmentDatabase equipmentDatabase;
-        public InventoryDatabase inventoryDatabase;
-
+        public CharacterBaseManager characterToAutoEquipConsumable;
         public Consumable consumableToEquip;
 
         public override IEnumerator Dispatch()
         {
-            int freeSlot = Array.FindIndex(equipmentDatabase.consumables, (slot) => slot == null);
+            int freeSlot = Array.FindIndex(characterToAutoEquipConsumable.characterBaseEquipment.GetConsumables(), (slot) => slot == null);
 
             if (freeSlot != -1)
             {
-                ConsumableInstance consumableInstance = inventoryDatabase.GetFirst(consumableToEquip) as ConsumableInstance;
-                equipmentDatabase.EquipConsumable(consumableInstance, freeSlot);
+                characterToAutoEquipConsumable.characterBaseEquipment.EquipConsumable(consumableToEquip, freeSlot);
             }
 
             yield return null;
         }
     }
-
 }

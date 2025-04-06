@@ -85,14 +85,15 @@ namespace AF
                 {
                     if (Random.Range(0, 100) <= itemToAdd.chance)
                     {
-                        GetPlayerManager().playerInventory.AddItem(itemToAdd.item, itemToAdd.amount);
+                        InventoryUtils.AddItem(itemToAdd.item, itemToAdd.amount, GetPlayerManager().playerInventory);
+
                         NotifyItem(itemToAdd.item, itemToAdd.amount);
                     }
                 }
             }
             else
             {
-                GetPlayerManager().playerInventory.AddItem(item, amount);
+                InventoryUtils.AddItem(item, amount, GetPlayerManager().playerInventory);
                 NotifyItem(item, amount);
             }
 

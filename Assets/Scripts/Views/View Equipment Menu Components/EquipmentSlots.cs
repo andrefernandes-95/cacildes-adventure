@@ -224,37 +224,39 @@ namespace AF.UI.EquipmentMenu
 
         void AssignArrowButtonCallbacks()
         {
-            Dictionary<Button, Func<ArrowInstance>> buttonDictionary = new()
-            {
-                { arrowsButtonSlot1, () => equipmentDatabase.arrows[0] },
-                { arrowsButtonSlot2, () => equipmentDatabase.arrows[1] },
-            };
+            return;
+            /*
+                Dictionary<Button, Func<ArrowInstance>> buttonDictionary = new()
+                {
+                    { arrowsButtonSlot1, () => equipmentDatabase.arrows[0] },
+                    { arrowsButtonSlot2, () => equipmentDatabase.arrows[1] },
+                };
 
-            int slotIndex = 0;
-            foreach (var entry in buttonDictionary)
-            {
-                int localSlotIndex = slotIndex;  // Create a local variable to capture the correct value
+                int slotIndex = 0;
+                foreach (var entry in buttonDictionary)
+                {
+                    int localSlotIndex = slotIndex;  // Create a local variable to capture the correct value
 
-                UIUtils.SetupButton(entry.Key,
-                    () =>
-                    {
-                        activeButton = entry.Key;
+                    UIUtils.SetupButton(entry.Key,
+                        () =>
+                        {
+                            activeButton = entry.Key;
 
-                        SetupEquipmentButton(ItemList.EquipmentType.ARROW, localSlotIndex, LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Arrows"));
-                    },
-                    () =>
-                    {
-                        OnSlotFocus(LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Arrows"), entry.Value());
-                    },
-                    () =>
-                    {
-                        OnSlotFocusOut();
-                    },
-                    false,
-                    soundbank);
+                            SetupEquipmentButton(ItemList.EquipmentType.ARROW, localSlotIndex, LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Arrows"));
+                        },
+                        () =>
+                        {
+                            OnSlotFocus(LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Arrows"), entry.Value());
+                        },
+                        () =>
+                        {
+                            OnSlotFocusOut();
+                        },
+                        false,
+                        soundbank);
 
-                slotIndex++;
-            }
+                    slotIndex++;
+                }*/
         }
 
         void AssignSpellButtonCallbacks()
@@ -407,7 +409,7 @@ namespace AF.UI.EquipmentMenu
 
         void AssignConsumableButtonCallbacks()
         {
-            Dictionary<Button, Func<ConsumableInstance>> buttonDictionary = new()
+            Dictionary<Button, Func<Consumable>> buttonDictionary = new()
             {
                 { consumableButtonSlot1, () => equipmentDatabase.consumables[0] },
                 { consumableButtonSlot2, () => equipmentDatabase.consumables[1] },
@@ -435,7 +437,7 @@ namespace AF.UI.EquipmentMenu
                     },
                     () =>
                     {
-                        OnSlotFocus(LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Consumables"), entry.Value());
+                        // OnSlotFocus(LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Consumables"), entry.Value());
                     },
                     () =>
                     {
@@ -534,8 +536,9 @@ namespace AF.UI.EquipmentMenu
             SetShieldSlot(secondaryWeaponButtonSlot2, 1, txt_UnequipedShield);
             SetShieldSlot(secondaryWeaponButtonSlot3, 2, txt_UnequipedShield);
 
-            SetBackgroundImage(arrowsButtonSlot1, equipmentDatabase.arrows, 0, txt_UnequipedArrow);
-            SetBackgroundImage(arrowsButtonSlot2, equipmentDatabase.arrows, 1, txt_UnequipedArrow);
+            /*
+                        SetBackgroundImage(arrowsButtonSlot1, equipmentDatabase.arrows, 0, txt_UnequipedArrow);
+                        SetBackgroundImage(arrowsButtonSlot2, equipmentDatabase.arrows, 1, txt_UnequipedArrow);*/
 
             SetBackgroundImage(spellsButtonSlot1, equipmentDatabase.spells, 0, txt_UnequipedSpell);
             SetBackgroundImage(spellsButtonSlot2, equipmentDatabase.spells, 1, txt_UnequipedSpell);
@@ -553,17 +556,18 @@ namespace AF.UI.EquipmentMenu
             SetBackgroundImage(accessoryButtonSlot3, equipmentDatabase.accessories, 2, txt_UnequippedAccessory);
             SetBackgroundImage(accessoryButtonSlot4, equipmentDatabase.accessories, 3, txt_UnequippedAccessory);
 
-            SetBackgroundImage(consumableButtonSlot1, equipmentDatabase.consumables, 0, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot2, equipmentDatabase.consumables, 1, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot3, equipmentDatabase.consumables, 2, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot4, equipmentDatabase.consumables, 3, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot5, equipmentDatabase.consumables, 4, txt_UnequippedConsumable);
+            /*
+                        SetBackgroundImage(consumableButtonSlot1, equipmentDatabase.consumables, 0, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot2, equipmentDatabase.consumables, 1, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot3, equipmentDatabase.consumables, 2, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot4, equipmentDatabase.consumables, 3, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot5, equipmentDatabase.consumables, 4, txt_UnequippedConsumable);
 
-            SetBackgroundImage(consumableButtonSlot6, equipmentDatabase.consumables, 5, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot7, equipmentDatabase.consumables, 6, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot8, equipmentDatabase.consumables, 7, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot9, equipmentDatabase.consumables, 8, txt_UnequippedConsumable);
-            SetBackgroundImage(consumableButtonSlot10, equipmentDatabase.consumables, 9, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot6, equipmentDatabase.consumables, 5, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot7, equipmentDatabase.consumables, 6, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot8, equipmentDatabase.consumables, 7, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot9, equipmentDatabase.consumables, 8, txt_UnequippedConsumable);
+                        SetBackgroundImage(consumableButtonSlot10, equipmentDatabase.consumables, 9, txt_UnequippedConsumable);*/
         }
 
         void SetBackgroundImage(VisualElement button, ItemInstance[] items, int index, Texture2D unequippedTexture)
@@ -596,7 +600,7 @@ namespace AF.UI.EquipmentMenu
         /// Unity Event
         /// </summary>
         public void OnUnequip()
-        {
+        {/*
             Button focusedElement = root.focusController.focusedElement as Button;
             if (focusedElement == null) { return; }
             activeButton = focusedElement;
@@ -643,6 +647,7 @@ namespace AF.UI.EquipmentMenu
                 soundbank.PlaySound(soundbank.uiCancel);
                 DrawUI();
             }
+            */
         }
 
     }

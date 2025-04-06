@@ -2,7 +2,6 @@ namespace AF
 {
     using System.Collections.Generic;
     using System.Linq;
-    using UnityEngine;
 
     public class PlayerEquipment : CharacterBaseEquipment
     {
@@ -11,7 +10,58 @@ namespace AF
 
         public PlayerManager playerManager;
 
-        #region Equipment Getters
+        #region Equipment Indexes
+        public override void SwitchRightWeapon()
+        {
+            equipmentDatabase.currentRightWeaponIndex++;
+
+            if (equipmentDatabase.currentRightWeaponIndex >= GetRightHandWeapons().Length)
+            {
+                equipmentDatabase.currentRightWeaponIndex = 0;
+            }
+        }
+
+        public override void SwitchLeftWeapon()
+        {
+            equipmentDatabase.currentLeftWeaponIndex++;
+
+            if (equipmentDatabase.currentLeftWeaponIndex >= GetLeftHandWeapons().Length)
+            {
+                equipmentDatabase.currentLeftWeaponIndex = 0;
+            }
+        }
+
+        public override void SwitchSkill()
+        {
+            equipmentDatabase.currentSkillIndex++;
+
+            if (equipmentDatabase.currentSkillIndex >= GetSpells().Length)
+            {
+                equipmentDatabase.currentSkillIndex = 0;
+            }
+        }
+
+        public override void SwitchConsumable()
+        {
+            equipmentDatabase.currentConsumableIndex++;
+
+            if (equipmentDatabase.currentConsumableIndex >= GetConsumables().Length)
+            {
+                equipmentDatabase.currentConsumableIndex = 0;
+            }
+        }
+
+        public override void SwitchArrow()
+        {
+            equipmentDatabase.currentArrowIndex++;
+
+            if (equipmentDatabase.currentArrowIndex >= GetArrows().Length)
+            {
+                equipmentDatabase.currentArrowIndex = 0;
+            }
+        }
+        #endregion
+
         public override List<AccessoryInstance> GetAccessoryInstances()
         {
             return equipmentDatabase.accessories.ToList();
@@ -22,14 +72,14 @@ namespace AF
             return equipmentDatabase.armor;
         }
 
-        public override ArrowInstance GetArrowInstance()
+        public override Arrow GetCurrentArrow()
         {
-            return equipmentDatabase.GetCurrentArrow();
+            return equipmentDatabase.arrows[equipmentDatabase.currentArrowIndex];
         }
 
-        public override ConsumableInstance GetConsumableInstance()
+        public override Consumable GetConsumable()
         {
-            return equipmentDatabase.GetCurrentConsumable();
+            return equipmentDatabase.consumables[equipmentDatabase.currentConsumableIndex];
         }
 
         public override GauntletInstance GetGauntletInstance()
@@ -44,7 +94,7 @@ namespace AF
 
         public override WeaponInstance GetLeftHandWeapon()
         {
-            return equipmentDatabase.GetCurrentLeftWeapon();
+            return equipmentDatabase.leftWeapons[equipmentDatabase.currentLeftWeaponIndex];
         }
 
         public override LegwearInstance GetLegwearInstance()
@@ -54,7 +104,7 @@ namespace AF
 
         public override WeaponInstance GetRightHandWeapon()
         {
-            return equipmentDatabase.GetCurrentRightWeapon();
+            return equipmentDatabase.rightWeapons[equipmentDatabase.currentRightWeaponIndex];
         }
 
         public override List<ShieldInstance> GetShieldInstances()
@@ -66,12 +116,15 @@ namespace AF
 
         public override SpellInstance GetSpellInstance()
         {
-            return equipmentDatabase.GetCurrentSpell();
+            return equipmentDatabase.spells[equipmentDatabase.currentSkillIndex];
         }
-        #endregion
+
+        public override Arrow GetArrowInSlot(int slot)
+        {
+            return equipmentDatabase.arrows[slot];
+        }
 
 
-        #region Getters By Slot Index
         public override WeaponInstance GetRightWeaponInSlot(int slot)
         {
             return equipmentDatabase.rightWeapons[slot];
@@ -87,53 +140,147 @@ namespace AF
             return equipmentDatabase.spells[slot];
         }
 
-        public override ArrowInstance GetArrowInSlot(int slot)
-        {
-            return equipmentDatabase.arrows[slot];
-        }
-
         public override AccessoryInstance GetAccessoryInSlot(int slot)
         {
             return equipmentDatabase.accessories[slot];
         }
 
-        public override ConsumableInstance GetConsumableInSlot(int slot)
+        public override Consumable GetConsumableInSlot(int slot)
         {
             return equipmentDatabase.consumables[slot];
         }
-        #endregion
 
-        #region Equipment Setters
-
-        public override void SetHelmet(HelmetInstance helmetInstance)
+        public override WeaponInstance[] GetRightHandWeapons()
         {
-            equipmentDatabase.helmet = helmetInstance.Clone();
+            return equipmentDatabase.rightWeapons;
         }
 
-        public override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
+        public override WeaponInstance[] GetLeftHandWeapons()
         {
-            equipmentDatabase.leftWeapons[slotIndex] = weaponInstance.Clone();
+            return equipmentDatabase.leftWeapons;
         }
 
-        public override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
+
+
+        public override Arrow[] GetArrows()
+        {
+            return equipmentDatabase.arrows;
+        }
+
+        public override Consumable[] GetConsumables()
+        {
+            return equipmentDatabase.consumables;
+        }
+
+        public override SpellInstance[] GetSpells()
+        {
+            return equipmentDatabase.spells;
+        }
+
+
+        protected override void SetRightWeapon(WeaponInstance weaponInstance, int slotIndex)
         {
             equipmentDatabase.rightWeapons[slotIndex] = weaponInstance.Clone();
         }
 
-        public override void ClearHelmet()
+        protected override void ClearRightWeapon(int slotIndex)
         {
-            equipmentDatabase.helmet.Clear();
+            equipmentDatabase.rightWeapons[slotIndex].Clear();
         }
 
-        public override void ClearLeftWeapon(int slotIndex)
+        protected override void SetLeftWeapon(WeaponInstance weaponInstance, int slotIndex)
+        {
+            equipmentDatabase.leftWeapons[slotIndex] = weaponInstance.Clone();
+        }
+
+        protected override void ClearLeftWeapon(int slotIndex)
         {
             equipmentDatabase.leftWeapons[slotIndex].Clear();
         }
 
-        public override void ClearRightWeapon(int slotIndex)
+        protected override void SetHelmet(HelmetInstance helmetInstance)
         {
-            equipmentDatabase.rightWeapons[slotIndex].Clear();
+            equipmentDatabase.helmet = helmetInstance.Clone();
         }
-        #endregion
+
+        protected override void ClearHelmet()
+        {
+            equipmentDatabase.helmet.Clear();
+        }
+
+        protected override void SetArrow(Arrow arrow, int slotIndex)
+        {
+            equipmentDatabase.arrows[slotIndex] = arrow;
+        }
+
+        protected override void ClearArrow(int slotIndex)
+        {
+            equipmentDatabase.arrows[slotIndex] = null;
+        }
+
+        protected override void SetSkill(SpellInstance skillInstance, int slotIndex)
+        {
+            equipmentDatabase.spells[slotIndex] = skillInstance.Clone();
+        }
+
+        protected override void ClearSkill(int slotIndex)
+        {
+            equipmentDatabase.spells[slotIndex].Clear();
+        }
+
+        protected override void SetAccessory(AccessoryInstance accessoryInstance, int slotIndex)
+        {
+            equipmentDatabase.accessories[slotIndex] = accessoryInstance.Clone();
+        }
+
+        protected override void ClearAccessory(int slotIndex)
+        {
+            equipmentDatabase.accessories[slotIndex].Clear();
+        }
+
+        protected override void SetArmor(ArmorInstance armorInstance)
+        {
+            equipmentDatabase.armor = armorInstance.Clone();
+        }
+
+        protected override void ClearArmor()
+        {
+            equipmentDatabase.armor.Clear();
+        }
+
+        protected override void SetGauntlets(GauntletInstance gauntletInstance)
+        {
+            equipmentDatabase.gauntlet = gauntletInstance.Clone();
+        }
+
+        protected override void ClearGauntlets()
+        {
+            equipmentDatabase.gauntlet.Clear();
+        }
+
+        protected override void SetLegwear(LegwearInstance legwearInstance)
+        {
+            equipmentDatabase.legwear = legwearInstance.Clone();
+        }
+
+        protected override void ClearLegwear()
+        {
+            equipmentDatabase.legwear.Clear();
+        }
+
+        protected override void SetConsumable(Consumable consumable, int slotIndex)
+        {
+            equipmentDatabase.consumables[slotIndex] = consumable;
+        }
+
+        protected override void ClearConsumable(int slotIndex)
+        {
+            equipmentDatabase.consumables[slotIndex] = null;
+        }
+
+        public override void UnequipCurrentConsumable()
+        {
+            UnequipConsumable(equipmentDatabase.currentConsumableIndex);
+        }
     }
 }

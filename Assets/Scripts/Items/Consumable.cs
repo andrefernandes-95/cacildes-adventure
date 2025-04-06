@@ -22,6 +22,9 @@ namespace AF
         public StatusEffect[] statusEffectsWhenConsumed;
         public float effectsDurationInSeconds = 6;
 
+        [Header("Stack Options")]
+        public bool isStackable = true;
+
         public string GetFormattedRemovedStatusEffects()
         {
             string result = "";

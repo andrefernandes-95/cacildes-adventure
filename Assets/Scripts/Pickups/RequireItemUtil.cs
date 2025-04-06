@@ -17,9 +17,8 @@ namespace AF.Pickups
         [Header("Required Item")]
         public Item requiredItem;
 
-        [Header("Databases")]
-        public InventoryDatabase inventoryDatabase;
-
+        [Header("Player")]
+        public PlayerManager playerManager;
 
         [Header("Flags")]
         public MonoBehaviourID monoBehaviourID;
@@ -42,7 +41,7 @@ namespace AF.Pickups
         /// </summary>
         public void Unlock()
         {
-            if (!inventoryDatabase.HasItem(requiredItem))
+            if (!playerManager.characterBaseInventory.HasItem(requiredItem))
             {
                 onItemMissing?.Invoke();
                 return;
@@ -55,7 +54,7 @@ namespace AF.Pickups
 
             GetSoundbank().PlaySound(GetSoundbank().itemLostWithUse);
 
-            inventoryDatabase.RemoveItem(requiredItem);
+            playerManager.playerInventory.RemoveItem(requiredItem);
             onItemUsed?.Invoke();
             flagsDatabase.AddFlag(monoBehaviourID);
         }

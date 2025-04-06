@@ -28,9 +28,6 @@ namespace AF
         public CharacterStateMachine characterStateMachine;
         public Sight sight;
 
-        // Animator Overrides
-        [HideInInspector] public AnimatorOverrideController animatorOverrideController;
-
         Vector3 initialPosition;
         Quaternion initialRotation;
 

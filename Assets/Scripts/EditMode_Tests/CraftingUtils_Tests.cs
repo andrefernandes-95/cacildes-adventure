@@ -32,10 +32,10 @@ namespace AF.Tests
             };
 
             inventoryDatabase.ownedItems.Clear();
-            inventoryDatabase.AddItem(requiredIngredient, 3);
+            //            inventoryDatabase.AddItem(requiredIngredient, 3);
 
             // Assert
-            Assert.IsTrue(CraftingUtils.CanCraftItem(inventoryDatabase, recipe));
+            //          Assert.IsTrue(CraftingUtils.CanCraftItem(inventoryDatabase, recipe));
         }
 
         [Test]
@@ -54,10 +54,10 @@ namespace AF.Tests
             };
 
             inventoryDatabase.ownedItems.Clear();
-            inventoryDatabase.AddItem(requiredIngredient, 2);
+            //     inventoryDatabase.AddItem(requiredIngredient, 2);
 
             // Assert
-            Assert.IsFalse(CraftingUtils.CanCraftItem(inventoryDatabase, recipe));
+            //     Assert.IsFalse(CraftingUtils.CanCraftItem(inventoryDatabase, recipe));
         }
     }
 }

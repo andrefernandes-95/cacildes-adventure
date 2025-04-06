@@ -102,8 +102,8 @@ namespace AF
         {
             canLevelUpIndicator.text = hasEnoughForLevellingUp ? " *" : "";
 
-            upgradeWeapons.style.display = inventoryDatabase.HasItem(blacksmithKit) ? DisplayStyle.Flex : DisplayStyle.None;
-            brewPotions.style.display = inventoryDatabase.HasItem(alchemyKit) ? DisplayStyle.Flex : DisplayStyle.None;
+            upgradeWeapons.style.display = playerManager.characterBaseInventory.HasItem(blacksmithKit) ? DisplayStyle.Flex : DisplayStyle.None;
+            brewPotions.style.display = playerManager.characterBaseInventory.HasItem(alchemyKit) ? DisplayStyle.Flex : DisplayStyle.None;
             SetButtonTexts();
             RegisterButtonCallbacks();
 

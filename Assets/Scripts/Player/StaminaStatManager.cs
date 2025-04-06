@@ -151,36 +151,6 @@ namespace AF
             return playerStatsDatabase.maxStamina + (int)Mathf.Ceil(endurance * playerStatsDatabase.levelMultiplierForStamina);
         }
 
-        public void DecreaseLightAttackStamina()
-        {
-            DecreaseStamina(
-                equipmentDatabase.GetCurrentRightWeapon().Exists()
-                    ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().lightAttackStaminaCost
-                    : unarmedLightAttackStaminaCost);
-        }
-        public void DecreaseHeavyAttackStamina()
-        {
-            DecreaseStamina(
-                equipmentDatabase.GetCurrentRightWeapon().Exists()
-                    ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().heavyAttackStaminaCost
-                    : unarmedHeavyAttackStaminaCost);
-        }
-
-        public bool HasEnoughStaminaForLightAttack()
-        {
-            var staminaCost = equipmentDatabase.GetCurrentRightWeapon().Exists()
-                ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().lightAttackStaminaCost : unarmedLightAttackStaminaCost;
-
-            return HasEnoughStaminaForAction(staminaCost);
-        }
-
-        public bool HasEnoughStaminaForHeavyAttack()
-        {
-            var staminaCost = equipmentDatabase.GetCurrentRightWeapon().Exists()
-                ? equipmentDatabase.GetCurrentRightWeapon().GetItem<Weapon>().heavyAttackStaminaCost : unarmedHeavyAttackStaminaCost;
-
-            return HasEnoughStaminaForAction(staminaCost);
-        }
 
         /// <summary>
         /// Unity Event

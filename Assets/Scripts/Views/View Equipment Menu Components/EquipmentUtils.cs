@@ -12,17 +12,17 @@ namespace AF
         public enum AttributeType { VITALITY, ENDURANCE, DEXTERITY, STRENGTH, INTELLIGENCE, REPUTATION }
         public enum AccessoryAttributeType { HEALTH_BONUS, STAMINA_BONUS, MANA_BONUS }
 
-        public static int GetPoiseChangeFromItem(int playerMaxPoiseHits, EquipmentDatabase equipmentDatabase, ItemInstance itemToEquip)
+        public static int GetPoiseChangeFromItem(int playerMaxPoiseHits, CharacterBaseEquipment characterBaseEquipment, ItemInstance itemToEquip)
         {
             int currentPoise = playerMaxPoiseHits;
 
             // Get the equipped poise bonus based on the type of armor
             int equippedPoiseBonus = itemToEquip switch
             {
-                HelmetInstance _ => equipmentDatabase.helmet.Exists() ? equipmentDatabase.helmet.GetItem<Helmet>().poiseBonus : 0,
-                ArmorInstance _ => equipmentDatabase.armor.Exists() ? equipmentDatabase.armor.GetItem<Armor>().poiseBonus : 0,
-                GauntletInstance _ => equipmentDatabase.gauntlet.Exists() ? equipmentDatabase.gauntlet.GetItem<Gauntlet>().poiseBonus : 0,
-                LegwearInstance _ => equipmentDatabase.legwear.Exists() ? equipmentDatabase.legwear.GetItem<Legwear>().poiseBonus : 0,
+                HelmetInstance _ => characterBaseEquipment.GetHelmetInstance().Exists() ? characterBaseEquipment.GetHelmetInstance().GetItem<Helmet>().poiseBonus : 0,
+                ArmorInstance _ => characterBaseEquipment.GetArmorInstance().Exists() ? characterBaseEquipment.GetArmorInstance().GetItem<Armor>().poiseBonus : 0,
+                GauntletInstance _ => characterBaseEquipment.GetGauntletInstance().Exists() ? characterBaseEquipment.GetGauntletInstance().GetItem<Gauntlet>().poiseBonus : 0,
+                LegwearInstance _ => characterBaseEquipment.GetLegwearInstance().Exists() ? characterBaseEquipment.GetLegwearInstance().GetItem<Legwear>().poiseBonus : 0,
                 _ => 0
             };
 
@@ -36,7 +36,7 @@ namespace AF
                 ArmorInstance armor => armor.GetItem<Armor>().poiseBonus,
                 GauntletInstance gauntlet => gauntlet.GetItem<Gauntlet>().poiseBonus,
                 LegwearInstance legwear => legwear.GetItem<Legwear>().poiseBonus,
-                AccessoryInstance accessory => equipmentDatabase.IsAccessoryEquiped(accessory) ? 0 : accessory.GetItem<Accessory>().poiseBonus,
+                AccessoryInstance accessory => characterBaseEquipment.IsAccessoryEquiped(accessory) ? 0 : accessory.GetItem<Accessory>().poiseBonus,
                 _ => 0
             };
 
@@ -44,17 +44,17 @@ namespace AF
             return currentPoise + itemPoiseBonus;
         }
 
-        public static int GetPostureChangeFromItem(int playerMaxPostureDamage, EquipmentDatabase equipmentDatabase, ItemInstance itemInstanceToEquip)
+        public static int GetPostureChangeFromItem(int playerMaxPostureDamage, CharacterBaseEquipment characterBaseEquipment, ItemInstance itemInstanceToEquip)
         {
             int currentPosture = playerMaxPostureDamage;
 
             // Get the equipped posture bonus based on armor type
             int equippedPostureBonus = itemInstanceToEquip switch
             {
-                HelmetInstance _ => equipmentDatabase.helmet.Exists() ? equipmentDatabase.helmet.GetItem<Helmet>().postureBonus : 0,
-                ArmorInstance _ => equipmentDatabase.armor.Exists() ? equipmentDatabase.armor.GetItem<Armor>().postureBonus : 0,
-                GauntletInstance _ => equipmentDatabase.gauntlet.Exists() ? equipmentDatabase.gauntlet.GetItem<Gauntlet>().postureBonus : 0,
-                LegwearInstance _ => equipmentDatabase.legwear.Exists() ? equipmentDatabase.legwear.GetItem<Legwear>().postureBonus : 0,
+                HelmetInstance _ => characterBaseEquipment.GetHelmetInstance().Exists() ? characterBaseEquipment.GetHelmetInstance().GetItem<Helmet>().postureBonus : 0,
+                ArmorInstance _ => characterBaseEquipment.GetArmorInstance().Exists() ? characterBaseEquipment.GetArmorInstance().GetItem<Armor>().postureBonus : 0,
+                GauntletInstance _ => characterBaseEquipment.GetGauntletInstance().Exists() ? characterBaseEquipment.GetGauntletInstance().GetItem<Gauntlet>().postureBonus : 0,
+                LegwearInstance _ => characterBaseEquipment.GetLegwearInstance().Exists() ? characterBaseEquipment.GetLegwearInstance().GetItem<Legwear>().postureBonus : 0,
                 _ => 0
             };
 
@@ -68,7 +68,7 @@ namespace AF
                 ArmorInstance armor => armor != null && armor.Exists() ? armor.GetItem<Armor>().postureBonus : 0,
                 GauntletInstance gauntlet => gauntlet != null && gauntlet.Exists() ? gauntlet.GetItem<Gauntlet>().postureBonus : 0,
                 LegwearInstance legwear => legwear != null && legwear.Exists() ? legwear.GetItem<Legwear>().postureBonus : 0,
-                AccessoryInstance accessory => equipmentDatabase.IsAccessoryEquiped(accessory)
+                AccessoryInstance accessory => characterBaseEquipment.IsAccessoryEquiped(accessory)
                         ? 0
                         : accessory.GetItem<Accessory>().postureBonus,
                 _ => 0
@@ -100,7 +100,7 @@ namespace AF
             };
         }
 
-        public static int GetElementalDefenseFromItem(ArmorBaseInstance armorBaseInstance, WeaponElementType weaponElementType, CharacterBaseDefenseManager defenseStatManager, EquipmentDatabase equipmentDatabase)
+        public static int GetElementalDefenseFromItem(ArmorBaseInstance armorBaseInstance, WeaponElementType weaponElementType, CharacterBaseDefenseManager defenseStatManager, CharacterBaseEquipment characterBaseEquipment)
         {
             int baseElementalDefense = weaponElementType switch
             {
@@ -116,11 +116,11 @@ namespace AF
 
             ArmorBaseInstance equippedArmorInstance = armorBaseInstance switch
             {
-                HelmetInstance => equipmentDatabase.helmet,
-                ArmorInstance => equipmentDatabase.armor,
-                GauntletInstance => equipmentDatabase.gauntlet,
-                LegwearInstance => equipmentDatabase.legwear,
-                AccessoryInstance accessory when !equipmentDatabase.IsAccessoryEquiped(accessory) => accessory,
+                HelmetInstance => characterBaseEquipment.GetHelmetInstance(),
+                ArmorInstance => characterBaseEquipment.GetArmorInstance(),
+                GauntletInstance => characterBaseEquipment.GetGauntletInstance(),
+                LegwearInstance => characterBaseEquipment.GetLegwearInstance(),
+                AccessoryInstance accessory when !characterBaseEquipment.IsAccessoryEquiped(accessory) => accessory,
                 _ => null
             };
 
@@ -146,7 +146,25 @@ namespace AF
 
             ArmorBase armorBase = armorBaseInstance.Exists() ? armorBaseInstance.GetItem<ArmorBase>() : null;
 
-            int newDefenseFromItem = equipmentDatabase.IsEquipped(armorBaseInstance) ? 0 : weaponElementType switch
+            bool isEquipped = false;
+            if (armorBase is Helmet)
+            {
+                isEquipped = characterBaseEquipment.GetHelmetInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Gauntlet)
+            {
+                isEquipped = characterBaseEquipment.GetGauntletInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Armor)
+            {
+                isEquipped = characterBaseEquipment.GetArmorInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Legwear)
+            {
+                isEquipped = characterBaseEquipment.GetArmorInstance().HasItem(armorBase);
+            }
+
+            int newDefenseFromItem = isEquipped ? 0 : weaponElementType switch
             {
                 WeaponElementType.Fire => (int)armorBase.damageAbsorbed.fire,
                 WeaponElementType.Frost => (int)armorBase.damageAbsorbed.frost,
@@ -161,7 +179,7 @@ namespace AF
             return newValue + newDefenseFromItem;
         }
 
-        public static float GetEquipLoadFromItem(ItemInstance itemToEquip, float currentWeightPenalty, EquipmentDatabase equipmentDatabase)
+        public static float GetEquipLoadFromItem(ItemInstance itemToEquip, float currentWeightPenalty, CharacterBaseEquipment characterBaseEquipment)
         {
             // Define a function to retrieve the current speed penalty from an equipped item.
             static float GetSpeedPenalty(ItemInstance item)
@@ -185,32 +203,32 @@ namespace AF
             switch (itemToEquip)
             {
                 case ShieldInstance shield:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.GetCurrentLeftWeapon());
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetLeftHandWeapon());
                     return Math.Max(0, currentWeightPenalty) + shield.GetItem<Shield>().speedPenalty;
 
                 case WeaponInstance weapon:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.GetCurrentRightWeapon());
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetRightHandWeapon());
                     return Math.Max(0, currentWeightPenalty) + weapon.GetItem<Weapon>().speedPenalty;
 
                 case HelmetInstance helmet:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.helmet);
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetHelmetInstance());
                     return Math.Max(0, currentWeightPenalty) + helmet.GetItem<Helmet>().speedPenalty;
 
                 case ArmorInstance armor:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.armor);
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetArmorInstance());
                     return Math.Max(0, currentWeightPenalty) + armor.GetItem<Armor>().speedPenalty;
 
                 case GauntletInstance gauntlet:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.gauntlet);
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetGauntletInstance());
                     return Math.Max(0, currentWeightPenalty) + gauntlet.GetItem<Gauntlet>().speedPenalty;
 
                 case LegwearInstance legwear:
-                    currentWeightPenalty -= GetSpeedPenalty(equipmentDatabase.legwear);
+                    currentWeightPenalty -= GetSpeedPenalty(characterBaseEquipment.GetLegwearInstance());
                     return Math.Max(0, currentWeightPenalty) + legwear.GetItem<Legwear>().speedPenalty;
 
                 case AccessoryInstance accessory:
                     // Sum speed penalties of all equipped accessories.
-                    currentWeightPenalty -= equipmentDatabase.accessories.Sum((Func<ItemInstance, float>)GetSpeedPenalty);
+                    currentWeightPenalty -= characterBaseEquipment.GetAccessoryInstances().Sum((Func<ItemInstance, float>)GetSpeedPenalty);
                     return Math.Max(0, currentWeightPenalty) + accessory.GetItem<Accessory>().speedPenalty;
 
                 default:
@@ -218,7 +236,7 @@ namespace AF
             }
         }
 
-        public static int GetAttributeFromEquipment(ArmorBaseInstance armorBase, AttributeType attributeType, CharacterBaseManager character, EquipmentDatabase equipmentDatabase)
+        public static int GetAttributeFromEquipment(ArmorBaseInstance armorBaseInstance, AttributeType attributeType, CharacterBaseManager character)
         {
             // Get current value based on attribute type
             int currentValue = attributeType switch
@@ -236,25 +254,45 @@ namespace AF
             int bonusFromEquipment = 0;
             int valueFromCurrentEquipment = 0;
 
+            bool isEquipped = false;
+
+            ArmorBase armorBase = armorBaseInstance.GetItem<ArmorBase>();
+            if (armorBase is Helmet)
+            {
+                isEquipped = character.characterBaseEquipment.GetHelmetInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Gauntlet)
+            {
+                isEquipped = character.characterBaseEquipment.GetGauntletInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Armor)
+            {
+                isEquipped = character.characterBaseEquipment.GetArmorInstance().HasItem(armorBase);
+            }
+            else if (armorBase is Legwear)
+            {
+                isEquipped = character.characterBaseEquipment.GetArmorInstance().HasItem(armorBase);
+            }
+
             // Retrieve bonus from armorBase
-            if (!equipmentDatabase.IsEquipped(armorBase))
+            if (!isEquipped)
             {
                 bonusFromEquipment = attributeType switch
                 {
-                    AttributeType.VITALITY => armorBase.GetItem<ArmorBase>().vitalityBonus,
-                    AttributeType.ENDURANCE => armorBase.GetItem<ArmorBase>().enduranceBonus,
-                    AttributeType.STRENGTH => armorBase.GetItem<ArmorBase>().strengthBonus,
-                    AttributeType.DEXTERITY => armorBase.GetItem<ArmorBase>().dexterityBonus,
-                    AttributeType.INTELLIGENCE => armorBase.GetItem<ArmorBase>().intelligenceBonus,
-                    AttributeType.REPUTATION => armorBase.GetItem<ArmorBase>().reputationBonus,
+                    AttributeType.VITALITY => armorBase.vitalityBonus,
+                    AttributeType.ENDURANCE => armorBase.enduranceBonus,
+                    AttributeType.STRENGTH => armorBase.strengthBonus,
+                    AttributeType.DEXTERITY => armorBase.dexterityBonus,
+                    AttributeType.INTELLIGENCE => armorBase.intelligenceBonus,
+                    AttributeType.REPUTATION => armorBase.reputationBonus,
                     _ => 0 // Fallback for safety
                 };
             }
 
             // Check currently equipped items
-            if (armorBase is HelmetInstance && equipmentDatabase.helmet.Exists())
+            if (armorBaseInstance is HelmetInstance && character.characterBaseEquipment.GetHelmetInstance().Exists())
             {
-                valueFromCurrentEquipment = equipmentDatabase.helmet switch
+                valueFromCurrentEquipment = character.characterBaseEquipment.GetHelmetInstance() switch
                 {
                     HelmetInstance equippedHelmet => attributeType switch
                     {
@@ -269,9 +307,9 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is ArmorInstance && equipmentDatabase.armor.Exists())
+            else if (armorBaseInstance is ArmorInstance && character.characterBaseEquipment.GetArmorInstance().Exists())
             {
-                valueFromCurrentEquipment = equipmentDatabase.armor switch
+                valueFromCurrentEquipment = character.characterBaseEquipment.GetArmorInstance() switch
                 {
                     ArmorInstance equippedArmor => attributeType switch
                     {
@@ -286,9 +324,9 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is GauntletInstance && equipmentDatabase.gauntlet.Exists())
+            else if (armorBaseInstance is GauntletInstance && character.characterBaseEquipment.GetGauntletInstance().Exists())
             {
-                valueFromCurrentEquipment = equipmentDatabase.gauntlet switch
+                valueFromCurrentEquipment = character.characterBaseEquipment.GetGauntletInstance() switch
                 {
                     GauntletInstance equippedGauntlet => attributeType switch
                     {
@@ -303,9 +341,9 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is LegwearInstance && equipmentDatabase.legwear.Exists())
+            else if (armorBaseInstance is LegwearInstance && character.characterBaseEquipment.GetLegwearInstance().Exists())
             {
-                valueFromCurrentEquipment = equipmentDatabase.legwear switch
+                valueFromCurrentEquipment = character.characterBaseEquipment.GetLegwearInstance() switch
                 {
                     LegwearInstance equippedLegwear => attributeType switch
                     {
@@ -320,10 +358,10 @@ namespace AF
                     _ => 0
                 };
             }
-            else if (armorBase is AccessoryInstance)
+            else if (armorBaseInstance is AccessoryInstance)
             {
                 // Loop through each accessory in the accessories collection
-                foreach (var equippedAccessory in equipmentDatabase.accessories)
+                foreach (var equippedAccessory in character.characterBaseEquipment.GetAccessoryInstances())
                 {
                     if (equippedAccessory.IsEmpty())
                     {
@@ -418,7 +456,7 @@ namespace AF
             int valueFromCurrentEquipment = 0;
 
             // Retrieve bonus from accessory if not equipped
-            if (accessory != null && !equipmentDatabase.IsAccessoryEquiped(accessory))
+            if (accessory != null && !playerManager.characterBaseEquipment.IsAccessoryEquiped(accessory))
             {
                 bonusFromEquipment = attributeType switch
                 {

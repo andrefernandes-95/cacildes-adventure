@@ -4,12 +4,12 @@ namespace AF.Conditions
 {
     public class Condition_HasItem : ConditionBase
     {
-        public InventoryDatabase inventoryDatabase;
+        public CharacterBaseManager character;
         public Item requiredItem;
 
         public override bool IsConditionMet()
         {
-            return inventoryDatabase.HasItem(requiredItem);
+            return character.characterBaseInventory.HasItem(requiredItem);
         }
     }
 }

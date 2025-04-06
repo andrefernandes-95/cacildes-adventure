@@ -94,8 +94,8 @@ namespace AF.Shooting
 
         bool IsRangeWeaponIncompatibleWithProjectile()
         {
-            Weapon currentRangeWeapon = equipmentDatabase.GetCurrentRightWeapon()?.GetItem<Weapon>();
-            Arrow arrow = equipmentDatabase.GetCurrentArrow()?.GetItem<Arrow>();
+            Weapon currentRangeWeapon = characterBaseManager.characterBaseEquipment.GetRightHandWeapon()?.GetItem<Weapon>();
+            Arrow arrow = characterBaseManager.characterBaseEquipment.GetCurrentArrow();
 
             if (currentRangeWeapon == null || arrow == null)
             {
@@ -130,14 +130,14 @@ namespace AF.Shooting
         {
             if (CanShoot())
             {
-                if (equipmentDatabase.IsBowEquipped() && equipmentDatabase.HasEnoughCurrentArrows())
+                if (characterBaseManager.characterBaseEquipment.IsBowEquipped() && characterBaseManager.characterBaseEquipment.GetCurrentArrow())
                 {
                     if (IsRangeWeaponIncompatibleWithProjectile())
                     {
                         return;
                     }
 
-                    ShootBow(equipmentDatabase.GetCurrentArrow().GetItem<Arrow>(), transform, lockOnManager.nearestLockOnTarget?.transform);
+                    ShootBow(characterBaseManager.characterBaseEquipment.GetCurrentArrow(), transform, lockOnManager.nearestLockOnTarget?.transform);
                     uIDocumentPlayerHUDV2.UpdateEquipment();
                     canShootBow = false;
                     return;
@@ -145,22 +145,24 @@ namespace AF.Shooting
 
                 PlayerManager playerManager = GetPlayerManager();
 
-                if (
-                   equipmentDatabase.IsStaffEquipped()
-                   && equipmentDatabase.GetCurrentSpell().Exists()
-                   && playerManager.manaManager.HasEnoughManaForSpell(equipmentDatabase.GetCurrentSpell().GetItem<Spell>()))
-                {
-                    playerManager.manaManager.DecreaseMana(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().manaCostPerCast);
+                // TODO: handle later
+                /*
+                            if (
+                               characterBaseManager.characterBaseEquipment.IsStaffEquipped()
+                               && characterBaseManager.characterBaseEquipment.GetSpellInstance().Exists()
+                               && playerManager.manaManager.HasEnoughManaForSpell(equipmentDatabase.GetCurrentSpell().GetItem<Spell>()))
+                            {
+                                playerManager.manaManager.DecreaseMana(equipmentDatabase.GetCurrentSpell().GetItem<Spell>().manaCostPerCast);
 
-                    HandleSpellCastAnimationOverrides();
+                                HandleSpellCastAnimationOverrides();
 
-                    playerManager.PlayBusyHashedAnimationWithRootMotion(hashCast);
-                }
+                                playerManager.PlayBusyHashedAnimationWithRootMotion(hashCast);
+                            }*/
             }
         }
 
         void HandleSpellCastAnimationOverrides()
-        {
+        {/*
             Spell currentSpell = equipmentDatabase.GetCurrentSpell()?.GetItem<Spell>();
 
             if (currentSpell == previousSpell)
@@ -183,7 +185,7 @@ namespace AF.Shooting
             {
                 GetPlayerManager().UpdateAnimatorOverrideControllerClip("Cacildes - Spell - Cast", currentSpell.castAnimationOverride);
                 GetPlayerManager().RefreshAnimationOverrideState();
-            }
+            }*/
         }
 
         public void Aim_Begin()
@@ -200,7 +202,9 @@ namespace AF.Shooting
 
             SetupCinemachine3rdPersonFollowReference();
 
-            if (equipmentDatabase.IsBowEquipped())
+            // TODO Handle later
+            /*
+            if (characterBaseManager.characterBaseEquipment.IsBowEquipped())
             {
                 GetPlayerManager().animator.SetBool(hashIsAiming, true);
 
@@ -213,7 +217,7 @@ namespace AF.Shooting
             {
                 cinemachine3RdPersonFollow.CameraDistance = spellAimCameraDistance;
                 onSpellAim_Begin?.Invoke();
-            }
+            }*/
 
             GetPlayerManager().thirdPersonController.virtualCamera.gameObject.SetActive(false);
         }
@@ -235,21 +239,23 @@ namespace AF.Shooting
 
         private void Update()
         {
+            // TODO: Handle Later
+            /*
             if (isAiming && equipmentDatabase.IsBowEquipped())
             {
                 lookAtConstraint.constraintActive = GetPlayerManager().thirdPersonController._input.move.magnitude <= 0;
-            }
+            }*/
         }
         public void ShootBow(ConsumableProjectile consumableProjectile, Transform origin, Transform lockOnTarget)
         {
-            if (equipmentDatabase.IsBowEquipped())
+            if (characterBaseManager.characterBaseEquipment.IsBowEquipped())
             {
                 achievementOnShootingBowForFirstTime.AwardAchievement();
             }
 
-            if (equipmentDatabase.GetCurrentArrow().Exists() && equipmentDatabase.GetCurrentArrow().GetItem<Arrow>().loseUponFiring)
+            if (characterBaseManager.characterBaseEquipment.GetCurrentArrow() != null && characterBaseManager.characterBaseEquipment.GetCurrentArrow().loseUponFiring)
             {
-                inventoryDatabase.RemoveItem(consumableProjectile);
+                characterBaseManager.characterBaseInventory.RemoveItem(consumableProjectile);
             }
 
             GetPlayerManager().staminaStatManager.DecreaseStamina(minimumStaminaToShoot);
@@ -263,7 +269,7 @@ namespace AF.Shooting
         /// </summary>
         public override void CastSpell()
         {
-            ShootSpell(equipmentDatabase.GetCurrentSpell()?.GetItem<Spell>(), lockOnManager.nearestLockOnTarget?.transform);
+            ShootSpell(characterBaseManager.characterBaseEquipment.GetSpellInstance()?.GetItem<Spell>(), lockOnManager.nearestLockOnTarget?.transform);
 
             OnShoot();
         }
@@ -296,7 +302,7 @@ namespace AF.Shooting
                 characterBaseManager.transform.rotation = Quaternion.LookRotation(rotation);
             }
 
-            if (equipmentDatabase.IsBowEquipped())
+            if (characterBaseManager.characterBaseEquipment.IsBowEquipped())
             {
                 if (isAiming)
                 {
@@ -527,7 +533,7 @@ namespace AF.Shooting
                 return false;
             }
 
-            return equipmentDatabase.IsBowEquipped() || equipmentDatabase.IsStaffEquipped();
+            return characterBaseManager.characterBaseEquipment.IsBowEquipped() || characterBaseManager.characterBaseEquipment.IsStaffEquipped();
         }
 
         public override bool CanShoot()
@@ -559,8 +565,8 @@ namespace AF.Shooting
 
             // If not ranged weapons equipped, dont allow shooting
             if (
-                !equipmentDatabase.IsBowEquipped()
-                && !equipmentDatabase.IsStaffEquipped())
+                !characterBaseManager.characterBaseEquipment.IsBowEquipped()
+                && !characterBaseManager.characterBaseEquipment.IsStaffEquipped())
             {
                 return false;
             }

@@ -8,17 +8,17 @@ namespace AF
 {
     public static class CraftingUtils
     {
-        public static bool CanCraftItem(InventoryDatabase inventoryDatabase, CraftingRecipe recipe)
+        public static bool CanCraftItem(CharacterBaseInventory characterBaseInventory, CraftingRecipe recipe)
         {
             bool hasEnoughMaterial = true;
 
             foreach (var ingredient in recipe.ingredients)
             {
-                var itemEntry = inventoryDatabase.HasItem(ingredient.ingredient)
-                    ? inventoryDatabase.ownedItems[ingredient.ingredient]
+                var itemEntry = characterBaseInventory.HasItem(ingredient.ingredient)
+                    ? characterBaseInventory.GetInventory()[ingredient.ingredient]
                     : null;
 
-                var itemCount = inventoryDatabase.GetItemAmount(ingredient.ingredient);
+                var itemCount = characterBaseInventory.GetItemQuantity(ingredient.ingredient);
 
                 if (itemEntry == null)
                 {
@@ -40,7 +40,7 @@ namespace AF
             return hasEnoughMaterial;
         }
 
-        public static bool CanImproveWeapon(InventoryDatabase inventoryDatabase, WeaponInstance weaponInstance, int ownedGold)
+        public static bool CanImproveWeapon(CharacterBaseInventory characterBaseInventory, WeaponInstance weaponInstance, int ownedGold)
         {
             WeaponUpgradeLevel nextWeaponUpgradeLevel = weaponInstance.GetItem<Weapon>().weaponUpgrades.ElementAtOrDefault(weaponInstance.level - 1);
 
@@ -53,7 +53,7 @@ namespace AF
 
             foreach (var upgradeMaterial in nextWeaponUpgradeLevel.upgradeMaterials)
             {
-                if (!inventoryDatabase.HasItem(upgradeMaterial.Key) || inventoryDatabase.GetItemAmount(upgradeMaterial.Key) < upgradeMaterial.Value)
+                if (!characterBaseInventory.HasItem(upgradeMaterial.Key) || characterBaseInventory.GetItemQuantity(upgradeMaterial.Key) < upgradeMaterial.Value)
                 {
                     hasAllMaterialsRequired = false;
                     break;

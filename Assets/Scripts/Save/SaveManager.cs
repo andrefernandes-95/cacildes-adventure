@@ -111,6 +111,8 @@ namespace AF
 
         void SavePlayerEquipment(QuickSaveWriter quickSaveWriter)
         {
+            // TODO: Move to proper class
+            /*
             quickSaveWriter.Write("currentWeaponIndex", equipmentDatabase.currentWeaponIndex);
             quickSaveWriter.Write("currentShieldIndex", equipmentDatabase.currentShieldIndex);
             quickSaveWriter.Write("currentArrowIndex", equipmentDatabase.currentArrowIndex);
@@ -126,7 +128,7 @@ namespace AF
             quickSaveWriter.Write("armor", equipmentDatabase.armor.Exists() ? equipmentDatabase.armor.id : "");
             quickSaveWriter.Write("gauntlet", equipmentDatabase.gauntlet.Exists() ? equipmentDatabase.gauntlet.id : "");
             quickSaveWriter.Write("legwear", equipmentDatabase.legwear.Exists() ? equipmentDatabase.legwear.id : "");
-            quickSaveWriter.Write("isTwoHanding", equipmentDatabase.isTwoHanding);
+            quickSaveWriter.Write("isTwoHanding", equipmentDatabase.isTwoHanding);*/
         }
 
 
@@ -291,8 +293,8 @@ namespace AF
             {
                 foreach (SerializedItem serializedItem in serializedOwnedItems)
                 {
-                    inventoryDatabase.AddFromSerializedItem(serializedItem);
-
+                    // TODO: Move to proper class
+                    //inventoryDatabase.AddFromSerializedItem(serializedItem);
                 }
             }
 

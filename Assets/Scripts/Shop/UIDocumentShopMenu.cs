@@ -29,7 +29,7 @@ namespace AF.Shops
 
         [Header("Databases")]
         public PlayerStatsDatabase playerStatsDatabase;
-        public InventoryDatabase inventoryDatabase;
+        public PlayerManager customer;
 
         Label buyerName, buyerGold, sellerName, sellerGold;
         VisualElement buyerIcon, sellerIcon;
@@ -192,7 +192,7 @@ namespace AF.Shops
                 sellerIcon.style.backgroundImage = new StyleBackground(playerManager.playerAppearance.GetPlayerPortrait());
             }
 
-            root.Q<Label>("AppliedDiscountsLabel").text = characterShop.GetShopDiscountsDescription(inventoryDatabase, playerManager.statsBonusController, playerIsBuying);
+            root.Q<Label>("AppliedDiscountsLabel").text = characterShop.GetShopDiscountsDescription(playerManager, playerManager.statsBonusController, playerIsBuying);
         }
 
         void DrawBuyMenu(CharacterShop characterShop)
@@ -205,7 +205,7 @@ namespace AF.Shops
             {
                 Item clonedItem = item.Key;
 
-                if (item.Value.dontShowIfPlayerAreadyOwns && inventoryDatabase.HasItem(item.Key))
+                if (item.Value.dontShowIfPlayerAreadyOwns && customer.characterBaseInventory.HasItem(item.Key))
                 {
                     continue;
                 }
@@ -216,7 +216,7 @@ namespace AF.Shops
 
                     foreach (var requiredItemForTrading in item.Key.tradingItemRequirements)
                     {
-                        if (!inventoryDatabase.HasItem(requiredItemForTrading.Key))
+                        if (!customer.characterBaseInventory.HasItem(requiredItemForTrading.Key))
                         {
                             hasAllItems = false;
                         }
@@ -240,7 +240,7 @@ namespace AF.Shops
 
             List<ItemInstance> shopItemsToDisplay = new();
 
-            foreach (var itemInstance in inventoryDatabase.ownedItems.SelectMany(entry => entry.Value))
+            foreach (var itemInstance in customer.characterBaseInventory.GetInventory().SelectMany(entry => entry.Value))
             {
                 Item item = itemInstance.GetItem<Item>();
 
@@ -276,7 +276,7 @@ namespace AF.Shops
 
             if (ShopUtils.ItemRequiresCoinsToBeBought(item))
             {
-                int finalValue = characterShop.GetItemEvaluation(item, inventoryDatabase, playerManager.statsBonusController, isPlayerBuying);
+                int finalValue = characterShop.GetItemEvaluation(item, customer, playerManager.statsBonusController, isPlayerBuying);
 
                 if (item.value != finalValue)
                 {
@@ -305,8 +305,8 @@ namespace AF.Shops
                 foreach (var requiredTradingItem in item.tradingItemRequirements)
                 {
                     if (
-                        !inventoryDatabase.HasItem(requiredTradingItem.Key)
-                        || inventoryDatabase.GetItemAmount(requiredTradingItem.Key) > 0)
+                        !customer.characterBaseInventory.HasItem(requiredTradingItem.Key)
+                        || customer.characterBaseInventory.GetItemQuantity(requiredTradingItem.Key) > 0)
                     {
                         canBuy = false;
                         break;
@@ -316,14 +316,14 @@ namespace AF.Shops
                 return canBuy;
             }
 
-            int finalValue = characterShop.GetItemEvaluation(item, inventoryDatabase, playerManager.statsBonusController, true);
+            int finalValue = characterShop.GetItemEvaluation(item, customer, playerManager.statsBonusController, true);
 
             return playerStatsDatabase.gold >= finalValue;
         }
 
         bool ShopCanBuy(CharacterShop characterShop, Item item)
         {
-            int finalValue = characterShop.GetItemEvaluation(item, inventoryDatabase, playerManager.statsBonusController, false);
+            int finalValue = characterShop.GetItemEvaluation(item, customer, playerManager.statsBonusController, false);
 
             return characterShop.shopGold >= finalValue;
         }
@@ -345,7 +345,7 @@ namespace AF.Shops
                 Button buySellItemButton = cloneButton.Q<Button>("BuySellButton");
 
                 cloneButton.Q<IMGUIContainer>("ItemIcon").style.backgroundImage = new StyleBackground(item.sprite);
-                cloneButton.Q<Label>("ItemName").text = ShopUtils.GetItemDisplayName(item, true, inventoryDatabase, characterShop.itemsToSell);
+                cloneButton.Q<Label>("ItemName").text = ShopUtils.GetItemDisplayName(item, true, customer, characterShop.itemsToSell);
 
                 bool playerCanBuy = PlayerCanBuy(characterShop, item);
 
@@ -418,7 +418,7 @@ namespace AF.Shops
                 Button buySellItemButton = cloneButton.Q<Button>("BuySellButton");
 
                 cloneButton.Q<IMGUIContainer>("ItemIcon").style.backgroundImage = new StyleBackground(item.sprite);
-                cloneButton.Q<Label>("ItemName").text = ShopUtils.GetItemDisplayName(item, false, inventoryDatabase, characterShop.itemsToSell);
+                cloneButton.Q<Label>("ItemName").text = ShopUtils.GetItemDisplayName(item, false, customer, characterShop.itemsToSell);
 
                 if (playerItemInstance is WeaponInstance weaponInstance)
                 {
@@ -493,7 +493,7 @@ namespace AF.Shops
         {
             int price = characterShop.GetItemEvaluation(
                 item,
-                inventoryDatabase,
+                customer,
                 playerManager.statsBonusController,
                 true);
 
@@ -523,7 +523,8 @@ namespace AF.Shops
                 (receivedItem) =>
                 {
                     // Give item to player
-                    playerManager.playerInventory.AddItem(item, 1);
+                    InventoryUtils.AddItem(item, 1, customer.characterBaseInventory);
+
                     soundbank.PlaySound(soundbank.uiItemReceived);
                     notificationManager.ShowNotification(
                         LocalizationSettings.StringDatabase.GetLocalizedString("Glossary", "Bought") + " " + item.GetName() + "", item.sprite);
@@ -541,7 +542,7 @@ namespace AF.Shops
 
             int price = characterShop.GetItemEvaluation(
                         item,
-                        inventoryDatabase,
+                        customer,
                         playerManager.statsBonusController,
                         false);
 

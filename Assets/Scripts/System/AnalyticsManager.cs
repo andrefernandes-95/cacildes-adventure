@@ -19,6 +19,11 @@ namespace AF
             return $"Inventory:BossWeaponAcquired:{name}";
         }
 
+        public static string OnWeaponAcquired(string name)
+        {
+            return $"Inventory:WeaponAcquired:{name}";
+        }
+
         public static string OnArmorAcquired(string name)
         {
             return $"Inventory:ArmorAcquired:{name}";

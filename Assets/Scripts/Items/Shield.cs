@@ -55,8 +55,6 @@ namespace AF
         public int postureBonus = 0;
         public int poiseBonus = 0;
 
-        public float speedPenalty = 0f;
-
         [Header("Damage Enemies On Block")]
         public bool canDamageEnemiesOnShieldAttack = false;
         public Damage damageDealtToEnemiesUponBlocking;
