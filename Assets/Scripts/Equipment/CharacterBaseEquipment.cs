@@ -426,5 +426,23 @@ namespace AF
                 && GetGauntletInstance().IsEmpty()
                 && GetLegwearInstance().IsEmpty();
         }
+
+        public bool IsItemInstanceEquipped(ItemInstance itemInstance)
+        {
+            return
+                GetLeftHandWeapons().Any(leftHandWeapon => leftHandWeapon.IsEqualTo(itemInstance))
+                || GetRightHandWeapons().Any(rightHandWeapon => rightHandWeapon.IsEqualTo(itemInstance))
+                || GetSpells().Any(spell => spell.IsEqualTo(itemInstance))
+                || GetAccessoryInstances().Any(accessory => accessory.IsEqualTo(itemInstance))
+                || GetHelmetInstance().IsEqualTo(itemInstance)
+                || GetArmorInstance().IsEqualTo(itemInstance)
+                || GetGauntletInstance().IsEqualTo(itemInstance)
+                || GetLegwearInstance().IsEqualTo(itemInstance);
+        }
+
+        public bool IsItemEquipped(Item item)
+        {
+            return GetArrows().Any(arrow => arrow == item) || GetConsumables().Any(consumable => consumable == item);
+        }
     }
 }

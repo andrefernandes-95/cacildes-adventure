@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 namespace AF
 {
-    [RequireComponent(typeof(AudioSource))]
     public class UI_EquipmentSlotButton : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, ISelectHandler, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        private AudioSource audioSource => GetComponent<AudioSource>();
 
         [Header("Icons")]
         [SerializeField] Sprite unequippedSprite;
@@ -261,6 +259,56 @@ namespace AF
             }
 
             return label;
+        }
+
+        // Unity Event
+        public void OnClick()
+        {
+            if (isLeftHand)
+            {
+                uI_CharacterEquipment.uI_ItemsList.isAttemptingToEquipLeftWeapon = true;
+                uI_CharacterEquipment.uI_ItemsList.FilterForWeapons();
+            }
+            else if (isRightHand)
+            {
+                uI_CharacterEquipment.uI_ItemsList.isAttemptingToEquipRightWeapon = true;
+                uI_CharacterEquipment.uI_ItemsList.FilterForWeapons();
+            }
+            else if (isArrow)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForArrows();
+            }
+            else if (isAccessories)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForAccessories();
+            }
+            else if (isConsumables)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForConsumables();
+            }
+            else if (isSkills)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForSkills();
+            }
+            else if (isHelmet)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForHelmets();
+            }
+            else if (isArmor)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForArmors();
+            }
+            else if (isGauntlets)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForGauntlets();
+            }
+            else if (isBoots)
+            {
+                uI_CharacterEquipment.uI_ItemsList.FilterForBoots();
+            }
+
+            uI_CharacterEquipment.uI_ItemsList.SetIsAttemptingToEquipItems(true, slotIndex);
+            uI_CharacterEquipment.SwitchToInventoryTab();
         }
     }
 }

@@ -52,14 +52,7 @@ namespace AF.Pickups
                     isCard = isCard
                 });
 
-                if (item.Key is Weapon weapon)
-                {
-                    GetPlayerInventory().AddWeapon(weapon);
-                }
-                else if (item.Key is Helmet helmet)
-                {
-                    GetPlayerInventory().AddHelmet(helmet);
-                }
+                InventoryUtils.AddItem(item.Key, item.Value.amount, GetPlayerInventory());
 
                 //GetPlayerInventory().AddItem(item.Key, item.Value.amount);
             }

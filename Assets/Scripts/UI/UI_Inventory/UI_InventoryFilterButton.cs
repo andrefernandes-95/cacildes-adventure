@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace AF
 {
+    [RequireComponent(typeof(CanvasGroup))]
+
     public class UI_InventoryFilterButton : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, ISelectHandler, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler
     {
 
@@ -22,12 +25,20 @@ namespace AF
         [Header("Equipment")]
         public UI_CharacterInventory uI_CharacterInventory;
 
+        [Header("UI")]
+        Button button => GetComponent<Button>();
+        CanvasGroup canvasGroup => GetComponent<CanvasGroup>();
+
         private void Awake()
         {
         }
 
         private void OnEnable()
         {
+            bool shouldShow = uI_CharacterInventory.uI_ItemList.IsAttemptingToEquipItems() == false;
+
+            button.interactable = shouldShow;
+            canvasGroup.alpha = shouldShow ? 1 : 0;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -63,7 +74,6 @@ namespace AF
             string enTooltip = "";
             string ptTooltip = "";
 
-
             enTooltip = GetSlotEnglishLabel();
             ptTooltip = GetSlotPortugueseLabel();
 
@@ -73,7 +83,6 @@ namespace AF
         private void OnLostFocus()
         {
         }
-
 
         string GetSlotEnglishLabel()
         {
@@ -122,7 +131,6 @@ namespace AF
 
             return label;
         }
-
 
         string GetSlotPortugueseLabel()
         {

@@ -1388,7 +1388,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742515730243258021}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.053057093, y: -0.7903344, z: 0.6064449, w: 0.069145344}
+  m_LocalRotation: {x: 0.054432683, y: -0.7780173, z: 0.622168, w: 0.06806774}
   m_LocalPosition: {x: 0.7648863, y: 3, z: 0.953166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1405,7 +1405,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 0.7817168, g: 0.7817168, b: 0.7817168, a: 1}
+  m_Color: {r: 0.7941261, g: 0.7941261, b: 0.7941261, a: 1}
   m_Intensity: 0.01
   m_Range: 10
   m_SpotAngle: 30
@@ -2163,7 +2163,7 @@ MonoBehaviour:
   uIDocumentPlayerGold: {fileID: 8239534056808693025}
   notificationManager: {fileID: 6922590514710513798}
   playerStatsDatabase: {fileID: 11400000, guid: 5700f759ff00d104a97ef4af25190ddd, type: 2}
-  inventoryDatabase: {fileID: 11400000, guid: 65e0aa89b01ed68448508a15a2a90114, type: 2}
+  customer: {fileID: 0}
   buyFor_LocalizedString:
     m_TableReference:
       m_TableCollectionName: GUID:dbb3674ad34b76b458d72593e4ca5a4a
@@ -3391,7 +3391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crossBowPosition: {x: 0.8999996, y: -0.0999999, z: -7.75}
-  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
+  character: {fileID: 0}
 --- !u!1 &1807263565566117170
 GameObject:
   m_ObjectHideFlags: 0
@@ -9330,7 +9330,7 @@ MonoBehaviour:
   action: Pickup lost coins
   item: {fileID: 0}
   requiredItemToOpen: {fileID: 0}
-  inventoryDatabase: {fileID: 0}
+  characterBaseManager: {fileID: 0}
 --- !u!114 &2402987835455022409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14070,7 +14070,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 4363140735506542586}
 --- !u!114 &282976099056367249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19238,6 +19238,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gUIManager: {fileID: 11400000, guid: 47b8ceaf7b0ea2f4489a45d96da76055, type: 2}
+  onNewMenuEvent:
+    m_PersistentCalls:
+      m_Calls: []
   analogMovement: 0
   cursorInputForLook: 1
   onNextMenu:
@@ -21484,6 +21487,7 @@ MonoBehaviour:
   canMove: 1
   canRotate: 1
   isTakingDamage: 0
+  rotationSpeed: 6
   lockOnReference: {fileID: 396033348521637727}
   statusController: {fileID: 2557134072425247624}
   health: {fileID: 2254563081667588534}

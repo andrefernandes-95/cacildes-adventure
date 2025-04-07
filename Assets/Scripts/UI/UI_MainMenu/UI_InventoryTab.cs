@@ -12,7 +12,7 @@ namespace AF
 
         void OnEnable()
         {
-            if (EventSystem.current.currentSelectedGameObject == null)
+            if (EventSystem.current.currentSelectedGameObject == null && defaultEquipmentSlotButtonToPreselect != null)
             {
                 EventSystem.current.SetSelectedGameObject(defaultEquipmentSlotButtonToPreselect.gameObject);
             }
