@@ -75,7 +75,7 @@ namespace AF.Equipment
             }
         }
 
-        public void EquipWeapon(WeaponInstance weaponToEquip, int slot, bool isRightHand)
+        public void EquipWorldWeapon(WeaponInstance weaponToEquip, bool isRightHand)
         {
             if (isRightHand)
             {
@@ -87,7 +87,6 @@ namespace AF.Equipment
             }
 
             WeaponInstance clonedWeaponInstance = weaponToEquip.Clone();
-            character.characterBaseEquipment.EquipWeapon(clonedWeaponInstance, slot, isRightHand);
 
             Weapon weapon = clonedWeaponInstance.GetItem<Weapon>();
             if (isRightHand)
@@ -104,13 +103,10 @@ namespace AF.Equipment
             }
 
             character.statsBonusController.RecalculateEquipmentBonus();
-
         }
 
-        public void UnequipWeapon(int slot, bool isRightHand)
+        public void UnequipWorldWeapon(bool isRightHand)
         {
-            character.characterBaseEquipment.UnequipWeapon(slot, isRightHand);
-
             if (isRightHand)
             {
                 DestroyRightWeaponInstance();
@@ -131,7 +127,6 @@ namespace AF.Equipment
                     character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
                 }
             }
-
 
             character.statsBonusController.RecalculateEquipmentBonus();
         }

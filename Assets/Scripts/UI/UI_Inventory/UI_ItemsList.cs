@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using AYellowpaper.SerializedCollections;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -29,6 +31,10 @@ namespace AF
         public UI_InventoryFilterButton filterForGauntletsButton;
         public UI_InventoryFilterButton filterForBootsButton;
         public UI_InventoryFilterButton noFiltersButton;
+
+        [Header("UI Equipping Mode")]
+        public GameObject equipmentModeWarning;
+        public TextMeshProUGUI equipmentModeLabel;
 
 
         [Header("Equipping Filtering Options")]
@@ -80,6 +86,8 @@ namespace AF
             PreselectFilterButton();
 
             PopulateScrollRect();
+
+            CheckIfShouldDisplayEquipmentModeWarning();
         }
 
         void OnDisable()
@@ -368,7 +376,7 @@ namespace AF
             keyItemInstances.Clear();
         }
 
-        void Refresh()
+        public void Refresh()
         {
             gameObject.SetActive(false);
             gameObject.SetActive(true);
@@ -459,7 +467,6 @@ namespace AF
             noFilter = true;
             Refresh();
         }
-
 
         void PreselectFilterButton()
         {
@@ -585,7 +592,6 @@ namespace AF
                 uI_ItemButton.SetupButton();
             }
         }
-
         void PopulateShields()
         {
             foreach (ShieldInstance shieldInstance in shieldInstances)
@@ -708,6 +714,7 @@ namespace AF
                 uI_ItemButton.SetupButton();
             }
         }
+
         void PopulateCraftingMaterials()
         {
             foreach (KeyValuePair<CraftingMaterial, List<CraftingMaterialInstance>> stackableCraftingMaterial in stackableCraftMaterialInstances)
@@ -745,6 +752,76 @@ namespace AF
             this.isAttemptingToEquipItems = isAttemptingToEquipItems;
             equippingSlotIndex = slotToEquipItemTo;
         }
+
+        void CheckIfShouldDisplayEquipmentModeWarning()
+        {
+            if (IsAttemptingToEquipItems())
+            {
+                string label = "";
+
+                if (filterForWeapons)
+                {
+                    string hand = isAttemptingToEquipRightWeapon ? "direita" : "esquerda";
+                    string handEnglish = isAttemptingToEquipRightWeapon ? "right" : "left";
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar arma na mão {hand} no slot {equippingSlotIndex}"
+                       : $"Equipping weapon on {handEnglish} hand for slot {equippingSlotIndex}";
+                }
+                else if (filterForArrows)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar flechas no slot {equippingSlotIndex}"
+                       : $"Equipping arrows for slot {equippingSlotIndex}";
+                }
+                else if (filterForSkills)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar abilidades no slot {equippingSlotIndex}"
+                       : $"Equipping skills for slot {equippingSlotIndex}";
+                }
+                else if (filterForConsumables)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar consumíveis no slot {equippingSlotIndex}"
+                       : $"Equipping consumables for slot {equippingSlotIndex}";
+                }
+                else if (filterForAccessories)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar acessórios no slot {equippingSlotIndex}"
+                       : $"Equipping accessories for slot {equippingSlotIndex}";
+                }
+                else if (filterForHelmets)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar elmo"
+                       : $"Equipping helmet";
+                }
+                else if (filterForArmors)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar armadura"
+                       : $"Equipping armor";
+                }
+                else if (filterForGauntlets)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar manoplas"
+                       : $"Equipping gauntlets";
+                }
+                else if (filterForBoots)
+                {
+                    label = Glossary.IsPortuguese()
+                       ? $"A equipar botas"
+                       : $"Equipping boots";
+                }
+
+                equipmentModeLabel.text = label;
+            }
+
+            equipmentModeWarning.gameObject.SetActive(IsAttemptingToEquipItems());
+        }
+
 
     }
 }

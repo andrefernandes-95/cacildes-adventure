@@ -101,84 +101,23 @@ namespace AF
         {
             if (uI_CharacterInventory.uI_ItemList.IsAttemptingToEquipItems())
             {
-                // Slot to equip
-                int slot = uI_CharacterInventory.uI_ItemList.equippingSlotIndex;
-                if (slot < 0)
-                {
-                    Debug.LogError("Error: Attempting to equip something on a slot with index of -1");
-                    return;
-                }
+                UI_EquipmentUtils.EquipItem(
+                    uI_CharacterInventory.character,
+                    itemInstance,
+                    stackableItem,
+                    uI_CharacterInventory.uI_ItemList.equippingSlotIndex,
+                    uI_CharacterInventory.uI_ItemList.isAttemptingToEquipRightWeapon,
+                    uI_CharacterInventory.uI_ItemList.isAttemptingToEquipLeftWeapon
+                );
 
-                CharacterBaseEquipment characterEquipment = uI_CharacterInventory.character.characterBaseEquipment;
-
-                // Attempting to equip weapon?
-                bool isEquippingRightWeapon = uI_CharacterInventory.uI_ItemList.isAttemptingToEquipRightWeapon;
-                bool isEquippingLeftWeapon = uI_CharacterInventory.uI_ItemList.isAttemptingToEquipLeftWeapon;
-
-                if ((isEquippingRightWeapon || isEquippingLeftWeapon) && itemInstance is WeaponInstance weaponInstance)
-                {
-                    uI_CharacterInventory.character.characterWeapons.EquipWeapon(
-                        weaponInstance,
-                        slot,
-                        isEquippingRightWeapon);
-                    return;
-                }
-
-                // Attempting to equip arrows?
-                if (stackableItem is Arrow arrow)
-                {
-                    characterEquipment.EquipArrow(arrow, slot);
-                    return;
-                }
-
-                // Attempting to equip skills?
-                if (itemInstance is SpellInstance spellInstance)
-                {
-                    characterEquipment.EquipSkill(spellInstance, slot);
-                    return;
-                }
-
-                // Attempting to equip accessory?
-                if (itemInstance is AccessoryInstance accessoryInstance)
-                {
-                    characterEquipment.EquipAccessory(accessoryInstance, slot);
-                    return;
-                }
-
-                // Attempting to equip consumable?
-                if (stackableItem is Consumable consumable)
-                {
-                    characterEquipment.EquipConsumable(consumable, slot);
-                    return;
-                }
-
-                if (itemInstance is HelmetInstance helmetInstance)
-                {
-                    characterEquipment.EquipHelmet(helmetInstance);
-                    return;
-                }
-
-                if (itemInstance is ArmorInstance armorInstance)
-                {
-                    characterEquipment.EquipArmor(armorInstance);
-                    return;
-                }
-
-                if (itemInstance is GauntletInstance gauntletInstance)
-                {
-                    characterEquipment.EquipGauntlets(gauntletInstance);
-                    return;
-                }
-
-                if (itemInstance is LegwearInstance legwearInstance)
-                {
-                    characterEquipment.EquipLegwear(legwearInstance);
-                    return;
-                }
+                uI_CharacterInventory.uI_CharacterEquipment.OpenEquipmentTab();
             }
             else
             {
                 // Open Overlay Menu to Manage Item
+                uI_CharacterInventory.uI_ItemContextualMenu.selectedItemInstance = itemInstance;
+                uI_CharacterInventory.uI_ItemContextualMenu.selectedStackableItem = stackableItem;
+                uI_CharacterInventory.ShowItemContextualMenu();
             }
         }
 

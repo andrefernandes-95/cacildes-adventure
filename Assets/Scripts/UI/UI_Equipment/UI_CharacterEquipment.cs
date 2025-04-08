@@ -20,9 +20,14 @@ namespace AF
             uI_FooterIndicator.DisplayTooltip(enTooltip, ptTooltip);
         }
 
-        public void SwitchToInventoryTab()
+        public void OpenInventoryTab()
         {
             uI_MainMenu.OpenInventoryTab();
+        }
+
+        public void OpenEquipmentTab()
+        {
+            uI_MainMenu.OpenEquipmentTab();
         }
 
     }

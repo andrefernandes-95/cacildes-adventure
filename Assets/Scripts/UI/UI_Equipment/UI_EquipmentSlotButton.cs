@@ -308,7 +308,7 @@ namespace AF
             }
 
             uI_CharacterEquipment.uI_ItemsList.SetIsAttemptingToEquipItems(true, slotIndex);
-            uI_CharacterEquipment.SwitchToInventoryTab();
+            uI_CharacterEquipment.OpenInventoryTab();
         }
     }
 }

@@ -282,5 +282,29 @@ namespace AF
         {
             UnequipConsumable(equipmentDatabase.currentConsumableIndex);
         }
+        public override int GetCurrentRightHandWeaponSlotIndex()
+        {
+            return equipmentDatabase.currentRightWeaponIndex;
+        }
+
+        public override int GetCurrentLeftHandWeaponSlotIndex()
+        {
+            return equipmentDatabase.currentLeftWeaponIndex;
+        }
+
+        public override int GetCurrentConsumablesSlotIndex()
+        {
+            return equipmentDatabase.currentConsumableIndex;
+        }
+
+        public override int GetCurrentSkillsSlotIndex()
+        {
+            return equipmentDatabase.currentSkillIndex;
+        }
+
+        public override int GetCurrentArrowsSlotIndex()
+        {
+            return equipmentDatabase.currentArrowIndex;
+        }
     }
 }

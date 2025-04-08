@@ -304,5 +304,30 @@ namespace AF
         {
             UnequipConsumable(currentConsumableIndex);
         }
+
+        public override int GetCurrentRightHandWeaponSlotIndex()
+        {
+            return currentRightWeaponIndex;
+        }
+
+        public override int GetCurrentLeftHandWeaponSlotIndex()
+        {
+            return currentLeftWeaponIndex;
+        }
+
+        public override int GetCurrentConsumablesSlotIndex()
+        {
+            return currentConsumableIndex;
+        }
+
+        public override int GetCurrentSkillsSlotIndex()
+        {
+            return currentSkillIndex;
+        }
+
+        public override int GetCurrentArrowsSlotIndex()
+        {
+            return currentArrowIndex;
+        }
     }
 }

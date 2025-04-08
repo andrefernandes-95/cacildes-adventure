@@ -40,7 +40,7 @@ namespace AF
                 if (weapon != null)
                 {
                     WeaponInstance addedWeapon = characterBaseManager.characterBaseInventory.AddWeapon(weapon);
-                    characterBaseManager.characterWeapons.EquipWeapon(addedWeapon, rightSlotIndex, false);
+                    EquipWeapon(addedWeapon, rightSlotIndex, false);
                 }
 
                 rightSlotIndex++;
@@ -52,7 +52,7 @@ namespace AF
                 if (weapon != null)
                 {
                     WeaponInstance addedWeapon = characterBaseManager.characterBaseInventory.AddWeapon(weapon);
-                    characterBaseManager.characterWeapons.EquipWeapon(addedWeapon, leftSlotIndex, false);
+                    EquipWeapon(addedWeapon, leftSlotIndex, false);
                 }
 
                 leftSlotIndex++;
@@ -196,14 +196,33 @@ namespace AF
 
         public void EquipWeapon(WeaponInstance weapon, int slotIndex, bool isRightHand)
         {
+
             if (isRightHand)
             {
+                // Is Already Equipped?
+                if (GetRightHandWeapon().IsEqualTo(weapon))
+                {
+                    UnequipWeapon(slotIndex, true);
+                    return;
+                }
+
                 SetRightWeapon(weapon, slotIndex);
             }
             else
             {
+                // Is Already Equipped?
+                if (GetLeftHandWeapon().IsEqualTo(weapon))
+                {
+                    UnequipWeapon(slotIndex, false);
+                    return;
+                }
+
                 SetLeftWeapon(weapon, slotIndex);
             }
+
+            characterBaseManager.characterWeapons.EquipWorldWeapon(
+                weapon,
+                isRightHand);
         }
 
         public void UnequipWeapon(int slotIndex, bool isRightHand)
@@ -217,12 +236,20 @@ namespace AF
                 ClearLeftWeapon(slotIndex);
             }
 
+            characterBaseManager.characterWeapons.UnequipWorldWeapon(isRightHand);
         }
 
         protected abstract void SetArrow(Arrow arrow, int slotIndex);
         protected abstract void ClearArrow(int slotIndex);
         public void EquipArrow(Arrow arrow, int slotIndex)
         {
+            // If arrow already equipped, unequip it
+            if (GetCurrentArrow() == arrow)
+            {
+                UnequipArrow(slotIndex);
+                return;
+            }
+
             SetArrow(arrow, slotIndex);
         }
         public void UnequipArrow(int slotIndex)
@@ -230,11 +257,17 @@ namespace AF
             ClearArrow(slotIndex);
         }
 
-
         protected abstract void SetSkill(SpellInstance skillInstance, int slotIndex);
         protected abstract void ClearSkill(int slotIndex);
         public void EquipSkill(SpellInstance skill, int slotIndex)
         {
+            // If already equipped
+            if (GetSpellInstance().IsEqualTo(skill))
+            {
+                UnequipSkill(slotIndex);
+                return;
+            }
+
             SetSkill(skill, slotIndex);
         }
         public void UnequipSkill(int slotIndex)
@@ -246,6 +279,13 @@ namespace AF
         protected abstract void ClearAccessory(int slotIndex);
         public void EquipAccessory(AccessoryInstance accessory, int slotIndex)
         {
+            // If accessory already equipped, unequip it
+            if (GetAccessoryInSlot(slotIndex).IsEqualTo(accessory))
+            {
+                UnequipAccessory(slotIndex);
+                return;
+            }
+
             SetAccessory(accessory, slotIndex);
         }
         public void UnequipAccessory(int slotIndex)
@@ -257,6 +297,12 @@ namespace AF
         protected abstract void ClearHelmet();
         public void EquipHelmet(HelmetInstance helmetInstance)
         {
+            if (GetHelmetInstance().IsEqualTo(helmetInstance))
+            {
+                UnequipHelmet();
+                return;
+            }
+
             if (helmetInstance.Exists())
             {
                 helmetInstance.GetItem<Helmet>().OnEquip(characterBaseManager);
@@ -281,6 +327,12 @@ namespace AF
         protected abstract void ClearArmor();
         public void EquipArmor(ArmorInstance armorInstance)
         {
+            if (GetArmorInstance().IsEqualTo(armorInstance))
+            {
+                UnequipArmor();
+                return;
+            }
+
             if (armorInstance.Exists())
             {
                 armorInstance.GetItem<Armor>().OnEquip(characterBaseManager);
@@ -305,6 +357,12 @@ namespace AF
         protected abstract void ClearGauntlets();
         public void EquipGauntlets(GauntletInstance gauntletInstance)
         {
+            if (GetGauntletInstance().IsEqualTo(gauntletInstance))
+            {
+                UnequipGauntlets();
+                return;
+            }
+
             if (gauntletInstance.Exists())
             {
                 gauntletInstance.GetItem<Gauntlet>().OnEquip(characterBaseManager);
@@ -328,6 +386,12 @@ namespace AF
         protected abstract void ClearLegwear();
         public void EquipLegwear(LegwearInstance legwearInstance)
         {
+            if (GetLegwearInstance().IsEqualTo(legwearInstance))
+            {
+                UnequipLegwear();
+                return;
+            }
+
             if (legwearInstance.Exists())
             {
                 legwearInstance.GetItem<Legwear>().OnEquip(characterBaseManager);
@@ -352,6 +416,13 @@ namespace AF
         protected abstract void ClearConsumable(int slotIndex);
         public void EquipConsumable(Consumable consumable, int slotIndex)
         {
+            // If consumable is equipped, unequip it
+            if (GetConsumable() == consumable)
+            {
+                UnequipConsumable(slotIndex);
+                return;
+            }
+
             SetConsumable(consumable, slotIndex);
         }
         public void UnequipConsumable(int slotIndex)
@@ -444,5 +515,12 @@ namespace AF
         {
             return GetArrows().Any(arrow => arrow == item) || GetConsumables().Any(consumable => consumable == item);
         }
+
+        public abstract int GetCurrentRightHandWeaponSlotIndex();
+        public abstract int GetCurrentLeftHandWeaponSlotIndex();
+        public abstract int GetCurrentConsumablesSlotIndex();
+        public abstract int GetCurrentSkillsSlotIndex();
+        public abstract int GetCurrentArrowsSlotIndex();
+
     }
 }
