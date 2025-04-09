@@ -163,13 +163,15 @@ namespace AF
 
             if (character.characterBaseEquipment.GetRightHandWeapon().Exists())
             {
-                attacks = character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightLightAttacks.ToList();
+                attacks = isHeavyAttacking
+                    ? character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightTriggerActions
+                    : character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightBumperActions;
             }
 
             if (attacks.Count <= 0 && character.characterWeapons.equippedRightWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
             {
                 // Try the unarmed weapons
-                attacks = unarmedWorldWeapon.rightLightAttacks;
+                attacks = isHeavyAttacking ? unarmedWorldWeapon.rightTriggerActions : unarmedWorldWeapon.rightBumperActions;
             }
 
             return attacks;
@@ -181,23 +183,18 @@ namespace AF
 
             if (character.characterBaseEquipment.GetLeftHandWeapon().Exists())
             {
-                attacks = character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>().leftLightAttacks.ToList();
+                attacks = character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>().leftBumperActions.ToList();
             }
 
             if (attacks.Count <= 0 && character.characterWeapons.equippedLeftWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
             {
                 // Try the unarmed weapons
-                attacks = unarmedWorldWeapon.leftLightAttacks;
+                attacks = unarmedWorldWeapon.leftBumperActions;
             }
 
             return attacks;
         }
 
-
-        public bool IsAttacking()
-        {
-            return isLightAttacking || isHeavyAttacking || isJumpAttacking;
-        }
 
         void HandleAttackSpeed()
         {
@@ -387,6 +384,12 @@ namespace AF
             {
                 playerManager.attackStatManager.attackSource = AttackStatManager.AttackSource.UNARMED;
             }*/
+        }
+
+        public void ResetIsHeavyAttacking()
+        {
+            isHeavyAttacking = false;
+            character.animator.SetBool(AnimatorParametersConstants.IsCharging, false);
         }
 
 

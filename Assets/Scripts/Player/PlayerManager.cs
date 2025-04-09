@@ -251,7 +251,11 @@ namespace AF
 
         public bool IsAttemptingToRightAttack()
         {
-            return starterAssetsInputs.rightHandAttack;
+            return starterAssetsInputs.rightHandBumper;
+        }
+        public bool IsAttemptingToHeavyRightAttack()
+        {
+            return starterAssetsInputs.rightHandTrigger;
         }
         public bool IsAttemptingToLeftAttack()
         {
@@ -259,7 +263,7 @@ namespace AF
         }
         public bool IsAttemptingAttack()
         {
-            return IsAttemptingToRightAttack() || IsAttemptingToLeftAttack();
+            return IsAttemptingToRightAttack() || IsAttemptingToLeftAttack() || IsAttemptingToHeavyRightAttack();
         }
 
         public bool IsSprinting()

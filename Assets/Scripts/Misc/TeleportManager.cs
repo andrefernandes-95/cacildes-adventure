@@ -32,6 +32,9 @@ namespace AF
 
             companionsSceneManager.SpawnCompanions();
 
+            // TODO: Remove this return
+            return;
+
             LoadingManager.Instance.EndLoading();
         }
 

@@ -14,7 +14,13 @@ namespace AF
         public Damage currentRightWeaponDamage;
         public Damage currentLeftWeaponDamage;
 
-        public void ResetStates() { }
+        [Header("Charging Attack Modifier")]
+        public float currentChargingAttackMultiplier = 0f;
+
+        public void ResetStates()
+        {
+            currentChargingAttackMultiplier = 0f;
+        }
 
         // Call this every time equipment changes or stats are updated
         public void RecalculateDamages()
@@ -25,16 +31,26 @@ namespace AF
 
         public Damage GetAttackingWeaponDamage()
         {
+            Damage damage = new Damage();
+
             if (character.combatManager.currentAttackingMember == AttackingMember.RIGHT_HAND)
             {
-                return currentRightWeaponDamage;
+                damage = currentRightWeaponDamage;
             }
             else if (character.combatManager.currentAttackingMember == AttackingMember.LEFT_HAND)
             {
-                return currentLeftWeaponDamage;
+                damage = currentLeftWeaponDamage;
             }
 
-            return new();
+            if (currentChargingAttackMultiplier > 0)
+            {
+                damage = damage.WithScaledDamage(1 + currentChargingAttackMultiplier);
+                Debug.Log("Charging attack, will multiply " + (1 + currentChargingAttackMultiplier) + " to the current damage");
+            }
+
+            Debug.Log("Damage dealt: " + damage.GetTotalDamage());
+
+            return damage;
         }
 
         /// <summary>

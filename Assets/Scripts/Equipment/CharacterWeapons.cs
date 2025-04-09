@@ -34,8 +34,9 @@ namespace AF.Equipment
                 equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
                 equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
 
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightLightAttacks.ToArray());
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightBumperActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.leftBumperActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightTriggerActions.ToArray());
             }
 
             defaultRightWeaponHandler = rightWeaponHandler;
@@ -93,13 +94,13 @@ namespace AF.Equipment
             {
                 equippedRightWeaponInstance = Instantiate(weapon.worldWeapon, rightWeaponHandler);
                 equippedRightWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
-                character.UpdateAttackAnimations(weapon.rightLightAttacks.ToArray());
+                character.UpdateAttackAnimations(weapon.rightBumperActions.ToArray());
             }
             else
             {
                 equippedLeftWeaponInstance = Instantiate(weapon.worldWeapon, leftWeaponHandler);
                 equippedLeftWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
-                character.UpdateAttackAnimations(weapon.leftLightAttacks.ToArray());
+                character.UpdateAttackAnimations(weapon.leftBumperActions.ToArray());
             }
 
             character.statsBonusController.RecalculateEquipmentBonus();
@@ -114,7 +115,7 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.rightLightAttacks.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.rightBumperActions.ToArray());
                 }
             }
             else
@@ -124,7 +125,7 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.leftLightAttacks.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.leftBumperActions.ToArray());
                 }
             }
 

@@ -58,8 +58,9 @@ namespace AF
         public WorldWeapon worldWeapon;
 
         [Header("Attack Actions")]
-        public List<AttackAction> rightLightAttacks = new();
-        public List<AttackAction> leftLightAttacks = new();
+        public List<AttackAction> rightBumperActions = new();
+        public List<AttackAction> rightTriggerActions = new();
+        public List<AttackAction> leftBumperActions = new();
 
         [Header("Attack")]
         public Damage damage;

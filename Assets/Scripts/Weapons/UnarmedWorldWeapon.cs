@@ -8,8 +8,9 @@ namespace AF
     {
 
         [Header("Attack Actions")]
-        public List<AttackAction> rightLightAttacks = new();
-        public List<AttackAction> leftLightAttacks = new();
+        public List<AttackAction> rightBumperActions = new();
+        public List<AttackAction> rightTriggerActions = new();
+        public List<AttackAction> leftBumperActions = new();
 
         [Header("Collider")]
         public UnarmedDamageCollider unarmedDamageCollider;

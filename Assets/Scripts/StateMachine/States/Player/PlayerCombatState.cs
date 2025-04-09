@@ -7,7 +7,7 @@ namespace AF.StateMachine
     {
         void ResetPlayerInputs(PlayerManager playerManager)
         {
-            playerManager.starterAssetsInputs.rightHandAttack = false;
+            playerManager.starterAssetsInputs.rightHandBumper = false;
             playerManager.starterAssetsInputs.leftHandAttack = false;
         }
 

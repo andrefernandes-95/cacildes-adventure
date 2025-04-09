@@ -108,10 +108,12 @@ namespace AF
                 return false;
             }
 
+            // TODO: Check
+            /*
             if (onlyAllowOnAttacks)
             {
                 return playerManager.combatManager.IsAttacking();
-            }
+            }*/
 
             if (dontAllowIKWhenJumpAttacking && playerManager.combatManager.isJumpAttacking)
             {

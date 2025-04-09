@@ -23,6 +23,11 @@ namespace AF
 
         void Evaluate()
         {
+            if (character == null)
+            {
+                return;
+            }
+
             if (character.characterBaseEquipment.GetRightHandWeapon().Exists() && character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().isCrossbow)
             {
                 transform.localPosition = crossBowPosition;

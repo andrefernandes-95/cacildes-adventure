@@ -4040,6 +4040,7 @@ MonoBehaviour:
     hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
+  currentChargingAttackMultiplier: 0
 --- !u!1 &1965311381916216248
 GameObject:
   m_ObjectHideFlags: 0
@@ -18486,6 +18487,10 @@ GameObject:
   - component: {fileID: 6361968677153970333}
   - component: {fileID: 5122672870407089929}
   - component: {fileID: 3450680162556713538}
+  - component: {fileID: 7913364499472456292}
+  - component: {fileID: 3457954186281182701}
+  - component: {fileID: 591857078768399544}
+  - component: {fileID: 6775786089052084653}
   m_Layer: 8
   m_Name: Player Input and Third Person Controller
   m_TagString: Untagged
@@ -18723,6 +18728,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  dodge: 0
   toggleWalk: 0
   consumeFavoriteItem: 0
   onConsumeFavoriteItem:
@@ -18743,106 +18749,6 @@ MonoBehaviour:
       - m_Target: {fileID: 4574202107048829290}
         m_TargetAssemblyTypeName: AF.UI.EquipmentMenu.ItemList, AF
         m_MethodName: OnUseItem
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  dodge: 0
-  onDodgeInput:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AF.DodgeController, AF
-        m_MethodName: OnDodgeInput
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5309569915440144546}
-        m_TargetAssemblyTypeName: AF.MenuManager, AF
-        m_MethodName: OnCancelInput
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6542650930376136311}
-        m_TargetAssemblyTypeName: AF.UIDocumentBook, AF
-        m_MethodName: OnClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1306552395153567011}
-        m_TargetAssemblyTypeName: AF.UIDocumentCraftScreen, AF
-        m_MethodName: OnClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7702240511942788258}
-        m_TargetAssemblyTypeName: AF.Shops.UIDocumentShopMenu, AF
-        m_MethodName: OnClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3632696609515934369}
-        m_TargetAssemblyTypeName: AF.UIDocumentLevelUp, AF
-        m_MethodName: OnClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6498320243498493387}
-        m_TargetAssemblyTypeName: AF.UIDocumentBonfireTravel, AF
-        m_MethodName: OnClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6967777918374765681}
-        m_TargetAssemblyTypeName: AF.UIDocumentBonfireMenu, AF
-        m_MethodName: OnClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18896,7 +18802,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   block: 0
-  rightHandAttack: 0
+  rightHandBumper: 0
+  rightHandTrigger: 0
   onBlock_Start:
     m_PersistentCalls:
       m_Calls:
@@ -19306,6 +19213,64 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: c45719dc8e6e81947b7f2a5be9b2993a, type: 2}
   playerInput: {fileID: 6361968677153970333}
   equipmentSlots: {fileID: 8542276434645547365}
+--- !u!114 &7913364499472456292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325afc9d977f7ee439f0a32a1653623e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -8750674506638915993, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+--- !u!114 &3457954186281182701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a155d0e2c4deed44fa3fc86b9c3a5d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: 6431354561503798453, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+--- !u!114 &591857078768399544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9eea41911297a46ab1e064eb22e33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: 6255321082648698994, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+  playerManager: {fileID: 4363140735506542586}
+--- !u!114 &6775786089052084653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0897fda617c5c041b58a016a851e2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -4883202719108895999, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+  playerManager: {fileID: 4363140735506542586}
 --- !u!1 &7491860537892402807
 GameObject:
   m_ObjectHideFlags: 0

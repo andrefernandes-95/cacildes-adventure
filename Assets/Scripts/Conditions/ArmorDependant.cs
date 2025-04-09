@@ -39,6 +39,11 @@ namespace AF.Conditions
         {
             bool evaluationResult = false;
 
+            if (characterToTest == null)
+            {
+                return;
+            }
+
             if (requirePlayerToBeNaked)
             {
                 evaluationResult = characterToTest.characterBaseEquipment.IsNaked();
