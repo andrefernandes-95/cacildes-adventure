@@ -26,6 +26,7 @@ namespace AF.StateMachine
                 ResetPlayerInputs(playerManager);
 
                 hasChosenAttack = true;
+
                 playerManager.combatManager.AttemptAttack();
             }
 

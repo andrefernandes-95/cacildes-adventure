@@ -1388,7 +1388,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742515730243258021}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.054432683, y: -0.7780173, z: 0.622168, w: 0.06806774}
+  m_LocalRotation: {x: 0.053057093, y: -0.7903344, z: 0.6064449, w: 0.069145344}
   m_LocalPosition: {x: 0.7648863, y: 3, z: 0.953166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1405,7 +1405,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 0.7941261, g: 0.7941261, b: 0.7941261, a: 1}
+  m_Color: {r: 0.7817168, g: 0.7817168, b: 0.7817168, a: 1}
   m_Intensity: 0.01
   m_Range: 10
   m_SpotAngle: 30
@@ -2887,9 +2887,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1082817454623224023}
-  - component: {fileID: 3972188609608555697}
+  - component: {fileID: 93533930453972839}
   m_Layer: 8
-  m_Name: ' Player Mana Manager'
+  m_Name: "\U0001F525Player Mana Manager"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2910,7 +2910,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6558083026297358713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3972188609608555697
+--- !u!114 &93533930453972839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2919,16 +2919,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1403431699516056328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dedfe4625ee0f594a87ecc53b1df23e4, type: 3}
+  m_Script: {fileID: 11500000, guid: f83b72c54b29dbb459b47f5db0a01033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentChargingAttackMultiplier: 0
+  character: {fileID: 4363140735506542586}
+  currentSpellDamage:
+    physical: 0
+    fire: 0
+    frost: 0
+    magic: 0
+    lightning: 0
+    darkness: 0
+    water: 0
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
   playerStatsDatabase: {fileID: 11400000, guid: 5700f759ff00d104a97ef4af25190ddd, type: 2}
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
   playerStatsBonusController: {fileID: 6020033262264106722}
   inputs: {fileID: 3450680162556713538}
-  equipmentGraphicsHandler: {fileID: 0}
+  equipmentGraphicsHandler: {fileID: 6383117140852044533}
   playerManager: {fileID: 4363140735506542586}
-  MANA_REGENERATION_RATE: 3
+  MANA_REGENERATION_RATE: 20
 --- !u!1 &1451403975102139995
 GameObject:
   m_ObjectHideFlags: 0
@@ -3216,7 +3238,7 @@ MonoBehaviour:
   onApplied_Start:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3972188609608555697}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AF.ManaManager, AF
         m_MethodName: RestoreFullMana
         m_Mode: 1
@@ -4101,6 +4123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9864235a5c574b9e88d6b126d6c38fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastAttackAction: {fileID: 0}
   currentAttackingMember: 0
   isCombatting: 0
   isLightAttacking: 0
@@ -14070,6 +14093,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  onSwitchingSpell:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingConsumable:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingRightWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingLeftWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+  switchWeaponsSoundpack: {fileID: 11400000, guid: 286c745411033a441a1d7f7967b4543c, type: 2}
+  switchSpellsSoundpack: {fileID: 11400000, guid: 17bfdfc54b0218b4a897f20829e91646, type: 2}
+  switchConsumablesSoundpack: {fileID: 11400000, guid: 76facf02fd3f2ea4292a8000fd6af9a3, type: 2}
   equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
   playerManager: {fileID: 4363140735506542586}
 --- !u!114 &282976099056367249
@@ -19212,6 +19250,7 @@ MonoBehaviour:
         m_CallState: 2
   gameSettings: {fileID: 11400000, guid: c45719dc8e6e81947b7f2a5be9b2993a, type: 2}
   playerInput: {fileID: 6361968677153970333}
+  playerManager: {fileID: 4363140735506542586}
   equipmentSlots: {fileID: 8542276434645547365}
 --- !u!114 &7913364499472456292
 MonoBehaviour:
@@ -21477,6 +21516,7 @@ MonoBehaviour:
   characterBaseDefenseManager: {fileID: 9026837746628033580}
   characterBaseAttackManager: {fileID: 2958563883327309659}
   characterBaseStateMachine: {fileID: 3566014933293653343}
+  characterBaseMagicManager: {fileID: 93533930453972839}
   animatorSpeed: 1
   thirdPersonController: {fileID: 5122672870407089929}
   playerWeaponsManager: {fileID: 897694540558054072}
@@ -21486,7 +21526,7 @@ MonoBehaviour:
   playerAchievementsManager: {fileID: 5689008741502995564}
   combatNotificationsController: {fileID: 5200957334068746001}
   staminaStatManager: {fileID: 3207973702865822255}
-  manaManager: {fileID: 3972188609608555697}
+  manaManager: {fileID: 93533930453972839}
   playerInventory: {fileID: 3925226053210021350}
   favoriteItemsManager: {fileID: 9079116784592991426}
   playerShootingManager: {fileID: 6982558639531093206}
@@ -21911,7 +21951,7 @@ MonoBehaviour:
   onApplied_Start:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3972188609608555697}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AF.ManaManager, AF
         m_MethodName: RestoreManaPoints
         m_Mode: 4
@@ -21994,8 +22034,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8619754588792639567}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.589999, y: 2.1599998, z: 8.7}
+  m_LocalRotation: {x: 0, y: -0.75784403, z: 0, w: 0.65243584}
+  m_LocalPosition: {x: 13.716671, y: 8.87, z: -0.9840393}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22034,7 +22074,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 70
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

@@ -29,6 +29,7 @@ namespace AF
         public int currentArrowIndex = 0;
         public int currentConsumableIndex = 0;
 
+
         #region Equipment Indexes
         public override void SwitchRightWeapon()
         {
@@ -38,6 +39,10 @@ namespace AF
             {
                 currentRightWeaponIndex = 0;
             }
+
+            onSwitchingRightWeapon.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchLeftWeapon()
@@ -48,6 +53,10 @@ namespace AF
             {
                 currentLeftWeaponIndex = 0;
             }
+
+            onSwitchingLeftWeapon.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchLeftHand);
+            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchSkill()
@@ -58,6 +67,10 @@ namespace AF
             {
                 currentSkillIndex = 0;
             }
+
+            onSwitchingSpell.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingSpellsSoundpack();
         }
 
         public override void SwitchConsumable()
@@ -68,6 +81,10 @@ namespace AF
             {
                 currentConsumableIndex = 0;
             }
+
+            onSwitchingConsumable.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingConsumablesSoundpack();
         }
 
         public override void SwitchArrow()

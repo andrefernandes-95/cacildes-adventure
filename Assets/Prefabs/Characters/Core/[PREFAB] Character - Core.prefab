@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887503e10e9e1c84bbd487c0c16f5d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastAttackAction: {fileID: 0}
   currentAttackingMember: 0
   isCombatting: 0
   isLightAttacking: 0
@@ -35424,6 +35425,7 @@ Transform:
   - {fileID: 5409332314645059800}
   - {fileID: 4700016453926838382}
   - {fileID: 7704516446950710702}
+  - {fileID: 8261847843307715193}
   m_Father: {fileID: 6242450190264014007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3705549246472038351
@@ -38377,6 +38379,7 @@ MonoBehaviour:
   characterBaseDefenseManager: {fileID: 4216785718268101194}
   characterBaseAttackManager: {fileID: 9099275497380788027}
   characterBaseStateMachine: {fileID: 8170815007969967083}
+  characterBaseMagicManager: {fileID: 5970159917112407286}
   animatorSpeed: 1
   companionID: {fileID: 0}
   characterCombatController: {fileID: 8518529533467014141}
@@ -38387,7 +38390,6 @@ MonoBehaviour:
   executionManager: {fileID: 3652008012499799501}
   characterStateMachine: {fileID: 8170815007969967083}
   sight: {fileID: 4887290504856783029}
-  animatorOverrideController: {fileID: 0}
   patrolSpeed: 2
   chaseSpeed: 4.5
   cutDistanceToTargetSpeed: 12
@@ -48754,6 +48756,79 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &5181035131531581434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8261847843307715193}
+  - component: {fileID: 5970159917112407286}
+  m_Layer: 22
+  m_Name: "\U0001F525 Magic Manager"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8261847843307715193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5181035131531581434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1438186108084557261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5970159917112407286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5181035131531581434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8afe501bf015d7a4093f3a371883a56b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentChargingAttackMultiplier: 0
+  character: {fileID: 1759811369383153655}
+  currentSpellDamage:
+    physical: 0
+    fire: 0
+    frost: 0
+    magic: 0
+    lightning: 0
+    darkness: 0
+    water: 0
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
+  playerStatsDatabase: {fileID: 11400000, guid: 5700f759ff00d104a97ef4af25190ddd, type: 2}
+  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
+  playerStatsBonusController: {fileID: 7019286470466001831}
+  inputs: {fileID: 0}
+  equipmentGraphicsHandler: {fileID: 5367183659880256516}
+  playerManager: {fileID: 0}
+  MANA_REGENERATION_RATE: 20
 --- !u!1 &5188702234918538813
 GameObject:
   m_ObjectHideFlags: 0
@@ -57723,6 +57798,7 @@ MonoBehaviour:
     hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
+  currentChargingAttackMultiplier: 0
 --- !u!1 &6155146739327157142
 GameObject:
   m_ObjectHideFlags: 0
@@ -64644,7 +64720,7 @@ MonoBehaviour:
   requireAllPiecesToBeEquipped: 0
   requireNoneOfThePiecesToBeEquipped: 0
   requirePlayerToBeNaked: 1
-  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
+  characterToTest: {fileID: 0}
   onTrue:
     m_PersistentCalls:
       m_Calls: []
@@ -69544,6 +69620,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  onSwitchingSpell:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingConsumable:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingRightWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+  onSwitchingLeftWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+  switchWeaponsSoundpack: {fileID: 0}
+  switchSpellsSoundpack: {fileID: 0}
+  switchConsumablesSoundpack: {fileID: 0}
   rightWeapons:
   - id: 
     item: {fileID: 0}
@@ -69565,10 +69656,8 @@ MonoBehaviour:
     item: {fileID: 0}
     level: 0
   arrows:
-  - id: 
-    item: {fileID: 0}
-  - id: 
-    item: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spells:
   - id: 
     item: {fileID: 0}
@@ -69581,36 +69670,16 @@ MonoBehaviour:
   - id: 
     item: {fileID: 0}
   consumables:
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
-  - id: 
-    item: {fileID: 0}
-    wasUsed: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   helmet:
     id: 
     item: {fileID: 0}
@@ -69632,11 +69701,11 @@ MonoBehaviour:
     item: {fileID: 0}
   - id: 
     item: {fileID: 0}
-  currentWeaponIndex: 0
-  currentShieldIndex: 0
-  currentConsumableIndex: 0
-  currentSpellIndex: 0
+  currentRightWeaponIndex: 0
+  currentLeftWeaponIndex: 0
+  currentSkillIndex: 0
   currentArrowIndex: 0
+  currentConsumableIndex: 0
 --- !u!114 &3782428676415894259
 MonoBehaviour:
   m_ObjectHideFlags: 0

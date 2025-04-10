@@ -40,19 +40,49 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   sprite: {fileID: 21300000, guid: d134297b4c2cf1244a3e73e9ad10e9ba, type: 3}
-  itemDescription: "An ancient spell, invented out of necessity, fires a flaming
-    fireball that will burn anything in its path.\r"
-  shortDescription: 
   value: 300
   isRenewable: 0
   tradingItemRequirements:
     _serializedList: []
   notes: 
   location: Found in Bear Cavern in the ruins near Forest Wanderers
+  rightBumperActions: []
+  rightTriggerActions:
+  - {fileID: 11400000, guid: b9f2f8a98382be142885a03ed18f7c1c, type: 2}
+  leftBumperActions: []
+  leftTriggerActions: []
+  rightHandAnimations:
+    _serializedList: []
+  leftHandAnimations:
+    _serializedList: []
+  spellType: {fileID: 11400000, guid: 9a1e72627c3ab7942b24e8530c166c6d, type: 2}
+  damage:
+    physical: 2
+    fire: 1
+    frost: 1
+    magic: 1
+    lightning: 1
+    darkness: 0
+    water: 1
+    postureDamage: 0
+    poiseDamage: 0
+    pushForce: 0
+    weaponAttackType: 0
+    statusEffects: []
+    strengthScaling: 5
+    dexterityScaling: 5
+    intelligenceScalling: 5
+    faithScaling: 5
+    hexScaling: 5
+    ignoreBlocking: 0
+    canNotBeParried: 0
   projectile: {fileID: 1648978194837340, guid: 2183168427f5fe744860ca1faf01528f, type: 3}
-  costPerCast: 7
+  manaCostPerCast: 20
+  staminaCostPerCast: 20
   castAnimationOverride: {fileID: 7400000, guid: 9dc7e4fcde4548e45a756e8d3c9f0973, type: 3}
+  animationCanNotBeOverriden: 0
   isFaithSpell: 0
+  isHexSpell: 0
   statusEffects: []
   effectsDurationInSeconds: 15
   spawnAtPlayerFeet: 0

@@ -7,6 +7,7 @@ namespace AF
 {
     public static class UIUtils
     {
+        #region UI Toolkit Stuff - Will be deprecated soon
         public static void SetupButton(Button button, UnityAction callback, Soundbank soundbank)
         {
             SetupButton(button, callback, null, null, true, soundbank);
@@ -115,5 +116,28 @@ namespace AF
             onFinish();
         }
 
+        #endregion
+
+
+        /// <summary>
+        /// Plays a pop animation (scale up and back) on the target GameObject.
+        /// </summary>
+        /// <param name="target">The GameObject to animate</param>
+        /// <param name="popScale">How big the "pop" gets (default 1.2x)</param>
+        /// <param name="duration">Total duration of the animation</param>
+        public static void PlayPopEffect(this GameObject target, float popScale = 1.2f, float duration = 0.25f)
+        {
+            if (target == null) return;
+
+            Transform t = target.transform;
+
+            t.DOKill(); // Kill any existing tweens to avoid overlap
+            t.localScale = Vector3.zero;
+
+            // Pop scale up, then bounce back to 1
+            Sequence popSeq = DOTween.Sequence();
+            popSeq.Append(t.DOScale(popScale, duration * 0.4f).SetEase(Ease.OutBack));
+            popSeq.Append(t.DOScale(1f, duration * 0.6f).SetEase(Ease.OutQuad));
+        }
     }
 }

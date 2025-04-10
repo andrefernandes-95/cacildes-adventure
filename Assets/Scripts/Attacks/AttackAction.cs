@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AF
 {
     [CreateAssetMenu(fileName = "Attack Action", menuName = "Combat / New Attack Action", order = 0)]
-    public class AttackAction : ScriptableObject
+    public class AttackAction : WeaponItemAction
     {
         [Header("Animations")]
         public SerializedDictionary<AnimationEnum, AnimationClip> attackAnimations = new();
@@ -24,7 +24,7 @@ namespace AF
         public float minimumAttackDistance = 0f;
         public float maximumAttackDistance = 5f;
 
-        public virtual void Execute(CharacterBaseManager attacker)
+        public override void Execute(CharacterBaseManager attacker)
         {
             if (attackAnimations.Count <= 0)
             {

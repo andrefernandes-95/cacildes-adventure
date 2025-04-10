@@ -19,6 +19,10 @@ namespace AF
             {
                 equipmentDatabase.currentRightWeaponIndex = 0;
             }
+
+            onSwitchingRightWeapon.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchLeftWeapon()
@@ -29,6 +33,10 @@ namespace AF
             {
                 equipmentDatabase.currentLeftWeaponIndex = 0;
             }
+
+            onSwitchingLeftWeapon.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchLeftHand);
+            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchSkill()
@@ -39,6 +47,10 @@ namespace AF
             {
                 equipmentDatabase.currentSkillIndex = 0;
             }
+
+            onSwitchingSpell.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingSpellsSoundpack();
         }
 
         public override void SwitchConsumable()
@@ -49,6 +61,10 @@ namespace AF
             {
                 equipmentDatabase.currentConsumableIndex = 0;
             }
+
+            onSwitchingConsumable.Invoke();
+            characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
+            PlaySwitchingConsumablesSoundpack();
         }
 
         public override void SwitchArrow()

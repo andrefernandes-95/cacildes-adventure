@@ -6,11 +6,7 @@ namespace AF
 {
     public class UnarmedWorldWeapon : WorldWeapon
     {
-
-        [Header("Attack Actions")]
-        public List<AttackAction> rightBumperActions = new();
-        public List<AttackAction> rightTriggerActions = new();
-        public List<AttackAction> leftBumperActions = new();
+        public ActionItem actionItem;
 
         [Header("Collider")]
         public UnarmedDamageCollider unarmedDamageCollider;

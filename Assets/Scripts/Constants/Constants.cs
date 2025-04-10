@@ -14,5 +14,8 @@ namespace AF
     public static class AnimatorClipNames
     {
         public static string Roll = "Roll";
+
+        public static string SwitchRightHand = "Switch Right Hand";
+        public static string SwitchLeftHand = "Switch Left Hand";
     }
 }

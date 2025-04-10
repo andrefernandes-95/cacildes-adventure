@@ -22,6 +22,12 @@ namespace AF
             currentChargingAttackMultiplier = 0f;
         }
 
+        void Start()
+        {
+            character.characterBaseEquipment.onSwitchingRightWeapon.AddListener(RecalculateDamages);
+            character.characterBaseEquipment.onSwitchingLeftWeapon.AddListener(RecalculateDamages);
+        }
+
         // Call this every time equipment changes or stats are updated
         public void RecalculateDamages()
         {

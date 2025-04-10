@@ -23,6 +23,9 @@ namespace AF
         [SerializeField] Button questsTabNavbarButton;
         [SerializeField] Button settingsTabNavbarButton;
 
+        [Header("UIs To Hide")]
+        [SerializeField] UI_PlayerHUD uI_PlayerHUD;
+
 
         private void Awake()
         {
@@ -48,10 +51,16 @@ namespace AF
         {
             if (isActiveAndEnabled)
             {
+                // Activate player hud if exiting main menu
+                uI_PlayerHUD.gameObject.SetActive(true);
+
                 gameObject.SetActive(false);
             }
             else
             {
+                // Deactivate player hud while on main menu
+                uI_PlayerHUD.gameObject.SetActive(false);
+
                 gameObject.SetActive(true);
 
                 // Prevent camera from rotating when disabling inputs

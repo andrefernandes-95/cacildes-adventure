@@ -1,13 +1,25 @@
+using AF.Health;
 using AF.Stats;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 namespace AF
 {
     [CreateAssetMenu(menuName = "Items / Spell / New Spell")]
-    public class Spell : Item
+    public class Spell : ActionItem
     {
+        [Header("Animations")]
+        public SerializedDictionary<AnimationEnum, AnimationClip> rightHandAnimations = new();
+        public SerializedDictionary<AnimationEnum, AnimationClip> leftHandAnimations = new();
 
+        [Header("Spell Type")]
+        public SpellType spellType;
+
+        [Header("Spell Damage & Effects")]
+        public Damage damage;
+
+        [Header("Deprecated::::")]
         public GameObject projectile;
 
         public float manaCostPerCast = 20;
@@ -98,5 +110,9 @@ namespace AF
             }
             return text.TrimEnd();
         }
+
+
+
+
     }
 }

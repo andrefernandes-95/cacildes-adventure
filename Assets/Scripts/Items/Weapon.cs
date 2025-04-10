@@ -50,17 +50,12 @@ namespace AF
         public SerializedDictionary<UpgradeMaterial, int> upgradeMaterials;
     }
 
-    [CreateAssetMenu(menuName = "Items / Weapon / New Weapon")]
-    public class Weapon : Item
+    [CreateAssetMenu(menuName = "Items / Action Item / New Weapon")]
+    public class Weapon : ActionItem
     {
 
         [Header("Prefab")]
         public WorldWeapon worldWeapon;
-
-        [Header("Attack Actions")]
-        public List<AttackAction> rightBumperActions = new();
-        public List<AttackAction> rightTriggerActions = new();
-        public List<AttackAction> leftBumperActions = new();
 
         [Header("Attack")]
         public Damage damage;

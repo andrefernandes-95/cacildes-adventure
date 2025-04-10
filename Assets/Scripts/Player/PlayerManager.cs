@@ -23,7 +23,7 @@ namespace AF
         public PlayerAchievementsManager playerAchievementsManager;
         public CombatNotificationsController combatNotificationsController;
         public StaminaStatManager staminaStatManager;
-        public ManaManager manaManager;
+        public CharacterBaseMagicManager manaManager;
         public PlayerInventory playerInventory;
         public FavoriteItemsManager favoriteItemsManager;
         public PlayerShooter playerShootingManager;

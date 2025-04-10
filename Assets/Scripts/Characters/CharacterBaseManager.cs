@@ -66,6 +66,8 @@ namespace AF
         // We need a reference to the base class so we can access certain methods that are common to both player and AI
         public CharacterBaseStateMachine characterBaseStateMachine;
 
+        public CharacterBaseMagicManager characterBaseMagicManager;
+
         // Animator Overrides
         protected AnimatorOverrideController animatorOverrideController;
         RuntimeAnimatorController defaultAnimatorController;

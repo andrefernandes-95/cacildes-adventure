@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AF
 {
@@ -8,7 +9,7 @@ namespace AF
     {
 
         [Header("Components")]
-        [SerializeField] CharacterBaseManager characterBaseManager;
+        [SerializeField] protected CharacterBaseManager characterBaseManager;
 
         [Header("Default Weapons")]
         [SerializeField] Weapon[] defaultRightHandWeapons = new Weapon[3];
@@ -31,6 +32,17 @@ namespace AF
         [SerializeField] Legwear defaultLegwear;
         [SerializeField] Accessory[] defaultAccessories = new Accessory[4];
 
+
+        [Header("Quick Items Switching Events")]
+        public UnityEvent onSwitchingSpell;
+        public UnityEvent onSwitchingConsumable;
+        public UnityEvent onSwitchingRightWeapon;
+        public UnityEvent onSwitchingLeftWeapon;
+
+        [Header("Sounds")]
+        public Soundpack switchWeaponsSoundpack;
+        public Soundpack switchSpellsSoundpack;
+        public Soundpack switchConsumablesSoundpack;
 
         public void SetupDefaultEquipment()
         {
@@ -168,10 +180,10 @@ namespace AF
         {
             if (isRightHand)
             {
-                return System.Array.IndexOf(GetRightHandWeapons(), weaponInstance);
+                return System.Array.FindIndex(GetRightHandWeapons(), (_weapon) => _weapon.IsEqualTo(weaponInstance));
             }
 
-            return System.Array.IndexOf(GetLeftHandWeapons(), weaponInstance);
+            return System.Array.FindIndex(GetLeftHandWeapons(), (_weapon) => _weapon.IsEqualTo(weaponInstance));
         }
 
         public abstract List<ShieldInstance> GetShieldInstances();
@@ -196,33 +208,52 @@ namespace AF
 
         public void EquipWeapon(WeaponInstance weapon, int slotIndex, bool isRightHand)
         {
-
             if (isRightHand)
             {
+
                 // Is Already Equipped?
-                if (GetRightHandWeapon().IsEqualTo(weapon))
+                if (GetRightWeaponInSlot(slotIndex).IsEqualTo(weapon))
                 {
                     UnequipWeapon(slotIndex, true);
+                    onSwitchingRightWeapon.Invoke();
                     return;
                 }
 
                 SetRightWeapon(weapon, slotIndex);
+                onSwitchingRightWeapon.Invoke();
             }
             else
             {
+
                 // Is Already Equipped?
-                if (GetLeftHandWeapon().IsEqualTo(weapon))
+                if (GetLeftWeaponInSlot(slotIndex).IsEqualTo(weapon))
                 {
                     UnequipWeapon(slotIndex, false);
+                    onSwitchingLeftWeapon.Invoke();
                     return;
                 }
 
                 SetLeftWeapon(weapon, slotIndex);
+                onSwitchingLeftWeapon.Invoke();
             }
 
-            characterBaseManager.characterWeapons.EquipWorldWeapon(
-                weapon,
-                isRightHand);
+            // Now check if we need to update the weapon currently equipped in the world. Only do it if we made changes to the active slot
+            bool shouldUpdateWorldWeapon = false;
+            if (isRightHand && GetCurrentRightHandWeaponSlotIndex() == slotIndex)
+            {
+                shouldUpdateWorldWeapon = true;
+            }
+            else if (GetCurrentLeftHandWeaponSlotIndex() == slotIndex)
+            {
+                shouldUpdateWorldWeapon = true;
+            }
+
+            if (shouldUpdateWorldWeapon)
+            {
+                characterBaseManager.characterWeapons.EquipWorldWeapon(
+                    weapon,
+                    isRightHand);
+            }
         }
 
         public void UnequipWeapon(int slotIndex, bool isRightHand)
@@ -230,13 +261,29 @@ namespace AF
             if (isRightHand)
             {
                 ClearRightWeapon(slotIndex);
+                onSwitchingRightWeapon.Invoke();
             }
             else
             {
                 ClearLeftWeapon(slotIndex);
+                onSwitchingLeftWeapon.Invoke();
             }
 
-            characterBaseManager.characterWeapons.UnequipWorldWeapon(isRightHand);
+            // Now check if we need to update the weapon currently equipped in the world. Only do it if we made changes to the active slot
+            bool shouldUpdateWorldWeapon = false;
+            if (isRightHand && GetCurrentRightHandWeaponSlotIndex() == slotIndex)
+            {
+                shouldUpdateWorldWeapon = true;
+            }
+            else if (GetCurrentLeftHandWeaponSlotIndex() == slotIndex)
+            {
+                shouldUpdateWorldWeapon = true;
+            }
+
+            if (shouldUpdateWorldWeapon)
+            {
+                characterBaseManager.characterWeapons.UnequipWorldWeapon(isRightHand);
+            }
         }
 
         protected abstract void SetArrow(Arrow arrow, int slotIndex);
@@ -522,5 +569,27 @@ namespace AF
         public abstract int GetCurrentSkillsSlotIndex();
         public abstract int GetCurrentArrowsSlotIndex();
 
+
+        public void PlaySwitchingWeaponsSoundpack()
+        {
+            if (switchWeaponsSoundpack != null)
+            {
+                switchWeaponsSoundpack.Play(characterBaseManager);
+            }
+        }
+        public void PlaySwitchingSpellsSoundpack()
+        {
+            if (switchSpellsSoundpack != null)
+            {
+                switchSpellsSoundpack.Play(characterBaseManager);
+            }
+        }
+        public void PlaySwitchingConsumablesSoundpack()
+        {
+            if (switchConsumablesSoundpack != null)
+            {
+                switchConsumablesSoundpack.Play(characterBaseManager);
+            }
+        }
     }
 }

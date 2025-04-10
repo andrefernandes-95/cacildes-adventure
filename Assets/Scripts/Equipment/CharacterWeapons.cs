@@ -34,13 +34,46 @@ namespace AF.Equipment
                 equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
                 equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
 
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightBumperActions.ToArray());
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.leftBumperActions.ToArray());
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.rightTriggerActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightBumperActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftBumperActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightTriggerActions.ToArray());
             }
 
             defaultRightWeaponHandler = rightWeaponHandler;
             defaultLeftWeaponHandler = leftWeaponHandler;
+
+            character.characterBaseEquipment.onSwitchingRightWeapon.AddListener(OnSwitchingRightWeapon);
+            character.characterBaseEquipment.onSwitchingLeftWeapon.AddListener(OnSwitchingLeftWeapon);
+        }
+
+        void OnSwitchingRightWeapon()
+        {
+            WeaponInstance newRightWeapon = character.characterBaseEquipment.GetRightHandWeapon();
+
+            // If no weapon, use unarmed
+            if (newRightWeapon.IsEmpty())
+            {
+                UnequipWorldWeapon(true);
+                return;
+            }
+
+            // Otherwise, equip current weapon
+            EquipWorldWeapon(newRightWeapon, true);
+        }
+
+        void OnSwitchingLeftWeapon()
+        {
+            WeaponInstance newLeftWeapon = character.characterBaseEquipment.GetLeftHandWeapon();
+
+            // If no weapon, use unarmed
+            if (newLeftWeapon.IsEmpty())
+            {
+                UnequipWorldWeapon(false);
+                return;
+            }
+
+            // Otherwise, equip current weapon
+            EquipWorldWeapon(newLeftWeapon, false);
         }
 
         public void ResetStates()
@@ -115,7 +148,8 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.rightBumperActions.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightBumperActions.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightTriggerActions.ToArray());
                 }
             }
             else
@@ -125,7 +159,8 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.leftBumperActions.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftBumperActions.ToArray());
+                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftTriggerActions.ToArray());
                 }
             }
 

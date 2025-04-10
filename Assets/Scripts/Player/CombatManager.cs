@@ -13,6 +13,7 @@ namespace AF
     public class CombatManager : MonoBehaviour
     {
         [Header("Unarmed Attacks")]
+        public AttackAction lastAttackAction;
         private AttackAction lastUnarmedRightHandAttackAction;
         private AttackAction lastUnarmedLeftHandAttackAction;
         private AttackAction lastUnarmedRightFootAttackAction;
@@ -87,7 +88,12 @@ namespace AF
         IEnumerator ResetComboFlags()
         {
             yield return new WaitForSeconds(maxTimeBeforeResettingCombos);
-            lastUnarmedRightHandAttackAction = lastUnarmedLeftHandAttackAction = lastUnarmedRightFootAttackAction = lastUnarmedLeftFootAttackAction = null;
+            lastAttackAction = null;
+        }
+
+        public void SetRightHandCurrentItemAction()
+        {
+
         }
 
         // TODO: Change so that the current active weapons are an array (for dual wielding, we may be attacking with both weapons)
@@ -95,106 +101,93 @@ namespace AF
         {
             StopComboCoroutine();
 
+            if (currentAttackingMember == AttackingMember.RIGHT_HAND)
+            {
+                if (character.characterBaseEquipment.GetRightHandWeapon().Exists())
+                {
+                    character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>()
+                    .PerformAction(character, true, isHeavyAttacking);
+                }
+                else if (character.characterWeapons.equippedRightWeaponInstance is UnarmedWorldWeapon rightUnarmedWorldWeapon)
+                {
+                    rightUnarmedWorldWeapon.actionItem.PerformAction(character, true, isHeavyAttacking);
+                }
+            }
+            else if (currentAttackingMember == AttackingMember.LEFT_HAND)
+            {
+                if (character.characterBaseEquipment.GetLeftHandWeapon().Exists())
+                {
+                    character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>()
+                    .PerformAction(character, false, isHeavyAttacking);
+                }
+                else if (character.characterWeapons.equippedLeftWeaponInstance is UnarmedWorldWeapon leftUnarmedWorldWeapon)
+                {
+                    leftUnarmedWorldWeapon.actionItem.PerformAction(character, false, isHeavyAttacking);
+                }
+            }
+
+
             // If unarmed
-            if (true)
-            {
-                //character.staminaStatManager.DecreaseLightAttackStamina();
 
-                AttackAction chosenAttackAction = null;
-                AttackAction lastAttackAction = null;
-                List<AttackAction> attackActions = new();
+            //character.staminaStatManager.DecreaseLightAttackStamina();
 
-                bool isRightHand = false;
-                bool isLeftHand = false;
+            /*
+                            AttackAction chosenAttackAction = null;
+                            AttackAction lastAttackAction = null;
+                            List<AttackAction> attackActions = new();
+
+                            bool isRightHand = false;
+                            bool isLeftHand = false;
 
 
-                switch (currentAttackingMember)
-                {
-                    case AttackingMember.RIGHT_HAND:
-                        lastAttackAction = lastUnarmedRightHandAttackAction;
-                        attackActions = GetRightWeaponAttackActions();
-                        isRightHand = true;
-                        break;
-                    case AttackingMember.LEFT_HAND:
-                        lastAttackAction = lastUnarmedLeftHandAttackAction;
-                        attackActions = GetLeftWeaponAttackActions();
-                        isLeftHand = true;
-                        break;
-                    default:
-                        return;
-                }
+                            switch (currentAttackingMember)
+                            {
+                                case AttackingMember.RIGHT_HAND:
+                                    lastAttackAction = lastUnarmedRightHandAttackAction;
+                                    attackActions = GetRightWeaponAttackActions();
+                                    isRightHand = true;
+                                    break;
+                                case AttackingMember.LEFT_HAND:
+                                    lastAttackAction = lastUnarmedLeftHandAttackAction;
+                                    attackActions = GetLeftWeaponAttackActions();
+                                    isLeftHand = true;
+                                    break;
+                                default:
+                                    return;
+                            }
 
-                if (attackActions == null || attackActions.Count <= 0)
-                {
-                    return;
-                }
+                            if (attackActions == null || attackActions.Count <= 0)
+                            {
+                                return;
+                            }
 
-                if (lastAttackAction == null)
-                {
-                    chosenAttackAction = attackActions[0];
-                }
-                else
-                {
-                    int nextAttackActionIndex = Array.IndexOf(attackActions.ToArray(), lastAttackAction) + 1;
-                    if (nextAttackActionIndex >= attackActions.Count)
-                    {
-                        nextAttackActionIndex = 0;
-                    }
+                            if (lastAttackAction == null)
+                            {
+                                chosenAttackAction = attackActions[0];
+                            }
+                            else
+                            {
+                                int nextAttackActionIndex = Array.IndexOf(attackActions.ToArray(), lastAttackAction) + 1;
+                                if (nextAttackActionIndex >= attackActions.Count)
+                                {
+                                    nextAttackActionIndex = 0;
+                                }
 
-                    chosenAttackAction = attackActions[nextAttackActionIndex];
-                }
+                                chosenAttackAction = attackActions[nextAttackActionIndex];
+                            }
 
-                if (isRightHand)
-                {
-                    lastUnarmedRightHandAttackAction = chosenAttackAction;
-                }
-                else if (isLeftHand)
-                {
-                    lastUnarmedLeftHandAttackAction = chosenAttackAction;
-                }
+                            if (isRightHand)
+                            {
+                                lastUnarmedRightHandAttackAction = chosenAttackAction;
+                            }
+                            else if (isLeftHand)
+                            {
+                                lastUnarmedLeftHandAttackAction = chosenAttackAction;
+                            }
 
-                chosenAttackAction?.Execute(character);
-            }
+                            chosenAttackAction?.Execute(character);
+                        }*/
         }
-
-        List<AttackAction> GetRightWeaponAttackActions()
-        {
-            List<AttackAction> attacks = new();
-
-            if (character.characterBaseEquipment.GetRightHandWeapon().Exists())
-            {
-                attacks = isHeavyAttacking
-                    ? character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightTriggerActions
-                    : character.characterBaseEquipment.GetRightHandWeapon().GetItem<Weapon>().rightBumperActions;
-            }
-
-            if (attacks.Count <= 0 && character.characterWeapons.equippedRightWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
-            {
-                // Try the unarmed weapons
-                attacks = isHeavyAttacking ? unarmedWorldWeapon.rightTriggerActions : unarmedWorldWeapon.rightBumperActions;
-            }
-
-            return attacks;
-        }
-
-        List<AttackAction> GetLeftWeaponAttackActions()
-        {
-            List<AttackAction> attacks = new();
-
-            if (character.characterBaseEquipment.GetLeftHandWeapon().Exists())
-            {
-                attacks = character.characterBaseEquipment.GetLeftHandWeapon().GetItem<Weapon>().leftBumperActions.ToList();
-            }
-
-            if (attacks.Count <= 0 && character.characterWeapons.equippedLeftWeaponInstance is UnarmedWorldWeapon unarmedWorldWeapon)
-            {
-                // Try the unarmed weapons
-                attacks = unarmedWorldWeapon.leftBumperActions;
-            }
-
-            return attacks;
-        }
-
 
         void HandleAttackSpeed()
         {

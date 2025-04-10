@@ -177,26 +177,44 @@ namespace AF
             {
                 this.weaponInstances = allWeapons
                     // Exclude weapons currently equipped in the left hand
-                    .Where(weapon => characterEquipment.GetEquippedWeaponSlot(weapon, false) == -1)
+                    .Where(weapon =>
+                    {
+                        // Exclude weapons currently equipped in the left hand
+                        bool isAvailable = characterEquipment.GetEquippedWeaponSlot(weapon, false) == -1;
+
+                        return isAvailable;
+                    })
                     // Allow:
                     // - Weapons not equipped in any right-hand slot
                     // - Or, the weapon currently equipped in the right-hand slot we are trying to modify
                     .Where(weapon =>
-                        weapon.IsEqualTo(characterEquipment.GetRightWeaponInSlot(equippingSlotIndex)) ||
-                        characterEquipment.GetEquippedWeaponSlot(weapon, true) == -1)
+                    {
+                        bool isSameWeapon = weapon.IsEqualTo(characterEquipment.GetRightWeaponInSlot(equippingSlotIndex));
+                        bool isAvailable = characterEquipment.GetEquippedWeaponSlot(weapon, true) == -1;
+                        return isSameWeapon || isAvailable;
+                    })
                     .ToList();
             }
             else if (isAttemptingToEquipLeftWeapon)
             {
                 this.weaponInstances = allWeapons
                     // Exclude weapons currently equipped in the right hand
-                    .Where(weapon => characterEquipment.GetEquippedWeaponSlot(weapon, true) == -1)
+                    .Where(weapon =>
+                    {
+                        bool isAvailable = characterEquipment.GetEquippedWeaponSlot(weapon, true) == -1;
+
+                        return isAvailable;
+                    })
                     // Allow:
                     // - Weapons not equipped in any left-hand slot
                     // - Or, the weapon currently equipped in the left-hand slot we are trying to modify
                     .Where(weapon =>
-                        weapon.IsEqualTo(characterEquipment.GetLeftWeaponInSlot(equippingSlotIndex)) ||
-                        characterEquipment.GetEquippedWeaponSlot(weapon, false) == -1)
+                        {
+                            bool isSameWeapon = weapon.IsEqualTo(characterEquipment.GetLeftWeaponInSlot(equippingSlotIndex));
+                            bool isAvailable = characterEquipment.GetEquippedWeaponSlot(weapon, false) == -1;
+
+                            return isSameWeapon || isAvailable;
+                        })
                     .ToList();
             }
         }

@@ -4,9 +4,11 @@ using DG.Tweening;
 namespace AF
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public class UI_Window : MonoBehaviour
+    public class UIWindow : MonoBehaviour
     {
-        public GUIManager gUIManager;
+        [Header("GUI Settings")]
+        public GUIManager guiManager;
+        public bool addToGuiManager = true;
 
         [Header("Fade Settings")]
         public float fadeDuration = 0.25f;
@@ -20,7 +22,11 @@ namespace AF
 
         private void OnEnable()
         {
-            gUIManager.SetHasActiveGUI(true);
+            if (addToGuiManager)
+            {
+                guiManager.PushWindow(this);
+            }
+
             canvasGroup.alpha = 0f;
             canvasGroup.DOKill(); // Cancel any previous tweens
             canvasGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
@@ -31,7 +37,11 @@ namespace AF
 
         private void OnDisable()
         {
-            gUIManager.SetHasActiveGUI(false);
+            if (addToGuiManager)
+            {
+                guiManager.RemoveWindow(this);
+            }
+
             canvasGroup.DOKill();
             canvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.OutQuad);
 

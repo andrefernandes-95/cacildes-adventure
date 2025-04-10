@@ -6,13 +6,16 @@ namespace AF
 {
     public class UI_InputButton : MonoBehaviour
     {
-        [Header("Components")]
+        [Header("Optional Components")]
         [SerializeField] StarterAssetsInputs starterAssetsInputs;
 
         [Header("Keyboard")]
         [SerializeField] GameObject keyboardContainer;
         [SerializeField] TextMeshProUGUI keyboardLabel;
         [SerializeField] Image keyboardKeyIcon;
+
+        [Header("Gamepad")]
+        [SerializeField] GameObject gamepadButtonContainer;
 
         [Header("PS4")]
         [SerializeField] Image ps4Icon;
@@ -64,6 +67,7 @@ namespace AF
             keyboardContainer.SetActive(false);
             xboxIcon.gameObject.SetActive(false);
             ps4Icon.gameObject.SetActive(false);
+            gamepadButtonContainer.gameObject.SetActive(false);
         }
 
         void EnableKeyboard()
@@ -87,6 +91,7 @@ namespace AF
             ps4Icon.sprite = uI_Input.ps4Icon;
 
             ps4Icon.gameObject.SetActive(true);
+            gamepadButtonContainer.gameObject.SetActive(true);
         }
 
         void EnableXbox()
@@ -94,6 +99,7 @@ namespace AF
             xboxIcon.sprite = uI_Input.xboxIcon;
 
             xboxIcon.gameObject.SetActive(true);
+            gamepadButtonContainer.gameObject.SetActive(true);
         }
     }
 }

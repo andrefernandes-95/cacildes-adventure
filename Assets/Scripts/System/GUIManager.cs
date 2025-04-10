@@ -1,40 +1,74 @@
-using AF;
-using AF.Events;
-using TigerForge;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.SmartFormat.Extensions;
-using UnityEngine.Localization.SmartFormat.GlobalVariables;
 
-[CreateAssetMenu(fileName = "GUI Manager", menuName = "System/New GUI Manager", order = 0)]
-public class GUIManager : ScriptableObject
+namespace AF
 {
-    public bool hasActiveGUI = false;
+
+    [CreateAssetMenu(fileName = "GUI Manager", menuName = "System/New GUI Manager", order = 0)]
+    public class GUIManager : ScriptableObject
+    {
+        private Stack<UIWindow> activeWindows = new Stack<UIWindow>();
 
 #if UNITY_EDITOR
-    private void OnEnable()
-    {
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-    }
-
-    private void OnPlayModeStateChanged(PlayModeStateChange state)
-    {
-        if (state == PlayModeStateChange.ExitingPlayMode)
+        private void OnEnable()
         {
-            Clear();
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
         }
-    }
+
+        private void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingPlayMode)
+            {
+                Clear();
+            }
+        }
 #endif
 
-    void Clear()
-    {
-        hasActiveGUI = false;
-    }
+        void Clear()
+        {
+            activeWindows.Clear();
+        }
 
-    public void SetHasActiveGUI(bool value)
-    {
-        hasActiveGUI = value;
+        public void PushWindow(UIWindow window)
+        {
+            if (window != null && !activeWindows.Contains(window))
+            {
+                activeWindows.Push(window);
+            }
+        }
+
+        public void PopWindow()
+        {
+            if (activeWindows.Count > 0)
+            {
+                activeWindows.Pop();
+            }
+        }
+
+        public UIWindow PeekWindow()
+        {
+            return activeWindows.Count > 0 ? activeWindows.Peek() : null;
+        }
+
+        public bool HasActiveWindow()
+        {
+            return activeWindows.Count > 0;
+        }
+
+        public void RemoveWindow(UIWindow window)
+        {
+            if (activeWindows.Contains(window))
+            {
+                var tempList = new List<UIWindow>(activeWindows);
+                tempList.Remove(window);
+                activeWindows.Clear();
+                for (int i = tempList.Count - 1; i >= 0; i--)
+                {
+                    activeWindows.Push(tempList[i]);
+                }
+            }
+        }
     }
 
 }
