@@ -101,12 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52efb8cee9a1ece43a4f832afccae973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  damageCollider: {fileID: 0}
-  trailRenderer: {fileID: 1320489202375699026}
-  swooshes: {fileID: 11400000, guid: 8fed9a1476d082b499fff6afb3afebe8, type: 2}
   actionItem: {fileID: 11400000, guid: f0cd01f9b9063f541be8713080b5d7ad, type: 2}
-  unarmedDamageCollider: {fileID: 4020443574984631623}
+  unarmedDamageCollider: {fileID: 7687508316414090617}
 --- !u!1 &8722498163189785332
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +263,7 @@ GameObject:
   - component: {fileID: 2968094749202480887}
   - component: {fileID: 1965727310910695503}
   - component: {fileID: 2544974575817347007}
-  - component: {fileID: 4020443574984631623}
+  - component: {fileID: 7687508316414090617}
   m_Layer: 0
   m_Name: Damage Collider
   m_TagString: Untagged
@@ -364,7 +360,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4020443574984631623
+--- !u!114 &7687508316414090617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,11 +369,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8881721137672663952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdab61c75d0f2dc4e9efaaaf18da2971, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ae1125fd8bea304ab2581a245bce2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageOwner: {fileID: 0}
   damage:
-    physical: 70
+    physical: 20
     fire: 0
     frost: 0
     magic: 0
@@ -396,3 +393,6 @@ MonoBehaviour:
     hexScaling: 5
     ignoreBlocking: 0
     canNotBeParried: 0
+  swooshes: {fileID: 11400000, guid: 8fed9a1476d082b499fff6afb3afebe8, type: 2}
+  weaponDrawn: {fileID: 0}
+  trailRenderer: {fileID: 1320489202375699026}

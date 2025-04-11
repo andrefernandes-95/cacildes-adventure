@@ -30,6 +30,11 @@ namespace AF
         [Range(0, 1f)] public float waterAbsorption = 1f;
         [Range(0, 1f)] public float postureDamageAbsorption = 1f;
 
+        [Header("VFX")]
+        public DestroyableParticle shieldBlockVfx;
+
+        [Header("Sounds")]
+        public Soundpack blockingSoundpack;
 
         [Header("Damage Types")]
         [Range(0, 1f)] public float pierceDamageAbsorption = 1f;

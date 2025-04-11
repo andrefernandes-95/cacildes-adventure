@@ -6,11 +6,19 @@ namespace AF.StateMachine
     public class AIIdleState : BaseIdleState
     {
 
+        bool hasEnteredState = false;
+
         public override AIState Tick(CharacterManager characterManager)
         {
             if (characterManager.targetManager.currentTarget != null)
             {
                 return SwitchState(characterManager, characterManager.characterStateMachine.pursueTargetState);
+            }
+
+            if (!hasEnteredState)
+            {
+                characterManager.DisableNavmeshAgent();
+                hasEnteredState = true;
             }
 
             // Search for a target, AI is always eager to fight stuff
@@ -23,7 +31,7 @@ namespace AF.StateMachine
         protected override void ResetStateFlags(CharacterBaseManager characterBaseManager)
         {
             base.ResetStateFlags(characterBaseManager);
-
+            hasEnteredState = false;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace AF
     {
         [Header("Instant Effects")]
         public TakeDamageEffect takeDamageEffect;
+        public TakeBlockedDamageEffect takeBlockedDamageEffect;
     }
 
 }

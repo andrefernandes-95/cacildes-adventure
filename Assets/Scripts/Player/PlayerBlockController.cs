@@ -51,5 +51,18 @@ namespace AF
             this.canCounterAttack = value;
         }
 
+        public override void SetIsBlocking(bool value)
+        {
+            base.SetIsBlocking(value);
+            playerManager.animator.SetBool(AnimatorParametersConstants.IsBlocking, true);
+
+        }
+
+        public void ResetIsBlocking()
+        {
+            isBlocking = false;
+            playerManager.animator.SetBool(AnimatorParametersConstants.IsBlocking, false);
+        }
+
     }
 }

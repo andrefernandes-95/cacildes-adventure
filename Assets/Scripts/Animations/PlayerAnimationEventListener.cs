@@ -36,7 +36,7 @@ namespace AF.Animations
                 playerManager.playerWeaponsManager.equippedLeftWeaponInstance.CloseDamageCollider();
             }
 
-            onHitboxesClosed?.Invoke();
+            AllowCombos();
         }
 
         public void OpenRightWeaponHitbox()
@@ -56,7 +56,7 @@ namespace AF.Animations
                 playerManager.playerWeaponsManager.equippedRightWeaponInstance.CloseDamageCollider();
             }
 
-            onHitboxesClosed?.Invoke();
+            AllowCombos();
         }
 
         public void OpenLeftFootHitbox()
@@ -67,8 +67,6 @@ namespace AF.Animations
 
         public void CloseLeftFootHitbox()
         {
-
-            onHitboxesClosed?.Invoke();
         }
 
         public void OpenRightFootHitbox()
@@ -79,7 +77,6 @@ namespace AF.Animations
 
         public void CloseRightFootHitbox()
         {
-            onHitboxesClosed?.Invoke();
         }
         public void EnableRotation()
         {
@@ -280,6 +277,27 @@ namespace AF.Animations
         public void DisableCanMove()
         {
             playerManager.DisableCanMove();
+        }
+
+        public void WarmupSpell()
+        {
+            if (playerManager.characterBaseMagicManager.currentChargeableSpellAttackAction != null)
+            {
+                playerManager.characterBaseMagicManager.currentChargeableSpellAttackAction.WarmupSpell(playerManager);
+            }
+        }
+
+        public void CastSpell()
+        {
+            if (playerManager.characterBaseMagicManager.currentChargeableSpellAttackAction != null)
+            {
+                playerManager.characterBaseMagicManager.currentChargeableSpellAttackAction.CastSpell(playerManager);
+            }
+        }
+
+        public void AllowCombos()
+        {
+            playerManager.combatManager.allowCombos = true;
         }
     }
 }

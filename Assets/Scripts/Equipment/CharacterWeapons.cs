@@ -12,8 +12,8 @@ namespace AF.Equipment
     public class CharacterWeapons : MonoBehaviour
     {
         [Header("Current Weapons")]
-        public WorldWeapon equippedRightWeaponInstance;
-        public WorldWeapon equippedLeftWeaponInstance;
+        public BaseWorldWeapon equippedRightWeaponInstance;
+        public BaseWorldWeapon equippedLeftWeaponInstance;
 
         [Header("Unarmed Weapon Prefab")]
         public UnarmedWorldWeapon unarmedWeaponPrefab;
@@ -126,13 +126,13 @@ namespace AF.Equipment
             if (isRightHand)
             {
                 equippedRightWeaponInstance = Instantiate(weapon.worldWeapon, rightWeaponHandler);
-                equippedRightWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
+                equippedRightWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
                 character.UpdateAttackAnimations(weapon.rightBumperActions.ToArray());
             }
             else
             {
                 equippedLeftWeaponInstance = Instantiate(weapon.worldWeapon, leftWeaponHandler);
-                equippedLeftWeaponInstance.damageCollider.weaponInstance = clonedWeaponInstance;
+                equippedLeftWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
                 character.UpdateAttackAnimations(weapon.leftBumperActions.ToArray());
             }
 
@@ -237,7 +237,7 @@ namespace AF.Equipment
             );
         }
 
-        private Transform CreateWeaponHandler(GameObject avatarGameObject, string boneName, Vector3 position, Vector3 rotation, WorldWeapon equippedWeapon)
+        private Transform CreateWeaponHandler(GameObject avatarGameObject, string boneName, Vector3 position, Vector3 rotation, BaseWorldWeapon equippedWeapon)
         {
             if (string.IsNullOrEmpty(boneName))
             {

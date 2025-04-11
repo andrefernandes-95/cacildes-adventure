@@ -29,9 +29,10 @@ namespace AF
 
         private void Awake()
         {
-            // Initialize Health
-            if (playerStatsDatabase.currentHealth == -1)
+            if (!playerStatsDatabase.hasInitializedHealth)
             {
+                playerStatsDatabase.hasInitializedHealth = true;
+
                 playerStatsDatabase.currentHealth = GetMaxHealth();
             }
         }

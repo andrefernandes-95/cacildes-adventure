@@ -17,8 +17,6 @@ namespace AF
         AudioSource audioSource => GetComponent<AudioSource>();
         [SerializeField] Soundpack uiQuickItemSoundpack;
 
-        bool hasInitialized = false;
-
         protected abstract void ShowItemIcon();
 
         protected virtual void HideItemIcon()
@@ -28,17 +26,9 @@ namespace AF
 
         protected virtual void PlayPopEffect()
         {
-            if (hasInitialized)
-            {
-                UIUtils.PlayPopEffect(gameObject);
-            }
-            else
-            {
-                hasInitialized = true;
-            }
+            UIUtils.PlayPopEffect(gameObject);
 
             uiQuickItemSoundpack.Play(audioSource);
         }
-
     }
 }

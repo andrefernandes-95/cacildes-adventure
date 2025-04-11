@@ -33,8 +33,6 @@ namespace AF.StateMachine
             playerCombatState = Instantiate(playerCombatState);
             playerTakeDamageState = Instantiate(playerTakeDamageState);
 
-            // Allow combos
-            playerManager.playerAnimationEventListener.onHitboxesClosed.AddListener(() => playerCombatState.CheckForCombos(playerManager));
         }
 
         void Update()

@@ -27,7 +27,7 @@ public class PlayerStatsDatabase : ScriptableObject
 
 
     [Header("Current Attributes")]
-
+    public bool hasInitializedHealth = false;
     public float currentHealth = -1;
     public float currentStamina = -1;
     public float currentMana = -1;
@@ -83,6 +83,8 @@ public class PlayerStatsDatabase : ScriptableObject
             sceneWhereGoldWasLost = "";
             positionWhereGoldWasLost = Vector3.zero;
         }
+
+        hasInitializedHealth = false;
     }
 
     public void ClearForNewGamePlus()

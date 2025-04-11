@@ -24,9 +24,12 @@ namespace AF
         [Header("Flags")]
         public bool isCombatting = false;
         public bool isLightAttacking = false;
+        public bool allowCombos = false;
+
 
         [Header("Components")]
         public CharacterBaseManager character;
+
 
 
         [Header("Two-Handing")]
@@ -62,6 +65,7 @@ namespace AF
             isHeavyAttacking = false;
             isLightAttacking = false;
             isAttackingWithFoot = false;
+            allowCombos = false;
 
             character.animator.SetFloat(SpeedMultiplierHash, 1f);
 

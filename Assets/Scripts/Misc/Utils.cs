@@ -190,7 +190,7 @@ namespace AF
 
         public static bool HasEnemyFighting()
         {
-            return MonoBehaviour.FindObjectsByType<TargetManager>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).Any(
+            return MonoBehaviour.FindObjectsByType<CharacterBaseTargetManager>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).Any(
                 x => x.currentTarget != null
                 && x.characterManager.health.GetCurrentHealth() > 0);
         }

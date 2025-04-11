@@ -14,7 +14,7 @@ namespace AF
 
         private void Awake()
         {
-            canvasGroup.alpha = 1;
+            canvasGroup.alpha = 0;
         }
 
         void Start()

@@ -9,6 +9,7 @@ namespace AF
         public static string FreeFall = "FreeFall";
         public static string InAirTimer = "InAirTimer";
         public static string IsCharging = "IsCharging";
+        public static string IsBlocking = "IsBlocking";
     }
 
     public static class AnimatorClipNames

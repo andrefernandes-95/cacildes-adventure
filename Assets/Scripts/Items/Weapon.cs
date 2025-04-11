@@ -54,8 +54,8 @@ namespace AF
     public class Weapon : ActionItem
     {
 
-        [Header("Prefab")]
-        public WorldWeapon worldWeapon;
+        [Header("📦 World Weapon Prefab")]
+        public BaseWorldWeapon worldWeapon;
 
         [Header("Attack")]
         public Damage damage;

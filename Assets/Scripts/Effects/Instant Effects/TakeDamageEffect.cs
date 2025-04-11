@@ -45,6 +45,9 @@ namespace AF
             // Calculate damage
             CalculateDamage();
 
+            // Show Damage Popup
+            ShowDamagePopups();
+
             characterBeingDamaged.damageReceiver.angleFromLastHit = angleHitFrom;
 
             // Check for build ups (Poison, Bleed)
@@ -70,6 +73,7 @@ namespace AF
             }
 
             // Calculate poise damage
+            receiver.health.TakeDamage(finalDamageDealt);
         }
 
         private void PlayDamageVFX()
@@ -88,5 +92,36 @@ namespace AF
             receiver.characterSoundManager.PlayDamageGrunt();
         }
 
+        private void ShowDamagePopups()
+        {
+            if (damage.physical > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowPhysicalDamage(damage.physical);
+            }
+            if (damage.fire > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowFireDamage(damage.fire);
+            }
+            if (damage.frost > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowFrostDamage(damage.frost);
+            }
+            if (damage.water > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowWaterDamage(damage.water);
+            }
+            if (damage.lightning > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowLightningDamage(damage.lightning);
+            }
+            if (damage.darkness > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowDarknessDamage(damage.darkness);
+            }
+            if (damage.magic > 0)
+            {
+                receiver.uI_CharacterDamagePopupManager.ShowMagicDamage(damage.magic);
+            }
+        }
     }
 }

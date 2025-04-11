@@ -21,8 +21,15 @@ namespace AF
             }
         }
 
-        public static int GetScalingBonus(float value, Scaling damageScaling)
+        public static int GetScalingBonus(int statLevel, Scaling damageScaling)
         {
+            if (statLevel <= 1)
+            {
+                return 0;
+            }
+
+            float value = statLevel;
+
             if (damageScaling == Scaling.S)
             {
                 value *= 4;
@@ -43,8 +50,8 @@ namespace AF
             {
                 value *= 1.2f;
             }
-            return Mathf.FloorToInt(value);
 
+            return Mathf.FloorToInt(value);
         }
 
     }

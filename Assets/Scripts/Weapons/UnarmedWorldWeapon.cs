@@ -4,22 +4,26 @@ using UnityEngine;
 
 namespace AF
 {
-    public class UnarmedWorldWeapon : WorldWeapon
+    public class UnarmedWorldWeapon : BaseWorldWeapon
     {
         public ActionItem actionItem;
 
         [Header("Collider")]
         public UnarmedDamageCollider unarmedDamageCollider;
 
-        public override void EnableCollider()
+        public override void OpenDamageCollider()
         {
             unarmedDamageCollider.EnableCollider();
         }
 
-        public override void DisableCollider()
+        public override void CloseDamageCollider()
         {
             unarmedDamageCollider.DisableCollider();
         }
 
+        // Not applicable
+        public override void SetWeaponInstance(WeaponInstance weaponInstance)
+        {
+        }
     }
 }

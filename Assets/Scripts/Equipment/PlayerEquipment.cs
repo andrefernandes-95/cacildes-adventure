@@ -22,7 +22,6 @@ namespace AF
 
             onSwitchingRightWeapon.Invoke();
             characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
-            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchLeftWeapon()
@@ -36,7 +35,6 @@ namespace AF
 
             onSwitchingLeftWeapon.Invoke();
             characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchLeftHand);
-            PlaySwitchingWeaponsSoundpack();
         }
 
         public override void SwitchSkill()
@@ -50,7 +48,6 @@ namespace AF
 
             onSwitchingSpell.Invoke();
             characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
-            PlaySwitchingSpellsSoundpack();
         }
 
         public override void SwitchConsumable()
@@ -64,7 +61,6 @@ namespace AF
 
             onSwitchingConsumable.Invoke();
             characterBaseManager.PlayAnimationWithCrossFade(AnimatorClipNames.SwitchRightHand);
-            PlaySwitchingConsumablesSoundpack();
         }
 
         public override void SwitchArrow()

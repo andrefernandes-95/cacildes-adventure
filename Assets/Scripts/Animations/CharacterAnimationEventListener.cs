@@ -106,6 +106,7 @@ namespace AF.Animations
         public void CloseLeftWeaponHitbox()
         {
             onLeftWeaponHitboxClose?.Invoke();
+            AllowCombos();
         }
 
         public void OpenRightWeaponHitbox()
@@ -116,6 +117,7 @@ namespace AF.Animations
         public void CloseRightWeaponHitbox()
         {
             onRightWeaponHitboxClose?.Invoke();
+            AllowCombos();
         }
 
         public void OpenLeftFootHitbox()
@@ -338,5 +340,26 @@ namespace AF.Animations
             characterManager.canMove = false;
         }
 
+        public void WarmupSpell()
+        {
+            if (characterManager.characterBaseMagicManager.currentChargeableSpellAttackAction != null)
+            {
+                characterManager.characterBaseMagicManager.currentChargeableSpellAttackAction.WarmupSpell(characterManager);
+            }
+        }
+
+        public void CastSpell()
+        {
+            if (characterManager.characterBaseMagicManager.currentChargeableSpellAttackAction != null)
+            {
+                characterManager.characterBaseMagicManager.currentChargeableSpellAttackAction.CastSpell(characterManager);
+            }
+        }
+
+
+        public void AllowCombos()
+        {
+            characterManager.combatManager.allowCombos = true;
+        }
     }
 }

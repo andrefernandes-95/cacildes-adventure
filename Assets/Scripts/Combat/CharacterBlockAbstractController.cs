@@ -43,12 +43,16 @@ namespace AF
 
         public UnityAction onBlockChanged;
 
+        [Header("Animations")]
+        public bool useDirectionalBlockedDamageAnimations = true;
+        public int receivedPoiseDamage = 0;
+
         public void ResetStates()
         {
-            isBlocking = false;
+            receivedPoiseDamage = 0;
         }
 
-        public void SetIsBlocking(bool value)
+        public virtual void SetIsBlocking(bool value)
         {
             isBlocking = value;
 
@@ -74,7 +78,8 @@ namespace AF
                 return false;
             }
 
-            return (characterManager.characterPosture.currentPostureDamage + (int)(damage.postureDamage * blockMultiplier)) < characterManager.characterPosture.GetMaxPostureDamage();
+            return true;
+            //return (characterManager.characterPosture.currentPostureDamage + (int)(damage.postureDamage * blockMultiplier)) < characterManager.characterPosture.GetMaxPostureDamage();
         }
 
         public void BeginParrying()
@@ -155,5 +160,27 @@ namespace AF
         public abstract float GetUnarmedParryWindow();
 
         public abstract int GetPostureDamageFromParry();
+
+
+        public string GetBlockedDirectionalDamagedAnimation()
+        {
+            if (characterManager.health.IsDead())
+            {
+                return "";
+            }
+
+            if (!useDirectionalBlockedDamageAnimations)
+            {
+                return "";
+            }
+
+            string damageAnimation = "";
+
+            // Calculate an intensity based on poise damage
+
+
+            return damageAnimation;
+        }
+
     }
 }

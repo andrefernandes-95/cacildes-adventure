@@ -548,10 +548,12 @@ namespace AF.Shooting
                 return false;
             }
 
-            if (uIManager.IsShowingGUI())
-            {
-                return false;
-            }
+            /*
+                        if (uIManager.IsShowingGUI())
+                        {
+                            return false;
+                        }
+                        */
 
             if (GetPlayerManager().IsBusy())
             {

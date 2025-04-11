@@ -71,5 +71,11 @@ namespace AF.Animations
 
         public void IsFetchingArrow();
 
+        public void WarmupSpell();
+
+        public void CastSpell();
+
+        public void AllowCombos();
+
     }
 }

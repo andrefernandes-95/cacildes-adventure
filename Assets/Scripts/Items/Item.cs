@@ -1,5 +1,7 @@
-﻿using AF.Inventory;
+﻿using System;
+using AF.Inventory;
 using AYellowpaper.SerializedCollections;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -8,11 +10,22 @@ namespace AF
     [CreateAssetMenu(menuName = "Items / Item / New Item")]
     public class Item : ScriptableObject
     {
+        [Foldout("Obsolete")]
+        [Obsolete] public LocalizedString nameLocalized;
+        [Foldout("Obsolete")]
+        [Obsolete] public LocalizedString descriptionLocalized;
+        [Foldout("Obsolete")]
+        [Obsolete] public LocalizedString shortDescriptionLocalized;
 
-        [Header("Localization")]
-        public LocalizedString nameLocalized;
-        public LocalizedString descriptionLocalized;
-        public LocalizedString shortDescriptionLocalized;
+        [Header("Texts")]
+
+        public string englishName;
+        public string portugueseName;
+
+        [TextArea(minLines: 2, maxLines: 5)] public string englishDescription;
+        [TextArea(minLines: 2, maxLines: 5)] public string portugueseDescription;
+
+        [HorizontalLine(color: EColor.Gray)]
 
         [Header("UI")]
         public Sprite sprite;
@@ -28,9 +41,17 @@ namespace AF
         [TextAreaAttribute(minLines: 5, maxLines: 10)] public string notes;
         [TextAreaAttribute(minLines: 1, maxLines: 2)] public string location;
 
-
         public string GetName()
         {
+            if (Glossary.IsPortuguese() && !string.IsNullOrEmpty(portugueseName))
+            {
+                return portugueseName;
+            }
+            else if (!string.IsNullOrEmpty(englishName))
+            {
+                return englishName;
+            }
+
             if (nameLocalized != null && nameLocalized.IsEmpty == false)
             {
                 return nameLocalized.GetLocalizedString();
@@ -42,6 +63,15 @@ namespace AF
 
         public string GetDescription()
         {
+            if (Glossary.IsPortuguese() && !string.IsNullOrEmpty(portugueseDescription))
+            {
+                return portugueseDescription;
+            }
+            else if (!string.IsNullOrEmpty(englishDescription))
+            {
+                return englishDescription;
+            }
+
             if (descriptionLocalized != null && descriptionLocalized.IsEmpty == false)
             {
                 return descriptionLocalized.GetLocalizedString();

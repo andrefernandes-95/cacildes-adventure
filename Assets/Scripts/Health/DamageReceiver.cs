@@ -184,7 +184,8 @@ namespace AF
                     return;
                 }
 
-                if (character.characterBlockController.CanBlockDamage(incomingDamage))
+                // TODO: Remove this
+                if (false)//character.characterBlockController.CanBlockDamage(incomingDamage))
                 {
                     /*
                     if (character is PlayerManager playerManager)

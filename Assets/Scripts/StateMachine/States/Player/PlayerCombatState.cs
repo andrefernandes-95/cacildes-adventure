@@ -11,16 +11,15 @@ namespace AF.StateMachine
             playerManager.starterAssetsInputs.leftHandAttack = false;
         }
 
-        public void CheckForCombos(PlayerManager playerManager)
-        {
-            if (playerManager.IsAttemptingToRightAttack() || playerManager.IsAttemptingToLeftAttack())
-            {
-                hasChosenAttack = false;
-            }
-        }
-
         public override AIState Tick(PlayerManager playerManager)
         {
+            if (playerManager.combatManager.allowCombos && (playerManager.IsAttemptingToRightAttack() || playerManager.IsAttemptingToLeftAttack()))
+            {
+                playerManager.combatManager.allowCombos = false;
+
+                hasChosenAttack = false;
+            }
+
             if (!hasChosenAttack)
             {
                 ResetPlayerInputs(playerManager);

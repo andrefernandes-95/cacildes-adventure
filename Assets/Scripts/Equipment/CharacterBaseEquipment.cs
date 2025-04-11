@@ -570,26 +570,5 @@ namespace AF
         public abstract int GetCurrentArrowsSlotIndex();
 
 
-        public void PlaySwitchingWeaponsSoundpack()
-        {
-            if (switchWeaponsSoundpack != null)
-            {
-                switchWeaponsSoundpack.Play(characterBaseManager);
-            }
-        }
-        public void PlaySwitchingSpellsSoundpack()
-        {
-            if (switchSpellsSoundpack != null)
-            {
-                switchSpellsSoundpack.Play(characterBaseManager);
-            }
-        }
-        public void PlaySwitchingConsumablesSoundpack()
-        {
-            if (switchConsumablesSoundpack != null)
-            {
-                switchConsumablesSoundpack.Play(characterBaseManager);
-            }
-        }
     }
 }

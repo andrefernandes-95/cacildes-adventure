@@ -27,12 +27,7 @@ namespace AF
                 guiManager.PushWindow(this);
             }
 
-            canvasGroup.alpha = 0f;
-            canvasGroup.DOKill(); // Cancel any previous tweens
-            canvasGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            canvasGroup.alpha = 1;
         }
 
         private void OnDisable()
@@ -42,11 +37,7 @@ namespace AF
                 guiManager.RemoveWindow(this);
             }
 
-            canvasGroup.DOKill();
-            canvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.OutQuad);
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            canvasGroup.alpha = 0;
         }
     }
 }

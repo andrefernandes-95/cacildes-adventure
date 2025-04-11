@@ -19,7 +19,14 @@ namespace AF.StateMachine
             {
                 hasEnteredState = true;
 
-                PlayDirectionalDamage(characterManager);
+                if (characterManager.characterBlockController.isBlocking)
+                {
+                    PlayBlockedDirectionalDamage(characterManager);
+                }
+                else
+                {
+                    PlayDirectionalDamage(characterManager);
+                }
                 return this;
             }
 

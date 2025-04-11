@@ -9,9 +9,10 @@ namespace AF
 {
     public class CharacterBaseMagicManager : MonoBehaviour
     {
+        public ChargeableSpell_AttackAction currentChargeableSpellAttackAction;
 
         [Header("Charging Spell Modifier")]
-        public float currentChargingAttackMultiplier = 0f;
+        public float currentChargingSpellDamageMultiplier = 0f;
 
         [Header("Components")]
         public CharacterBaseManager character;
@@ -33,6 +34,9 @@ namespace AF
 
         public PlayerManager playerManager;
 
+        [Header("Instances")]
+        public GameObject spellWarmupInstance;
+
         [Header("Regeneration Settings")]
         public float MANA_REGENERATION_RATE = 20f;
 
@@ -51,6 +55,15 @@ namespace AF
 
 
             character.characterBaseEquipment.onSwitchingSpell.AddListener(UpdateSpellAnimations);
+        }
+
+        public void ResetStates()
+        {
+            currentChargingSpellDamageMultiplier = 0f;
+            character.animator.SetBool(AnimatorParametersConstants.IsCharging, false);
+
+            // Clear current spell references
+            currentChargeableSpellAttackAction = null;
         }
 
         void UpdateSpellAnimations()
@@ -78,9 +91,6 @@ namespace AF
         {
             CalculateCurrentSpellDamage();
         }
-
-
-
 
         public void CalculateCurrentSpellDamage()
         {
@@ -259,6 +269,16 @@ namespace AF
         public float GetCurrentManaPercentage()
         {
             return playerStatsDatabase.currentMana * 100 / GetMaxMana();
+        }
+
+        public void DestroyCurrentWarmupSpellEffects()
+        {
+
+            if (spellWarmupInstance != null)
+            {
+                Destroy(spellWarmupInstance.gameObject);
+                spellWarmupInstance = null;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AF.Animations;
 using AF.Characters;
+using AF.Combat;
 using AF.Equipment;
 using AF.Health;
 using AF.Stats;
@@ -67,6 +68,10 @@ namespace AF
         public CharacterBaseStateMachine characterBaseStateMachine;
 
         public CharacterBaseMagicManager characterBaseMagicManager;
+        public CharacterBaseTargetManager characterBaseTargetManager;
+
+        [Header("Character UIs")]
+        public UI_CharacterDamagePopupManager uI_CharacterDamagePopupManager;
 
         // Animator Overrides
         protected AnimatorOverrideController animatorOverrideController;
