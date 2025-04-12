@@ -37,7 +37,7 @@ namespace AF
         public StarterAssetsInputs starterAssetsInputs;
         public PlayerAnimationEventListener playerAnimationEventListener;
         public PlayerBackstabController playerBackstabController;
-        public TwoHandingController twoHandingController;
+        public CharacterBaseTwoHandingManager twoHandingController;
         public LockOnManager lockOnManager;
         public PlayerReputation playerReputation;
         public PlayerAppearance playerAppearance;
@@ -67,15 +67,6 @@ namespace AF
 
         void Start()
         {
-            starterAssetsInputs.onRightHandAttack.AddListener(() =>
-            {
-                combatManager.currentAttackingMember = AttackingMember.RIGHT_HAND;
-            });
-
-            starterAssetsInputs.onLeftHandAttack.AddListener(() =>
-            {
-                combatManager.currentAttackingMember = AttackingMember.LEFT_HAND;
-            });
         }
 
 
@@ -259,7 +250,7 @@ namespace AF
         }
         public bool IsAttemptingToLeftAttack()
         {
-            return starterAssetsInputs.leftHandAttack;
+            return starterAssetsInputs.leftHandBumper;
         }
         public bool IsAttemptingAttack()
         {

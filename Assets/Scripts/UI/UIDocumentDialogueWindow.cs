@@ -48,13 +48,13 @@ namespace AF
             this.gameObject.SetActive(false);
 
             // Fix for issue where opening menu while choosing options hides cursor
-            inputs.onLightAttackInput.AddListener(() =>
+            /*inputs.onLightAttackInput.AddListener(() =>
             {
                 if (this.isActiveAndEnabled)
                 {
                     cursorManager.ShowCursor();
                 }
-            });
+            });*/
         }
 
         private void OnEnable()

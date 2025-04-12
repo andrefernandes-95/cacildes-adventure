@@ -7,6 +7,23 @@ namespace AF
     {
         [SerializeField] MeleeDamageCollider meleeDamageCollider;
 
+        [Header("Back Pivot")]
+        [SerializeField] Vector3 weaponInBack_localPosition;
+        [SerializeField] Vector3 weaponInBack_localRotation;
+
+        [Header("Two Handing Pivot")]
+        [SerializeField] Vector3 twoHanding_localPosition;
+        [SerializeField] Vector3 twoHanding_localRotation;
+
+        Vector3 originalLocalPosition;
+        Quaternion originalLocalRotation;
+
+        private void Awake()
+        {
+            originalLocalPosition = transform.localPosition;
+            originalLocalRotation = transform.localRotation;
+        }
+
         public void ActivateEquippedWorldWeapon()
         {
             meleeDamageCollider.gameObject.SetActive(true);
@@ -31,5 +48,22 @@ namespace AF
         {
             meleeDamageCollider.weaponInstance = weaponInstance;
         }
+
+        public void ActivateTwoHandPivots()
+        {
+            transform.SetLocalPositionAndRotation(twoHanding_localPosition, Quaternion.Euler(twoHanding_localRotation));
+        }
+
+        public void RestoreDefaultPivots()
+        {
+            transform.SetLocalPositionAndRotation(originalLocalPosition, originalLocalRotation);
+        }
+
+        public void ActivatBackPivots()
+        {
+            transform.SetLocalPositionAndRotation(weaponInBack_localPosition, Quaternion.Euler(weaponInBack_localRotation));
+        }
+
     }
+
 }

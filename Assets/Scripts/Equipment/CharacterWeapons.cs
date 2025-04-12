@@ -35,8 +35,10 @@ namespace AF.Equipment
                 equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
 
                 character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightBumperActions.ToArray());
-                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftBumperActions.ToArray());
                 character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightTriggerActions.ToArray());
+
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftBumperActions.ToArray());
+                character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftTriggerActions.ToArray());
             }
 
             defaultRightWeaponHandler = rightWeaponHandler;
@@ -44,6 +46,8 @@ namespace AF.Equipment
 
             character.characterBaseEquipment.onSwitchingRightWeapon.AddListener(OnSwitchingRightWeapon);
             character.characterBaseEquipment.onSwitchingLeftWeapon.AddListener(OnSwitchingLeftWeapon);
+
+            character.characterBaseTwoHandingManager.onTwoHandingModeChanged.AddListener(UpdateRightBumperActions);
         }
 
         void OnSwitchingRightWeapon()
@@ -109,6 +113,35 @@ namespace AF.Equipment
             }
         }
 
+        void UpdateRightBumperActions()
+        {
+            WeaponInstance rightHandWeaponInstace = character.characterBaseEquipment.GetRightHandWeapon();
+            if (rightHandWeaponInstace.IsEmpty())
+            {
+                return;
+            }
+
+            Weapon weapon = rightHandWeaponInstace.GetItem<Weapon>();
+
+            // If is two handing and has right bumper actions for two handing, equip them
+            if (character.characterBaseTwoHandingManager.isTwoHanding)
+            {
+                if (weapon.two_hand_rightBumperActions.Count > 0)
+                {
+                    character.UpdateAttackAnimations(weapon.two_hand_rightBumperActions.ToArray());
+                }
+                if (weapon.two_hand_rightTriggerActions.Count > 0)
+                {
+                    character.UpdateAttackAnimations(weapon.two_hand_rightTriggerActions.ToArray());
+                }
+            }
+            else
+            {
+                character.UpdateAttackAnimations(weapon.rightBumperActions.ToArray());
+                character.UpdateAttackAnimations(weapon.rightTriggerActions.ToArray());
+            }
+        }
+
         public void EquipWorldWeapon(WeaponInstance weaponToEquip, bool isRightHand)
         {
             if (isRightHand)
@@ -127,16 +160,24 @@ namespace AF.Equipment
             {
                 equippedRightWeaponInstance = Instantiate(weapon.worldWeapon, rightWeaponHandler);
                 equippedRightWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
-                character.UpdateAttackAnimations(weapon.rightBumperActions.ToArray());
+                UpdateRightBumperActions();
             }
             else
             {
                 equippedLeftWeaponInstance = Instantiate(weapon.worldWeapon, leftWeaponHandler);
+
+                Vector3 vector3 = new(
+                    equippedLeftWeaponInstance.transform.localScale.x * -1, equippedLeftWeaponInstance.transform.localScale.y,
+                    equippedLeftWeaponInstance.transform.localScale.z);
+                equippedLeftWeaponInstance.transform.localScale = vector3;
+
                 equippedLeftWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
                 character.UpdateAttackAnimations(weapon.leftBumperActions.ToArray());
+                character.UpdateAttackAnimations(weapon.leftTriggerActions.ToArray());
             }
 
             character.statsBonusController.RecalculateEquipmentBonus();
+            character.characterBaseTwoHandingManager.EvaluateCurrentState();
         }
 
         public void UnequipWorldWeapon(bool isRightHand)
@@ -173,7 +214,8 @@ namespace AF.Equipment
             {
                 equippedRightWeaponInstance.gameObject.SetActive(true);
             }
-            if (equippedLeftWeaponInstance != null)
+            // Only show left weapon if not in two handing mode
+            if (equippedLeftWeaponInstance != null && character.characterBaseTwoHandingManager.isTwoHanding == false)
             {
                 equippedLeftWeaponInstance.gameObject.SetActive(true);
             }
@@ -190,7 +232,6 @@ namespace AF.Equipment
                 equippedLeftWeaponInstance.gameObject.SetActive(false);
             }
         }
-
 
         public void RestoreDefaultsForWeaponPivots()
         {

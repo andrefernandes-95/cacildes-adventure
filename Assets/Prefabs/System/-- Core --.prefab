@@ -423,6 +423,7 @@ Transform:
   m_Children:
   - {fileID: 4095284375261365662}
   - {fileID: 7845504205824551809}
+  - {fileID: 7846003617045487555}
   m_Father: {fileID: 9198782313407061788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &350417955323199600
@@ -13054,9 +13055,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8865007221701318155}
-  - component: {fileID: 1437281212952297719}
+  - component: {fileID: 1478152323461640136}
   m_Layer: 8
-  m_Name: Player Two Hand Controller
+  m_Name: "\U0001FAF2\U0001FAF1 Two Handing Manager"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13077,7 +13078,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6558083026297358713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1437281212952297719
+--- !u!114 &1478152323461640136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13086,12 +13087,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4231323545553876369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c859ef18665e2f4ca628e01335211ba, type: 3}
+  m_Script: {fileID: 11500000, guid: d035b90b89730614a89d26473520cbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 4363140735506542586}
-  soundbank: {fileID: 7321280117501162532}
-  equipmentDatabase: {fileID: 11400000, guid: a2bf3141e1e696a48952a3479a4a9742, type: 2}
+  character: {fileID: 4363140735506542586}
+  isTwoHanding: 0
+  backHolster: {fileID: 7846003617045487555}
+  onTwoHandingModeChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4372577925647094151
 GameObject:
   m_ObjectHideFlags: 0
@@ -18593,6 +18597,8 @@ GameObject:
   - component: {fileID: 6775786089052084653}
   - component: {fileID: 3995502744374335346}
   - component: {fileID: 3803542353285329647}
+  - component: {fileID: 2968148764536110419}
+  - component: {fileID: 1130244468393577640}
   m_Layer: 8
   m_Name: Player Input and Third Person Controller
   m_TagString: Untagged
@@ -18831,79 +18837,6 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   dodge: 0
-  toggleWalk: 0
-  consumeFavoriteItem: 0
-  onConsumeFavoriteItem:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9079116784592991426}
-        m_TargetAssemblyTypeName: AF.FavoriteItemsManager, AF
-        m_MethodName: OnConsumableUse
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4574202107048829290}
-        m_TargetAssemblyTypeName: AF.UI.EquipmentMenu.ItemList, AF
-        m_MethodName: OnUseItem
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  leftHandAttack: 0
-  onLightAttackInput:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1688620459228595376}
-        m_TargetAssemblyTypeName: AF.PlayerCombatController, AF
-        m_MethodName: OnLightAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6982558639531093206}
-        m_TargetAssemblyTypeName: AF.Shooting.PlayerShooter, AF
-        m_MethodName: OnFireInput
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1628314599164878575}
-        m_TargetAssemblyTypeName: AF.PlayerBlockController, AF
-        m_MethodName: OnCounterAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onRightHandAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  block: 0
   rightHandBumper: 0
   rightHandTrigger: 0
   leftHandBumper: 0
@@ -19122,7 +19055,7 @@ MonoBehaviour:
   onToggleTwoHandsInput:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1437281212952297719}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AF.TwoHandingController, AF
         m_MethodName: OnInput
         m_Mode: 1
@@ -19404,6 +19337,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: 2774443025452957695, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+  playerManager: {fileID: 4363140735506542586}
+--- !u!114 &2968148764536110419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66c4b47ea2f5094995a9e5bac88a9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: 6347170252661205853, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+  starterAssetsInputs: {fileID: 3450680162556713538}
+  playerManager: {fileID: 4363140735506542586}
+--- !u!114 &1130244468393577640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434115110090511195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb771ea88d466b40a03a0e73cbfd86b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -1503921917793407702, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
   starterAssetsInputs: {fileID: 3450680162556713538}
   playerManager: {fileID: 4363140735506542586}
 --- !u!1 &7491860537892402807
@@ -21615,6 +21578,7 @@ MonoBehaviour:
   characterBaseStateMachine: {fileID: 3566014933293653343}
   characterBaseMagicManager: {fileID: 93533930453972839}
   characterBaseTargetManager: {fileID: 7564897774594775646}
+  characterBaseTwoHandingManager: {fileID: 1478152323461640136}
   uI_CharacterDamagePopupManager: {fileID: 3374253127002570439}
   animatorSpeed: 1
   thirdPersonController: {fileID: 5122672870407089929}
@@ -21639,7 +21603,7 @@ MonoBehaviour:
   starterAssetsInputs: {fileID: 3450680162556713538}
   playerAnimationEventListener: {fileID: 7144497925014830152}
   playerBackstabController: {fileID: 6714799691997101552}
-  twoHandingController: {fileID: 1437281212952297719}
+  twoHandingController: {fileID: 1478152323461640136}
   lockOnManager: {fileID: 5309569913858928647}
   playerReputation: {fileID: 4247258838834278573}
   playerAppearance: {fileID: 158853697948707438}
@@ -24143,6 +24107,54 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &9184489461221903281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7846003617045487555}
+  - component: {fileID: 1525974886071838149}
+  m_Layer: 8
+  m_Name: Back Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7846003617045487555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184489461221903281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8457694423483447461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1525974886071838149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184489461221903281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013d2b98cedb25d4eb624374bb560049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneName: Back_Attachment
+  boneToAssignAsParent: {fileID: 0}
+  localPositionWhenParenting: {x: -0.029, y: 0.194, z: 0}
+  localRotationWhenParenting: {x: -8.494, y: -90, z: -15}
 --- !u!1001 &790990361592054252
 PrefabInstance:
   m_ObjectHideFlags: 0

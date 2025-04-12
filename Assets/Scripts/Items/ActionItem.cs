@@ -13,6 +13,10 @@ namespace AF
         public List<AttackAction> leftBumperActions = new();
         public List<AttackAction> leftTriggerActions = new();
 
+        [Header("⚔️ Two Handing Actions")]
+        public List<AttackAction> two_hand_rightBumperActions = new();
+        public List<AttackAction> two_hand_rightTriggerActions = new();
+
         public virtual void PerformAction(
             CharacterBaseManager character,
             bool isRightHand,
@@ -23,11 +27,13 @@ namespace AF
             {
                 if (isTriggerAction)
                 {
-                    ChooseAction(character, rightTriggerActions);
+                    ChooseAction(character, isRightHand && character.characterBaseTwoHandingManager.isTwoHanding
+                        ? two_hand_rightTriggerActions : rightTriggerActions);
                 }
                 else
                 {
-                    ChooseAction(character, rightBumperActions);
+                    ChooseAction(character, isRightHand && character.characterBaseTwoHandingManager.isTwoHanding
+                        ? two_hand_rightBumperActions : rightBumperActions);
                 }
             }
             else

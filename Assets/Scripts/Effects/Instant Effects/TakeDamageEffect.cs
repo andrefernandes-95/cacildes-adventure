@@ -60,6 +60,9 @@ namespace AF
 
             // If character is AI, check for new target if character causing damage is present
             characterBeingDamaged.characterBaseStateMachine.ChangeToTakeDamageState();
+
+            // Generate impulse
+            characterBeingDamaged.cinemachineImpulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
         }
 
         private void CalculateDamage()

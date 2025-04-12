@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using AF.Animations;
 using AF.Health;
-using AF.Stats;
 using AYellowpaper.SerializedCollections;
 using UnityEditor;
 using UnityEngine;
@@ -88,40 +85,14 @@ namespace AF
         public Scaling strengthScaling = Scaling.E;
         public Scaling dexterityScaling = Scaling.E;
         public Scaling intelligenceScaling = Scaling.E;
-        [Header("Weapon Special Options")]
-        public int manaCostToUseWeaponSpecialAttack = 0;
 
-        [Header("Use New Weapon System?")]
-        [Tooltip("Temporary bool. If true, will use the new World Weapons system when equipped")]
-        public bool useNewWeaponSystem = false;
-
-        [Header("Animation Overrides")]
-        public List<AnimationOverride> animationOverrides;
-        [Tooltip("Optional")] public List<AnimationOverride> twoHandOverrides;
-        [Tooltip("Optional")] public List<AnimationOverride> blockOverrides;
-
-        public int lightAttackCombos = 2;
-        public int heavyAttackCombos = 1;
-
-        [Header("Upper Layer Options")]
-        public bool useUpperLayerAnimations = false;
-        public bool allowUpperLayerWhenOneHanding = true;
-        public bool allowUpperLayerWhenTwoHanding = true;
-
-        [Header("Dual Wielding Options")]
-        public bool halveDamage = false;
 
         [Header("Speed Penalty")]
         [Tooltip("Will be added as a negative speed to the animator when equipped")]
         public float speedPenalty = 0f;
-        [Range(0.1f, 2f)] public float oneHandAttackSpeedPenalty = 1f;
-        [Range(0.1f, 2f)] public float twoHandAttackSpeedPenalty = 1f;
 
         [Header("Weapon Bonus")]
-        public int amountOfGoldReceivedPerHit = 0;
         public bool doubleCoinsUponKillingEnemies = false;
-        public bool doubleDamageDuringNightTime = false;
-        public bool doubleDamageDuringDayTime = false;
         public int healthRestoredWithEachHit = 0;
 
         [Header("Jump Attack")]
@@ -129,7 +100,6 @@ namespace AF
 
         [Header("Is Holy?")]
         public bool isHolyWeapon = false;
-        public bool isHexWeapon = false;
 
         [Header("Range Category")]
         public bool isCrossbow = false;
@@ -140,7 +110,6 @@ namespace AF
 
         [Header("Staff Options")]
         public bool shouldRegenerateMana = false;
-        public bool ignoreSpellsAnimationClips = false;
 
 #if UNITY_EDITOR
         private void OnEnable()

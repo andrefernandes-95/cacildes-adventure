@@ -34,7 +34,6 @@ namespace AF
 
         private void OnEnable()
         {
-            playerManager.twoHandingController.onTwoHandingModeChanged += EvaluateTwoHandingUpdate;
             playerManager.characterBlockController.onBlockChanged += EvaluateTwoHandingUpdate;
             playerManager.characterBlockController.onBlockChanged += UseBlockTransform;
 
@@ -44,7 +43,6 @@ namespace AF
         private void OnDisable()
         {
 
-            playerManager.twoHandingController.onTwoHandingModeChanged -= EvaluateTwoHandingUpdate;
             playerManager.characterBlockController.onBlockChanged -= EvaluateTwoHandingUpdate;
             playerManager.characterBlockController.onBlockChanged -= UseBlockTransform;
 

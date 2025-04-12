@@ -98,9 +98,10 @@ namespace AF
 
             // Lightning...
 
-            if (shield.shieldBlockVfx != null)
+            // Assume left weapon is used for blocking
+            if (shield.shieldBlockVfx != null && receiver.characterWeapons.equippedLeftWeaponInstance != null)
             {
-                Instantiate(shield.shieldBlockVfx, contactPoint, Quaternion.identity);
+                Instantiate(shield.shieldBlockVfx, receiver.characterWeapons.equippedLeftWeaponInstance.transform.position, Quaternion.identity);
             }
 
 

@@ -76,11 +76,13 @@ namespace AF
             {
                 keyboardKeyIcon.sprite = uI_Input.keyboardIcon;
                 keyboardLabel.text = "";
+                keyboardKeyIcon.gameObject.SetActive(true);
             }
             else
             {
                 keyboardLabel.text = uI_Input.GetCurrentKeyBinding(starterAssetsInputs.playerInput);
                 keyboardKeyIcon.sprite = null;
+                keyboardKeyIcon.gameObject.SetActive(false);
             }
 
             keyboardContainer.SetActive(true);

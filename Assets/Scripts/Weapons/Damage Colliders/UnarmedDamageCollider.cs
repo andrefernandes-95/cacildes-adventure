@@ -13,6 +13,7 @@ namespace AF
 
         [Header("Sounds")]
         [SerializeField] Soundpack swooshes;
+        [SerializeField] Soundpack hits;
         [SerializeField] Soundpack weaponDrawn;
 
         [Header("VFX")]
@@ -23,23 +24,6 @@ namespace AF
             base.Awake();
 
             damageOwner = GetComponentInParent<CharacterBaseManager>();
-        }
-
-        protected override void ProcessDamageEffect(DamageReceiver damageReceiver)
-        {
-            if (!CanAttackTarget(damageReceiver))
-            {
-                return;
-            }
-
-            TakeDamageEffect takeDamageEffect = Instantiate(damageReceiver.character.characterEffectsManager.characterEffectsDatabase.takeDamageEffect);
-            takeDamageEffect.damage = damageOwner.characterBaseAttackManager.GetAttackingWeaponDamage();
-            takeDamageEffect.contactPoint = contactPoint;
-            takeDamageEffect.attacker = damageOwner;
-            takeDamageEffect.receiver = damageReceiver.character;
-            takeDamageEffect.angleHitFrom = Vector3.SignedAngle(damageOwner.transform.forward, damageReceiver.transform.forward, Vector3.up);
-
-            damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
         }
 
         public override void EnableCollider()
@@ -91,6 +75,29 @@ namespace AF
             return true;
         }
 
+
+        protected override void ProcessDamageEffect(DamageReceiver damageReceiver)
+        {
+            if (!CanAttackTarget(damageReceiver))
+            {
+                return;
+            }
+
+            TakeDamageEffect takeDamageEffect = Instantiate(damageReceiver.character.characterEffectsManager.characterEffectsDatabase.takeDamageEffect);
+            takeDamageEffect.damage = damageOwner.characterBaseAttackManager.GetAttackingWeaponDamage();
+            takeDamageEffect.contactPoint = contactPoint;
+            takeDamageEffect.attacker = damageOwner;
+            takeDamageEffect.receiver = damageReceiver.character;
+            takeDamageEffect.angleHitFrom = Vector3.SignedAngle(damageOwner.transform.forward, damageReceiver.transform.forward, Vector3.up);
+
+            damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
+
+            if (hits != null)
+            {
+                hits.Play(damageOwner);
+            }
+        }
+
         protected override void ProcessTakeBlockedDamageEffect(DamageReceiver damageReceiver)
         {
             TakeBlockedDamageEffect takeBlockedDamageEffect = Instantiate(damageReceiver.character.characterEffectsManager.characterEffectsDatabase.takeBlockedDamageEffect);
@@ -115,6 +122,10 @@ namespace AF
             takeBlockedDamageEffect.shield = shield;
 
             damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeBlockedDamageEffect);
+            if (hits != null)
+            {
+                hits.Play(damageOwner);
+            }
         }
     }
 }

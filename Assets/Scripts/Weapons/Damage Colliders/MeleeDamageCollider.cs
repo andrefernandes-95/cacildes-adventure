@@ -1,4 +1,5 @@
 using AF.Health;
+using Cinemachine;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace AF
 
         [Header("Sounds")]
         [SerializeField] Soundpack swooshes;
+        [SerializeField] Soundpack hits;
         [SerializeField] Soundpack weaponDrawn;
 
         protected override void Awake()
@@ -89,6 +91,11 @@ namespace AF
             takeDamageEffect.angleHitFrom = Vector3.SignedAngle(damageOwner.transform.forward, damageReceiver.transform.forward, Vector3.up);
 
             damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
+
+            if (hits != null)
+            {
+                hits.Play(damageOwner);
+            }
         }
 
         bool CanAttackTarget(DamageReceiver targetToDamage)
@@ -122,6 +129,11 @@ namespace AF
             takeDamageEffect.angleHitFrom = Vector3.SignedAngle(transform.forward, damageReceiver.transform.forward, Vector3.up);
 
             damageReceiver.character.characterEffectsManager.ProcessInstantEffect(takeDamageEffect);
+
+            if (hits != null)
+            {
+                hits.Play(damageOwner);
+            }
         }
     }
 }

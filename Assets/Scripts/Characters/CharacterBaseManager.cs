@@ -8,11 +8,13 @@ using AF.Equipment;
 using AF.Health;
 using AF.Stats;
 using AF.StatusEffects;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace AF
 {
+    [RequireComponent(typeof(CinemachineImpulseSource))]
     public abstract class CharacterBaseManager : MonoBehaviour
     {
 
@@ -69,6 +71,7 @@ namespace AF
 
         public CharacterBaseMagicManager characterBaseMagicManager;
         public CharacterBaseTargetManager characterBaseTargetManager;
+        public CharacterBaseTwoHandingManager characterBaseTwoHandingManager;
 
         [Header("Character UIs")]
         public UI_CharacterDamagePopupManager uI_CharacterDamagePopupManager;
@@ -79,6 +82,8 @@ namespace AF
 
         public float animatorSpeed = 1f;
         float defaultAnimatorSpeed = 1f;
+
+        public CinemachineImpulseSource cinemachineImpulseSource => GetComponent<CinemachineImpulseSource>();
 
         protected virtual void Awake()
         {

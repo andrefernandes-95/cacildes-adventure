@@ -8,7 +8,7 @@ namespace AF.StateMachine
         void ResetPlayerInputs(PlayerManager playerManager)
         {
             playerManager.starterAssetsInputs.rightHandBumper = false;
-            playerManager.starterAssetsInputs.leftHandAttack = false;
+            playerManager.starterAssetsInputs.leftHandBumper = false;
         }
 
         public override AIState Tick(PlayerManager playerManager)
