@@ -17,6 +17,50 @@ namespace AF
         public List<AttackAction> two_hand_rightBumperActions = new();
         public List<AttackAction> two_hand_rightTriggerActions = new();
 
+        [Header("Contextual Attacks For Right Hand")]
+        public List<AttackAction> runAttackActions = new();
+        public List<AttackAction> dodgeAttackActions = new();
+        public List<AttackAction> backstepAttackActions = new();
+        public List<AttackAction> pokingBehindShieldAttackActions = new();
+        public List<AttackAction> powerStanceAttackActions = new();
+        public List<AttackAction> jumpAttacks = new();
+
+        public virtual void UpdateRightAttackAnimations(CharacterBaseManager character)
+        {
+            // If is two handing and has right bumper actions for two handing, equip them
+            if (character.characterBaseTwoHandingManager.isTwoHanding)
+            {
+                if (two_hand_rightBumperActions.Count > 0)
+                {
+                    character.UpdateAttackAnimations(two_hand_rightBumperActions.ToArray());
+                }
+                if (two_hand_rightTriggerActions.Count > 0)
+                {
+                    character.UpdateAttackAnimations(two_hand_rightTriggerActions.ToArray());
+                }
+            }
+            else
+            {
+                character.UpdateAttackAnimations(rightBumperActions.ToArray());
+                character.UpdateAttackAnimations(rightTriggerActions.ToArray());
+            }
+
+            if (runAttackActions.Count > 0)
+            {
+                character.UpdateAttackAnimations(runAttackActions.ToArray());
+            }
+            if (jumpAttacks.Count > 0)
+            {
+                character.UpdateAttackAnimations(jumpAttacks.ToArray());
+            }
+        }
+
+        public virtual void UpdateLeftAttackAnimations(CharacterBaseManager character)
+        {
+            character.UpdateAttackAnimations(leftBumperActions.ToArray());
+            character.UpdateAttackAnimations(leftTriggerActions.ToArray());
+        }
+
         public virtual void PerformAction(
             CharacterBaseManager character,
             bool isRightHand,
@@ -27,13 +71,32 @@ namespace AF
             {
                 if (isTriggerAction)
                 {
-                    ChooseAction(character, isRightHand && character.characterBaseTwoHandingManager.isTwoHanding
+                    ChooseAction(character, character.characterBaseTwoHandingManager.isTwoHanding
                         ? two_hand_rightTriggerActions : rightTriggerActions);
                 }
                 else
                 {
-                    ChooseAction(character, isRightHand && character.characterBaseTwoHandingManager.isTwoHanding
-                        ? two_hand_rightBumperActions : rightBumperActions);
+
+                    List<AttackAction> attackActions = new();
+
+                    if (character.combatManager.wantsToRunAttack)
+                    {
+                        attackActions = runAttackActions;
+                    }
+                    else if (character.combatManager.wantsToJumpAttack)
+                    {
+                        attackActions = jumpAttacks;
+                    }
+                    else if (character.characterBaseTwoHandingManager.isTwoHanding)
+                    {
+                        attackActions = two_hand_rightBumperActions;
+                    }
+                    else
+                    {
+                        attackActions = rightBumperActions;
+                    }
+
+                    ChooseAction(character, attackActions);
                 }
             }
             else

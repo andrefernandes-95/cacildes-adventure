@@ -12,6 +12,14 @@ namespace AF.StateMachine
         {
             PlayJump(playerManager.animator);
 
+            if (playerManager.IsAttemptingAttack())
+            {
+                playerManager.combatManager.wantsToJumpAttack = true;
+                playerManager.combatManager.isJumpAttacking = true;
+
+                return SwitchState(playerManager, playerManager.playerStateMachine.playerCombatState);
+            }
+
             // Free Falling?
             if (playerManager.characterGravity.VerticalVelocity >= 0)
             {

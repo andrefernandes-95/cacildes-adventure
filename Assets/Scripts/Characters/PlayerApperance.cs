@@ -5,85 +5,86 @@ namespace AF
 {
     public class PlayerAppearanceManager : CharacterBaseAppearance
     {
-        [Header("Options")]
-        public bool isMale = true;
-
-        [Header("Common Parts")]
-        [SerializeField] List<string> hairs = new();
-        [SerializeField] List<string> eyebrows = new();
-        [SerializeField] List<string> beards = new();
-
-        [Header("Male Parts")]
-        [SerializeField] List<string> maleHead = new();
-        [SerializeField] List<string> maleTorso = new();
-        [SerializeField] List<string> maleHands = new();
-        [SerializeField] List<string> maleLegs = new();
-
-        [Header("Female Parts")]
-        [SerializeField] List<string> femaleHead = new();
-        [SerializeField] List<string> femaleTorso = new();
-        [SerializeField] List<string> femaleHands = new();
-        [SerializeField] List<string> femaleLegs = new();
+        public PlayerCustomization playerCustomization;
 
         public override List<string> GetHands()
         {
-            if (isMale)
+            if (playerCustomization.isMale)
             {
-                return maleHands;
+                return playerCustomization.maleHands;
             }
 
-            return femaleHands;
+            return playerCustomization.femaleHands;
         }
 
         public override List<string> GetBeard()
         {
-            return beards;
+            return playerCustomization.beards;
         }
 
         public override List<string> GetEyebrows()
         {
-            return eyebrows;
+            return playerCustomization.eyebrows;
         }
 
         public override List<string> GetHairs()
         {
-            return hairs;
+            return playerCustomization.hairs;
         }
 
         public override List<string> GetFace()
         {
-            if (isMale)
+            if (playerCustomization.isMale)
             {
-                return maleHead;
+                return playerCustomization.maleHead;
             }
 
-            return femaleHead;
+            return playerCustomization.femaleHead;
         }
 
         public override List<string> GetLegs()
         {
-            if (isMale)
+            if (playerCustomization.isMale)
             {
-                return maleLegs;
+                return playerCustomization.maleLegs;
             }
 
-            return femaleLegs;
+            return playerCustomization.femaleLegs;
         }
 
         public override List<string> GetTorso()
         {
-            if (isMale)
+            if (playerCustomization.isMale)
             {
-                return maleTorso;
+                return playerCustomization.maleTorso;
             }
 
-            return femaleTorso;
+            return playerCustomization.femaleTorso;
         }
 
         public override bool IsMale()
         {
-            return isMale;
+            return playerCustomization.isMale;
         }
 
+        public override Color GetEyeColor()
+        {
+            return playerCustomization.eyeColor;
+        }
+
+        public override Color GetSkinColor()
+        {
+            return playerCustomization.skinColor;
+        }
+
+        public override Color GetHairColor()
+        {
+            return playerCustomization.hairColor;
+        }
+
+        public override Color GetScarColor()
+        {
+            return playerCustomization.scarColor;
+        }
     }
 }

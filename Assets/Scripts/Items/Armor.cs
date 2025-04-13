@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace AF
@@ -7,26 +7,37 @@ namespace AF
     public class Armor : ArmorBase
     {
         [Header("Graphics")]
-        public string[] armorPieces;
+        public List<string> armorPieces = new();
+        public string malePiece;
+        public string femalePiece;
+        public Material armorMaterial;
 
         public void OnEquip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in armorPieces)
+            List<string> finalList = armorPieces;
+
+            if (character.characterBaseAppearance.IsMale())
             {
-                character.syntyCharacterModelManager.ShowPiece(gameObjectName);
+                finalList.Add(malePiece);
+            }
+            else
+            {
+                finalList.Add(femalePiece);
             }
 
-            character.syntyCharacterModelManager.ToggleTorso(false);
+            character.syntyCharacterModelManager.EnableArmorPiece(finalList, armorMaterial);
+            character.syntyCharacterModelManager.DisableTorso();
         }
 
         public void OnUnequip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in armorPieces)
-            {
-                character.syntyCharacterModelManager.HidePiece(gameObjectName);
-            }
+            List<string> finalList = armorPieces;
 
-            character.syntyCharacterModelManager.ToggleTorso(true);
+            finalList.Add(malePiece);
+            finalList.Add(femalePiece);
+
+            character.syntyCharacterModelManager.DisablePieces(finalList);
+            character.syntyCharacterModelManager.EnableTorso();
         }
     }
 }

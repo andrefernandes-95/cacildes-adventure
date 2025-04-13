@@ -25,6 +25,12 @@ namespace AF
         [SerializeField] List<string> femaleHands = new();
         [SerializeField] List<string> femaleLegs = new();
 
+        [Header("Colors")]
+        [SerializeField] Color skinColor;
+        [SerializeField] Color hairColor;
+        [SerializeField] Color eyeColor;
+        [SerializeField] Color scarColor;
+
         public override List<string> GetHands()
         {
             if (isMale)
@@ -85,5 +91,24 @@ namespace AF
             return isMale;
         }
 
+        public override Color GetEyeColor()
+        {
+            return eyeColor;
+        }
+
+        public override Color GetSkinColor()
+        {
+            return skinColor;
+        }
+
+        public override Color GetHairColor()
+        {
+            return hairColor;
+        }
+
+        public override Color GetScarColor()
+        {
+            return scarColor;
+        }
     }
 }

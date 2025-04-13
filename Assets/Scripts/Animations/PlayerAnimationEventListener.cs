@@ -85,6 +85,11 @@ namespace AF.Animations
 
         public void DisableRotation()
         {
+            if (playerManager.combatManager.isJumpAttacking)
+            {
+                return;
+            }
+
             playerManager.DisableCanRotate();
         }
 

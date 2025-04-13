@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace AF
 {
@@ -40,5 +41,24 @@ namespace AF
         [Header("Inventory")]
         public bool chanceToNotLoseItemUponConsumption = false;
 
+        [Header("Graphics")]
+        public List<string> accessoryPieces = new();
+        public Material accessoryMaterial;
+
+        public void OnEquip(CharacterBaseManager character)
+        {
+            if (accessoryPieces.Count > 0)
+            {
+                character.syntyCharacterModelManager.EnableArmorPiece(accessoryPieces, accessoryMaterial);
+            }
+        }
+
+        public void OnUnequip(CharacterBaseManager character)
+        {
+            if (accessoryPieces.Count > 0)
+            {
+                character.syntyCharacterModelManager.DisablePieces(accessoryPieces);
+            }
+        }
     }
 }

@@ -4131,6 +4131,12 @@ MonoBehaviour:
   isCombatting: 0
   isLightAttacking: 0
   allowCombos: 0
+  wantsToDodgeAttack: 0
+  wantsToBackstepAttack: 0
+  wantsToJumpAttack: 0
+  wantsToRunAttack: 0
+  wantsToPowerStanceAttack: 0
+  wantsToPokeAttackBehindShield: 0
   character: {fileID: 4363140735506542586}
   isTwoHanding: 0
   twoHandingMultiplier: 1.2
@@ -16794,7 +16800,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8523506115791238718}
-  - component: {fileID: 220308081219909978}
+  - component: {fileID: 3256342141113290687}
   m_Layer: 8
   m_Name: "\U0001F484 Appearance Manager"
   m_TagString: Untagged
@@ -16817,7 +16823,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6558083026297358713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &220308081219909978
+--- !u!114 &3256342141113290687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16826,33 +16832,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6205596420015942958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f7f2215151e94479f335f1beeae283, type: 3}
+  m_Script: {fileID: 11500000, guid: 08c28d3f57f82044a9ae8b878d3abae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMale: 1
-  hairs:
-  - Chr_Hair_23
-  eyebrows: []
-  beards: []
-  maleHead:
-  - _Chr_Head_Male_00
-  maleTorso:
-  - _Chr_Torso_Male_00
-  - _Chr_ArmUpperRight_Male_00
-  - _Chr_ArmUpperLeft_Male_00
-  maleHands:
-  - _Chr_HandLeft_Male_00
-  - _Chr_HandRight_Male_00
-  - _Chr_ArmLowerLeft_Male_00
-  - _Chr_ArmLowerRight_Male_00
-  maleLegs:
-  - _Chr_LegLeft_Male_00
-  - _Chr_LegRight_Male_00
-  - _Chr_Hips_Male_00
-  femaleHead: []
-  femaleTorso: []
-  femaleHands: []
-  femaleLegs: []
+  playerCustomization: {fileID: 11400000, guid: b9cd7f236bbc6644ca0aa3001f2d2373, type: 2}
 --- !u!1 &6244017603199229704
 GameObject:
   m_ObjectHideFlags: 0
@@ -21571,7 +21554,7 @@ MonoBehaviour:
   characterWeapons: {fileID: 897694540558054072}
   characterBaseInventory: {fileID: 3925226053210021350}
   syntyCharacterModelManager: {fileID: 6383117140852044533}
-  characterBaseAppearance: {fileID: 220308081219909978}
+  characterBaseAppearance: {fileID: 3256342141113290687}
   characterBaseAvatar: {fileID: 1671989011647315090}
   characterBaseDefenseManager: {fileID: 9026837746628033580}
   characterBaseAttackManager: {fileID: 2958563883327309659}

@@ -47,7 +47,7 @@ namespace AF.Equipment
             character.characterBaseEquipment.onSwitchingRightWeapon.AddListener(OnSwitchingRightWeapon);
             character.characterBaseEquipment.onSwitchingLeftWeapon.AddListener(OnSwitchingLeftWeapon);
 
-            character.characterBaseTwoHandingManager.onTwoHandingModeChanged.AddListener(UpdateRightBumperActions);
+            character.characterBaseTwoHandingManager.onTwoHandingModeChanged.AddListener(UpdateRightActions);
         }
 
         void OnSwitchingRightWeapon()
@@ -113,7 +113,7 @@ namespace AF.Equipment
             }
         }
 
-        void UpdateRightBumperActions()
+        void UpdateRightActions()
         {
             WeaponInstance rightHandWeaponInstace = character.characterBaseEquipment.GetRightHandWeapon();
             if (rightHandWeaponInstace.IsEmpty())
@@ -122,24 +122,19 @@ namespace AF.Equipment
             }
 
             Weapon weapon = rightHandWeaponInstace.GetItem<Weapon>();
+            weapon.UpdateRightAttackAnimations(character);
+        }
 
-            // If is two handing and has right bumper actions for two handing, equip them
-            if (character.characterBaseTwoHandingManager.isTwoHanding)
+        void UpdateLeftActions()
+        {
+            WeaponInstance leftHandWeaponInstance = character.characterBaseEquipment.GetLeftHandWeapon();
+            if (leftHandWeaponInstance.IsEmpty())
             {
-                if (weapon.two_hand_rightBumperActions.Count > 0)
-                {
-                    character.UpdateAttackAnimations(weapon.two_hand_rightBumperActions.ToArray());
-                }
-                if (weapon.two_hand_rightTriggerActions.Count > 0)
-                {
-                    character.UpdateAttackAnimations(weapon.two_hand_rightTriggerActions.ToArray());
-                }
+                return;
             }
-            else
-            {
-                character.UpdateAttackAnimations(weapon.rightBumperActions.ToArray());
-                character.UpdateAttackAnimations(weapon.rightTriggerActions.ToArray());
-            }
+
+            Weapon weapon = leftHandWeaponInstance.GetItem<Weapon>();
+            weapon.UpdateLeftAttackAnimations(character);
         }
 
         public void EquipWorldWeapon(WeaponInstance weaponToEquip, bool isRightHand)
@@ -160,7 +155,7 @@ namespace AF.Equipment
             {
                 equippedRightWeaponInstance = Instantiate(weapon.worldWeapon, rightWeaponHandler);
                 equippedRightWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
-                UpdateRightBumperActions();
+                UpdateRightActions();
             }
             else
             {
@@ -172,8 +167,7 @@ namespace AF.Equipment
                 equippedLeftWeaponInstance.transform.localScale = vector3;
 
                 equippedLeftWeaponInstance.SetWeaponInstance(clonedWeaponInstance);
-                character.UpdateAttackAnimations(weapon.leftBumperActions.ToArray());
-                character.UpdateAttackAnimations(weapon.leftTriggerActions.ToArray());
+                UpdateLeftActions();
             }
 
             character.statsBonusController.RecalculateEquipmentBonus();
@@ -189,8 +183,7 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedRightWeaponInstance = Instantiate(unarmedWeaponPrefab, rightWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightBumperActions.ToArray());
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.rightTriggerActions.ToArray());
+                    unarmedWeaponPrefab.actionItem.UpdateRightAttackAnimations(character);
                 }
             }
             else
@@ -200,8 +193,7 @@ namespace AF.Equipment
                 if (unarmedWeaponPrefab != null)
                 {
                     equippedLeftWeaponInstance = Instantiate(unarmedWeaponPrefab, leftWeaponHandler);
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftBumperActions.ToArray());
-                    character.UpdateAttackAnimations(unarmedWeaponPrefab.actionItem.leftTriggerActions.ToArray());
+                    unarmedWeaponPrefab.actionItem.UpdateLeftAttackAnimations(character);
                 }
             }
 

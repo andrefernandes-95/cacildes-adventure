@@ -1,8 +1,6 @@
 # UI
 
-[X] Create Input Based Icons With Optional Label (Must be a generic prefab)
 [] Add Return button on equipment screen
-[] Fix repeated weapons showing in the inventory
 
 # Items
 
@@ -19,8 +17,6 @@ Todo
 
 # Bow system
 
-# Two Handing
-
 # Blocking with spears
 
 # Parry
@@ -30,3 +26,28 @@ Todo
 # Backstabs
 
 # Poise System
+
+# Contextual Attacks
+
+Add dodge attacks
+Add backstep attacks
+Add jump attacks
+Add sprint attacks
+Add dual wielding attacks for left trigger action when weapons are compatible
+Add blocking poke attack
+
+Create a simple flag system on combat manager: WantsBackstepAttack? and then just check if any are checked
+
+# Critical
+
+- Event System by json, with event ids strategy
+- Books simplified
+- Alchemy and blacksmith
+- Music Playing with Credits System
+- Consumables
+- Bow System
+- Critical Hits and Backstabs
+- Swimming for AI and Player
+- Non Humanoid
+- World Map for navigation
+- Quest Tracking

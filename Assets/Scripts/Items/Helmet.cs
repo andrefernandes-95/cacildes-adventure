@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace AF
 {
@@ -6,9 +7,9 @@ namespace AF
     [CreateAssetMenu(menuName = "Items / Armor / New Helmet")]
     public class Helmet : ArmorBase
     {
-
         [Header("Graphics")]
-        public string[] helmetPieces;
+        public List<string> helmetPieces = new();
+        public Material helmetMaterial;
         public bool hideHair = false;
         public bool hideFace = false;
         public bool hideEyebrows = false;
@@ -16,41 +17,48 @@ namespace AF
 
         public void OnEquip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in helmetPieces)
-            {
-                character.syntyCharacterModelManager.ShowPiece(gameObjectName);
-            }
+            character.syntyCharacterModelManager.EnableArmorPiece(helmetPieces, helmetMaterial);
 
             if (hideHair)
             {
-                character.syntyCharacterModelManager.ToggleHair(false);
+                character.syntyCharacterModelManager.DisableHair();
             }
             if (hideFace)
             {
-                character.syntyCharacterModelManager.ToggleFace(false);
+                character.syntyCharacterModelManager.DisableFace();
             }
             if (hideEyebrows)
             {
-                character.syntyCharacterModelManager.ToggleEyebrows(false);
+                character.syntyCharacterModelManager.DisableEyebrows();
             }
 
             if (hideBeard)
             {
-                character.syntyCharacterModelManager.ToggleBeard(false);
+                character.syntyCharacterModelManager.DisableBeard();
             }
         }
 
         public void OnUnequip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in helmetPieces)
+            character.syntyCharacterModelManager.DisablePieces(helmetPieces);
+
+            if (hideHair)
             {
-                character.syntyCharacterModelManager.HidePiece(gameObjectName);
+                character.syntyCharacterModelManager.EnableHair();
+            }
+            if (hideFace)
+            {
+                character.syntyCharacterModelManager.EnableFace();
+            }
+            if (hideEyebrows)
+            {
+                character.syntyCharacterModelManager.EnableEyebrows();
             }
 
-            character.syntyCharacterModelManager.ToggleHair(true);
-            character.syntyCharacterModelManager.ToggleFace(true);
-            character.syntyCharacterModelManager.ToggleEyebrows(true);
-            character.syntyCharacterModelManager.ToggleBeard(true);
+            if (hideBeard)
+            {
+                character.syntyCharacterModelManager.EnableBeard();
+            }
         }
     }
 

@@ -15,5 +15,10 @@ namespace AF
         public abstract List<string> GetHands();
         public abstract List<string> GetLegs();
 
+        public abstract Color GetEyeColor();
+        public abstract Color GetSkinColor();
+        public abstract Color GetHairColor();
+        public abstract Color GetScarColor();
+
     }
 }

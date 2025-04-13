@@ -333,11 +333,23 @@ namespace AF
                 return;
             }
 
+            if (accessory.Exists())
+            {
+                accessory.GetItem<Accessory>().OnEquip(characterBaseManager);
+            }
+
             SetAccessory(accessory, slotIndex);
+            UpdateEquipmentValues();
         }
         public void UnequipAccessory(int slotIndex)
         {
+            if (GetAccessoryInSlot(slotIndex) != null && GetAccessoryInSlot(slotIndex).Exists())
+            {
+                GetAccessoryInSlot(slotIndex).GetItem<Accessory>().OnUnequip(characterBaseManager);
+            }
+
             ClearAccessory(slotIndex);
+            UpdateEquipmentValues();
         }
 
         protected abstract void SetHelmet(HelmetInstance helmetInstance);
@@ -356,7 +368,6 @@ namespace AF
             }
 
             SetHelmet(helmetInstance);
-
             UpdateEquipmentValues();
         }
         public void UnequipHelmet()

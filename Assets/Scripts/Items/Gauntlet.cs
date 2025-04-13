@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace AF
 {
@@ -7,27 +8,19 @@ namespace AF
     public class Gauntlet : ArmorBase
     {
         [Header("Graphics")]
-        public string[] gauntletPieces;
+        public List<string> gauntletPieces = new();
+        public Material gauntletsMaterial;
 
         public void OnEquip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in gauntletPieces)
-            {
-                character.syntyCharacterModelManager.ShowPiece(gameObjectName);
-            }
-
-            character.syntyCharacterModelManager.ToggleHands(false);
+            character.syntyCharacterModelManager.EnableArmorPiece(gauntletPieces, gauntletsMaterial);
+            character.syntyCharacterModelManager.DisableHands();
         }
 
         public void OnUnequip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in gauntletPieces)
-            {
-                character.syntyCharacterModelManager.HidePiece(gameObjectName);
-            }
-
-            character.syntyCharacterModelManager.ToggleHands(true);
+            character.syntyCharacterModelManager.DisablePieces(gauntletPieces);
+            character.syntyCharacterModelManager.EnableHands();
         }
     }
-
 }

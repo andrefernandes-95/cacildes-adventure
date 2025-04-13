@@ -145,5 +145,6 @@ namespace AF
             }
             enemy.damageReceiver.TakeDamage(damageDealtToEnemiesUponAttacked);
         }
+
     }
 }

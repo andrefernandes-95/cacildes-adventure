@@ -36,6 +36,8 @@ namespace AF.StateMachine
 
             if (playerManager.IsAttemptingAttack())
             {
+                playerManager.combatManager.wantsToRunAttack = playerManager.IsSprinting();
+
                 return SwitchState(playerManager, playerManager.playerStateMachine.playerCombatState);
             }
 

@@ -37,7 +37,11 @@ namespace AF
             attacker.EnableCanRotate();
 
             attacker.animator.speed = animationSpeed;
+
+            bool useRootMotion = attacker.combatManager.isJumpAttacking == false;
+
             attacker.PlayCrossFadeBusyAnimationWithRootMotion(attackName, crossFade);
+            attacker.animator.applyRootMotion = useRootMotion;
         }
     }
 }

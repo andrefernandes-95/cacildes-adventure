@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace AF
 {
@@ -8,27 +9,19 @@ namespace AF
     {
 
         [Header("Graphics")]
-        public string[] bootPieces;
+        public List<string> bootPieces = new();
+        public Material bootsMaterial;
 
         public void OnEquip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in bootPieces)
-            {
-                character.syntyCharacterModelManager.ShowPiece(gameObjectName);
-            }
-
-            character.syntyCharacterModelManager.ToggleLegs(false);
+            character.syntyCharacterModelManager.EnableArmorPiece(bootPieces, bootsMaterial);
+            character.syntyCharacterModelManager.DisableLegs();
         }
 
         public void OnUnequip(CharacterBaseManager character)
         {
-            foreach (string gameObjectName in bootPieces)
-            {
-                character.syntyCharacterModelManager.HidePiece(gameObjectName);
-            }
-
-            character.syntyCharacterModelManager.ToggleLegs(true);
+            character.syntyCharacterModelManager.DisablePieces(bootPieces);
+            character.syntyCharacterModelManager.EnableLegs();
         }
     }
-
 }

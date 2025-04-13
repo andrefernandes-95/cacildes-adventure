@@ -32,6 +32,15 @@ namespace AF.StateMachine
                 playerManager.Move(moveSpeed, playerManager.playerCamera.GetPlayerRotation());
             }
 
+
+            if (playerManager.IsAttemptingAttack())
+            {
+                playerManager.combatManager.wantsToJumpAttack = true;
+                playerManager.combatManager.isJumpAttacking = true;
+
+                return SwitchState(playerManager, playerManager.playerStateMachine.playerCombatState);
+            }
+
             return this;
         }
 

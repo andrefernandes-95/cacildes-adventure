@@ -26,11 +26,16 @@ namespace AF
         public bool isLightAttacking = false;
         public bool allowCombos = false;
 
+        [Header("Contextual Attacks")]
+        public bool wantsToDodgeAttack = false;
+        public bool wantsToBackstepAttack = false;
+        public bool wantsToJumpAttack = false;
+        public bool wantsToRunAttack = false;
+        public bool wantsToPowerStanceAttack = false;
+        public bool wantsToPokeAttackBehindShield = false;
 
         [Header("Components")]
         public CharacterBaseManager character;
-
-
 
         [Header("Two-Handing")]
         public bool isTwoHanding = false;
@@ -78,6 +83,8 @@ namespace AF
             {
                 OnGoingResetComboCoroutine = StartCoroutine(ResetComboFlags());
             }
+
+            ResetContextualAttacks();
         }
 
         void StopComboCoroutine()
@@ -93,6 +100,12 @@ namespace AF
         {
             yield return new WaitForSeconds(maxTimeBeforeResettingCombos);
             lastAttackAction = null;
+        }
+
+        void ResetContextualAttacks()
+        {
+            wantsToBackstepAttack = wantsToDodgeAttack = wantsToJumpAttack = wantsToPokeAttackBehindShield =
+            wantsToPowerStanceAttack = wantsToRunAttack = false;
         }
 
         public void SetRightHandCurrentItemAction()
@@ -129,6 +142,8 @@ namespace AF
                     leftUnarmedWorldWeapon.actionItem.PerformAction(character, false, isHeavyAttacking);
                 }
             }
+
+            ResetContextualAttacks();
 
 
             // If unarmed

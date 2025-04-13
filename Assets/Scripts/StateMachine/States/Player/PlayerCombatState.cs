@@ -29,6 +29,12 @@ namespace AF.StateMachine
                 playerManager.combatManager.AttemptAttack();
             }
 
+            if (playerManager.combatManager.isJumpAttacking)
+            {
+                // TODO: Change this to airJumpMovespeed
+                playerManager.Move(3f, playerManager.playerCamera.GetPlayerRotation());
+            }
+
             if (playerManager.isBusy)
             {
                 return this;

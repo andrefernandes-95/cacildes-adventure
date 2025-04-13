@@ -25,6 +25,9 @@ namespace AF
         [TextArea(minLines: 2, maxLines: 5)] public string englishDescription;
         [TextArea(minLines: 2, maxLines: 5)] public string portugueseDescription;
 
+        [InfoBox("Recommended to use item description objects:", EInfoBoxType.Warning)]
+        public ItemDescription itemDescription;
+
         [HorizontalLine(color: EColor.Gray)]
 
         [Header("UI")]
