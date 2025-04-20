@@ -1,53 +1,75 @@
-# UI
+# Simple Title Screen
 
-[] Add Return button on equipment screen
+# Main Menu
 
-# Items
+    - Inputs on footer
+    - Add a way to return from inventory to equipment in equipment mode
 
-- Make it easier to have drop item by creating a prefab for drop instance items - each weapon inside has different game object children for world combat, dropped or holstered
-- Weapon Buffs: Add fire effects prefab to holster weapon effects, then we just change the scale based on a box collider
-- No losing gold mechanic - save game saves state. I think its better to simplify. Less confusing to explain.
+# Received Items UI Prompt
+
+# Generic Trigger
+
+# Notifications Popup
+
+# Bonfire
+
+    - Rest
+    - Level Up Screen
+    - Customize Character Screen
+    - Travel (Simple for now, but check world map possibilities)
+    - Wait Time
+
+# Dialogue
+
+    - Improve UI
+    - Add Tutorial System
+
+# Quests
+
+    - Navigation between scenes (reuse code)
+    - Add quest path indicator
+    - Current objective indicator
+
+# Player
+
+    - Add bow
+    - Add swimming
+    - Add ladder climbing
+    - Add consumables
+    - Add status effects
+    - Add blocking poke attack
+    - Add dual wielding attacks for left trigger action when weapons are compatible
+    - Weapon Buffs: Add fire effects prefab to holster weapon effects, then we just change the scale based on a box collider
 
 # AI
 
-- Create behaviour classes for Archers to always prioritze arrows, MAges to always prirotize spells, and so on...
-- Create professions. Start with simple Blacksmith Idle which tries to work during hours, and then goes to tavern maybe, then goes to sleep
+    - Add HUD
+    - Add Posture
+    - Add Parry
+    - Add critical hits
+    - Add Boss Event
+    - Add swiming
+    - Create professions. Start with simple Blacksmith Idle which tries to work during hours, and then goes to tavern maybe, then goes to sleep
+    - Add combat behaviours
 
-Todo
+# Non Humanoid AI
 
-# Bow system
+    - Add Wolf Enemy
 
-# Blocking with spears
+# Companions
 
-# Parry
+    - Add companions
 
-# Posture and Criticals (when posture is low)
+# Loading & Scene
 
-# Backstabs
+    - Music Playing with Credits System
+    - Improve Loading Screen
 
-# Poise System
+# Lost Gold
 
-# Contextual Attacks
+    - Remove Lost Gold mechanic
 
-Add dodge attacks
-Add backstep attacks
-Add jump attacks
-Add sprint attacks
-Add dual wielding attacks for left trigger action when weapons are compatible
-Add blocking poke attack
+# Poise and Posture
 
-Create a simple flag system on combat manager: WantsBackstepAttack? and then just check if any are checked
-
-# Critical
-
-- Event System by json, with event ids strategy
-- Books simplified
-- Alchemy and blacksmith
-- Music Playing with Credits System
-- Consumables
-- Bow System
-- Critical Hits and Backstabs
-- Swimming for AI and Player
-- Non Humanoid
-- World Map for navigation
-- Quest Tracking
+    - If enemy is at full stamina, does not suffer poise damage
+    - If enemy has drained stamina, he will be open to a critical

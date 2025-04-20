@@ -31,7 +31,6 @@ namespace AF.Bonfires
 
         [Header("Components")]
         PlayerManager _playerManager;
-        CursorManager _cursorManager;
         SaveManager _saveManager;
         UIDocumentBonfireMenu _uiDocumentBonfireMenu;
         CompanionsSceneManager _companionsSceneManager;
@@ -74,11 +73,6 @@ namespace AF.Bonfires
             return _saveManager;
         }
 
-        CursorManager GetCursorManager()
-        {
-            if (_cursorManager == null) { _cursorManager = FindAnyObjectByType<CursorManager>(FindObjectsInactive.Include); }
-            return _cursorManager;
-        }
 
         UIDocumentBonfireMenu GetUIDocumentBonfireMenu()
         {
@@ -159,8 +153,6 @@ namespace AF.Bonfires
             onBonfire_Exit?.Invoke();
             SetPlayerLockState(false);
             GetPlayerManager().PlayBusyHashedAnimationWithRootMotion(exitingBonfireHash);
-
-            GetCursorManager().HideCursor();
         }
 
         void SetPlayerLockState(bool isLocked)

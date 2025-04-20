@@ -9,15 +9,8 @@ namespace AF
     {
         [Tooltip("Must match the action name in StarterAssetsInput")]
         public string actionName;
-
-        [Header("Keyboard")]
-        public bool useKeyboardIcon = false;
-        public Sprite keyboardIcon;
-
-        [Header("Gamepad Icons")]
         public Sprite ps4Icon;
         public Sprite xboxIcon;
-
         public string GetCurrentKeyBinding(PlayerInput playerInput)
         {
             if (playerInput == null)

@@ -12,7 +12,6 @@ namespace AF
 
         [Header("Components")]
         public TitleScreenManager titleScreenManager;
-        public CursorManager cursorManager;
         public UIDocumentTitleScreenCredits uIDocumentTitleScreenCredits;
         public UIDocumentChangelog uIDocumentChangelog;
         public UIDocumentTitleScreenOptions uIDocumentTitleScreenOptions;
@@ -199,7 +198,6 @@ namespace AF
             }, soundbank);
 
 
-            cursorManager.ShowCursor();
 
             // Delay the focus until the next frame, required as an hack for now
             Invoke(nameof(GiveFocus), 0f);

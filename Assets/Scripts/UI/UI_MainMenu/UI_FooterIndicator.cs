@@ -1,11 +1,36 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.PropertyVariants;
 
 namespace AF
 {
     public class UI_FooterIndicator : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI label;
+        [Header("Tooltip Label")]
+        [SerializeField] TextMeshProUGUI tooltipLabel;
+
+        [Header("Contextual Actions")]
+        [SerializeField] GameObject actionsContainer;
+
+        private void OnEnable()
+        {
+            foreach (Transform child in actionsContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        public void AddFooterActionButton(GameObject prefab, string actionLabel)
+        {
+            GameObject button = Instantiate(prefab, actionsContainer.transform);
+            var target = button.GetComponentInChildren<UI_ActionDescription>();
+            if (target.TryGetComponent(out GameObjectLocalizer comp))
+            {
+                Destroy(comp);
+            }
+            target.GetComponent<TextMeshProUGUI>().text = actionLabel;
+        }
 
         public void DisplayTooltip(string enTooltip, string ptTooltip)
         {
@@ -14,13 +39,19 @@ namespace AF
 
             if (Glossary.IsPortuguese())
             {
-                label.text = ptTooltip;
+                tooltipLabel.text = ptTooltip;
             }
             else
             {
-                label.text = enTooltip;
+                tooltipLabel.text = enTooltip;
             }
 
+            gameObject.SetActive(true);
+        }
+
+        public void Refresh()
+        {
+            gameObject.SetActive(false);
             gameObject.SetActive(true);
         }
     }

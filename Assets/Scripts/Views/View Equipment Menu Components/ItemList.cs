@@ -45,7 +45,6 @@ namespace AF.UI.EquipmentMenu
 
         [Header("Components")]
         public MenuManager menuManager;
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public StarterAssetsInputs inputs;
         public Soundbank soundbank;

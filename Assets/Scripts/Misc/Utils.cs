@@ -2,6 +2,7 @@
 using System.Linq;
 using AF.Characters;
 using AF.Combat;
+using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -213,6 +214,17 @@ namespace AF
                     return found;
             }
             return null;
+        }
+
+
+        public static void LogAnalytic(string eventName)
+        {
+            if (!GameAnalytics.Initialized)
+            {
+                GameAnalytics.Initialize();
+            }
+
+            GameAnalytics.NewDesignEvent(eventName);
         }
     }
 }

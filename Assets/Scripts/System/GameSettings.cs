@@ -1,11 +1,11 @@
 using AF;
 using AF.Events;
+using CI.QuickSave;
 using TigerForge;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.SmartFormat.Extensions;
-using UnityEngine.Localization.SmartFormat.GlobalVariables;
 
 [CreateAssetMenu(fileName = "GameSettings", menuName = "System/New Game Settings", order = 0)]
 public class GameSettings : ScriptableObject
@@ -39,6 +39,16 @@ public class GameSettings : ScriptableObject
     public readonly string PLAYER_NAME_KEY = "PLAYER_NAME";
     public readonly string defaultPlayerName = "Cacildes";
     public readonly string HIDE_PLAYER_HUD_KEY = "HIDE_PLAYER_HUD_KEY";
+
+    [Header("Gameplay Settings")]
+    public float cameraSensitivity = 1f;
+    public float minCameraSensitivity = 0.1f;
+    public float maxCameraSensitivity = 5f;
+    public bool invertYAxis = false;
+
+    [Header("Save Preferences")]
+    public string SAVE_FILES_FOLDER = "QuickSave";
+    public string GAME_PREFERENCES_FILE_NAME = "GamePreferences";
 
 
 #if UNITY_EDITOR
@@ -168,8 +178,9 @@ public class GameSettings : ScriptableObject
 
     public void SetCameraSensitivity(float newValue)
     {
-        PlayerPrefs.SetFloat(MOUSE_SENSITIVITY_KEY, newValue);
+        cameraSensitivity = Mathf.Clamp(newValue, minCameraSensitivity, maxCameraSensitivity);
     }
+
     public void SetMusicVolume(float newValue)
     {
         PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, newValue);
@@ -195,10 +206,6 @@ public class GameSettings : ScriptableObject
     public float GetCameraDistance()
     {
         return PlayerPrefs.HasKey(CAMERA_DISTANCE_KEY) ? PlayerPrefs.GetFloat(CAMERA_DISTANCE_KEY) : defaultCameraDistanceToPlayer;
-    }
-    public float GetMouseSensitivity()
-    {
-        return PlayerPrefs.HasKey(MOUSE_SENSITIVITY_KEY) ? PlayerPrefs.GetFloat(MOUSE_SENSITIVITY_KEY) : 1f;
     }
 
     public float GetMusicVolume()
@@ -282,5 +289,24 @@ public class GameSettings : ScriptableObject
     public void SetSprintOverrideBindingPayload(string newValue)
     {
         PlayerPrefs.SetString(SPRINT_OVERRIDE_BINDING_PAYLOAD_KEY, newValue);
+    }
+
+
+    public void SavePreferences()
+    {
+        QuickSaveWriter quickSaveWriter = QuickSaveWriter.Create(GAME_PREFERENCES_FILE_NAME);
+
+        quickSaveWriter.TryCommit();
+    }
+
+    public void LoadPreferences()
+    {
+        if (!QuickSaveBase.RootExists(GAME_PREFERENCES_FILE_NAME))
+        {
+            return;
+        }
+
+        QuickSaveReader quickSaveReader = QuickSaveReader.Create(GAME_PREFERENCES_FILE_NAME);
+
     }
 }

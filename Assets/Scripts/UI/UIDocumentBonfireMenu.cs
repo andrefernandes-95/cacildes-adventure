@@ -15,7 +15,6 @@ namespace AF
         public UIDocumentCraftScreen uIDocumentCraftScreen;
 
         [Header("Components")]
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public Soundbank soundbank;
 
@@ -85,7 +84,6 @@ namespace AF
 
         public void DrawUI()
         {
-            cursorManager.ShowCursor();
             isPassingTime = false;
 
             if (currentBonfire != null)
@@ -182,7 +180,6 @@ namespace AF
 
         void ExitBonfire()
         {
-            cursorManager.HideCursor();
             gameSession.daySpeed = originalDaySpeed;
             currentBonfire.ExitBonfire();
             currentBonfire = null;

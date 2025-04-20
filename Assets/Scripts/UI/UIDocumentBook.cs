@@ -24,7 +24,6 @@ namespace AF
 
         [Header("Components")]
         public Soundbank soundbank;
-        public CursorManager cursorManager;
 
         private void Awake()
         {
@@ -67,7 +66,6 @@ namespace AF
             currentJournal.CloseBook();
             currentJournal = null;
 
-            cursorManager.HideCursor();
         }
 
         /// <summary>

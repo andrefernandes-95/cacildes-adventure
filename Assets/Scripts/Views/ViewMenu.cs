@@ -26,7 +26,6 @@ namespace AF.UI
         protected MenuManager menuManager;
 
         [Header("Components")]
-        public CursorManager cursorManager;
         public Soundbank soundbank;
         public FadeManager fadeManager;
         public SaveManager saveManager;
@@ -81,7 +80,6 @@ namespace AF.UI
         {
             if (UnityEngine.Cursor.visible == false)
             {
-                cursorManager.ShowCursor();
             }
         }
 

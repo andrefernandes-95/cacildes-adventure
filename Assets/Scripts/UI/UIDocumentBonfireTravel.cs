@@ -21,7 +21,6 @@ namespace AF
 
         [Header("Components")]
         public Soundbank soundbank;
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public TeleportManager teleportManager;
 
@@ -127,7 +126,6 @@ namespace AF
 
             }
 
-            cursorManager.ShowCursor();
 
             if (lastScrollElementIndex == -1)
             {

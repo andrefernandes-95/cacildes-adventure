@@ -28,7 +28,6 @@ namespace AF
         [Header("Components")]
         public StarterAssetsInputs inputs;
         public Soundbank soundbank;
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public FlagsDatabase flagsDatabase;
 
@@ -235,7 +234,6 @@ namespace AF
 
                 UIUtils.SetupButton(newDialogueChoiceItem.Q<Button>(), () =>
                 {
-                    cursorManager.HideCursor();
                     selectedResponse = response;
                     response.onResponseSelected?.Invoke();
                 }, soundbank);
@@ -245,7 +243,6 @@ namespace AF
                 dialogueChoicePanel.Add(newDialogueChoiceItem);
             }
 
-            cursorManager.ShowCursor();
             elementToFocus?.Focus();
             playerManager.thirdPersonController.LockCameraPosition = true;
 

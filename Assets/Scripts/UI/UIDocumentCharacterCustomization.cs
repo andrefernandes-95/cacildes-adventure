@@ -16,7 +16,6 @@ namespace AF
         public PlayerAppearance playerAppearance;
 
         public Soundbank soundbank;
-        public CursorManager cursorManager;
         VisualElement root;
 
         Button saveChangesButton, resetSettingsButton;
@@ -117,7 +116,6 @@ namespace AF
             }, soundbank);
 
 
-            cursorManager.ShowCursor();
 
             // Delay the focus until the next frame, required as an hack for now
             Invoke(nameof(GiveFocus), 0f);

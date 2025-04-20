@@ -14,7 +14,6 @@ namespace AF
     {
         [Header("Components")]
         public BGMManager bgmManager;
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public TeleportManager teleportManager;
 

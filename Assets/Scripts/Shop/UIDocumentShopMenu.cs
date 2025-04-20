@@ -16,7 +16,6 @@ namespace AF.Shops
         public Character playerCharacter;
 
         [Header("Components")]
-        public CursorManager cursorManager;
         public PlayerManager playerManager;
         public Soundbank soundbank;
 
@@ -125,7 +124,6 @@ namespace AF.Shops
 
         void DisplayCursor()
         {
-            cursorManager.ShowCursor();
         }
 
         private void OnEnable()
@@ -165,7 +163,6 @@ namespace AF.Shops
             currentCharacterShop?.onShopExit?.Invoke();
 
             playerManager.playerComponentManager.EnableComponents();
-            cursorManager.HideCursor();
             this.gameObject.SetActive(false);
         }
 

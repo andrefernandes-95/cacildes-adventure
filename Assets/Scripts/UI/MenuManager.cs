@@ -19,7 +19,6 @@ namespace AF
 
         [Header("Components")]
 
-        public CursorManager cursorManager;
         public StarterAssetsInputs starterAssetsInputs;
         public UIDocumentCraftScreen craftScreen;
         public TitleScreenManager titleScreenManager;
@@ -54,6 +53,7 @@ namespace AF
         /// </summary>
         public void OnMenuInput()
         {
+            return;
             if (!CanUseMenu())
             {
                 return;
@@ -139,7 +139,6 @@ namespace AF
             playerManager.thirdPersonController.LockCameraPosition = true;
 
             onMenuOpen?.Invoke();
-            cursorManager.ShowCursor();
 
             uIDocumentPlayerHUDV2.HideHUD();
         }
@@ -155,8 +154,6 @@ namespace AF
             playerManager.playerComponentManager.EnablePlayerControl();
 
             onMenuClose?.Invoke();
-
-            cursorManager.HideCursor();
 
             uIDocumentPlayerHUDV2.ShowHUD();
         }

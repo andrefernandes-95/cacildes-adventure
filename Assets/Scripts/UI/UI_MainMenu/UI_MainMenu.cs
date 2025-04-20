@@ -36,14 +36,10 @@ namespace AF
 
         private void OnEnable()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         }
 
         private void OnDisable()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         void OpenDefaultTab()
@@ -63,6 +59,10 @@ namespace AF
         {
             if (isActiveAndEnabled)
             {
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
                 // Activate player hud if exiting main menu
                 uI_PlayerHUD.gameObject.SetActive(true);
 
@@ -70,6 +70,9 @@ namespace AF
             }
             else
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
                 // Deactivate player hud while on main menu
                 uI_PlayerHUD.gameObject.SetActive(false);
 

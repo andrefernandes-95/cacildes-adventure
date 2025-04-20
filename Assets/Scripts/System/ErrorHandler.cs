@@ -19,7 +19,6 @@ namespace AF
         VisualElement errorMessagesContainer;
 
         public SaveManager saveManager;
-        public CursorManager cursorManager;
 
         public Dictionary<string, string> errors = new();
 
@@ -97,7 +96,6 @@ namespace AF
             {
                 errorMessagesContainer.Remove(entry);
                 CloseErrorPanel();
-                cursorManager?.HideCursor();
             });
             returnToTitleScreen.RegisterCallback<ClickEvent>(ev =>
             {
@@ -145,7 +143,6 @@ namespace AF
                 root.visible = true;
             }
 
-            cursorManager?.ShowCursor();
         }
 
         public void CloseErrorPanel()

@@ -44,7 +44,6 @@ namespace AF
         public NotificationManager notificationManager;
         public UIManager uiManager;
         public PlayerManager playerManager;
-        public CursorManager cursorManager;
         public BGMManager bgmManager;
         public Soundbank soundbank;
 
@@ -98,7 +97,6 @@ namespace AF
             this.root = uIDocument.rootVisualElement;
 
             bgmManager.PlaySound(sfxOnEnterMenu, null);
-            cursorManager.ShowCursor();
 
             DrawUI();
         }
@@ -145,7 +143,6 @@ namespace AF
                 returnToBonfire = false;
 
                 uIDocumentBonfireMenu.gameObject.SetActive(true);
-                cursorManager.ShowCursor();
                 this.gameObject.SetActive(false);
                 return;
             }
@@ -154,7 +151,6 @@ namespace AF
             playerManager.playerComponentManager.EnableCharacterController();
 
             this.gameObject.SetActive(false);
-            cursorManager.HideCursor();
         }
 
         void ClearPreviews()

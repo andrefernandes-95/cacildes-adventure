@@ -120,8 +120,8 @@ namespace AF
 
             cameraSensitivity.lowValue = gameSettings.minimumMouseSensitivity;
             cameraSensitivity.highValue = gameSettings.maximumMouseSensitivity;
-            cameraSensitivity.value = gameSettings.GetMouseSensitivity();
-            cameraSensitivity.label = String.Format(CameraSensitivityLabel.GetLocalizedString(), gameSettings.GetMouseSensitivity());
+            //cameraSensitivity.value = gameSettings.GetMouseSensitivity();
+            //cameraSensitivity.label = String.Format(CameraSensitivityLabel.GetLocalizedString(), gameSettings.GetMouseSensitivity());
 
             cameraSensitivity.RegisterValueChangedCallback(ev =>
             {
@@ -293,7 +293,7 @@ namespace AF
             yield return inputs.Rebind(actionName, (action) =>
             {
                 onRebindSuccessPayload.Invoke(action);
-            });
+            }, () => { });
             pressAnyKeyModal.style.display = DisplayStyle.None;
             onFinish?.Invoke();
         }
