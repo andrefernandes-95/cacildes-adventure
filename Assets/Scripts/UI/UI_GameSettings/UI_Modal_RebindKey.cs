@@ -45,12 +45,12 @@ namespace AF
             yield return inputs.Rebind(actionName,
             (bindingPayload) =>
            {
-               gameSettings.SetJumpOverrideBindingPayload(bindingPayload);
+               gameSettings.UpdateBinding(actionName, bindingPayload);
+
                callback?.Invoke();
                soundbank.PlaySound(onRebindedSfx);
                gameObject.SetActive(false);
            }, Close);
-
         }
 
         public void Close()

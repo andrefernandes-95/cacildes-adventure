@@ -559,5 +559,23 @@ namespace AF
                 LoadLastSavedGame(false);
             }
         }
+
+        public void DeleteSaveFile(string saveFile)
+        {
+            if (string.IsNullOrEmpty(saveFile) || !QuickSaveBase.RootExists(saveFile))
+            {
+                return;
+            }
+
+            try
+            {
+                QuickSaveBase.DeleteRoot(saveFile);
+                File.Delete(Path.Combine(Application.persistentDataPath + "/" + SAVE_FILES_FOLDER, saveFile + ".jpg"));
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace AF
 
         [Header("Components")]
         [SerializeField] StarterAssetsInputs starterAssetsInputs;
+        [SerializeField] GameSettings gameSettings;
 
         [Header("Footer Components")]
         [SerializeField] UI_FooterIndicator uI_FooterIndicator;
@@ -23,7 +24,12 @@ namespace AF
 
         [Header("Settings Sub-menus")]
         [SerializeField] GameObject defaultSettingsPage;
+        [SerializeField] GameObject displayControlsSettingsPage;
+        [SerializeField] GameObject changeControlsSettingsPage;
         [SerializeField] GameObject gameplaySettingsPage;
+        [SerializeField] GameObject graphicsSettingsPage;
+        [SerializeField] GameObject languageSettingsPage;
+        [SerializeField] GameObject audioSettingsPage;
 
         [Header("UI Modals")]
         [SerializeField] UI_Modal_RebindKey uI_Modal_RebindKey;
@@ -53,6 +59,9 @@ namespace AF
         void OnDisable()
         {
             starterAssetsInputs.onMenuEvent.RemoveListener(OnReturn);
+
+            // Save Settings
+            gameSettings.SaveSettings();
         }
 
         void UpdateUI()
@@ -73,14 +82,19 @@ namespace AF
         public void SetupFooter()
         {
             uI_FooterIndicator.Refresh();
-            uI_FooterIndicator.AddFooterActionButton(confirmButtonPrefab, Glossary.IsPortuguese() ? "Confirmar" : "Confirm");
             uI_FooterIndicator.AddFooterActionButton(cancelButtonPrefab, Glossary.IsPortuguese() ? "Regressar" : "Cancel");
+            uI_FooterIndicator.AddFooterActionButton(confirmButtonPrefab, Glossary.IsPortuguese() ? "Confirmar" : "Confirm");
         }
 
         void DisableAllSubMenus()
         {
             defaultSettingsPage.SetActive(false);
+            displayControlsSettingsPage.SetActive(false);
+            changeControlsSettingsPage.SetActive(false);
             gameplaySettingsPage.SetActive(false);
+            graphicsSettingsPage.SetActive(false);
+            languageSettingsPage.SetActive(false);
+            audioSettingsPage.SetActive(false);
         }
 
         public void OpenDefaultSettings()
@@ -88,10 +102,35 @@ namespace AF
             DisableAllSubMenus();
             defaultSettingsPage.SetActive(true);
         }
+        public void OpenDisplayControlsSettings()
+        {
+            DisableAllSubMenus();
+            displayControlsSettingsPage.SetActive(true);
+        }
+        public void OpenChangeControlsSettings()
+        {
+            DisableAllSubMenus();
+            changeControlsSettingsPage.SetActive(true);
+        }
         public void OpenGameplaySettings()
         {
             DisableAllSubMenus();
             gameplaySettingsPage.SetActive(true);
+        }
+        public void OpenGraphicsSettings()
+        {
+            DisableAllSubMenus();
+            graphicsSettingsPage.SetActive(true);
+        }
+        public void OpenLanguageSettings()
+        {
+            DisableAllSubMenus();
+            languageSettingsPage.SetActive(true);
+        }
+        public void OpenAudioSettings()
+        {
+            DisableAllSubMenus();
+            audioSettingsPage.SetActive(true);
         }
     }
 }

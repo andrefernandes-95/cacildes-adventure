@@ -23,6 +23,9 @@ namespace AF
 
         [Header("Links")]
         [SerializeField] string discordLink = "https://discord.gg/JwnZMc27D2";
+        [Header("Footer Components")]
+        [SerializeField] UI_FooterIndicator uI_FooterIndicator;
+        [SerializeField] GameObject confirmButtonPrefab;
 
         private void Start()
         {
@@ -47,6 +50,14 @@ namespace AF
         {
             UpdateGameTitle();
             UpdateGameVersion();
+
+            SetupFooter();
+        }
+
+        public void SetupFooter()
+        {
+            uI_FooterIndicator.Refresh();
+            uI_FooterIndicator.AddFooterActionButton(confirmButtonPrefab, Glossary.IsPortuguese() ? "Confirmar" : "Confirm");
         }
 
         void UpdateGameTitle()

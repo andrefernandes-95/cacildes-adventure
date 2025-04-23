@@ -5,6 +5,7 @@ using AF.Combat;
 using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace AF
 {
@@ -226,5 +227,19 @@ namespace AF
 
             GameAnalytics.NewDesignEvent(eventName);
         }
+
+        public static void ClearScrollRect(ScrollRect scrollRect)
+        {
+            if (scrollRect.content.childCount <= 0)
+            {
+                return;
+            }
+
+            foreach (Transform child in scrollRect.content)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
+
     }
 }

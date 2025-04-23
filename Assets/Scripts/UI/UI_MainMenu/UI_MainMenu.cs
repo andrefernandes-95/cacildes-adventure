@@ -10,6 +10,7 @@ namespace AF
         [Header("Tabs")]
         [SerializeField] UI_EquipmentTab uI_EquipmentTab;
         [SerializeField] UI_InventoryTab uI_InventoryTab;
+        [SerializeField] UI_SettingsTab uI_SettingsTab;
 
         [Header("Default Tab")]
         public bool defaultIsEquipment = false;
@@ -91,6 +92,7 @@ namespace AF
         {
             uI_EquipmentTab.gameObject.SetActive(false);
             uI_InventoryTab.gameObject.SetActive(false);
+            uI_SettingsTab.gameObject.SetActive(false);
         }
 
         public void OpenEquipmentTab()
@@ -105,6 +107,12 @@ namespace AF
             DisableAllTabs();
             uI_InventoryTab.gameObject.SetActive(true);
             inventoryTabNavbarButton.Select();
+        }
+        public void OpenSettingsTab()
+        {
+            DisableAllTabs();
+            uI_SettingsTab.gameObject.SetActive(true);
+            settingsTabNavbarButton.Select();
         }
 
     }

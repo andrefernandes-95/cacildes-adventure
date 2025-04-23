@@ -83,11 +83,10 @@ namespace AF
             {
                 return new string[] { }; // Directory doesn't exist, return empty string
             }
-
             return files
+                .Where(f => f.Name.EndsWith(".json") && !f.Name.Contains("GamePreferences"))
                 .OrderByDescending(f => f.CreationTime)
-                .Where(x => x.Name.Contains(".json"))
-                .Select(x => x.Name.Replace(".json", ""))
+                .Select(f => Path.GetFileNameWithoutExtension(f.Name))
                 .ToArray();
         }
 

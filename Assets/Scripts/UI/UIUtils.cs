@@ -139,5 +139,16 @@ namespace AF
             popSeq.Append(t.DOScale(popScale, duration * 0.4f).SetEase(Ease.OutBack));
             popSeq.Append(t.DOScale(1f, duration * 0.6f).SetEase(Ease.OutQuad));
         }
+
+        public static Sprite CreateSpriteFromTexture(Texture2D texture2D)
+        {
+            if (texture2D == null)
+            {
+                Debug.LogError("Texture2D is null. Cannot create sprite.");
+                return null;
+            }
+
+            return Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+        }
     }
 }

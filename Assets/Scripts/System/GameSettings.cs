@@ -1,5 +1,6 @@
 using AF;
 using AF.Events;
+using AYellowpaper.SerializedCollections;
 using CI.QuickSave;
 using TigerForge;
 using UnityEditor;
@@ -45,6 +46,10 @@ public class GameSettings : ScriptableObject
     public float minCameraSensitivity = 0.1f;
     public float maxCameraSensitivity = 5f;
     public bool invertYAxis = false;
+    public SerializedDictionary<string, string> customInputBindings = new SerializedDictionary<string, string>();
+    public int graphicsQuality = 4;
+    public float musicVolume = .8f;
+    public float soundEffectsVolume = 1f;
 
     [Header("Save Preferences")]
     public string SAVE_FILES_FOLDER = "QuickSave";
@@ -142,27 +147,29 @@ public class GameSettings : ScriptableObject
         }
 
         hasInitializedSettings = true;
-        SetGameQuality(GetGraphicsQuality());
-        SetInputOverrides(starterAssetsInputs);
+        LoadSettings();
+
+        //        SetGameQuality(GetGraphicsQuality());
+        //        SetInputOverrides(starterAssetsInputs);
     }
 
     public void SetGameQuality(int newValue)
     {
-        PlayerPrefs.SetInt(GRAPHICS_QUALITY_KEY, Mathf.Clamp(newValue, 0, 4));
+        graphicsQuality = Mathf.Clamp(newValue, 0, 4);
 
-        if (newValue == 0)
+        if (graphicsQuality == 0)
         {
             QualitySettings.SetQualityLevel(0);
         }
-        else if (newValue == 1)
+        else if (graphicsQuality == 1)
         {
             QualitySettings.SetQualityLevel(2);
         }
-        else if (newValue == 2)
+        else if (graphicsQuality == 2)
         {
             QualitySettings.SetQualityLevel(4);
         }
-        else if (newValue == 3)
+        else if (graphicsQuality == 3)
         {
             QualitySettings.SetQualityLevel(5);
         }
@@ -183,7 +190,7 @@ public class GameSettings : ScriptableObject
 
     public void SetMusicVolume(float newValue)
     {
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, newValue);
+        musicVolume = Mathf.Clamp(newValue, 0f, 1f);
         EventManager.EmitEvent(EventMessages.ON_MUSIC_VOLUME_CHANGED);
     }
 
@@ -292,14 +299,22 @@ public class GameSettings : ScriptableObject
     }
 
 
-    public void SavePreferences()
+    public void SaveSettings()
     {
         QuickSaveWriter quickSaveWriter = QuickSaveWriter.Create(GAME_PREFERENCES_FILE_NAME);
+
+        quickSaveWriter.Write("cameraSensitivity", cameraSensitivity);
+        quickSaveWriter.Write("invertYAxis", invertYAxis);
+        quickSaveWriter.Write("customInputBindings", customInputBindings);
+        quickSaveWriter.Write("graphicsQuality", graphicsQuality);
+        quickSaveWriter.Write("language", LocalizationSettings.SelectedLocale.Identifier.Code);
+        quickSaveWriter.Write("musicVolume", musicVolume);
+        quickSaveWriter.Write("soundEffectsVolume", soundEffectsVolume);
 
         quickSaveWriter.TryCommit();
     }
 
-    public void LoadPreferences()
+    public void LoadSettings()
     {
         if (!QuickSaveBase.RootExists(GAME_PREFERENCES_FILE_NAME))
         {
@@ -308,5 +323,52 @@ public class GameSettings : ScriptableObject
 
         QuickSaveReader quickSaveReader = QuickSaveReader.Create(GAME_PREFERENCES_FILE_NAME);
 
+        if (quickSaveReader.TryRead("cameraSensitivity", out float cameraSensitivity))
+        {
+            this.cameraSensitivity = cameraSensitivity;
+        }
+
+        if (quickSaveReader.TryRead("invertYAxis", out bool invertYAxis))
+        {
+            this.invertYAxis = invertYAxis;
+        }
+
+        if (quickSaveReader.TryRead("customInputBindings", out SerializedDictionary<string, string> customInputBindings))
+        {
+            this.customInputBindings = customInputBindings;
+        }
+
+        if (quickSaveReader.TryRead("graphicsQuality", out int graphicsQuality))
+        {
+            SetGameQuality(graphicsQuality);
+        }
+
+        if (quickSaveReader.TryRead("language", out string language))
+        {
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.GetLocale(language);
+        }
+
+        if (quickSaveReader.TryRead("musicVolume", out float musicVolume))
+        {
+            SetMusicVolume(musicVolume);
+        }
+
+        if (quickSaveReader.TryRead("soundEffectsVolume", out float soundEffectsVolume))
+        {
+            this.soundEffectsVolume = soundEffectsVolume;
+        }
+
+    }
+
+    public void UpdateBinding(string actionName, string bindingPayload)
+    {
+        if (customInputBindings.ContainsKey(actionName))
+        {
+            customInputBindings[actionName] = bindingPayload;
+        }
+        else
+        {
+            customInputBindings.Add(actionName, bindingPayload);
+        }
     }
 }
