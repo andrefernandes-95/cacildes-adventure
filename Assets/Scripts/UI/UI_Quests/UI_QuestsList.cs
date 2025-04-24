@@ -60,6 +60,7 @@ namespace AF
         public void SetupFooter()
         {
             uI_FooterIndicator.Refresh();
+
         }
 
         void DrawQuestsList()
