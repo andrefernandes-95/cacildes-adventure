@@ -11,6 +11,7 @@ namespace AF
         [SerializeField] UI_EquipmentTab uI_EquipmentTab;
         [SerializeField] UI_InventoryTab uI_InventoryTab;
         [SerializeField] UI_SettingsTab uI_SettingsTab;
+        [SerializeField] UI_QuestsTab ui_QuestsTab;
 
         [Header("Default Tab")]
         public bool defaultIsEquipment = false;
@@ -54,6 +55,14 @@ namespace AF
             {
                 OpenInventoryTab();
             }
+            else if (defaultIsSystem)
+            {
+                OpenSettingsTab();
+            }
+            else if (defaultIsQuests)
+            {
+                OpenQuestsTab();
+            }
         }
 
         void ToggleMainMenu()
@@ -93,6 +102,7 @@ namespace AF
             uI_EquipmentTab.gameObject.SetActive(false);
             uI_InventoryTab.gameObject.SetActive(false);
             uI_SettingsTab.gameObject.SetActive(false);
+            ui_QuestsTab.gameObject.SetActive(false);
         }
 
         public void OpenEquipmentTab()
@@ -101,7 +111,6 @@ namespace AF
             uI_EquipmentTab.gameObject.SetActive(true);
             equipmentTabNavbarButton.Select();
         }
-
         public void OpenInventoryTab()
         {
             DisableAllTabs();
@@ -113,6 +122,12 @@ namespace AF
             DisableAllTabs();
             uI_SettingsTab.gameObject.SetActive(true);
             settingsTabNavbarButton.Select();
+        }
+        public void OpenQuestsTab()
+        {
+            DisableAllTabs();
+            ui_QuestsTab.gameObject.SetActive(true);
+            questsTabNavbarButton.Select();
         }
 
     }

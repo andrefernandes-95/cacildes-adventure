@@ -1,11 +1,7 @@
-# Simple Title Screen
-
-- Missing audio menu
-
 # Main Menu
 
-    - Inputs on footer
     - Add a way to return from inventory to equipment in equipment mode
+    - Add return to title screen and exit game on settings menu
 
 # Received Items UI Prompt
 

@@ -103,5 +103,21 @@ namespace AF
         {
             return questsReceived.Contains(questParent);
         }
+
+        public int GetGameCompletePercentage()
+        {
+            int completedObjectives = 0;
+            QuestObjective[] allObjectives = Resources.LoadAll<QuestObjective>("Quests");
+
+            foreach (var objective in allObjectives)
+            {
+                if (objective.quest.IsObjectiveCompleted(objective))
+                {
+                    completedObjectives++;
+                }
+            }
+
+            return Mathf.RoundToInt((float)completedObjectives / allObjectives.Length * 100f);
+        }
     }
 }

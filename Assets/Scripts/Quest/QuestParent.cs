@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AF.Events;
 using GameAnalyticsSDK;
@@ -9,7 +10,7 @@ using UnityEngine.Localization;
 
 namespace AF
 {
-    [CreateAssetMenu(menuName = "Data / New Quest")]
+    [CreateAssetMenu(menuName = "Quests / New Quest")]
 
     public class QuestParent : ScriptableObject
     {
@@ -17,13 +18,22 @@ namespace AF
         public new string name;
         public LocalizedString questName_LocalizedString;
 
+        [Header("Quest Description")]
+        public string englishName;
+        public string portugueseName;
+
+        [Header("Quest Description")]
+        [TextArea(minLines: 3, maxLines: 9)] public string englishDescription;
+        [TextArea(minLines: 3, maxLines: 9)] public string portugueseDescription;
+
+
         public Texture questIcon;
 
         public string[] questObjectives;
 
         public LocalizedString[] questObjectives_LocalizedString;
 
-        public int questProgress = -1;
+        public int questProgress = 0;
 
         [Header("Databases")]
         public QuestsDatabase questsDatabase;
@@ -32,7 +42,16 @@ namespace AF
         public bool useDefaultQuestProgress = false;
         public int defaultQuestProgress = 0;
 
-#if UNITY_EDITOR 
+        // Current Status
+        [Header("Quest Status")]
+        public bool isStarted = false;
+        public bool isCompleted = false;
+
+        [Header("Objectives")]
+        public QuestObjective[] objectives;
+
+
+#if UNITY_EDITOR
 
         private void OnEnable()
         {
@@ -56,7 +75,7 @@ namespace AF
 
         public bool IsCompleted()
         {
-            return questProgress + 1 > questObjectives.Length;
+            return questProgress > objectives.Length;
         }
 
         /// <summary>
@@ -68,6 +87,8 @@ namespace AF
             if (!questsDatabase.ContainsQuest(this) && progress != -1)
             {
                 questsDatabase.AddQuest(this);
+                isStarted = true;
+                isCompleted = false;
             }
 
             questProgress = progress;
@@ -103,9 +124,9 @@ namespace AF
             questsDatabase.SetQuestToTrack(this);
         }
 
-        public bool IsObjectiveCompleted(string questObjective)
+        public bool IsObjectiveCompleted(QuestObjective questObjective)
         {
-            return questProgress > Array.IndexOf(questObjectives, questObjective);
+            return questProgress > Array.IndexOf(objectives, questObjective);
         }
 
 
@@ -117,6 +138,16 @@ namespace AF
             }
 
             GameAnalytics.NewDesignEvent(eventName);
+        }
+
+        public List<QuestObjective> GetActiveObjectives()
+        {
+            if (!isStarted)
+            {
+                return new();
+            }
+
+            return objectives.Take(questProgress + 1).ToList();
         }
     }
 }

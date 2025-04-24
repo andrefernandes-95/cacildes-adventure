@@ -116,7 +116,7 @@ namespace AF
                 questObjectiveEntry.Q<Label>("QuestObjectiveLabel").text = questParent.questObjectives_LocalizedString[idx].GetLocalizedString();
                 questObjectiveEntry.Q<Label>("QuestObjectiveLocation").text = "";
 
-                bool isCompleted = questParent.IsObjectiveCompleted(questObjective);
+                bool isCompleted = questParent.IsObjectiveCompleted(null);
 
                 questObjectiveEntry.Q<VisualElement>("QuestObjectiveComplete").style.display = isCompleted ? DisplayStyle.Flex : DisplayStyle.None;
                 questObjectiveEntry.Q<VisualElement>("QuestObjectiveIncomplete").style.display = !isCompleted ? DisplayStyle.Flex : DisplayStyle.None;
