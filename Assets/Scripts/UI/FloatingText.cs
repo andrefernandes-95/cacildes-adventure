@@ -42,7 +42,7 @@ namespace AF
         IEnumerator Hide()
         {
             yield return new WaitForSeconds(timeBeforeDisappearing);
-         
+
             for (float i = duration; i >= 0; i -= Time.deltaTime)
             {
                 transform.localScale = new Vector3(i * 100, i * 100, i * 100);

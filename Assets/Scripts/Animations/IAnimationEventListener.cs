@@ -77,5 +77,9 @@ namespace AF.Animations
 
         public void AllowCombos();
 
+        #region Jobs
+        public void OnHammering();
+        #endregion
+
     }
 }

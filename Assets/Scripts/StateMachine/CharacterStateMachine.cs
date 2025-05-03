@@ -86,5 +86,10 @@ namespace AF.StateMachine
                 currentState = takeDamageState;
             }
         }
+
+        public override void ChangeToState(AIState newState)
+        {
+            currentState = currentState.SwitchState(this.characterManager, newState);
+        }
     }
 }

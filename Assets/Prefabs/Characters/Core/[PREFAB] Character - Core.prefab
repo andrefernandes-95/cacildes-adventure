@@ -35488,6 +35488,7 @@ Transform:
   - {fileID: 7704516446950710702}
   - {fileID: 8261847843307715193}
   - {fileID: 2468139417672188538}
+  - {fileID: 8059824406536246402}
   m_Father: {fileID: 6242450190264014007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3705549246472038351
@@ -38442,10 +38443,12 @@ MonoBehaviour:
   characterBaseAvatar: {fileID: 0}
   characterBaseDefenseManager: {fileID: 4216785718268101194}
   characterBaseAttackManager: {fileID: 9099275497380788027}
+  characterBaseGold: {fileID: 8355928382239092725}
   characterBaseStateMachine: {fileID: 8170815007969967083}
   characterBaseMagicManager: {fileID: 5970159917112407286}
   characterBaseTargetManager: {fileID: 7469933540127021875}
   characterBaseTwoHandingManager: {fileID: 4837188523701104016}
+  characterBaseBlacksmithManager: {fileID: 0}
   uI_CharacterDamagePopupManager: {fileID: 453006028018148037}
   animatorSpeed: 1
   companionID: {fileID: 0}
@@ -83849,6 +83852,51 @@ SkinnedMeshRenderer:
     m_Center: {x: 46.39278, y: 0.45551944, z: -1.6289432}
     m_Extent: {x: 15.569866, y: 7.168619, z: 6.2313967}
   m_DirtyAABB: 0
+--- !u!1 &8722418517893923146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8059824406536246402}
+  - component: {fileID: 8355928382239092725}
+  m_Layer: 22
+  m_Name: "\U0001F4B8 Character Gold Manager"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8059824406536246402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8722418517893923146}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1438186108084557261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8355928382239092725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8722418517893923146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1b60a6196e1254d85a05e877b8bb88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: 0
 --- !u!1 &8729043289470378295
 GameObject:
   m_ObjectHideFlags: 0

@@ -241,5 +241,17 @@ namespace AF
             }
         }
 
+        public static void ClearChildren(Transform targetGameObject)
+        {
+            if (targetGameObject.childCount <= 0)
+            {
+                return;
+            }
+
+            foreach (Transform child in targetGameObject.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
     }
 }

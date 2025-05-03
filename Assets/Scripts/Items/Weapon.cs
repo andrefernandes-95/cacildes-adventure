@@ -130,7 +130,7 @@ namespace AF
 
         public Damage GetDamageForLevel(int currentLevel)
         {
-            WeaponUpgradeLevel weaponUpgradeLevel = weaponUpgrades.ElementAtOrDefault(currentLevel - 2);
+            WeaponUpgradeLevel weaponUpgradeLevel = weaponUpgrades.ElementAtOrDefault(currentLevel);
 
             if (weaponUpgradeLevel != null)
             {
@@ -295,6 +295,18 @@ namespace AF
         public bool IsStaffWeapon()
         {
             return damage.weaponAttackType == WeaponAttackType.Staff;
+        }
+
+        public bool TryGetNextWeaponUpgradeLevel(out WeaponUpgradeLevel weaponUpgradeLevel)
+        {
+            if (CanBeUpgradedFurther())
+            {
+                weaponUpgradeLevel = weaponUpgrades[this.level + 1];
+                return true;
+            }
+
+            weaponUpgradeLevel = null;
+            return false;
         }
     }
 

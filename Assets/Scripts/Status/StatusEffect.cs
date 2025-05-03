@@ -19,6 +19,9 @@ namespace AF
         public float decreaseRateWithDamage = 1f;
         public float decreaseRateWithoutDamage = 5f;
 
+        [Header("Localization")]
+        public string englishStatusEffectName;
+        public string portugueseStatusEffectName;
 
         public string GetName()
         {
@@ -39,6 +42,5 @@ namespace AF
 
             return displayNameWhenApplied.GetLocalizedString();
         }
-
     }
 }

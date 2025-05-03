@@ -65,6 +65,7 @@ namespace AF
         public CharacterBaseAvatar characterBaseAvatar;
         public CharacterBaseDefenseManager characterBaseDefenseManager;
         public CharacterBaseAttackManager characterBaseAttackManager;
+        public CharacterBaseGold characterBaseGold;
 
         // We need a reference to the base class so we can access certain methods that are common to both player and AI
         public CharacterBaseStateMachine characterBaseStateMachine;
@@ -72,6 +73,9 @@ namespace AF
         public CharacterBaseMagicManager characterBaseMagicManager;
         public CharacterBaseTargetManager characterBaseTargetManager;
         public CharacterBaseTwoHandingManager characterBaseTwoHandingManager;
+
+        [Header("Job Componentes")]
+        public CharacterBaseBlacksmithManager characterBaseBlacksmithManager;
 
         [Header("Character UIs")]
         public UI_CharacterDamagePopupManager uI_CharacterDamagePopupManager;
@@ -212,6 +216,11 @@ namespace AF
             animator.SetFloat(parameterName, value, blendTime, Time.deltaTime);
         }
 
+        public void SetAnimatorBool(string parameterName, bool value)
+        {
+            animator.SetBool(parameterName, value);
+        }
+
         public void PlayCrossFadeBusyAnimationWithRootMotion(string animationName, float crossFade)
         {
             animator.applyRootMotion = true;
@@ -292,6 +301,13 @@ namespace AF
             Vector3 direction = target.position - transform.position;
             direction.y = 0;
             transform.transform.rotation = Quaternion.Slerp(transform.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
+        }
+
+        public void TeleportToPosition(Vector3 position)
+        {
+            characterController.enabled = false;
+            transform.position = position;
+            characterController.enabled = true;
         }
     }
 }

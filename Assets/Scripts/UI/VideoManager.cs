@@ -34,7 +34,6 @@ namespace AF
 
             if (currentGenericTrigger != null)
             {
-                currentGenericTrigger.DisableCapturable();
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -44,7 +43,6 @@ namespace AF
 
             if (currentGenericTrigger != null)
             {
-                currentGenericTrigger.TurnCapturable();
             }
 
             currentVideoRoot = null;
@@ -63,7 +61,6 @@ namespace AF
 
             if (currentGenericTrigger != null)
             {
-                currentGenericTrigger.TurnCapturable();
             }
 
             StopCoroutine(PlayVideoCoroutine);

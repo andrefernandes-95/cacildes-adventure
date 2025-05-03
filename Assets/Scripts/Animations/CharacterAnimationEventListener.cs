@@ -361,5 +361,10 @@ namespace AF.Animations
         {
             characterManager.combatManager.allowCombos = true;
         }
+
+        public void OnHammering()
+        {
+            characterManager.characterBaseBlacksmithManager.PlayHammer();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace AF
         public static string IsCharging = "IsCharging";
         public static string IsBlocking = "IsBlocking";
         public static string IsTwoHanding = "IsTwoHanding";
+        public static string IsUsingAnvil = "IsUsingAnvil";
     }
 
     public static class AnimatorClipNames
@@ -19,5 +20,7 @@ namespace AF
 
         public static string SwitchRightHand = "Switch Right Hand";
         public static string SwitchLeftHand = "Switch Left Hand";
+
+        public static string UsingAnvil = "Using Anvil";
     }
 }

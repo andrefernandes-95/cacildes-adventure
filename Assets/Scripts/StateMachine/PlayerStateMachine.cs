@@ -53,5 +53,10 @@ namespace AF.StateMachine
         {
             currentState = playerTakeDamageState;
         }
+
+        public override void ChangeToState(AIState newState)
+        {
+            currentState = currentState.SwitchState(playerManager, newState);
+        }
     }
 }

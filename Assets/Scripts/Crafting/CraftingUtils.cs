@@ -42,7 +42,7 @@ namespace AF
 
         public static bool CanImproveWeapon(CharacterBaseInventory characterBaseInventory, WeaponInstance weaponInstance, int ownedGold)
         {
-            WeaponUpgradeLevel nextWeaponUpgradeLevel = weaponInstance.GetItem<Weapon>().weaponUpgrades.ElementAtOrDefault(weaponInstance.level - 1);
+            WeaponUpgradeLevel nextWeaponUpgradeLevel = weaponInstance.GetItem<Weapon>().weaponUpgrades.ElementAtOrDefault(weaponInstance.level + 1);
 
             if (nextWeaponUpgradeLevel == null)
             {

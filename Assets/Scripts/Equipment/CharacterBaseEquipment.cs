@@ -580,6 +580,15 @@ namespace AF
         public abstract int GetCurrentSkillsSlotIndex();
         public abstract int GetCurrentArrowsSlotIndex();
 
+        public void UpdateWeaponLevel(WeaponInstance weaponInstance, int newLevel, bool isRightHand)
+        {
+            WeaponInstance weaponInstanceToModify = (isRightHand ? GetRightHandWeapons() : GetLeftHandWeapons()).FirstOrDefault(w => w.IsEqualTo(weaponInstance));
+
+            if (weaponInstanceToModify != null)
+            {
+                weaponInstanceToModify.level = newLevel;
+            }
+        }
 
     }
 }

@@ -82,7 +82,7 @@ namespace AF
 
             if (
                 EventSystem.current.currentSelectedGameObject == null &&
-                chaptersListScrollRect.transform.childCount > 0)
+                chaptersListScrollRect.content.transform.childCount > 0)
             {
                 EventSystem.current.SetSelectedGameObject(chaptersListScrollRect.content.GetChild(0).gameObject);
             }

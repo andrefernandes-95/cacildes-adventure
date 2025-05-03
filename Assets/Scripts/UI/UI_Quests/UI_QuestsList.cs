@@ -84,7 +84,7 @@ namespace AF
 
             if (
                 EventSystem.current.currentSelectedGameObject == null &&
-                questsListScrollRect.transform.childCount > 0 &&
+                questsListScrollRect.content.transform.childCount > 0 &&
                 uI_QuestPreview.quest == null)
             {
                 EventSystem.current.SetSelectedGameObject(questsListScrollRect.content.GetChild(0).gameObject);

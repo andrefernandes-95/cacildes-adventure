@@ -359,5 +359,18 @@ namespace AF
                 }
             }
         }
+
+        public void UpdateWeaponLevel(WeaponInstance weaponInstance, int newLevel)
+        {
+            if (GetInventory().ContainsKey(weaponInstance.GetItem<Weapon>()))
+            {
+                List<WeaponInstance> weaponInstances = GetInventory()[weaponInstance.GetItem<Weapon>()].OfType<WeaponInstance>().ToList();
+                var index = weaponInstances.IndexOf(weaponInstance);
+                if (index != -1)
+                {
+                    weaponInstances[index].level = newLevel;
+                }
+            }
+        }
     }
 }

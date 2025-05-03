@@ -25,8 +25,8 @@ namespace AF
         [SerializeField] Button questsTabNavbarButton;
         [SerializeField] Button settingsTabNavbarButton;
 
-        [Header("UIs To Hide")]
-        [SerializeField] UI_PlayerHUD uI_PlayerHUD;
+        [Header("UI Manager")]
+        [SerializeField] UI_Manager uI_Manager;
 
 
         private void Awake()
@@ -74,17 +74,25 @@ namespace AF
                 Cursor.visible = false;
 
                 // Activate player hud if exiting main menu
-                uI_PlayerHUD.gameObject.SetActive(true);
+                uI_Manager.ShowPlayerHUD();
 
                 gameObject.SetActive(false);
             }
             else
             {
+                TryEnableMainMenu();
+            }
+        }
+
+        void TryEnableMainMenu()
+        {
+            if (uI_Manager.CanUseMainMenu())
+            {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
                 // Deactivate player hud while on main menu
-                uI_PlayerHUD.gameObject.SetActive(false);
+                uI_Manager.HidePlayerHUD();
 
                 gameObject.SetActive(true);
 
